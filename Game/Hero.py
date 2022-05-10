@@ -32,14 +32,24 @@ class Main_Hero(Graphic_elements):
         self.list_capture_buildings = []# Список захваченных зданий
         self.list_capture_buildings_symbol = []# Список символов захваченных зданий
         self.need_to_move_to_hero = False#Нужно ли перемещаться к игроку после телепорта
-        self.flag_draw_chest = False
+        
+
         self.near_chest = False
         self.near_tower = False
+        self.near_academy = False
+        self.near_fountain = False
+        self.near_shack = False
+        self.near_tavern = False
+
         self.chest_cor = None
         self.tower_cor = None
-        self.near_fountain = False
+
+        self.flag_draw_chest = False
         self.flag_fountain = False
         self.flag_tower = False
+        self.flag_academy = True
+        self.flag_shack = True
+        self.flag_tavern = False
         for i in range(4):# Заполнение списков изобржаний с движением 
             path = os.path.join(os.path.abspath(__file__+'/..'),'images/player/right/'+str(i)+'.png')
             self.list_images_right.append(path)
@@ -311,7 +321,42 @@ class Main_Hero(Graphic_elements):
                 else:
                     self.near_tower = False
 
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'J' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'j':
+                    self.near_tavern = True
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'J' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'j':
+                    self.near_tavern = True
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'J' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'j':
+                    self.near_tavern = True
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'J' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'j':
+                    self.near_tavern = True
+                else:
+                    self.near_tavern = False
+                #Академия
+                if self.flag_academy:
+                    if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'a':
+                        self.near_academy = True
+                    elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'a':
+                        self.near_academy = True
+                    elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'a':
+                        self.near_academy = True
+                    elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'a':
+                        self.near_academy = True
+                    else:
+                        self.near_academy = False
+                #Башня колдуна
+                if self.flag_shack:
+                    if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'S':
+                        self.near_shack = True
+                    elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'S':
+                        self.near_shack = True
+                    elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'S':
+                        self.near_shack = True
+                    elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'S':
+                        self.near_shack = True
+                    else:
+                        self.near_shack = False
 
+                #Фонтаны
                 if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'E' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'M':
                     self.near_fountain = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
                 elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'E' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'M':
@@ -337,8 +382,23 @@ class Main_Hero(Graphic_elements):
                 self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e]:
                     self.flag_tower = True
+            if self.near_academy and self.flag_academy:
+                self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e]:
+                    characteristic_dict['exp']+=100
+                    self.flag_academy = False
+                    self.near_academy = False
+            if self.near_shack and self.flag_shack:
+                self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e]:
+                    characteristic_dict['mana']+=100
+                    self.flag_shack = False
+                    self.near_shack = False
+            if self.near_tavern:
+                self.show_tip(' [E] Сыграть',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e]:
+                    self.flag_tavern = True
 
-                    
             #Если рядом со здание и нажимаем кнопку E - захватываем здание
             if self.near_building:
                 self.show_tip( '[E] Захватить здание', self.SCREEN_W-self.SCREEN_W//6.4, 0)
