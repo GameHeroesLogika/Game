@@ -5,7 +5,8 @@ from Menu import*
 pygame.init()
 #Основная фунуция
 def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,flag_to_move_to_hero,game,card_pressed,index_card,artifact_pressed,artifact_chest,list_cor_player_xy,LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP,
-        X_FRAME_MM,Y_FRAME_MM,list_cells_MM,recourse_sounds,resources_dict,settings,change_exp_x,max_exp_lvl,flag_show_new_day,change_mana_x,flag_button_end,past_resources_dict,flag_use_fountain_exp,flag_use_fountain_mana):
+        X_FRAME_MM,Y_FRAME_MM,list_cells_MM,recourse_sounds,resources_dict,settings,change_exp_x,max_exp_lvl,flag_show_new_day,change_mana_x,flag_button_end,past_resources_dict,flag_use_fountain_exp,flag_use_fountain_mana,
+        flag_use_tavern):
     time = pygame.time.Clock()
     while game:
         
@@ -332,7 +333,8 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
                         fog_war=fog_war,list_cor_player_xy=list_cor_player_xy,W_CELL_MINI_MAP=W_CELL_MINI_MAP,
                         H_CELL_MINI_MAP=H_CELL_MINI_MAP,X_FRAME_MM=X_FRAME_MM,
                         Y_FRAME_MM=Y_FRAME_MM, list_cells_MM = list_cells_MM, list_cor_portals = list_cor_portals,
-                        LENGTH_MAP = LENGTH_MAP_LVL1,chest=chest,fountain_mana=fountain_mana,fountain_exp=fountain_exp,watchtower=watchtower)
+                        LENGTH_MAP = LENGTH_MAP_LVL1,chest=chest,fountain_mana=fountain_mana,fountain_exp=fountain_exp,watchtower=watchtower,
+                        shack=shack,royal_academy=royal_academy,tavern=tavern)
             
             # matrix_image_blind(list_objects_cells_lvl1,mat_objetcs_lvl1,player_lvl1,list_objects_cells_lvl1,player_lvl1.changed_x,player_lvl1.changed_y,win)
             #Отрисовуем полоску справа
@@ -346,12 +348,15 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
             elliot_img.show_image(win)
             player_info.show_text(win)
             #Новый день
+
             if flag_button_end and player_lvl1.where_move == None:
                 if characteristic_dict['day'] == 7:
                     characteristic_dict['week']+=1
                     characteristic_dict['day'] = 0
                     flag_use_fountain_exp = True
                     flag_use_fountain_mana = True
+                    flag_use_tavern = True
+                    player_lvl1.flag_tavern = False
                 characteristic_dict['day']+=1
                 text_date.font_content = ('День: '+str(characteristic_dict['day'])+';Неделя: '+str(characteristic_dict['week'])).split(';')
                 flag_button_end = False
@@ -449,9 +454,14 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
                     characteristic_dict['mana']+=mana_fountain
                     flag_use_fountain_mana = False
                     player_lvl1.flag_fountain = False
+            
+            if player_lvl1.flag_tavern:
+                if flag_use_tavern:
+                    flag_use_tavern = False
             if player_lvl1.flag_tower:
                 player_lvl1.blind_move(index=6,flag_player=[player_lvl1.tower_cor[1],player_lvl1.tower_cor[0],False])
                 player_lvl1.flag_tower = False
+            # print(player_lvl1.flag_tavern)
             # отрисовуем клетки на мини-карте
             for cor in list_cells_MM:
                 if cor[2] == 'green':
@@ -516,4 +526,5 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
 
 
 run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,flag_to_move_to_hero,game,card_pressed,index_card,artifact_pressed,artifact_chest,list_cor_player_xy,LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP,
-        X_FRAME_MM,Y_FRAME_MM,list_cells_MM,recourse_sounds,resources_dict,settings,change_exp_x,max_exp_lvl,flag_show_new_day,change_mana_x,flag_button_end,past_resources_dict,flag_use_fountain_exp,flag_use_fountain_mana)
+        X_FRAME_MM,Y_FRAME_MM,list_cells_MM,recourse_sounds,resources_dict,settings,change_exp_x,max_exp_lvl,flag_show_new_day,change_mana_x,flag_button_end,past_resources_dict,flag_use_fountain_exp,flag_use_fountain_mana,
+        flag_use_tavern)

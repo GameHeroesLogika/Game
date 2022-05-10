@@ -99,6 +99,7 @@ exp_fountain = int(settings['EXP_FOUNTAIN'])
 flag_show_new_day = 100
 flag_use_fountain_exp = True
 flag_use_fountain_mana = True
+flag_use_tavern = True
 flag_button_end = False
 skill_cost = 200
 max_exp_lvl = 1000
@@ -138,13 +139,13 @@ list_cells_lvl1 = [list('000000000000000000000000000000'),
                    list('000000000000000000000000000000'), 
                    list('000000000000000000000000000000')]
 
-
+#fdsffdsf
 #Список-матрица объектов(персонаж, здания, ресурсы)
 mat_objetcs_lvl1 =[ list('000000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B
-                    list('0MpP00E0000000000P000000000000'),#A-academia
-                    list('0000gi0cw00000000000000000000C'),#B-taverna
-                    list('00C0C0000000000000000000000000'),#S-Хижина
-                    list('00Ff0000000000000T00000t000000'),#J-Храм
+                    list('0MpP00E0000000000P0000000Jj000'),#A,a-academia
+                    list('0000gi0cw000Aa00000000S00jj00C'),#J,j-taverna
+                    list('00C0C0000000aa0000000000000000'),#S-Хижина
+                    list('00Ff0000000000000T00000t000000'),#B-Храм
                     list('00ff00000000000000000000000000'),#
                     list('00000Hh00000000000000000000000'),#
                     list('00000hh00000000000000000000000'),#
