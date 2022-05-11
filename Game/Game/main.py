@@ -215,7 +215,7 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
                     #Если заканчиваем ход
                     if check_mouse_cor(button_end_move,mouse_cor) and (player_lvl1.where_move == None or player_lvl1.count_step == 0):
                         #Обновляем количество ходов игрока
-                        player_lvl1.count_step = 20
+                        
                         player_lvl1.where_move = None
                         flag_button_end = True
                         flag_show_new_day = 0
@@ -348,8 +348,19 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
             elliot_img.show_image(win)
             player_info.show_text(win)
             #Новый день
-
             if flag_button_end and player_lvl1.where_move == None:
+                characteristic_dict['count_step'] = int(settings['COUNT_STEP_HERO'])
+                for obj in list_all_artifact:
+                    if obj.NAME != None and obj.path != None:
+                        effect_hero(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict)
+                                    
+                for obj in list_slots_skills_hero:
+                    effect_hero(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict)
+                for obj in list_choice_base_skill:
+                    effect_hero(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict)
+                
+                player_lvl1.count_step = characteristic_dict['count_step']
+                resources_dict['gold'] += characteristic_dict['lvl_skill_domesticpolitics']*characteristic_dict['contribution']
                 if characteristic_dict['day'] == 7:
                     characteristic_dict['week']+=1
                     characteristic_dict['day'] = 0
@@ -357,26 +368,13 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
                     flag_use_fountain_mana = True
                     flag_use_tavern = True
                     player_lvl1.flag_tavern = False
+                    player_lvl1.flag_fountain_mana = False
+                    player_lvl1.flag_fountain_exp = False
                 characteristic_dict['day']+=1
                 text_date.font_content = ('День: '+str(characteristic_dict['day'])+';Неделя: '+str(characteristic_dict['week'])).split(';')
                 flag_button_end = False
-                for obj in list_all_artifact:
-                    if obj.NAME != None and obj.path != None:
-                        name_obj = obj.path.split('/')[-1]
-                        if name_obj in effect_art_skills_name_dict.keys():
-                            value_dict = effect_art_skills_name_dict[name_obj].split('_')
-                            if value_dict[-1] == 'resourcesdict':
-                                resources_dict[value_dict[0]] += int(value_dict[1])
-                            if value_dict[-1] == 'characteristicdict':
-                                characteristic_dict[value_dict[0]] += int(value_dict[1])
-                for obj in list_slots_skills_hero:
-                    name_obj = obj.path.split('/')[-1]
-                    if name_obj in effect_art_skills_name_dict.keys():
-                        value_dict = effect_art_skills_name_dict[name_obj].split('_')
-                        if value_dict[-1] == 'resourcesdict':
-                            resources_dict[value_dict[0]] += int(value_dict[1])
-                        if value_dict[-1] == 'characteristicdict':
-                            characteristic_dict[value_dict[0]] += int(value_dict[1])
+                
+
             if flag_show_new_day < 100:
                 player_lvl1.flag_move = False
                 if flag_show_new_day == 0:
@@ -445,15 +443,16 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
                     amount_money.WIDTH = settings['SCREEN_WIDTH']//19*1.5
                     amount_money.HEIGHT = settings['SCREEN_WIDTH']//19*1.5
                 amount_money.image_load()
-            if player_lvl1.flag_fountain:
-                if player_lvl1.near_fountain == 'E' and flag_use_fountain_exp:
+            if player_lvl1.flag_fountain_exp:
+                if flag_use_fountain_exp:
                     characteristic_dict['exp']+=exp_fountain
                     flag_use_fountain_exp = False
-                    player_lvl1.flag_fountain = False
-                elif player_lvl1.near_fountain == 'M'  and flag_use_fountain_mana:
+                    player_lvl1.flag_fountain_exp = False
+            if player_lvl1.flag_fountain_mana:
+                if flag_use_fountain_mana:
                     characteristic_dict['mana']+=mana_fountain
                     flag_use_fountain_mana = False
-                    player_lvl1.flag_fountain = False
+                    player_lvl1.flag_fountain_mana = False
             
             if player_lvl1.flag_tavern:
                 if flag_use_tavern:
@@ -523,6 +522,9 @@ def run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,fl
         time.tick(int(settings['FPS']))
         #Обновляем экран
         pygame.display.flip()
+
+
+    
 
 
 run_game(flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,flag_to_move_to_hero,game,card_pressed,index_card,artifact_pressed,artifact_chest,list_cor_player_xy,LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP,

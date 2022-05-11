@@ -13,7 +13,7 @@ player_lvl1 = Main_Hero(
                         path='images/player/player_front.png',
                         SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
                         where_move=where_move,count_move=int(settings['COUNT_MOVE']),
-                        win=win,count_step=int(settings['COUNT_STEP_HERO']))
+                        win=win,count_step=characteristic_dict['count_step'])
 #Контент ошибки 
 text_error_content = None
 # Рамка для ошибки

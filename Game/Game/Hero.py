@@ -37,7 +37,8 @@ class Main_Hero(Graphic_elements):
         self.near_chest = False
         self.near_tower = False
         self.near_academy = False
-        self.near_fountain = False
+        self.near_fountain_mana = False
+        self.near_fountain_exp = False
         self.near_shack = False
         self.near_tavern = False
 
@@ -45,7 +46,8 @@ class Main_Hero(Graphic_elements):
         self.tower_cor = None
 
         self.flag_draw_chest = False
-        self.flag_fountain = False
+        self.flag_fountain_mana = False
+        self.flag_fountain_exp = False
         self.flag_tower = False
         self.flag_academy = True
         self.flag_shack = True
@@ -358,15 +360,26 @@ class Main_Hero(Graphic_elements):
 
                 #Фонтаны
                 if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'E' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                    self.near_fountain_exp = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
                 elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'E' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                    self.near_fountain_exp = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
                 elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'E' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                    self.near_fountain_exp = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
                 elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'E' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                    self.near_fountain_exp = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
                 else:
-                    self.near_fountain = False
+                    self.near_fountain_exp = False
+                
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'M':
+                    self.near_fountain_mana = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'M':
+                    self.near_fountain_mana = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'M':
+                    self.near_fountain_mana = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'M':
+                    self.near_fountain_mana = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                else:
+                    self.near_fountain_mana = False
             
             if self.near_chest:
                 self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
@@ -374,10 +387,14 @@ class Main_Hero(Graphic_elements):
                     self.near_chest = False
                     self.flag_draw_chest = True
                     self.flag_move = False
-            if self.near_fountain == 'E' or self.near_fountain == 'M':
+            if self.near_fountain_exp == 'E':
                 self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e]:
-                    self.flag_fountain = True
+                    self.flag_fountain_exp = True
+            if self.near_fountain_mana == 'M':
+                self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e]:
+                    self.flag_fountain_mana = True
             if self.near_tower:
                 self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e]:
