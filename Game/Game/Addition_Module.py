@@ -414,31 +414,3 @@ def change_images(artifact_pressed,sprite):
         artifact_pressed.image_load()
     artifact_pressed.X = artifact_pressed.start_x
     artifact_pressed.Y = artifact_pressed.start_y
-def effect_hero(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict):
-    
-        name_obj = obj.path.split('/')[-1]
-        if name_obj in effect_art_skills_name_dict.keys():
-            value_dict = effect_art_skills_name_dict[name_obj].split(';')
-            if value_dict[-1] == 'resourcesdict':
-                if value_dict[-2] == '+':
-                    resources_dict[value_dict[0]] += int(value_dict[1])
-                elif value_dict[-2] == '-':
-                    resources_dict[value_dict[0]] -= int(value_dict[1])
-                elif value_dict[-2] == '*':
-                    resources_dict[value_dict[0]] *= int(value_dict[1])
-                elif value_dict[-2] == '/':
-                    resources_dict[value_dict[0]] /= int(value_dict[1])
-            if value_dict[-1] == 'characteristicdict':
-                if value_dict[-2] == '+':
-                    characteristic_dict[value_dict[0]] += int(value_dict[1])
-                elif value_dict[-2] == '-':
-                    characteristic_dict[value_dict[0]] -= int(value_dict[1])
-                elif value_dict[-2] == '*':
-                    if name_obj == 'skill_idol_people_learn.png':
-                        if randint(0,4) == 4:
-                            characteristic_dict[value_dict[0]] *= int(value_dict[1])
-                    else:
-                        characteristic_dict[value_dict[0]] *= int(value_dict[1])
-                    
-                elif value_dict[-2] == '/':
-                    characteristic_dict[value_dict[0]] /= int(value_dict[1])

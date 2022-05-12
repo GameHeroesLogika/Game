@@ -68,7 +68,6 @@ list_cells_MM = list()
 recourse_sounds = [Sounds('sounds/res1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res2.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res3.wav',settings['SOUNDS_VOLUME'])]
 flag_new_lvl = False
 #Словарь отвечает за кол-во ресурсов у игрока
-
 resources_dict = {
     'food':int(settings['FOOD']),
     'iron':int(settings['IRON']),
@@ -79,19 +78,11 @@ resources_dict = {
 }
 past_resources_dict = resources_dict.copy()
 effect_art_skills_name_dict = {
-    'boots_fire.png':'iron;4;+;resourcesdict',
-    'chest_hero.png':'crystal;1;+;resourcesdict',
-    'helmet_hero.png':'exp;100;+;characteristicdict',
-    'skill_lumberjack_learn.png':'wood;1;+;resourcesdict',
-    'boots_hero.png':'lvl_skill_domesticpolitics;2;+;characteristicdict',
-    'sword_fire.png':'lvl_skill_fight;2;+;characteristicdict',
-    'boots_ice.png':'count_step;2;+;characteristicdict',
-    'chest_fire.png':'mana;2;*;characteristicdict',
-    'helmet_ice.png':'lvl_skill_diplomacy;2;+;characteristicdict',
-    'skill_idol_people_learn.png':'contribution;2;*;characteristicdict',
-    'skill_forest_path_learn.png':'count_step;2;+;characteristicdict'
+    'boots_fire.png':'iron_4_resourcesdict',
+    'chest_hero.png':'crystal_1_resourcesdict',
+    'helmet_hero.png':'exp_100_characteristicdict',
+    'skill_lumberjack_learn.png':'wood_1_resourcesdict'
 }
-
 characteristic_dict = {
     'exp':int(settings['EXP']),
     'lvl':int(settings['LVL_HERO']),
@@ -100,9 +91,7 @@ characteristic_dict = {
     'lvl_skill_fight':int(settings['lvl_skill_fight'.upper()]),
     'mana':int(settings['MANA']),
     'day':int(settings['DAY']),
-    'week':int(settings['WEEK']),
-    'count_step':int(settings['COUNT_STEP_HERO']),
-    'contribution':int(settings['contribution'.upper()])
+    'week':int(settings['WEEK'])
 }
 
 mana_fountain = int(settings['MANA_FOUNTAIN'])
