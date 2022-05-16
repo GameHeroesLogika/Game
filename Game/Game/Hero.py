@@ -11,6 +11,7 @@ pygame.init()
 class Main_Hero(Graphic_elements):
     def __init__(self,x,y,width,height,path,SCREEN_W,SCREEN_H,where_move,count_move, win,count_step):
         super().__init__(x,y,width,height,path)
+        self.flag_pressed = True
         self.flag_move = True
         self.list_studied_map = []# Список изученых клеток
         self.index_cor = []
@@ -37,18 +38,22 @@ class Main_Hero(Graphic_elements):
         self.near_chest = False
         self.near_tower = False
         self.near_academy = False
-        self.near_fountain = False
         self.near_shack = False
         self.near_tavern = False
+        self.near_market = False
+        self.near_fountain_exp = False
+        self.near_fountain_mana = False
 
         self.chest_cor = None
         self.tower_cor = None
 
+        self.flag_fountain_mana = False
+        self.flag_fountain_exp = False
+        self.flag_market = False
         self.flag_draw_chest = False
-        self.flag_fountain = False
         self.flag_tower = False
-        self.flag_academy = True
-        self.flag_shack = True
+        self.flag_academy = False
+        self.flag_shack = False
         self.flag_tavern = False
         for i in range(4):# Заполнение списков изобржаний с движением 
             path = os.path.join(os.path.abspath(__file__+'/..'),'images/player/right/'+str(i)+'.png')
@@ -331,42 +336,61 @@ class Main_Hero(Graphic_elements):
                     self.near_tavern = True
                 else:
                     self.near_tavern = False
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'O' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'o':
+                    self.near_market = True
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'O' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'o':
+                    self.near_market = True
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'O' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'o':
+                    self.near_market = True
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'O' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'o':
+                    self.near_market = True
+                else:
+                    self.near_market = False
                 #Академия
-                if self.flag_academy:
-                    if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'a':
-                        self.near_academy = True
-                    elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'a':
-                        self.near_academy = True
-                    elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'a':
-                        self.near_academy = True
-                    elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'a':
-                        self.near_academy = True
-                    else:
-                        self.near_academy = False
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'a':
+                    self.near_academy = True
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'a':
+                    self.near_academy = True
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'a':
+                    self.near_academy = True
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'a':
+                    self.near_academy = True
+                else:
+                    self.near_academy = False
                 #Башня колдуна
-                if self.flag_shack:
-                    if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'S':
-                        self.near_shack = True
-                    elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'S':
-                        self.near_shack = True
-                    elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'S':
-                        self.near_shack = True
-                    elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'S':
-                        self.near_shack = True
-                    else:
-                        self.near_shack = False
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'S':
+                    self.near_shack = True
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'S':
+                    self.near_shack = True
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'S':
+                    self.near_shack = True
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'S':
+                    self.near_shack = True
+                else:
+                    self.near_shack = False
 
                 #Фонтаны
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'E' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'E' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'E' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'E' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'M':
-                    self.near_fountain = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'M':
+                    self.near_fountain_mana = True
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'M':
+                    self.near_fountain_mana = True
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'M':
+                    self.near_fountain_mana = True
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'M':
+                    self.near_fountain_mana = True
                 else:
-                    self.near_fountain = False
+                    self.near_fountain_mana = False
+
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'E':
+                    self.near_fountain_exp = True
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'E':
+                    self.near_fountain_exp = True
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'E':
+                    self.near_fountain_exp = True
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'E':
+                    self.near_fountain_exp = True
+                else:
+                    self.near_fountain_exp = False
             
             if self.near_chest:
                 self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
@@ -374,31 +398,44 @@ class Main_Hero(Graphic_elements):
                     self.near_chest = False
                     self.flag_draw_chest = True
                     self.flag_move = False
-            if self.near_fountain == 'E' or self.near_fountain == 'M':
-                self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e]:
-                    self.flag_fountain = True
+            if self.near_fountain_exp:
+                self.show_tip(' [E] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.flag_fountain_exp = True
+                    self.flag_pressed = True
+            if self.near_fountain_mana :
+                self.show_tip(' [E] Колодец маны',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.flag_fountain_mana = True
+                    self.flag_pressed = True
             if self.near_tower:
-                self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e]:
+                self.show_tip(' [E] Поставить дозорного',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5,font_size=settings['SCREEN_WIDTH']//80)
+                if keys[pygame.K_e] and self.flag_pressed == False:
                     self.flag_tower = True
-            if self.near_academy and self.flag_academy:
-                self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e]:
-                    characteristic_dict['exp']+=100
-                    self.flag_academy = False
-                    self.near_academy = False
-            if self.near_shack and self.flag_shack:
-                self.show_tip(' [E] Использовать',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e]:
-                    characteristic_dict['mana']+=100
-                    self.flag_shack = False
-                    self.near_shack = False
+                    self.flag_pressed = True
+            if self.near_academy:
+                self.show_tip(' [E] Академия',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.flag_academy = True
+                    self.flag_pressed = True
+            if self.near_shack :
+                self.show_tip(' [E] Хижина Колдуна',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.flag_shack = True
+                    self.flag_pressed = True
             if self.near_tavern:
-                self.show_tip(' [E] Сыграть',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e]:
+                self.show_tip(' [E] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                if keys[pygame.K_e] and self.flag_pressed == False:
                     self.flag_tavern = True
-
+                    self.flag_pressed = True
+            if self.near_market:
+                # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                if keys[pygame.K_f]:
+                    self.near_market = False
+                    self.flag_market = True
+            if not keys[pygame.K_e] and self.flag_pressed:
+                self.flag_pressed = False
             #Если рядом со здание и нажимаем кнопку E - захватываем здание
             if self.near_building:
                 self.show_tip( '[E] Захватить здание', self.SCREEN_W-self.SCREEN_W//6.4, 0)
@@ -465,8 +502,8 @@ class Main_Hero(Graphic_elements):
 
 
     #Функция для показа подсказок
-    def show_tip(self, text, x_text, y_text):
-        text = Font('images/Font/pixel_font.ttf',self.SCREEN_W//65,(255,255,255),text,x_text,y_text)
+    def show_tip(self, text, x_text, y_text,font_size = settings['SCREEN_WIDTH']//65):
+        text = Font('images/Font/pixel_font.ttf',font_size,(255,255,255),text,x_text,y_text)
         text.show_text(self.win)
 
     # Метод тумана войны 

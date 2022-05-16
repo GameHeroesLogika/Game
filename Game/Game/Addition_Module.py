@@ -46,7 +46,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 SCREEN_H,count_move,changed_x,changed_y,
                 ironmine, goldmine, farm, gemsmine,sawmill, stonebreaker,flag_green,list_studied_map,portal, fog_war,
                 list_cor_player_xy,W_CELL_MINI_MAP ,H_CELL_MINI_MAP,X_FRAME_MM,Y_FRAME_MM,list_cells_MM,list_cor_portals,
-                LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern):
+                LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market):
     list_xy = [0,0]
     #Индекс клетки, к которой привязан объект
     index_cells = 0
@@ -107,7 +107,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     fountain_mana.show_image(win)
                 elif obj == 'E':
                     fountain_exp.X = list_objects_cells_lvl1[index_cells].X
-                    fountain_exp.Y = list_objects_cells_lvl1[index_cells].Y
+                    fountain_exp.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19
                     fountain_exp.show_image(win)
                 elif obj == 'F':
                     farm.X = list_objects_cells_lvl1[index_cells].X
@@ -131,6 +131,27 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 #     tavern.X = list_objects_cells_lvl1[index_cells].X
                 #     tavern.Y = list_objects_cells_lvl1[index_cells].Y 
                 #     tavern.show_image(win)
+                elif obj == 'O':
+                    market.X = list_objects_cells_lvl1[index_cells].X
+                    market.Y = list_objects_cells_lvl1[index_cells].Y 
+                    market.show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM,'white'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*3,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+ H_CELL_MINI_MAP*2,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM+ H_CELL_MINI_MAP*2,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+ H_CELL_MINI_MAP*3,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM+ H_CELL_MINI_MAP*3,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP*2,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP*3,'white'))
+                    flag_cell_MM = False
                 elif obj == 'J':
                     tavern.X = list_objects_cells_lvl1[index_cells].X
                     tavern.Y = list_objects_cells_lvl1[index_cells].Y 
@@ -414,3 +435,72 @@ def change_images(artifact_pressed,sprite):
         artifact_pressed.image_load()
     artifact_pressed.X = artifact_pressed.start_x
     artifact_pressed.Y = artifact_pressed.start_y
+def effect_resource(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict):
+    name_obj = obj.path.split('/')[-1]
+    if name_obj in effect_art_skills_name_dict.keys():
+        value_dict = effect_art_skills_name_dict[name_obj].split(';')
+        if value_dict[-1] == 'resourcesdict':
+            if value_dict[-2] == '+':
+                resources_dict[value_dict[0]] += int(value_dict[1])
+            elif value_dict[-2] == '-':
+                resources_dict[value_dict[0]] -= int(value_dict[1])
+            elif value_dict[-2] == '*':
+                resources_dict[value_dict[0]] *= int(value_dict[1])
+            elif value_dict[-2] == '/':
+                resources_dict[value_dict[0]] /= int(value_dict[1])
+        if value_dict[-1] == 'characteristicdict':
+            if value_dict[-2] == '+':
+                characteristic_dict[value_dict[0]] += int(value_dict[1])
+            elif value_dict[-2] == '-':
+                characteristic_dict[value_dict[0]] -= int(value_dict[1])
+            elif value_dict[-2] == '*':
+                if name_obj == 'skill_idol_people_learn.png':
+                    if randint(0,4) == 4:
+                        characteristic_dict[value_dict[0]] *= int(value_dict[1])
+                else:
+                    characteristic_dict[value_dict[0]] *= int(value_dict[1])
+
+            elif value_dict[-2] == '/':
+                characteristic_dict[value_dict[0]] /= int(value_dict[1])
+def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,characteristic_dict,list_learn_skills,player_lvl1):
+    for obj in list_all_artifact:
+        if obj.NAME != None and obj.path != None:
+            dict_artifact_on[obj.NAME] = obj.path.split('/')[-1]
+        if obj.path == None and obj.NAME != None:
+            dict_artifact_on[obj.NAME] = None
+
+    if dict_artifact_on['helmet'] != dict_artifact_on_past['helmet'] :
+        if dict_artifact_on['helmet'] == 'helmet_ice.png' and dict_artifact_on_past['helmet'] != 'helmet_ice.png':
+            characteristic_dict['lvl_skill_diplomacy'] +=2
+        if dict_artifact_on['helmet'] != 'helmet_ice.png' and dict_artifact_on_past['helmet'] == 'helmet_ice.png':
+            characteristic_dict['lvl_skill_diplomacy'] -=2
+    if dict_artifact_on['boots'] != dict_artifact_on_past['boots']:
+        if dict_artifact_on['boots'] == 'boots_ice.png' and dict_artifact_on_past['boots'] != 'boots_ice.png':
+            characteristic_dict['count_step'] +=2
+            player_lvl1.count_step +=2
+        if dict_artifact_on['boots'] != 'boots_ice.png' and dict_artifact_on_past['boots'] == 'boots_ice.png':
+            characteristic_dict['count_step'] -=2
+            player_lvl1.count_step -=2
+        if dict_artifact_on['boots'] == 'boots_hero.png' and dict_artifact_on_past['boots'] != 'boots_hero.png':
+            characteristic_dict['lvl_skill_domesticpolitics'] +=2
+        if dict_artifact_on['boots'] != 'boots_hero.png' and dict_artifact_on_past['boots'] == 'boots_hero.png':
+            characteristic_dict['lvl_skill_domesticpolitics'] -=2
+    if dict_artifact_on['chest'] != dict_artifact_on_past['chest']:
+        if dict_artifact_on['chest'] == 'chest_fire.png' and dict_artifact_on_past['chest'] != 'chest_fire.png':
+            characteristic_dict['change_mana'] +=1
+        if dict_artifact_on['chest'] != 'chest_fire.png' and dict_artifact_on_past['chest'] == 'chest_fire.png':
+            characteristic_dict['change_mana'] -=1
+    if dict_artifact_on['sword'] != dict_artifact_on_past['sword']:
+        if dict_artifact_on['sword'] == 'sword_fire.png' and dict_artifact_on_past['sword'] != 'sword_fire.png':
+            characteristic_dict['lvl_skill_fight'] +=2
+        if dict_artifact_on['sword'] != 'sword_fire.png' and dict_artifact_on_past['sword'] == 'sword_fire.png':
+            characteristic_dict['lvl_skill_fight'] -=2
+    if dict_artifact_on['shield'] != dict_artifact_on_past['shield']:
+        pass
+    if 'skill_forest_path_learn' in list_learn_skills:
+        characteristic_dict['count_step'] +=2
+        player_lvl1.count_step +=2
+        list_learn_skills.remove('skill_forest_path_learn')
+    
+
+

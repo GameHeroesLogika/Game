@@ -25,13 +25,14 @@ if settings['SCREEN_WIDTH'] == 0 and settings['SCREEN_HEIGHT'] == 0:
     settings['SCREEN_WIDTH'] = pygame.display.Info().current_w
     settings['SCREEN_HEIGHT'] = pygame.display.Info().current_h
 
+
 key_is_pressed = False
 count_move = 0
 #Направление движения игрока
 where_move = None
 # Флаг для отображения ошибки
 flag_show_error = 100
-
+flag_show_tavern = 30
 # КООРДИНАТЫ ЦЕНТРАЛЬНОЙ КЛЕТКИ
 CENTER_CELL_COR = [settings['SCREEN_WIDTH']//19*8,settings['SCREEN_HEIGHT']//2]
 #Константа громкости звука
@@ -78,11 +79,21 @@ resources_dict = {
 }
 past_resources_dict = resources_dict.copy()
 effect_art_skills_name_dict = {
-    'boots_fire.png':'iron_4_resourcesdict',
-    'chest_hero.png':'crystal_1_resourcesdict',
-    'helmet_hero.png':'exp_100_characteristicdict',
-    'skill_lumberjack_learn.png':'wood_1_resourcesdict'
+    'boots_fire.png':'iron;4;+;resourcesdict',
+    'chest_hero.png':'crystal;1;+;resourcesdict',
+    'helmet_hero.png':'exp;100;+;characteristicdict',
+    'skill_lumberjack_learn.png':'wood;1;+;resourcesdict',
 }
+# effect_skills_name_dict = {
+#     'boots_hero.png':'lvl_skill_domesticpolitics;2;+;characteristicdict',
+#     'sword_fire.png':'lvl_skill_fight;2;+;characteristicdict',
+#     'boots_ice.png':'count_step;2;+;characteristicdict',
+#     'chest_fire.png':'mana;2;*;characteristicdict',
+#     'helmet_ice.png':'lvl_skill_diplomacy;2;+;characteristicdict',
+#     'skill_idol_people_learn.png':'contribution;2;*;characteristicdict',
+#     'skill_forest_path_learn.png':'count_step;2;+;characteristicdict'
+# }
+
 characteristic_dict = {
     'exp':int(settings['EXP']),
     'lvl':int(settings['LVL_HERO']),
@@ -91,9 +102,23 @@ characteristic_dict = {
     'lvl_skill_fight':int(settings['lvl_skill_fight'.upper()]),
     'mana':int(settings['MANA']),
     'day':int(settings['DAY']),
-    'week':int(settings['WEEK'])
+    'week':int(settings['WEEK']),
+    'week':int(settings['WEEK']),
+    'count_step':int(settings['COUNT_STEP_HERO']),
+    'contribution':int(settings['contribution'.upper()]),
+    'change_mana':1,
+    'change_exp':1,
 }
-
+dict_artifact_on = {
+    'helmet':None,
+    'sword':None,
+    'chest':None,
+    'boots':None,
+    'shield':None,
+}
+list_learn_skills = list()
+dict_artifact_on_past = dict_artifact_on.copy()
+list_order_skills = ['skill_earth_blessing','skill_forest_path','skill_idol_people','skill_leader','skill_lumberjack']
 mana_fountain = int(settings['MANA_FOUNTAIN'])
 exp_fountain = int(settings['EXP_FOUNTAIN'])
 flag_show_new_day = 100
@@ -104,9 +129,13 @@ flag_button_end = False
 skill_cost = 200
 max_exp_lvl = 1000
 max_mana = 1000
+mana_shack = 200
 change_mana_x = 0
 step_exp_text = settings['SCREEN_WIDTH']//93
 change_exp_x = 0
+flag_show_error_next_week = 30
+flag_buy_skill = True
+flag_use_royal_academy = True
 #Список из клеток первого уровня
 list_cells_lvl1 = [list('000000000000000000000000000000'),
                    list('000000000000000000000000000000'),
@@ -141,7 +170,7 @@ list_cells_lvl1 = [list('000000000000000000000000000000'),
 
 #fdsffdsf
 #Список-матрица объектов(персонаж, здания, ресурсы)
-mat_objetcs_lvl1 =[ list('000000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B
+mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B
                     list('0MpP00E0000000000P0000000Jj000'),#A,a-academia
                     list('0000gi0cw000Aa00000000S00jj00C'),#J,j-taverna
                     list('00C0C0000000aa0000000000000000'),#S-Хижина
@@ -154,14 +183,14 @@ mat_objetcs_lvl1 =[ list('000000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
                     list('000000000000Nn0000000000000000'),#
                     list('000000000000nn0000000000000000'),#
                     list('000000000000000Rr0000000000000'),#
-                    list('000000000000000rr0000000000000'),#
-                    list('0000000000000000000Xx000000000'),#
-                    list('0000000000000000000xx000000000'),#
-                    list('000000000000000000000000000000'),#
+                    list('0000Ooo00000000rr0000000000000'),#
+                    list('0000ooo000000000000Xx000000000'),#
+                    list('0000oooo00000000000xx000000000'),#
+                    list('00000ooo0000000000000000000000'),#
                     list('000000000000000000000000000000'),#
                     list('000000000000000000000000000000'),
                     list('000000000000000000000000000000'),
-                    list('0000000000W0000000000000000000'),
+                    list('000000P000W0000000000000000000'),
                     list('000000000000000000000000000000'),
                     list('000000000000000000000000000000'),
                     list('000000000000000000000000000000'),
@@ -184,7 +213,7 @@ create_map(list_cells_lvl1, list_objects_cells_lvl1,settings['SCREEN_WIDTH'],set
 #Список с ячейками артефактов 
 
 list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interface/to_hero_w.png'],['images/game_interface/to_castle.png','images/game_interface/to_castle_w.png',],['images/game_interface/end_moves.png','images/game_interface/end_moves_w.png',]]
-list_cor_portals = [ [[1,3],[1,17]] ]
+list_cor_portals = [ [[1,3],[1,17]],[[0,0],[20,6]] ]
 list_matrix_artifact = []
 
     
@@ -193,3 +222,49 @@ create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEI
                     list_card_pl_reserv=list_card_pl_reserv,
                     list_cards_menu_hero=list_cards_menu_hero)
     
+flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,flag_to_move_to_hero,game,card_pressed,index_card,artifact_pressed,artifact_chest,list_cor_player_xy,LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP,
+X_FRAME_MM,Y_FRAME_MM,list_cells_MM,recourse_sounds,resources_dict,settings,change_exp_x,max_exp_lvl,flag_show_new_day,change_mana_x,
+flag_button_end,past_resources_dict,flag_use_fountain_exp,flag_use_fountain_mana,
+flag_use_tavern
+dict_arguments = {
+    'flag_show_error':flag_show_error,
+    'CENTER_CELL_COR':CENTER_CELL_COR,
+    'draw_cells':draw_cells,
+    'scene':scene,
+    'buttonIsPressed':buttonIsPressed,
+    'flag_to_move_to_hero':flag_to_move_to_hero,
+    'game':game,
+    'card_pressed':card_pressed,
+    'index_card':index_card,
+    'artifact_pressed':artifact_pressed,
+    'artifact_chest':artifact_chest,
+    'list_cor_player_xy':list_cor_player_xy,
+    'LENGTH_MAP_LVL1':LENGTH_MAP_LVL1,
+    'W_CELL_MINI_MAP':W_CELL_MINI_MAP,
+    'H_CELL_MINI_MAP':H_CELL_MINI_MAP,
+    'X_FRAME_MM':X_FRAME_MM,
+    'Y_FRAME_MM':Y_FRAME_MM,
+    'list_cells_MM':list_cells_MM,
+    'recourse_sounds':recourse_sounds,
+    'resources_dict':resources_dict,
+    'settings':settings,
+    'change_exp_x':change_exp_x,
+    'max_exp_lvl':max_exp_lvl,
+    'max_mana':max_mana,
+    'skill_cost':skill_cost,
+    'flag_show_new_day':flag_show_new_day,
+    'change_mana_x':change_mana_x,
+    'flag_button_end':flag_button_end,
+    'past_resources_dict':past_resources_dict,
+    'flag_use_fountain_exp':flag_use_fountain_exp,
+    'flag_use_fountain_mana':flag_use_fountain_mana,
+    'flag_use_royal_academy':flag_use_royal_academy,
+    'flag_use_tavern':flag_use_tavern,
+    'flag_buy_skill':flag_buy_skill,
+    'flag_show_tavern':flag_show_tavern,
+    'flag_new_lvl':False,
+    'flag_use_shack':True,
+    'flag_show_error_next_week':flag_show_error_next_week,
+    'dict_artifact_on_past':dict_artifact_on_past,
+
+}
