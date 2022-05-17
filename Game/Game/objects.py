@@ -1,6 +1,7 @@
 from const import *
 from Hero import Main_Hero
 from Menu import Menu
+from random import choice
 #Создаем окно, с параметром БЕЗ РАМКИ
 if settings['FULLSCREEN'] == True:
     win = pygame.display.set_mode((settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT']),pygame.FULLSCREEN)#
@@ -56,6 +57,9 @@ iron = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WID
 crystal = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/gems.png')
 wood = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/resources/wood.png')
 stone = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/resources/stone.png')
+tree_full = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree_full.png')
+tree = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree.png')
+
 apple = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, settings['SCREEN_WIDTH']//19*6.7, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/apple.png')
 iron_bullion = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, settings['SCREEN_WIDTH']//19*7.5, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/iron_bullion.png')
 wood2 = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, settings['SCREEN_WIDTH']//19*8.3, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/wood.png')
@@ -63,9 +67,9 @@ gold_bullion = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDT
 exp_img = Graphic_elements(x=settings['SCREEN_WIDTH']//1.23,y=settings['SCREEN_HEIGHT']//1.7,width=settings['SCREEN_WIDTH']//50,height=settings['SCREEN_WIDTH']//50,path='images/exp.png')
 crystal_purified = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*1.4//1, settings['SCREEN_WIDTH']//19*7.5, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/cristal.png')
 stone_purified = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*1.4//1, settings['SCREEN_WIDTH']//19*8.3, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/stone2.png')
-tree_full = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree_full.png')
-tree = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree.png')
 
+
+button_change = Graphic_elements(x=settings['SCREEN_WIDTH']//2.43,y=settings['SCREEN_HEIGHT']//1.69,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change.png')
 button_to_hero = Graphic_elements( settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1 +settings['SCREEN_WIDTH']//13.5,settings['SCREEN_WIDTH']//19*4.7,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//30,'images/game_interface/to_hero.png')
 button_to_castle = Graphic_elements( settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1 +settings['SCREEN_WIDTH']//13.5,settings['SCREEN_WIDTH']//19*4.7 + settings['SCREEN_WIDTH']//30,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//30,'images/game_interface/to_castle.png')
 button_end_move = Graphic_elements(settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//7.6, settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//11, settings['SCREEN_WIDTH']//9,settings['SCREEN_HEIGHT']//20 , 'images/game_interface/end_moves.png')
@@ -102,11 +106,14 @@ text_mana = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'blue
 text_tavern = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red','Вы выиграли 20 золотых: ',frame_tavern.X+settings['SCREEN_WIDTH']//40,frame_tavern.Y + settings['SCREEN_HEIGHT']//19,index=3)
 #Текст для зданий
 text_next_week_buildings = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red','     Сейчас недоступно!;   Приходите через неделю',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12,index=2)
+#Текст для цены артефакта
+text_price_artifact = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_change.X-settings['SCREEN_WIDTH']//30,button_change.Y - settings['SCREEN_WIDTH']//40)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*6.9)
 amount_iron = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*7.7)
 amount_wood = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*8.4)
 amount_gold = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//29, settings['SCREEN_WIDTH']//19*6.9)
+
 amount_crystal=Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//29, settings['SCREEN_WIDTH']//19*7.7)
 amount_stone = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//29, settings['SCREEN_WIDTH']//19*8.4)
 amount_money = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*1.4//1, settings['SCREEN_WIDTH']//19*6.7,settings['SCREEN_WIDTH']//19*1.5, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/gold_bullion.png')
@@ -125,6 +132,7 @@ desc = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,
 desc_artifact = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
 desc_base_skill = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
 desc_skill_hero = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
+market_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 #Cундук
 chest = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19,path='images/chest/chest.png')
 chest_open = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT']//2-settings['SCREEN_WIDTH']//19*3,settings['SCREEN_WIDTH']//19*6,settings['SCREEN_WIDTH']//19*6,path='images/chest/chest_open.png')
@@ -178,13 +186,62 @@ list_slots_skills_hero = [
     
     Graphic_elements(x=settings['SCREEN_WIDTH']//8.25,y=settings['SCREEN_HEIGHT']//2.21,width=settings['SCREEN_WIDTH']//14.22,height=settings['SCREEN_WIDTH']//14.22,path='images/skills/eliot/skill_leader.png')
     ]
-
-
-
+dict_price_artifact = {
+    'boots_fire':randint(20,30),
+    'boots_hero':randint(30,35),
+    'boots_ice':randint(20,30),
+    'chest_fire':randint(30,35),
+    'chest_ice':randint(10,20),
+    'helmet_ice':randint(20,30),
+    'shield_ice':randint(20,30),
+    'sword_ice':randint(20,30),
+    'chest_hero':randint(10,20),
+    'helmet_hero':randint(10,20),
+    'shield_hero':randint(20,30),
+    'sword_hero':randint(25,35),
+    'shield_fire':randint(15,20),
+    'sword_fire':randint(25,35),
+    'helmet_fire':randint(10,20)
+}
+dict_price_resource = {
+    'wood':'1_4',
+    'iron':'1_2',
+    'stone':'1_3',
+    'crystal':'2_1',
+    'food':'1_5',
+}
 with open('images/artifacts/artifact_list.txt','r') as file:
     for text in file:
         text = text.split(',')
     list_matrix_artifact = text
+list_slots_market_hero = [
+    #Артефакты 
+    Graphic_elements(x=settings['SCREEN_WIDTH']//36.57,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='artifact',path=None),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//7.52,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='artifact',path=None),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//4.19,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='artifact',path=None),
+    #Ресурсы сверху
+    Graphic_elements(x=settings['SCREEN_WIDTH']//42.6,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/apple.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//7.75,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/cristal.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//4.26,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/iron_bullion.png'),
+    #Ресурсы снизу
+    Graphic_elements(x=settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//1.22,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/stone2.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//5.49,y=settings['SCREEN_HEIGHT']//1.22,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/wood.png'),
+]
+list_slots_market = [
+    #Артефакты 
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.46,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='artifact',path='images/artifacts/'+choice(list_matrix_artifact)+'.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.27,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='artifact',path='images/artifacts/'+choice(list_matrix_artifact)+'.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.12,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='artifact',path='images/artifacts/'+choice(list_matrix_artifact)+'.png'),
+    #Ресурсы сверху
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.46,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/apple.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.26,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/cristal.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.11,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/iron_bullion.png'),
+    #Ресурсы снизу
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.35,y=settings['SCREEN_HEIGHT']//1.22,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/stone2.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.18,y=settings['SCREEN_HEIGHT']//1.22,width=settings['SCREEN_WIDTH']//13.37,height=settings['SCREEN_HEIGHT']//7.2,name='resource',path='images/resources/wood.png'),
+]
+amount_gold_market = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'red','0',settings['SCREEN_WIDTH']//1.8, settings['SCREEN_HEIGHT']//1.07)
+
 
 list_artifact_graphic_elements = list()
 for i in list_matrix_artifact:

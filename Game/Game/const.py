@@ -126,6 +126,7 @@ flag_use_fountain_exp = True
 flag_use_fountain_mana = True
 flag_use_tavern = True
 flag_button_end = False
+flag_market_selected = False
 skill_cost = 200
 max_exp_lvl = 1000
 max_mana = 1000
@@ -168,7 +169,6 @@ list_cells_lvl1 = [list('000000000000000000000000000000'),
                    list('000000000000000000000000000000'), 
                    list('000000000000000000000000000000')]
 
-#fdsffdsf
 #Список-матрица объектов(персонаж, здания, ресурсы)
 mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B
                     list('0MpP00E0000000000P0000000Jj000'),#A,a-academia
@@ -209,12 +209,10 @@ list_card_pl_reserv = [['клаус',1,2],['бард',5,0],['подрывник'
 list_cards_menu_hero = list()
 
 create_map(list_cells_lvl1, list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
-
-#Список с ячейками артефактов 
-
+ 
 list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interface/to_hero_w.png'],['images/game_interface/to_castle.png','images/game_interface/to_castle_w.png',],['images/game_interface/end_moves.png','images/game_interface/end_moves_w.png',]]
-list_cor_portals = [ [[1,3],[1,17]],[[0,0],[20,6]] ]
-list_matrix_artifact = []
+list_cor_portals = [ [[1,3],[1,17]],[[0,0],[15,0]] ]
+
 
     
 create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
@@ -222,10 +220,6 @@ create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEI
                     list_card_pl_reserv=list_card_pl_reserv,
                     list_cards_menu_hero=list_cards_menu_hero)
     
-flag_show_error,CENTER_CELL_COR,draw_cells,scene,buttonIsPressed,flag_to_move_to_hero,game,card_pressed,index_card,artifact_pressed,artifact_chest,list_cor_player_xy,LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP,
-X_FRAME_MM,Y_FRAME_MM,list_cells_MM,recourse_sounds,resources_dict,settings,change_exp_x,max_exp_lvl,flag_show_new_day,change_mana_x,
-flag_button_end,past_resources_dict,flag_use_fountain_exp,flag_use_fountain_mana,
-flag_use_tavern
 dict_arguments = {
     'flag_show_error':flag_show_error,
     'CENTER_CELL_COR':CENTER_CELL_COR,
@@ -266,5 +260,6 @@ dict_arguments = {
     'flag_use_shack':True,
     'flag_show_error_next_week':flag_show_error_next_week,
     'dict_artifact_on_past':dict_artifact_on_past,
+    'flag_market_selected':flag_market_selected
 
 }
