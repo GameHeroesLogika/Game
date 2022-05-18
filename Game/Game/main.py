@@ -35,60 +35,122 @@ def run_game(dict_arguments):
                         dict_arguments['scene'] = 'lvl1'
                     for obj in list_slots_market_hero:
                         if dict_arguments['flag_market_selected'] and check_mouse_cor(button_change,mouse_cor) and market_selected.NAME.path != None:
-                            price = dict_price_artifact[market_selected.NAME.path.split('/')[-1].split('.')[0]]
-                            if dict_arguments['resources_dict']['gold'] >= price:
-                                dict_arguments['resources_dict']['gold'] -= price
-                                list_slots_market[list_slots_market.index(market_selected.NAME)].path = None
-                                dict_arguments['flag_market_selected'] = False
+                            if market_selected.NAME.NAME == 'artifact':
+                                price_artifact = dict_arguments['dict_price_artifact'][market_selected.NAME.path.split('/')[-1].split('.')[0]]
+                                if dict_arguments['resources_dict']['gold_bullion'] < price_artifact:
+                                    dict_arguments['flag_not_enough_gold'] = 0
+                                
+                                elif dict_arguments['resources_dict']['gold_bullion'] >= price_artifact and market_selected.NAME in list_slots_market:
+                                    name_artifact = market_selected.NAME.path.split('/')[-1]
+                                    name_artifact = name_artifact.split('.')[0]
+                                    name_artifact= name_artifact.split('_')[0]
+                                    for artifact in list_all_artifact:
+                                        if artifact.path == None:
+                                            if artifact.NAME != None:
+                                                if name_artifact == artifact.NAME:
+                                                    artifact.path = market_selected.NAME.path
+                                                    artifact.image_load()
+                                                    break
+                                            if artifact.NAME == None:
+                                                artifact.path = market_selected.NAME.path
+                                                artifact.image_load()
+                                                break
+                                    else:
+                                        dict_arguments['flag_market_aritfact_no_slots'] = 0
+                                    if dict_arguments['flag_market_aritfact_no_slots'] != 0:
+                                        dict_arguments['resources_dict']['gold_bullion'] -= price_artifact
+                                        list_slots_market[list_slots_market.index(market_selected.NAME)].path = None
+                                        dict_arguments['flag_market_selected'] = False
+                                elif market_selected.NAME in list_slots_market_hero:
+                                    dict_arguments['resources_dict']['gold_bullion'] += price_artifact-5
+                                    list_slots_market_hero[list_slots_market_hero.index(market_selected.NAME)].path = None
+                                    list_all_artifact[list_slots_market_hero.index(market_selected.NAME)+5].path = None
+                                    dict_arguments['flag_market_selected'] = False
+                                
+                            if market_selected.NAME.NAME == 'resource':
+                                name_resource = market_selected.NAME.path.split('/')[-1]
+                                name_resource = name_resource.split('.')[0]
+                                price_resource = (dict_arguments['dict_price_resource'][market_selected.NAME.path.split('/')[-1].split('.')[0]]).split('_')
+                                if dict_arguments['resources_dict']['gold_bullion'] < int(price_resource[0]):
+                                    dict_arguments['flag_not_enough_gold'] = 0
+                                elif dict_arguments['resources_dict']['gold_bullion'] >= int(price_resource[0]) and market_selected.NAME in list_slots_market:
+                                    dict_arguments['resources_dict'][name_resource] += int(price_resource[1])
+                                    dict_arguments['resources_dict']['gold_bullion'] -= int(price_resource[0])
+                                    dict_arguments['dict_count_resource'][name_resource] -= int(price_resource[1])
+                                    if dict_arguments['dict_count_resource'][name_resource] <= 0 :
+                                        list_slots_market[list_slots_market.index(market_selected.NAME)].path = None
+                                    dict_arguments['flag_market_selected'] = False
+                                elif market_selected.NAME in list_slots_market_hero and dict_arguments['resources_dict'][name_resource] >= int(price_resource[1]):
+                                    dict_arguments['resources_dict'][name_resource] -= int(price_resource[1])
+                                    dict_arguments['resources_dict']['gold_bullion'] += int(price_resource[0])
+                                    if dict_arguments['dict_count_resource'][name_resource] <= 0 :
+                                        list_slots_market[list_slots_market.index(market_selected.NAME)].path = None
+                                    dict_arguments['flag_market_selected'] = False
                                 
                         if check_mouse_cor(obj,mouse_cor) and obj.path != None :
                             if obj.NAME == 'resource':
                                 name_resource = obj.path.split('/')[-1].split('.')[0]
-                                if name_resource == 'cristal':
-                                    name_resource = 'crystal'
-                                elif name_resource == 'stone2':
-                                    name_resource = 'stone'
-                                elif name_resource == 'apple':
-                                    name_resource = 'food'
-                                elif name_resource == 'iron_bullion':
-                                    name_resource = 'iron'
                                 if dict_arguments['resources_dict'][name_resource] > 0:
-                                    market_selected.X = obj.X
-                                    market_selected.Y=obj.Y
-                                    market_selected.WIDTH=obj.WIDTH
-                                    market_selected.HEIGHT=obj.HEIGHT
-                                    dict_arguments['flag_market_selected'] = True
+                                    if obj.path != None:
+                                        market_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                                        market_selected.Y=obj.Y-settings['SCREEN_WIDTH']//106.6
+                                        market_selected.WIDTH=obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                                        market_selected.HEIGHT=obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
+                                        market_selected.NAME = obj
+                                        dict_arguments['flag_market_selected'] = True
                             if obj.NAME == 'artifact':
                                 if obj.path != None:
-                                    market_selected.X = obj.X
-                                    market_selected.Y=obj.Y
-                                    market_selected.WIDTH=obj.WIDTH
-                                    market_selected.HEIGHT=obj.HEIGHT
+                                    market_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                                    market_selected.Y=obj.Y-settings['SCREEN_WIDTH']//106.6
+                                    market_selected.WIDTH=obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                                    market_selected.HEIGHT=obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
                                     market_selected.NAME = obj
                                     dict_arguments['flag_market_selected'] = True
                     for obj in list_slots_market:
                         if check_mouse_cor(obj,mouse_cor) and obj.path != None :
-                            
                             if obj.NAME == 'resource':
-                                market_selected.X = obj.X
-                                market_selected.Y=obj.Y
-                                market_selected.WIDTH=obj.WIDTH
-                                market_selected.HEIGHT=obj.HEIGHT
-                                dict_arguments['flag_market_selected'] = True
-                            if obj.NAME == 'artifact':
                                 if obj.path != None:
-                                    market_selected.X = obj.X
-                                    market_selected.Y=obj.Y
-                                    market_selected.WIDTH=obj.WIDTH
-                                    market_selected.HEIGHT=obj.HEIGHT
+                                    market_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                                    market_selected.Y=obj.Y-settings['SCREEN_WIDTH']//106.6
+                                    market_selected.WIDTH=obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                                    market_selected.HEIGHT=obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
                                     market_selected.NAME = obj
                                     dict_arguments['flag_market_selected'] = True
-                if dict_arguments['flag_market_selected']:
+                            if obj.NAME == 'artifact':
+                                if obj.path != None:
+                                    market_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                                    market_selected.Y=obj.Y-settings['SCREEN_WIDTH']//106.6
+                                    market_selected.WIDTH=obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                                    market_selected.HEIGHT=obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
+                                    market_selected.NAME = obj
+                                    dict_arguments['flag_market_selected'] = True
+                if dict_arguments['flag_market_selected'] and market_selected.NAME  in list_slots_market:
                     market_selected.image_load()
                     market_selected.show_image(win)
                     button_change.show_image(win)
-                    price = str(dict_price_artifact[market_selected.NAME.path.split('/')[-1].split('.')[0]])
-                    text_price_artifact.font_content = 'Купить за: '+price+' золота'
+                    if market_selected.NAME.path.split('/')[-1].split('.')[0] in dict_price_artifact.keys():
+                        price = str(dict_arguments['dict_price_artifact'][market_selected.NAME.path.split('/')[-1].split('.')[0]])
+                        text_price_artifact.font_content = 'Купить за: '+price+' золота'
+                    if market_selected.NAME.path.split('/')[-1].split('.')[0] in dict_price_resource.keys():
+                        price = (dict_arguments['dict_price_resource'][market_selected.NAME.path.split('/')[-1].split('.')[0]]).split('_')
+                        if price[0] != str(1):
+                            text_price_artifact.font_content = 'Купить '+price[1] + ' за '+price[0]+' золота'
+                        else:
+                            text_price_artifact.font_content = 'Купить '+price[1] + ' за '+price[0]+' золото'
+                    text_price_artifact.show_text(win)
+                if dict_arguments['flag_market_selected'] and market_selected.NAME  in list_slots_market_hero:
+                    market_selected.image_load()
+                    market_selected.show_image(win)
+                    button_change.show_image(win)
+                    if market_selected.NAME.path.split('/')[-1].split('.')[0] in dict_price_artifact.keys():
+                        price = str(dict_arguments['dict_price_artifact'][market_selected.NAME.path.split('/')[-1].split('.')[0]])
+                        text_price_artifact.font_content = 'Продать за: '+str(int(price)-5)+' золота'
+                    if market_selected.NAME.path.split('/')[-1].split('.')[0] in dict_price_resource.keys():
+                        price = (dict_arguments['dict_price_resource'][market_selected.NAME.path.split('/')[-1].split('.')[0]]).split('_')
+                        if price[0] != str(1):
+                            text_price_artifact.font_content = 'Продать '+price[1] + ' за '+price[0]+' золота'
+                        else:
+                            text_price_artifact.font_content = 'Продать '+price[1] + ' за '+price[0]+' золото'
                     text_price_artifact.show_text(win)
                     
                 for obj in list_slots_market_hero:
@@ -114,23 +176,16 @@ def run_game(dict_arguments):
                             desc_artifact.path = None
                             desc_artifact.X = desc_artifact.start_x
                             desc_artifact.Y = desc_artifact.start_y
-                    if obj.NAME == 'resource':
+                    if obj.NAME == 'resource' and obj.path != None:
                         name_resource = obj.path.split('/')[-1].split('.')[0]
-                        if name_resource == 'cristal':
-                            name_resource = 'crystal'
-                        elif name_resource == 'stone2':
-                            name_resource = 'stone'
-                        elif name_resource == 'apple':
-                            name_resource = 'food'
-                        elif name_resource == 'iron_bullion':
-                            name_resource = 'iron'
                         if dict_arguments['resources_dict'][name_resource] > 0:
                             obj.show_image(win)
-                        text_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'green',str(dict_arguments['resources_dict'][name_resource]),obj.X,obj.Y+obj.HEIGHT//1.7)
-                        text_count.show_text(win)
+                            text_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'green',str(dict_arguments['resources_dict'][name_resource]),obj.X,obj.Y+obj.HEIGHT//1.7)
+                            text_count.show_text(win)
                     
                 for obj in list_slots_market:
-                    if obj.NAME == 'artifact':
+                    if obj.NAME == 'artifact' and obj.path != None:
+                        obj.image_load()
                         obj.show_image(win)
                         if check_mouse_cor(obj,mouse_cor) and obj.path != None:
                             path = obj.path.split('/')[-1]
@@ -143,10 +198,15 @@ def run_game(dict_arguments):
                             desc_artifact.path = None
                             desc_artifact.X = desc_artifact.start_x
                             desc_artifact.Y = desc_artifact.start_y
-                    if obj.NAME == 'resource':#Все кроме яблок
-                        obj.show_image(win)
-                        text_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'green','20',obj.X,obj.Y+obj.HEIGHT//1.55)
-                        text_count.show_text(win)
+                    if obj.NAME == 'resource' and obj.path != None:
+                        name_resource = obj.path.split('/')[-1].split('.')[0]
+                        if dict_arguments['dict_count_resource'][name_resource] > 0:
+                            obj.image_load()
+                            obj.show_image(win)
+                            text_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'green',str(dict_arguments['dict_count_resource'][name_resource]),obj.X,obj.Y+obj.HEIGHT//1.55)
+                            text_count.show_text(win)
+                    
+                amount_gold_market.font_content = str(dict_arguments['resources_dict']['gold_bullion'])
                 amount_gold_market.show_text(win)
                 
 
@@ -392,7 +452,7 @@ def run_game(dict_arguments):
                                     break
                         else:
                             dict_arguments['flag_show_error'] = 0
-                            dict_arguments['resources_dict']['gold'] += 20
+                            dict_arguments['resources_dict']['gold_bullion'] += 20
                         dict_arguments['artifact_chest'] = None
                         player_lvl1.flag_draw_chest = False
                         mat_objetcs_lvl1[player_lvl1.chest_cor[0]][player_lvl1.chest_cor[1]] = '0'
@@ -402,7 +462,7 @@ def run_game(dict_arguments):
                         player_lvl1.flag_draw_chest = False
                         mat_objetcs_lvl1[player_lvl1.chest_cor[0]][player_lvl1.chest_cor[1]] = '0'
                         player_lvl1.flag_move = True
-                        dict_arguments['resources_dict']['gold'] += 20
+                        dict_arguments['resources_dict']['gold_bullion'] += 20
                     for obj in list_choice_base_skill:
                         if check_mouse_cor(obj,mouse_cor) and dict_arguments['flag_use_royal_academy'] and player_lvl1.flag_academy:
                             name_skill = obj.path.split('/')[-1]
@@ -462,9 +522,9 @@ def run_game(dict_arguments):
         if dict_arguments['scene'] == 'lvl1':
             amount_crystal.font_content = str(dict_arguments['resources_dict']['crystal'])
             amount_food.font_content = str(dict_arguments['resources_dict']['food'])
-            amount_iron.font_content = str(dict_arguments['resources_dict']['iron'])
-            amount_gold.font_content = str(dict_arguments['resources_dict']['gold'])
-            amount_gold_market.font_content = str(dict_arguments['resources_dict']['gold'])
+            amount_iron.font_content = str(dict_arguments['resources_dict']['iron_bullion'])
+            amount_gold.font_content = str(dict_arguments['resources_dict']['gold_bullion'])
+            amount_gold_market.font_content = str(dict_arguments['resources_dict']['gold_bullion'])
             amount_wood.font_content = str(dict_arguments['resources_dict']['wood'])
             amount_stone.font_content = str(dict_arguments['resources_dict']['stone'])
             win.fill('black')
@@ -529,6 +589,30 @@ def run_game(dict_arguments):
                     dict_arguments['flag_use_tavern'] = True
                     dict_arguments['flag_use_royal_academy'] = True
                     dict_arguments['flag_use_shack'] = True
+                    dict_arguments['dict_price_artifact'] = {
+                                            'boots_fire':randint(20,30),
+                                            'boots_hero':randint(30,35),
+                                            'boots_ice':randint(20,30),
+                                            'chest_fire':randint(30,35),
+                                            'chest_ice':randint(30,35),
+                                            'helmet_ice':randint(20,30),
+                                            'shield_ice':randint(20,30),
+                                            'sword_ice':randint(20,30),
+                                            'chest_hero':randint(10,20),
+                                            'helmet_hero':randint(10,20),
+                                            'shield_hero':randint(20,30),
+                                            'sword_hero':randint(25,35),
+                                            'shield_fire':randint(15,20),
+                                            'sword_fire':randint(25,35),
+                                            'helmet_fire':randint(10,20)
+                                    }
+                    dict_arguments['dict_count_resource'] = {
+                                            'wood':20,
+                                            'iron_bullion':20,
+                                            'stone':20,
+                                            'crystal':20,
+                                            'food':20,
+                                        }
                     for obj in list_slots_market:
                         if obj.NAME == 'artifact':
                             obj.path = 'images/artifacts/'+choice(list_matrix_artifact)+'.png'
@@ -536,8 +620,8 @@ def run_game(dict_arguments):
                 characteristic_dict['day']+=1
                 if 'skill_idol_people_learn' in list_learn_skills:
                     if randint(0,4) == 4:
-                        resources_dict['gold']+=characteristic_dict['contribution']*characteristic_dict['lvl_skill_domesticpolitics']
-                resources_dict['gold']+=characteristic_dict['contribution']*characteristic_dict['lvl_skill_domesticpolitics']
+                        resources_dict['gold_bullion']+=characteristic_dict['contribution']*characteristic_dict['lvl_skill_domesticpolitics']
+                resources_dict['gold_bullion']+=characteristic_dict['contribution']*characteristic_dict['lvl_skill_domesticpolitics']
                 text_date.font_content = ('День: '+str(characteristic_dict['day'])+';Неделя: '+str(characteristic_dict['week'])).split(';')
                 dict_arguments['flag_button_end'] = False
                 for obj in list_all_artifact:
@@ -549,7 +633,7 @@ def run_game(dict_arguments):
             if dict_arguments['flag_show_new_day'] < 100:
                 player_lvl1.flag_move = False
                 if dict_arguments['flag_show_new_day'] == 0:
-                    text_new_day.font_content = ('           Новый день;        Получено за день; ;Яблок - '+str(dict_arguments['resources_dict']['food']-dict_arguments['past_resources_dict']['food'])+'      Золота - '+str(dict_arguments['resources_dict']['gold']-dict_arguments['past_resources_dict']['gold'])+'; ;Железа - '+str(dict_arguments['resources_dict']['iron']-dict_arguments['past_resources_dict']['iron'])+'      Кристаллов - '+str(dict_arguments['resources_dict']['crystal']-dict_arguments['past_resources_dict']['crystal'])+'; ;Камня - '+str(dict_arguments['resources_dict']['stone']-dict_arguments['past_resources_dict']['stone'])+'      Дерева - '+str(dict_arguments['resources_dict']['wood']-dict_arguments['past_resources_dict']['wood'])).split(';')
+                    text_new_day.font_content = ('           Новый день;        Получено за день; ;Яблок - '+str(dict_arguments['resources_dict']['food']-dict_arguments['past_resources_dict']['food'])+'      Золота - '+str(dict_arguments['resources_dict']['gold_bullion']-dict_arguments['past_resources_dict']['gold_bullion'])+'; ;Железа - '+str(dict_arguments['resources_dict']['iron_bullion']-dict_arguments['past_resources_dict']['iron_bullion'])+'      Кристаллов - '+str(dict_arguments['resources_dict']['crystal']-dict_arguments['past_resources_dict']['crystal'])+'; ;Камня - '+str(dict_arguments['resources_dict']['stone']-dict_arguments['past_resources_dict']['stone'])+'      Дерева - '+str(dict_arguments['resources_dict']['wood']-dict_arguments['past_resources_dict']['wood'])).split(';')
                     dict_arguments['past_resources_dict'] = dict_arguments['resources_dict'].copy()
                 frame_new_day.show_image(win)        
                 text_new_day.show_text(win)
@@ -659,18 +743,18 @@ def run_game(dict_arguments):
                 random = randint(0,2)
                 if random == 0:
                     text_tavern.font_content =( '    Вы выиграли!; 20  золотых в карты. ;Приходите через неделю;').split(';')
-                    resources_dict['gold']+=20
+                    resources_dict['gold_bullion']+=20
                 if random == 1:
                     text_tavern.font_content = ('; Вы ничего не получили. ; Приходите через неделю').split(';')
                 if random == 2:
-                    if resources_dict['gold'] <20:
-                        if resources_dict['gold'] == 1:
+                    if resources_dict['gold_bullion'] <20:
+                        if resources_dict['gold_bullion'] == 1:
                             text_tavern.font_content =( '    Вас ограбили!;    На 1 золотую;Приходите через неделю').split(';')
                         else:
-                            text_tavern.font_content =( '    Вас ограбили!;    На '+str(resources_dict['gold'])+' золотых;Приходите через неделю').split(';')
-                        resources_dict['gold'] = 0
+                            text_tavern.font_content =( '    Вас ограбили!;    На '+str(resources_dict['gold_bullion'])+' золотых;Приходите через неделю').split(';')
+                        resources_dict['gold_bullion'] = 0
                     else:
-                        resources_dict['gold'] -=20
+                        resources_dict['gold_bullion'] -=20
                         text_tavern.font_content =( '    Вас ограбили!;    На 20 золотых;Приходите через неделю').split(';')
                 dict_arguments['flag_show_tavern'] = 0
             if player_lvl1.flag_tower:
@@ -722,10 +806,10 @@ def run_game(dict_arguments):
             if dict_arguments['resources_dict']['food'] != 0:
                 apple.show_image(win)
                 amount_food.show_text(win)
-            if dict_arguments['resources_dict']['iron'] != 0:
+            if dict_arguments['resources_dict']['iron_bullion'] != 0:
                 iron_bullion.show_image(win)
                 amount_iron.show_text(win)
-            if dict_arguments['resources_dict']['gold'] != 0:
+            if dict_arguments['resources_dict']['gold_bullion'] != 0:
                 gold_bullion.show_image(win)
                 amount_gold.show_text(win)
             if dict_arguments['resources_dict']['crystal'] != 0:
@@ -762,6 +846,14 @@ def run_game(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_next_week_buildings.show_text(win)
             dict_arguments['flag_show_error_next_week'] +=1
+        if dict_arguments['flag_market_aritfact_no_slots'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_market_aritfact_no_slots.show_text(win)
+            dict_arguments['flag_market_aritfact_no_slots'] +=1
+        if dict_arguments['flag_not_enough_gold'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_not_enough_gold.show_text(win)
+            dict_arguments['flag_not_enough_gold'] +=1
         time.tick(int(settings['FPS']))
         #Обновляем экран
         pygame.display.flip()

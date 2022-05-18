@@ -216,8 +216,8 @@ class Main_Hero(Graphic_elements):
                 #Если мы стоим не с правого краю карты
                 if self.player_cor[1] != LENGTH_MAP - 1:
                     #Вызываем функции подбора ресрусов
-                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'gold','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'iron','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
@@ -233,8 +233,8 @@ class Main_Hero(Graphic_elements):
             #Если нажата клавиша ВЛЕВО
             elif keys[pygame.K_LEFT] and self.flag_move:
                 if self.player_cor[1] != 0:
-                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'gold','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'iron','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
@@ -249,8 +249,8 @@ class Main_Hero(Graphic_elements):
             elif keys[pygame.K_UP] and self.flag_move:
                 if self.player_cor[0] != 0:
                     
-                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'gold','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'iron','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
@@ -263,8 +263,8 @@ class Main_Hero(Graphic_elements):
             #Если нажата клавиша ВНИЗ
             elif keys[pygame.K_DOWN] and self.flag_move:
                 if self.player_cor[0] != LENGTH_MAP - 1:
-                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'gold','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'iron','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
@@ -277,7 +277,7 @@ class Main_Hero(Graphic_elements):
           
             list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
             #Узнаем: рядом ли игрок со зданием
-            if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and (self.player_cor[0] != 0 or self.player_cor[1] != 0): 
+            if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and self.player_cor[0] != 0 and self.player_cor[1] != 0: 
             #Здания
                 if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]  in list_symbols_biuldings: 
                     self.near_building = True
@@ -391,7 +391,16 @@ class Main_Hero(Graphic_elements):
                     self.near_fountain_exp = True
                 else:
                     self.near_fountain_exp = False
-            
+            else:
+                self.near_academy = False
+                self.near_building = False
+                self.near_chest = False
+                self.near_market = False
+                self.near_fountain_exp = False
+                self.near_fountain_mana = False
+                self.near_shack = False
+                self.near_tavern = False
+                self.near_tower = False
             if self.near_chest:
                 self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
@@ -429,7 +438,7 @@ class Main_Hero(Graphic_elements):
                     self.flag_tavern = True
                     self.flag_pressed = True
             if self.near_market:
-                # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
                     self.near_market = False
@@ -489,6 +498,7 @@ class Main_Hero(Graphic_elements):
                         if (self.player_cor[0]-1,self.player_cor[1]-2) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-2))
                             self.list_capture_buildings_symbol.append(building_cor.upper())
+            
 
     #Функция для сбора ресрусов
     def take_resource(self,index_x,index_y,name_resource,resource_symb,mat_objetcs,min_count,max_count,resources_dict,recourse_sounds):

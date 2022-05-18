@@ -71,9 +71,9 @@ flag_new_lvl = False
 #Словарь отвечает за кол-во ресурсов у игрока
 resources_dict = {
     'food':int(settings['FOOD']),
-    'iron':int(settings['IRON']),
+    'iron_bullion':int(settings['IRON']),
     'wood':int(settings['WOOD']),
-    'gold':int(settings['GOLD']),
+    'gold_bullion':int(settings['GOLD']),
     'crystal':int(settings['CRYSTAL']),
     'stone':int(settings['STONE']),
 }
@@ -127,6 +127,8 @@ flag_use_fountain_mana = True
 flag_use_tavern = True
 flag_button_end = False
 flag_market_selected = False
+flag_market_aritfact_no_slots = 30
+flag_not_enough_gold = 30
 skill_cost = 200
 max_exp_lvl = 1000
 max_mana = 1000
@@ -172,7 +174,7 @@ list_cells_lvl1 = [list('000000000000000000000000000000'),
 #Список-матрица объектов(персонаж, здания, ресурсы)
 mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B
                     list('0MpP00E0000000000P0000000Jj000'),#A,a-academia
-                    list('0000gi0cw000Aa00000000S00jj00C'),#J,j-taverna
+                    list('0000gi0cw000Aa00000000S00jj0C0'),#J,j-taverna
                     list('00C0C0000000aa0000000000000000'),#S-Хижина
                     list('00Ff0000000000000T00000t000000'),#B-Храм
                     list('00ff00000000000000000000000000'),#
@@ -183,10 +185,10 @@ mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
                     list('000000000000Nn0000000000000000'),#
                     list('000000000000nn0000000000000000'),#
                     list('000000000000000Rr0000000000000'),#
-                    list('0000Ooo00000000rr0000000000000'),#
-                    list('0000ooo000000000000Xx000000000'),#
-                    list('0000oooo00000000000xx000000000'),#
-                    list('00000ooo0000000000000000000000'),#
+                    list('0000Oo000000000rr0000000000000'),#
+                    list('0000oo0000000000000Xx000000000'),#
+                    list('0000000000000000000xx000000000'),#
+                    list('000000000000000000000000000000'),#
                     list('000000000000000000000000000000'),#
                     list('000000000000000000000000000000'),
                     list('000000000000000000000000000000'),
@@ -260,6 +262,8 @@ dict_arguments = {
     'flag_use_shack':True,
     'flag_show_error_next_week':flag_show_error_next_week,
     'dict_artifact_on_past':dict_artifact_on_past,
-    'flag_market_selected':flag_market_selected
+    'flag_market_selected':flag_market_selected,
+    'flag_market_aritfact_no_slots':flag_market_aritfact_no_slots,
+    'flag_not_enough_gold':flag_not_enough_gold
 
 }

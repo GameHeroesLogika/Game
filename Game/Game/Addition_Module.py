@@ -137,20 +137,8 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     market.show_image(win)
                     list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
                     list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM,'white'))
                     list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*3,'white'))
                     list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+ H_CELL_MINI_MAP*2,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM+ H_CELL_MINI_MAP*2,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+ H_CELL_MINI_MAP*3,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*3,Y_CELL_MM+ H_CELL_MINI_MAP*3,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP*2,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP*3,'white'))
                     flag_cell_MM = False
                 elif obj == 'J':
                     tavern.X = list_objects_cells_lvl1[index_cells].X
@@ -165,6 +153,8 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     shack.X = list_objects_cells_lvl1[index_cells].X
                     shack.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
                     shack.show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                    flag_cell_MM = False
                     
                 elif obj == 'N':
                     stonebreaker.X = list_objects_cells_lvl1[index_cells].X
