@@ -36,6 +36,7 @@ class Main_Hero(Graphic_elements):
         
 
         self.near_chest = False
+        self.near_city = False
         self.near_tower = False
         self.near_academy = False
         self.near_shack = False
@@ -46,7 +47,7 @@ class Main_Hero(Graphic_elements):
 
         self.chest_cor = None
         self.tower_cor = None
-
+        self.flag_city = False
         self.flag_fountain_mana = False
         self.flag_fountain_exp = False
         self.flag_market = False
@@ -357,6 +358,17 @@ class Main_Hero(Graphic_elements):
                     self.near_academy = True
                 else:
                     self.near_academy = False
+                #Город
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'K' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'k':
+                    self.near_city = True
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'K' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'k':
+                    self.near_city = True
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'K' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'k':
+                    self.near_city = True
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'K' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'k':
+                    self.near_city = True
+                else:
+                    self.near_city = False
                 #Башня колдуна
                 if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'S':
                     self.near_shack = True
@@ -401,6 +413,7 @@ class Main_Hero(Graphic_elements):
                 self.near_shack = False
                 self.near_tavern = False
                 self.near_tower = False
+                self.near_city = False
             if self.near_chest:
                 self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
@@ -438,11 +451,16 @@ class Main_Hero(Graphic_elements):
                     self.flag_tavern = True
                     self.flag_pressed = True
             if self.near_market:
-                self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
                     self.near_market = False
                     self.flag_market = True
+            if self.near_city:
+                self.show_tip( '[F] Зайти в город', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                if keys[pygame.K_f]:
+                    self.flag_city = True
+                    self.near_city = False
             if not keys[pygame.K_e] and self.flag_pressed:
                 self.flag_pressed = False
             #Если рядом со здание и нажимаем кнопку E - захватываем здание

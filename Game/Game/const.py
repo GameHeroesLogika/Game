@@ -79,7 +79,7 @@ resources_dict = {
 }
 past_resources_dict = resources_dict.copy()
 effect_art_skills_name_dict = {
-    'boots_fire.png':'iron;4;+;resourcesdict',
+    'boots_fire.png':'iron_bullion;4;+;resourcesdict',
     'chest_hero.png':'crystal;1;+;resourcesdict',
     'helmet_hero.png':'exp;100;+;characteristicdict',
     'skill_lumberjack_learn.png':'wood;1;+;resourcesdict',
@@ -121,6 +121,7 @@ dict_artifact_on_past = dict_artifact_on.copy()
 list_order_skills = ['skill_earth_blessing','skill_forest_path','skill_idol_people','skill_leader','skill_lumberjack']
 mana_fountain = int(settings['MANA_FOUNTAIN'])
 exp_fountain = int(settings['EXP_FOUNTAIN'])
+flag_buy_card = True
 flag_show_new_day = 100
 flag_use_fountain_exp = True
 flag_use_fountain_mana = True
@@ -129,6 +130,9 @@ flag_button_end = False
 flag_market_selected = False
 flag_market_aritfact_no_slots = 30
 flag_not_enough_gold = 30
+flag_show_error_not_inventory = 50
+flag_show_error_locked = 30
+flag_show_error_blocked_camp = 50
 skill_cost = 200
 max_exp_lvl = 1000
 max_mana = 1000
@@ -139,6 +143,7 @@ change_exp_x = 0
 flag_show_error_next_week = 30
 flag_buy_skill = True
 flag_use_royal_academy = True
+number_opened_card = 2
 #Список из клеток первого уровня
 list_cells_lvl1 = [list('000000000000000000000000000000'),
                    list('000000000000000000000000000000'),
@@ -188,9 +193,9 @@ mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
                     list('0000Oo000000000rr0000000000000'),#
                     list('0000oo0000000000000Xx000000000'),#
                     list('0000000000000000000xx000000000'),#
-                    list('000000000000000000000000000000'),#
-                    list('000000000000000000000000000000'),#
-                    list('000000000000000000000000000000'),
+                    list('0000Kkk00000000000000000000000'),#
+                    list('0000kkk00000000000000000000000'),#
+                    list('0000kkk00000000000000000000000'),
                     list('000000000000000000000000000000'),
                     list('000000P000W0000000000000000000'),
                     list('000000000000000000000000000000'),
@@ -206,8 +211,8 @@ mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
 list_objects_cells_lvl1 = []
 
 
-list_cards_pl = [['бард',1,2],['клаус',5,0],['бард',3,5],['гигант',4,3],['ями',2,3],[None,3,2]]
-list_card_pl_reserv = [['клаус',1,2],['бард',5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],[None,3,2]]
+list_cards_pl = [['бард',1,2],['клаус',5,0],['бард',3,5],['гигант',4,3],['ями',2,3],['ями',3,2]]
+list_card_pl_reserv = [['клаус',1,2],['бард',5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
 list_cards_menu_hero = list()
 
 create_map(list_cells_lvl1, list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
@@ -264,6 +269,11 @@ dict_arguments = {
     'dict_artifact_on_past':dict_artifact_on_past,
     'flag_market_selected':flag_market_selected,
     'flag_market_aritfact_no_slots':flag_market_aritfact_no_slots,
-    'flag_not_enough_gold':flag_not_enough_gold
+    'flag_not_enough_gold':flag_not_enough_gold,
+    'number_opened_card':number_opened_card,
+    'flag_buy_card':flag_buy_card,
+    'flag_show_error_not_inventory':flag_show_error_not_inventory,
+    'flag_show_error_locked':flag_show_error_locked,
+    'flag_show_error_blocked_camp':flag_show_error_blocked_camp,
 
 }

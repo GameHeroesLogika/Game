@@ -14,8 +14,57 @@ def run_game(dict_arguments):
             mouse_cor = pygame.mouse.get_pos() 
             if event.type == pygame.QUIT:
                 dict_arguments['game'] = False
-
-
+            if dict_arguments['scene'] == 'city':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if check_mouse_cor(camp,mouse_cor) and dict_arguments['flag_buy_card']:
+                        dict_arguments['scene'] = 'camp'
+                    if check_mouse_cor(camp,mouse_cor) and dict_arguments['flag_buy_card'] == False:
+                        dict_arguments['flag_show_error_blocked_camp'] = 0
+                    if check_mouse_cor(button_city_back,mouse_cor):
+                        player_lvl1.flag_city = False
+                        dict_arguments['scene'] = 'lvl1'
+            if dict_arguments['scene'] == 'camp':
+                for i in range(dict_arguments['number_opened_card']) :
+                    if 'locked' in list_card_camp[i].path:
+                        list_card_camp[i].path = list_card_camp[i].path.split('_locked')[0]+'.png'
+                        list_card_camp[i].image_load()
+                    
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    for obj in list_card_camp:
+                        if check_mouse_cor(obj,mouse_cor) and not 'locked' in obj.path:
+                            camp_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                            camp_selected.Y=obj.Y-settings['SCREEN_WIDTH']//106.6
+                            camp_selected.WIDTH=obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                            camp_selected.HEIGHT=obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
+                            camp_selected.NAME = obj
+                            camp_selected.image_load()
+                        if check_mouse_cor(obj,mouse_cor) and 'locked' in obj.path:
+                            dict_arguments['flag_show_error_locked'] = 0 
+                    if check_mouse_cor(button_camp_back,mouse_cor):
+                        dict_arguments['scene'] = 'city'
+                    if check_mouse_cor(button_hire,mouse_cor) and camp_selected.NAME != None:
+                        if dict_arguments['flag_buy_card'] == False:
+                            dict_arguments['flag_show_error_blocked_camp'] = 0
+                        for card in list_cards_pl:
+                            if card[0] == None and dict_arguments['flag_buy_card']:
+                                card[0] = camp_selected.NAME.path.split('/')[-1].split('.')[0]
+                                camp_selected.NAME = None
+                                dict_arguments['flag_buy_card'] = False
+                                create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
+                                break
+                        for card in list_card_pl_reserv:
+                            if card[0] == None and dict_arguments['flag_buy_card']:
+                                card[0] = camp_selected.NAME.path.split('/')[-1].split('.')[0]
+                                camp_selected.NAME = None
+                                dict_arguments['flag_buy_card'] = False
+                                create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
+                                break
+                        if dict_arguments['flag_buy_card']:
+                            dict_arguments['flag_show_error_not_inventory'] = 0
+                        
+                                
+            
+                
             if dict_arguments['scene'] == 'market':
             # if dict_arguments['scene'] == 'sandwich':
                 background_market.show_image(win)
@@ -210,7 +259,26 @@ def run_game(dict_arguments):
                 amount_gold_market.show_text(win)
                 
 
-                    
+            if dict_arguments['scene'] == 'camp':
+                scene_camp.show_image(win)
+                if camp_selected.NAME != None:
+                    camp_selected.show_image(win)
+                for obj in list_card_camp:
+                    obj.show_image(win)
+                button_hire.show_image(win)
+                button_camp_back.show_image(win)
+            if dict_arguments['scene'] == 'city':
+                city_scene.show_image(win)
+
+                button_city_back.show_image(win)
+                castle.show_image(win)
+                camp.show_image(win)
+                church.show_image(win)
+                altar.show_image(win)
+                forge.show_image(win)
+                portal_city.show_image(win)
+
+
 
             #Условие Меню Героя
             if dict_arguments['scene'] == 'menu_hero':
@@ -518,7 +586,7 @@ def run_game(dict_arguments):
 
                             i+=1
         # if dict_arguments['scene'] == 'sandwich':
-            
+        # print(list_cards_pl)
         if dict_arguments['scene'] == 'lvl1':
             amount_crystal.font_content = str(dict_arguments['resources_dict']['crystal'])
             amount_food.font_content = str(dict_arguments['resources_dict']['food'])
@@ -558,7 +626,7 @@ def run_game(dict_arguments):
                         H_CELL_MINI_MAP=H_CELL_MINI_MAP,X_FRAME_MM=X_FRAME_MM,
                         Y_FRAME_MM=Y_FRAME_MM, list_cells_MM = dict_arguments['list_cells_MM'], list_cor_portals = list_cor_portals,
                         LENGTH_MAP = LENGTH_MAP_LVL1,chest=chest,fountain_mana=fountain_mana,fountain_exp=fountain_exp,watchtower=watchtower,
-                        shack=shack,royal_academy=royal_academy,tavern=tavern,market=market)
+                        shack=shack,royal_academy=royal_academy,tavern=tavern,market=market,castle=city)
             
             # matrix_image_blind(list_objects_cells_lvl1,mat_objetcs_lvl1,player_lvl1,list_objects_cells_lvl1,player_lvl1.changed_x,player_lvl1.changed_y,win)
             #Отрисовуем полоску справа
@@ -571,6 +639,11 @@ def run_game(dict_arguments):
             text_date.show_text(win)
             elliot_img.show_image(win)
             player_info.show_text(win)
+            
+            dict_arguments['number_opened_card'] = characteristic_dict['lvl'] // 3
+            if player_lvl1.flag_city:
+                dict_arguments['scene'] = 'city'
+
             #Новый день
             if player_lvl1.flag_market:
                 # dict_arguments['scene'] = 'sandwich'
@@ -578,12 +651,14 @@ def run_game(dict_arguments):
             if dict_arguments['flag_button_end'] and player_lvl1.where_move == None and player_lvl1.flag_move:
                 player_lvl1.flag_move = False
                 if characteristic_dict['day'] == 7:
+
                     characteristic_dict['week']+=1
                     characteristic_dict['day'] = 0
                     fountain_mana.path = 'images/buildings/fountain_mana.png'
                     fountain_mana.image_load()
                     fountain_exp.path = 'images/buildings/fountain_exp.png'
                     fountain_exp.image_load()
+                    dict_arguments['flag_buy_card'] = True
                     dict_arguments['flag_use_fountain_exp'] = True
                     dict_arguments['flag_use_fountain_mana'] = True
                     dict_arguments['flag_use_tavern'] = True
@@ -854,7 +929,23 @@ def run_game(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_not_enough_gold.show_text(win)
             dict_arguments['flag_not_enough_gold'] +=1
+        
+        if dict_arguments['flag_show_error_not_inventory'] <50:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_not_inventory.show_text(win)
+            dict_arguments['flag_show_error_not_inventory'] +=1
+        
+        if dict_arguments['flag_show_error_locked'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_locked_card.show_text(win)
+            dict_arguments['flag_show_error_locked'] +=1
+
+        if dict_arguments['flag_show_error_blocked_camp'] <50:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_blocked_camp.show_text(win)
+            dict_arguments['flag_show_error_blocked_camp'] +=1
         time.tick(int(settings['FPS']))
+        # print(mouse_cor)
         #Обновляем экран
         pygame.display.flip()
 

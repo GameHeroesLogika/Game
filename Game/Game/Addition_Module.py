@@ -46,7 +46,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 SCREEN_H,count_move,changed_x,changed_y,
                 ironmine, goldmine, farm, gemsmine,sawmill, stonebreaker,flag_green,list_studied_map,portal, fog_war,
                 list_cor_player_xy,W_CELL_MINI_MAP ,H_CELL_MINI_MAP,X_FRAME_MM,Y_FRAME_MM,list_cells_MM,list_cor_portals,
-                LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market):
+                LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle):
     list_xy = [0,0]
     #Индекс клетки, к которой привязан объект
     index_cells = 0
@@ -131,6 +131,20 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 #     tavern.X = list_objects_cells_lvl1[index_cells].X
                 #     tavern.Y = list_objects_cells_lvl1[index_cells].Y 
                 #     tavern.show_image(win)
+                elif obj == 'K':
+                    castle.X = list_objects_cells_lvl1[index_cells].X
+                    castle.Y = list_objects_cells_lvl1[index_cells].Y 
+                    castle.show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+H_CELL_MINI_MAP,'white'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
+                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP*2,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
+                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
+                    flag_cell_MM = False
                 elif obj == 'O':
                     market.X = list_objects_cells_lvl1[index_cells].X
                     market.Y = list_objects_cells_lvl1[index_cells].Y 
@@ -367,6 +381,7 @@ def move_to_hero(CENTER_CELL_COR,list_cor_player_xy,list_objects_cells_lvl1,SCRE
         for cell in list_objects_cells_lvl1:
             cell.Y += change_y
 def create_icon_card(SCREEN_W,SCREEN_H,list_cards_pl,list_cards_menu_hero,list_card_pl_reserv):
+    list_cards_menu_hero.clear()
     x = SCREEN_W//2.133
     y = SCREEN_H//44
     width = SCREEN_W//1.8666 - x
