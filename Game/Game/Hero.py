@@ -1,3 +1,4 @@
+from xml.dom.minidom import Element
 from const import*
 import pygame
 from random import choice,randint
@@ -47,6 +48,7 @@ class Main_Hero(Graphic_elements):
 
         self.chest_cor = None
         self.tower_cor = None
+        self.building_cor = None
         self.flag_city = False
         self.flag_fountain_mana = False
         self.flag_fountain_exp = False
@@ -280,129 +282,39 @@ class Main_Hero(Graphic_elements):
             #Узнаем: рядом ли игрок со зданием
             if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and self.player_cor[0] != 0 and self.player_cor[1] != 0: 
             #Здания
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]  in list_symbols_biuldings: 
+                
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbols_biuldings:
                     self.near_building = True
-                    building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]  in list_symbols_biuldings: 
+                    self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbols_biuldings:
                     self.near_building = True
-                    building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
-                elif mat_objetcs[self.player_cor[0]-1][self.player_cor[1]]  in list_symbols_biuldings: 
+                    self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbols_biuldings:
                     self.near_building = True
-                    building_cor = mat_objetcs[self.player_cor[0]-1][self.player_cor[1]]
-                elif mat_objetcs[self.player_cor[0]+1][self.player_cor[1] ]  in list_symbols_biuldings: 
+                    self.building_cor = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbols_biuldings:
                     self.near_building = True
-                    building_cor = mat_objetcs[self.player_cor[0]+1][self.player_cor[1]]
+                    self.building_cor = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
                 else:
-                    building_cor = None
                     self.near_building = False
+                    self.building_cor = None
                 #Сундук
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'C':
-                    self.near_chest = True
-                    self.chest_cor = [self.player_cor[0],self.player_cor[1] + 1]
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'C':
-                    self.near_chest = True
-                    self.chest_cor = [self.player_cor[0],self.player_cor[1] - 1]
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'C':
-                    self.near_chest = True
-                    self.chest_cor = [self.player_cor[0]+1,self.player_cor[1]]
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'C':
-                    self.near_chest = True
-                    self.chest_cor = [self.player_cor[0]-1,self.player_cor[1]] 
-                else:
-                    self.near_chest = False
+                self.near_chest,self.chest_cor = self.check_near_build(element='C',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 #Башня
-
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'W':
-                    self.near_tower = True
-                    self.tower_cor = [self.player_cor[0],self.player_cor[1] + 1]
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'W':
-                    self.near_tower = True
-                    self.tower_cor = [self.player_cor[0],self.player_cor[1] - 1]
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'W':
-                    self.near_tower = True
-                    self.tower_cor = [self.player_cor[0]+1,self.player_cor[1]]
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'W':
-                    self.near_tower = True
-                    self.tower_cor = [self.player_cor[0]-1,self.player_cor[1]]
-                else:
-                    self.near_tower = False
-
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'J' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'j':
-                    self.near_tavern = True
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'J' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'j':
-                    self.near_tavern = True
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'J' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'j':
-                    self.near_tavern = True
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'J' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'j':
-                    self.near_tavern = True
-                else:
-                    self.near_tavern = False
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'O' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'o':
-                    self.near_market = True
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'O' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'o':
-                    self.near_market = True
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'O' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'o':
-                    self.near_market = True
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'O' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'o':
-                    self.near_market = True
-                else:
-                    self.near_market = False
+                self.near_tower,self.tower_cor = self.check_near_build(element='W',mat_objetcs=mat_objetcs,flag_building_cor=True)
+                #Таверна
+                self.near_tavern = self.check_near_build(element='J',sub_element='j',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                #Рынок
+                self.near_market = self.check_near_build(element='O',sub_element='o',mat_objetcs=mat_objetcs,flag_building_cor=False)
                 #Академия
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'a':
-                    self.near_academy = True
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'A' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'a':
-                    self.near_academy = True
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'a':
-                    self.near_academy = True
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'A' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'a':
-                    self.near_academy = True
-                else:
-                    self.near_academy = False
+                self.near_academy = self.check_near_build(element='A',sub_element='a',mat_objetcs=mat_objetcs,flag_building_cor=False)
                 #Город
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'K' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'k':
-                    self.near_city = True
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'K' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'k':
-                    self.near_city = True
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'K' or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'k':
-                    self.near_city = True
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'K' or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'k':
-                    self.near_city = True
-                else:
-                    self.near_city = False
+                self.near_city = self.check_near_build(element='K',sub_element='k',mat_objetcs=mat_objetcs,flag_building_cor=False)
                 #Башня колдуна
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'S':
-                    self.near_shack = True
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'S':
-                    self.near_shack = True
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'S':
-                    self.near_shack = True
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'S':
-                    self.near_shack = True
-                else:
-                    self.near_shack = False
-
+                self.near_shack = self.check_near_build(element='S',mat_objetcs=mat_objetcs,flag_building_cor=False)
                 #Фонтаны
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'M':
-                    self.near_fountain_mana = True
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'M':
-                    self.near_fountain_mana = True
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'M':
-                    self.near_fountain_mana = True
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'M':
-                    self.near_fountain_mana = True
-                else:
-                    self.near_fountain_mana = False
-
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'E':
-                    self.near_fountain_exp = True
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'E':
-                    self.near_fountain_exp = True
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == 'E':
-                    self.near_fountain_exp = True
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'E':
-                    self.near_fountain_exp = True
-                else:
-                    self.near_fountain_exp = False
+                self.near_fountain_mana = self.check_near_build(element='M',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                self.near_fountain_exp = self.check_near_build(element='E',mat_objetcs=mat_objetcs,flag_building_cor=False)
             else:
                 self.near_academy = False
                 self.near_building = False
@@ -466,56 +378,56 @@ class Main_Hero(Graphic_elements):
             #Если рядом со здание и нажимаем кнопку E - захватываем здание
             if self.near_building:
                 self.show_tip( '[E] Захватить здание', self.SCREEN_W-self.SCREEN_W//6.4, 0)
-                if  keys[pygame.K_e] and building_cor!=None:
-                    if building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]]:
+                if  keys[pygame.K_e] and self.building_cor!=None:
+                    if self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]]:
                         if (self.player_cor[0]+1,self.player_cor[1]) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+1]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+1]:
                         if (self.player_cor[0],self.player_cor[1]+1) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]+1))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]]:
                         if (self.player_cor[0]-2,self.player_cor[1]) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]-2,self.player_cor[1]))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]+2][self.player_cor[1]]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+2][self.player_cor[1]]:
                         if (self.player_cor[0]+2,self.player_cor[1]) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]+2,self.player_cor[1]))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+2]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+2]:
                         if (self.player_cor[0],self.player_cor[1]+2) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]+2))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]-2]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]-2]:
                         if (self.player_cor[0],self.player_cor[1]-2) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]-2))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-1]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-1]:
                         if (self.player_cor[0]-1,self.player_cor[1]-1) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-1))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]+1]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]+1]:
                         if (self.player_cor[0]+1,self.player_cor[1]+1) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]+1))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]+1]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]+1]:
                         if (self.player_cor[0]-1,self.player_cor[1]+1) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]+1))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]-1]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]-1]:
                         if (self.player_cor[0]+1,self.player_cor[1]-1) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]-1))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]-1]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]-1]:
                         if (self.player_cor[0]-2,self.player_cor[1]-1) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]-2,self.player_cor[1]-1))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
-                    elif building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-2]:
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-2]:
                         if (self.player_cor[0]-1,self.player_cor[1]-2) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-2))
-                            self.list_capture_buildings_symbol.append(building_cor.upper())
+                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
             
 
     #Функция для сбора ресрусов
@@ -602,3 +514,27 @@ class Main_Hero(Graphic_elements):
                 self.list_studied_map.append(self.index_cor)
             
         self.index_cor = [index_x,index_y] 
+    def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None):
+        building_cor = None
+        if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == sub_element:
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0],self.player_cor[1] + 1]
+        elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == sub_element:
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0],self.player_cor[1] - 1]
+        elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == sub_element:
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]+1,self.player_cor[1]]
+        elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == sub_element:
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]-1,self.player_cor[1]]
+        else:
+            flag_near_building = False
+        if flag_building_cor == True:
+            return flag_near_building,building_cor
+        if flag_building_cor == False:
+            return flag_near_building

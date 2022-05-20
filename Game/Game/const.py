@@ -122,17 +122,22 @@ list_order_skills = ['skill_earth_blessing','skill_forest_path','skill_idol_peop
 mana_fountain = int(settings['MANA_FOUNTAIN'])
 exp_fountain = int(settings['EXP_FOUNTAIN'])
 flag_buy_card = True
+flag_forge = True
 flag_show_new_day = 100
 flag_use_fountain_exp = True
+past_lvl_skill_fight = 0
 flag_use_fountain_mana = True
 flag_use_tavern = True
 flag_button_end = False
 flag_market_selected = False
+flag_new_lvl_skill_fight = False
 flag_market_aritfact_no_slots = 30
 flag_not_enough_gold = 30
 flag_show_error_not_inventory = 50
 flag_show_error_locked = 30
 flag_show_error_blocked_camp = 50
+flag_show_error_bought_card = 30
+flag_church = True
 skill_cost = 200
 max_exp_lvl = 1000
 max_mana = 1000
@@ -210,9 +215,16 @@ mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
 #Список, в которм будут храниться объекты клеток
 list_objects_cells_lvl1 = []
 
-
-list_cards_pl = [['бард',1,2],['клаус',5,0],['бард',3,5],['гигант',4,3],['ями',2,3],['ями',3,2]]
-list_card_pl_reserv = [['клаус',1,2],['бард',5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
+dict_card_characteristics = {
+                            'бард':[1,2,3,'earth'],
+                            'клаус':[5,0,6,'hell'],
+                            'гигант':[4,3,2,'mountain'],
+                            'ями':[2,3,5,'hell'],
+                            'подрывник':[6,0,3,'earth'],
+                            'арбалетчик':[4,4,7,'earth'],
+}
+list_cards_pl = [['клаус',1,2],['клаус',5,0],['клаус',3,5],['клаус',4,3],['ями',2,3],['ями',3,2]]
+list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
 list_cards_menu_hero = list()
 
 create_map(list_cells_lvl1, list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
@@ -220,6 +232,13 @@ create_map(list_cells_lvl1, list_objects_cells_lvl1,settings['SCREEN_WIDTH'],set
 list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interface/to_hero_w.png'],['images/game_interface/to_castle.png','images/game_interface/to_castle_w.png',],['images/game_interface/end_moves.png','images/game_interface/end_moves_w.png',]]
 list_cor_portals = [ [[1,3],[1,17]],[[0,0],[15,0]] ]
 
+dict_bought_city = {
+                    'altar':False,
+                    'camp':True,
+                    'church':True,
+                    'forge':True,
+                    'portal_resource':True,
+}
 
     
 create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
@@ -275,5 +294,10 @@ dict_arguments = {
     'flag_show_error_not_inventory':flag_show_error_not_inventory,
     'flag_show_error_locked':flag_show_error_locked,
     'flag_show_error_blocked_camp':flag_show_error_blocked_camp,
+    'dict_bought_city':dict_bought_city,
+    'flag_church':flag_church,
+    'flag_forge':flag_forge,
+    'flag_show_error_bought_card':flag_show_error_bought_card,
+    'past_lvl_skill_fight':flag_new_lvl_skill_fight,
 
 }
