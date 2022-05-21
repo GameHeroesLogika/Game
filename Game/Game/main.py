@@ -27,10 +27,16 @@ def run_game(dict_arguments):
                     if check_mouse_cor(forge,mouse_cor) and dict_arguments['dict_bought_city']['forge']:
                         pass
                     if check_mouse_cor(altar,mouse_cor) and dict_arguments['dict_bought_city']['altar']:
-                        pass
+                        dict_arguments['scene'] = 'altar'
                     if check_mouse_cor(button_city_back,mouse_cor):
                         player_lvl1.flag_city = False
                         dict_arguments['scene'] = 'lvl1'
+                if check_mouse_cor(button_city_back,mouse_cor):
+                    button_city_back.path = 'images/menu_hero_back_b.png'
+                    button_city_back.image_load()
+                else:
+                    button_city_back.path = 'images/menu_hero_back_y.png'
+                    button_city_back.image_load()
                 if dict_arguments['dict_bought_city']['church'] and dict_arguments['flag_church']:
                     characteristic_dict['lvl_skill_domesticpolitics']+=5 
                     dict_arguments['flag_church'] = False
@@ -39,6 +45,46 @@ def run_game(dict_arguments):
                         dict_card_characteristics[key][0]+=3
                         dict_card_characteristics[key][1]+=3
                     dict_arguments['flag_forge'] = False
+
+            if dict_arguments['scene'] == 'altar':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if check_mouse_cor(button_altar_back,mouse_cor):
+                        dict_arguments['scene'] = 'city'
+                    for obj in list_card_altar:
+                        if check_mouse_cor(obj,mouse_cor) and obj.path != None:
+                            altar_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                            altar_selected.Y=obj.Y-settings['SCREEN_WIDTH']//106.6
+                            altar_selected.WIDTH=obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                            altar_selected.HEIGHT=obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
+                            altar_selected.NAME = obj
+                            altar_selected.image_load()
+                    if check_mouse_cor(button_change_card,mouse_cor) and altar_selected.NAME != None and altar_selected.NAME.path != None and altar_selected.NAME.path != 'name':
+                        dict_arguments['resources_dict']['gold_bullion'] += dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]
+                        list_card_altar[list_card_altar.index(altar_selected.NAME)].path = None
+                        list_cards_menu_hero[list_card_altar.index(altar_selected.NAME)].path = None
+                        altar_selected.NAME = None
+                for i in range(len(list_cards_menu_hero)):
+                    if list_cards_menu_hero[i].path != None:
+                        list_card_altar[i].path = list_cards_menu_hero[i].path
+                        list_card_altar[i].image_load()
+                    if list_cards_menu_hero[i].path == None:
+                        list_card_altar[i].path = None
+                if check_mouse_cor(button_altar_back,mouse_cor):
+                    button_altar_back.path = 'images/menu_hero_back_b.png'
+                    button_altar_back.image_load()
+                else:
+                    button_altar_back.path = 'images/menu_hero_back_y.png'
+                    button_altar_back.image_load()
+                if check_mouse_cor(button_change_card,mouse_cor):
+                    button_change_card.path = 'images/button_change_b.png'
+                    button_change_card.image_load()
+                else:
+                    button_change_card.path = 'images/button_change_y.png'
+                    button_change_card.image_load()
+                
+                
+                
+                
             if dict_arguments['scene'] == 'camp':
                 for i in range(dict_arguments['number_opened_card']) :
                     if 'locked' in list_card_camp[i].path and list_card_camp[i].NAME != 'locked':
@@ -78,7 +124,7 @@ def run_game(dict_arguments):
                                     break
                             
                             for card in list_card_pl_reserv:
-                                if card[0] == None and  dict_arguments['resources_dict']['gold_bullion'] >= dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]:
+                                if card[0] == None and camp_selected.NAME != None and dict_arguments['resources_dict']['gold_bullion'] >= dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]:
                                     dict_arguments['resources_dict']['gold_bullion'] -= dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]
                                     card[0] = camp_selected.NAME.path.split('/')[-1].split('.')[0]
                                     list_card_camp[list_card_camp.index(camp_selected.NAME)].path = camp_selected.NAME.path.split('.')[0]+'_locked.png'
@@ -89,6 +135,18 @@ def run_game(dict_arguments):
                                     break
                             if camp_selected.NAME != None:
                                 dict_arguments['flag_show_error_not_inventory'] = 0
+                if check_mouse_cor(button_camp_back,mouse_cor):
+                    button_camp_back.path = 'images/menu_hero_back_b.png'
+                    button_camp_back.image_load()
+                else:
+                    button_camp_back.path = 'images/menu_hero_back_y.png'
+                    button_camp_back.image_load()
+                if check_mouse_cor(button_hire,mouse_cor):
+                    button_hire.path = 'images/camp_hire_b.png'
+                    button_hire.image_load()
+                else:
+                    button_hire.path = 'images/camp_hire_r.png'
+                    button_hire.image_load()
                         
                         
                                 
@@ -300,6 +358,21 @@ def run_game(dict_arguments):
                     text_price_card.show_text(win)
                 button_hire.show_image(win)
                 button_camp_back.show_image(win)
+
+            if dict_arguments['scene'] == 'altar':
+                scene_altar.show_image(win)
+                if altar_selected.NAME != None:
+                    altar_selected.show_image(win)
+                button_altar_back.show_image(win)
+                button_change_card.show_image(win)
+                if button_change_card.path != None and altar_selected.NAME != None and altar_selected.path != None and altar_selected.NAME != 'name':
+                    text_change_card.font_content = 'Продать за '+ str(dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]])+ ' золота'
+                    text_change_card.show_text(win)
+                for obj in list_card_altar:
+                    if obj.path != None:
+                        obj.show_image(win)
+                
+
             if dict_arguments['scene'] == 'city':
                 city_scene.show_image(win)
 
@@ -349,7 +422,7 @@ def run_game(dict_arguments):
                         for sprite in list_cards_menu_hero:
                             if check_mouse_cor(sprite,mouse_cor=mouse_cor) and dict_arguments['index_card'] != list_cards_menu_hero.index(sprite):
                                 if dict_arguments['card_pressed'].path != None:
-                                    change_x_y_width_height(dict_arguments['card_pressed'], sprite)
+                                    change_images(dict_arguments['card_pressed'], sprite)
                                     break
                             else:
                                 dict_arguments['card_pressed'].X = dict_arguments['card_pressed'].start_x
@@ -466,7 +539,7 @@ def run_game(dict_arguments):
                     dict_arguments['artifact_pressed'].image_load()
                     dict_arguments['artifact_pressed'].show_image(win)
                 for obj in list_cards_menu_hero:
-                    if check_mouse_cor(obj,mouse_cor) and dict_arguments['card_pressed'] == None and obj.NAME != None:
+                    if check_mouse_cor(obj,mouse_cor) and dict_arguments['card_pressed'] == None and obj.NAME != None and obj.path != None:
                         desc.path = 'images/cards/desc/desc_'+obj.NAME+'.png'
                         desc.image_load()
                         desc.show_image(win)

@@ -223,7 +223,15 @@ dict_card_characteristics = {
                             'подрывник':[6,0,3,'earth'],
                             'арбалетчик':[4,4,7,'earth'],
 }
-list_cards_pl = [['клаус',1,2],['клаус',5,0],['клаус',3,5],['клаус',4,3],['ями',2,3],['ями',3,2]]
+dict_card_price = {
+                    'бард':3,
+                    'клаус':6,
+                    'гигант':2,
+                    'ями':5,
+                    'подрывник':3,
+                    'арбалетчик':7,
+}
+list_cards_pl = [[None,1,2],['клаус',5,0],['клаус',3,5],['клаус',4,3],['ями',2,3],['ями',3,2]]
 list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
 list_cards_menu_hero = list()
 
@@ -233,7 +241,7 @@ list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interfac
 list_cor_portals = [ [[1,3],[1,17]],[[0,0],[15,0]] ]
 
 dict_bought_city = {
-                    'altar':False,
+                    'altar':True,
                     'camp':True,
                     'church':True,
                     'forge':True,
