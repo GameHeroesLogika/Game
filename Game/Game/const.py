@@ -55,7 +55,7 @@ artifact_pressed = None
 artifact_chest = None
 time = pygame.time.Clock()
 list_cor_player_xy = [0,0]
-
+list_cor_castle_xy = [0,0]
 #Размер карты первого уровня
 LENGTH_MAP_LVL1 = 30
 #Размер клеточки в мини-карте
@@ -127,6 +127,9 @@ flag_show_new_day = 100
 flag_use_fountain_exp = True
 past_lvl_skill_fight = 0
 flag_use_fountain_mana = True
+flag_show_shack = 30
+flag_show_fountain_mana = 30
+flag_show_fountain_exp = 30
 flag_use_tavern = True
 flag_button_end = False
 flag_market_selected = False
@@ -307,5 +310,9 @@ dict_arguments = {
     'flag_forge':flag_forge,
     'flag_show_error_bought_card':flag_show_error_bought_card,
     'past_lvl_skill_fight':flag_new_lvl_skill_fight,
+    'list_cor_castle_xy':list_cor_castle_xy,
+    'flag_show_shack':flag_show_shack,
+    'flag_show_fountain_mana':flag_show_fountain_mana,
+    'flag_show_fountain_exp':flag_show_fountain_exp,
 
 }
