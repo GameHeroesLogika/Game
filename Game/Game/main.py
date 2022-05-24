@@ -1,3 +1,4 @@
+from unicodedata import name
 from const import*
 from objects import*
 from Addition_Module import*
@@ -7,7 +8,7 @@ pygame.init()
 def run_game(dict_arguments):
     time = pygame.time.Clock()
     while dict_arguments['game']:
-        effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics)
+        effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price)
         dict_arguments['dict_artifact_on_past'] = dict_artifact_on.copy()
         for obj in list_text_lvl_base_skills:
             name_skill = list_text_lvl_base_skills.index(obj)
@@ -22,16 +23,12 @@ def run_game(dict_arguments):
                 dict_arguments['game'] = False
             if dict_arguments['scene'] == 'city':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if check_mouse_cor(castle,mouse_cor):
+                        dict_arguments['scene'] = 'castle'
                     if check_mouse_cor(camp,mouse_cor) and dict_arguments['dict_bought_city']['camp']:
                         dict_arguments['scene'] = 'camp'
                     if check_mouse_cor(camp,mouse_cor) == False and dict_arguments['dict_bought_city']['camp']:
                         dict_arguments['flag_show_error_blocked_camp'] = 0
-                    if check_mouse_cor(church,mouse_cor) and dict_arguments['dict_bought_city']['church']:
-                        pass
-                    if check_mouse_cor(portal_resource,mouse_cor) and dict_arguments['dict_bought_city']['portal_resource']:
-                        pass
-                    if check_mouse_cor(forge,mouse_cor) and dict_arguments['dict_bought_city']['forge']:
-                        pass
                     if check_mouse_cor(altar,mouse_cor) and dict_arguments['dict_bought_city']['altar']:
                         dict_arguments['scene'] = 'altar'
                     if check_mouse_cor(button_city_back,mouse_cor):
@@ -51,7 +48,58 @@ def run_game(dict_arguments):
                         dict_card_characteristics[key][0]+=3
                         dict_card_characteristics[key][1]+=3
                     dict_arguments['flag_forge'] = False
+        
+            if dict_arguments['scene'] == 'castle':
+                if check_mouse_cor(button_build,mouse_cor):
+                    button_build.path = 'images/button_build_w.png'
+                    button_build.image_load()
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        if castle_selected.NAME != 'name' and castle_selected.NAME != None and  dict_arguments['dict_bought_city'][castle_selected.NAME.NAME] == False:
+                            name_resource = dict_price_city[castle_selected.NAME.NAME]
+                            list_text_cost = name_resource.split(';')
+                            for resource in list_text_cost:
+                                resource = resource.split('/')
+                                if dict_arguments['resources_dict'][resource[0]] < int(resource[1]):
+                                   dict_arguments ['flag_not_enough_resource'] = 0
+                            if dict_arguments ['flag_not_enough_resource'] == 30:
+                                name_build = list_buildings_castle[list_buildings_castle.index(castle_selected.NAME)].path
+                                list_buildings_castle[list_buildings_castle.index(castle_selected.NAME)].path = name_build.split('_locked')[0]+'.png'
+                                list_buildings_castle[list_buildings_castle.index(castle_selected.NAME)].image_load()
+                                dict_arguments['dict_bought_city'][castle_selected.NAME.NAME] = True
+                                for resource in list_text_cost:
+                                    resource = resource.split('/')
+                                    dict_arguments['resources_dict'][resource[0]] -= int(resource[1])
+                                castle_selected.NAME = None 
+                        if castle_selected.NAME != 'name' and castle_selected.NAME != None and dict_arguments['dict_bought_city'][castle_selected.NAME.NAME]:
+                            dict_arguments['flag_build_alredy_bought'] = 0  
+                        
 
+                            
+                else:
+                    button_build.path = 'images/button_build_b.png'
+                    button_build.image_load()
+                if check_mouse_cor(button_castle_back,mouse_cor):
+                    button_castle_back.path = 'images/menu_hero_back_b.png'
+                    button_castle_back.image_load()
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        dict_arguments['scene'] = 'city'
+                else:
+                    button_castle_back.path = 'images/menu_hero_back_y.png'
+                    button_castle_back.image_load()
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    for obj in list_buildings_castle:
+                        not_locked = (list_buildings_castle[0] == list_buildings_castle[list_buildings_castle.index(obj)] or not 'locked' in list_buildings_castle[list_buildings_castle.index(obj)-1].path)
+                        locked = ( not (list_buildings_castle[0] == list_buildings_castle[list_buildings_castle.index(obj)]) and 'locked' in list_buildings_castle[list_buildings_castle.index(obj)-1].path)
+                        if check_mouse_cor(obj,mouse_cor) and not_locked :
+                            castle_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                            castle_selected.Y=obj.Y-settings['SCREEN_WIDTH']//106.6
+                            castle_selected.WIDTH=obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                            castle_selected.HEIGHT=obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
+                            castle_selected.NAME = obj
+                            castle_selected.image_load()
+                        if check_mouse_cor(obj,mouse_cor) and locked:
+                            dict_arguments['flag_buy_previous_build'] = 0
+                        
             if dict_arguments['scene'] == 'altar':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if check_mouse_cor(button_altar_back,mouse_cor):
@@ -66,7 +114,12 @@ def run_game(dict_arguments):
                             altar_selected.NAME = obj
                             altar_selected.image_load()
                     if check_mouse_cor(button_change_card,mouse_cor) and altar_selected.NAME != None and altar_selected.NAME.path != None and altar_selected.NAME.path != 'name':
-                        dict_arguments['resources_dict']['gold_bullion'] += dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]-1
+                        name_card = dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]
+                        list_text_cost = name_card.split(';')
+                        for resource in list_text_cost:
+                            resource = resource.split('/')
+                            if len(resource[0]) != 0:
+                                dict_arguments['resources_dict'][resource[0]]+=int(resource[1])
                         list_card_altar[list_card_altar.index(altar_selected.NAME)].path = None
                         if list_card_altar.index(altar_selected.NAME) <=5:
                             list_cards_pl[list_card_altar.index(altar_selected.NAME)][0] = None
@@ -124,30 +177,38 @@ def run_game(dict_arguments):
                     if check_mouse_cor(button_camp_back,mouse_cor):
                         dict_arguments['scene'] = 'city'
                     if check_mouse_cor(button_hire,mouse_cor) and camp_selected.NAME != None:
-                        # if dict_arguments['flag_buy_card'] == False:
-                        #     dict_arguments['flag_show_error_blocked_camp'] = 0
-                        if dict_arguments['resources_dict']['gold_bullion'] < dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]:
-                            dict_arguments['flag_not_enough_gold'] = 0
-                        else:
+                        name_card = dict_card_price[camp_selected.NAME.path.split('/')[-1].split('.')[0]]
+                        list_text_cost = name_card.split(';')
+                        for resource in list_text_cost:
+                            resource = resource.split('/')
+                            if len(resource[0]) != 0:
+                                if dict_arguments['resources_dict'][resource[0]] < int(resource[1]):
+                                    dict_arguments ['flag_not_enough_resource'] = 0
+                        if dict_arguments ['flag_not_enough_resource'] == 30:
                             for card in list_cards_pl:
-                                if card[0] == None and dict_arguments['resources_dict']['gold_bullion'] >= dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]:
-                                    dict_arguments['resources_dict']['gold_bullion'] -= dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]
+                                if card[0] == None:
                                     list_cards_pl[list_cards_pl.index(card)][0] = camp_selected.NAME.path.split('/')[-1].split('.')[0]
                                     list_card_camp[list_card_camp.index(camp_selected.NAME)].path = camp_selected.NAME.path.split('.')[0]+'_locked.png'
                                     list_card_camp[list_card_camp.index(camp_selected.NAME)].NAME = 'locked'
                                     list_card_camp[list_card_camp.index(camp_selected.NAME)].image_load()
+                                    for resource in list_text_cost:
+                                        resource = resource.split('/')
+                                        if len(resource[0]) != 0:
+                                            dict_arguments['resources_dict'][resource[0]] -= int(resource[1])
                                     camp_selected.NAME = None
-                                    
                                     create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
                                     break
                             
                             for card in list_card_pl_reserv:
-                                if card[0] == None and camp_selected.NAME != None and dict_arguments['resources_dict']['gold_bullion'] >= dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]:
-                                    dict_arguments['resources_dict']['gold_bullion'] -= dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2]
-                                    list_cards_pl[list_cards_pl.index(card)][0] = camp_selected.NAME.path.split('/')[-1].split('.')[0]
+                                if card[0] == None and camp_selected.NAME != None:
+                                    list_card_pl_reserv[list_card_pl_reserv.index(card)][0] = camp_selected.NAME.path.split('/')[-1].split('.')[0]
                                     list_card_camp[list_card_camp.index(camp_selected.NAME)].path = camp_selected.NAME.path.split('.')[0]+'_locked.png'
                                     list_card_camp[list_card_camp.index(camp_selected.NAME)].NAME = 'locked'
                                     list_card_camp[list_card_camp.index(camp_selected.NAME)].image_load()
+                                    for resource in list_text_cost:
+                                        resource = resource.split('/')
+                                        if len(resource[0]) != 0:
+                                            dict_arguments['resources_dict'][resource[0]] -= int(resource[1])
                                     camp_selected.NAME = None
                                     create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
                                     break
@@ -363,7 +424,23 @@ def run_game(dict_arguments):
                 amount_gold_market.font_content = str(dict_arguments['resources_dict']['gold_bullion'])
                 amount_gold_market.show_text(win)
                 
-
+            if dict_arguments['scene'] == 'castle':
+                scene_castle.show_image(win)
+                if castle_selected.path != None and castle_selected.NAME != None and castle_selected.NAME != 'name':
+                    castle_selected.show_image(win)
+                    name_build = castle_selected.NAME.NAME
+                    list_text_cost = dict_price_city[name_build].split(';')
+                    finally_text, text_x = text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=text_cost_buildings)
+                    text_cost_buildings.font_x = text_x
+                    text_cost_buildings.font_content = str(finally_text)
+                    text_cost_buildings.show_text(win)
+                button_build.show_image(win)
+                button_castle_back.show_image(win)
+                for obj in list_buildings_castle:
+                    if  obj.path != None:
+                        obj.show_image(win)
+                
+                
             if dict_arguments['scene'] == 'camp':
                 scene_camp.show_image(win)
                 text_camp.show_text(win)
@@ -372,7 +449,11 @@ def run_game(dict_arguments):
                 for obj in list_card_camp:
                     obj.show_image(win)
                 if button_hire.path != None and camp_selected.NAME != None and camp_selected.path != None and camp_selected.NAME != 'name':
-                    text_price_card.font_content = 'Купить за: '+str(dict_card_characteristics[camp_selected.NAME.path.split('/')[-1].split('.')[0]][2])+' золота'
+                    name_card = camp_selected.NAME.path.split('/')[-1].split('.')[0]
+                    list_text_cost = dict_card_price[name_card].split(';')
+                    finally_text, text_x = text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=text_price_card)
+                    text_price_card.font_content = finally_text
+                    text_price_card.font_x = text_x
                     text_price_card.show_text(win)
                 button_hire.show_image(win)
                 button_camp_back.show_image(win)
@@ -384,7 +465,11 @@ def run_game(dict_arguments):
                 button_altar_back.show_image(win)
                 button_change_card.show_image(win)
                 if button_change_card.path != None and altar_selected.NAME != None and altar_selected.NAME != 'name' and altar_selected.NAME.path != None:
-                    text_change_card.font_content = 'Продать за '+ str(dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]-1)+ ' золота'
+                    name_card = dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]
+                    list_text_cost = name_card.split(';')
+                    finally_text,text_x = text_cost(list_text_cost,finally_text='Продать за:',text_obj=text_change_card)
+                    text_change_card.font_content = finally_text
+                    text_change_card.font_x = text_x
                     text_change_card.show_text(win)
                 for obj in list_card_altar:
                     if obj.path != None:
@@ -1138,10 +1223,47 @@ def run_game(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_bought_card.show_text(win)
             dict_arguments['flag_show_error_bought_card'] +=1
+        if dict_arguments['flag_not_enough_resource'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_not_enough_resource.show_text(win)
+            dict_arguments['flag_not_enough_resource'] +=1
+        if dict_arguments['flag_build_alredy_bought'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_build_alredy_bought.show_text(win)
+            dict_arguments['flag_build_alredy_bought'] += 1  
+        if dict_arguments['flag_buy_previous_build'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_buy_previous_build.show_text(win)
+            dict_arguments['flag_buy_previous_build'] += 1  
         time.tick(int(settings['FPS']))
-        # print(mouse_cor)
         #Обновляем экран
         pygame.display.flip()
+
+def text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=None):
+    print(list_text_cost)
+    for resource in list_text_cost:
+        resource_full_name = resource
+        
+        resource = resource.split('/')
+        if resource[0] == 'gold_bullion':
+            finally_text += ' '+resource[1]+' золота'
+        if resource[0] == 'food':
+            finally_text += ' '+resource[1]+' еды'
+        if resource[0] == 'iron_bullion':
+            finally_text += ' '+resource[1]+' железа'
+        if resource[0] == 'crystal': 
+            finally_text += ' '+resource[1]+' кристалла'
+        if resource[0] == 'wood': 
+            finally_text += ' '+resource[1]+' дерева'
+        if resource[0] == 'stone': 
+            finally_text += ' '+resource[1]+' камня'
+        if len(list_text_cost[-1]) != 0:
+            if list_text_cost[-1] != resource_full_name:
+                finally_text +=','
+    finally_text +='.'
+    text_len = len(finally_text)
+    text_x = settings['SCREEN_WIDTH']//2-((text_len//2)*text_obj.font_size)//2
+    return finally_text,text_x
 
 
 run_game(dict_arguments)

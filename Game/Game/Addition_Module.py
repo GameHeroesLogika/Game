@@ -470,7 +470,7 @@ def effect_resource(resources_dict, obj,effect_art_skills_name_dict,characterist
 
             elif value_dict[-2] == '/':
                 characteristic_dict[value_dict[0]] /= int(value_dict[1])
-def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics):
+def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price):
     for obj in list_all_artifact:
         if obj.NAME != None and obj.path != None:
             dict_artifact_on[obj.NAME] = obj.path.split('/')[-1]
@@ -510,12 +510,15 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,charact
         player_lvl1.count_step +=2
         list_learn_skills.remove('skill_forest_path_learn')
     if 'skill_leader_learn' in list_learn_skills:
-        for key in dict_card_characteristics.keys():
-            dict_card_characteristics[key][2]-=1
+        for key in dict_card_price.keys():
+            name_card = dict_card_price[key].split(';')
+            del name_card[0]
+            for text in name_card:
+                dict_card_price[key] = 'gold_bullion/'+str(int(dict_card_price[key].split(';')[0].split('/')[-1])-1)+';'+text
         list_learn_skills.remove('skill_leader_learn')
     if 'skill_earth_blessing_learn' in list_learn_skills:
         for key in dict_card_characteristics.keys():
-            if dict_card_characteristics[key][3] == 'earth':
+            if dict_card_characteristics[key][2] == 'earth':
                 dict_card_characteristics[key][0] +=1
                 dict_card_characteristics[key][1] +=1
         list_learn_skills.remove('skill_earth_blessing_learn')

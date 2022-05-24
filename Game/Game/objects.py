@@ -86,6 +86,7 @@ button_menu_hero_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['S
 button_city_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19,'images/menu_hero_back_y.png')
 button_camp_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19,'images/menu_hero_back_y.png')
 button_altar_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19,'images/menu_hero_back_y.png')
+button_castle_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19,'images/menu_hero_back_y.png')
 button_market_back = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=0,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19,path='images/menu_hero_back_b.png')
 button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//10, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9,path='images/menu/play_b.png',image_button_b='images/menu/play_b.png',image_button_y='images/menu/play_y.png',x_divider=15,y_divider=10)
 button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=15,y_divider=3.5)
@@ -93,6 +94,7 @@ button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//2.1, 
 button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=15,y_divider=1.5)
 button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//4,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/camp_hire_b.png')
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
+button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
 list_buttons = [button_play,button_help,button_set,button_exit] 
 
 #Текст
@@ -136,6 +138,8 @@ text_bought_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//4
 text_price_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_hire.X-settings['SCREEN_WIDTH']//30,button_hire.Y - settings['SCREEN_WIDTH']//40)
 #Текст стоимости обмена карты в алтаре
 text_change_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_change_card.X-settings['SCREEN_WIDTH']//30,button_change_card.Y - settings['SCREEN_WIDTH']//40)
+#Текст стоимости здания в замке
+text_cost_buildings = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_build.X-settings['SCREEN_WIDTH']//30,button_build.Y - settings['SCREEN_WIDTH']//40)
 #Текст лагерь наемников
 text_camp = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','Лагерь наемников',settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//9.5,0)
 #Текст для хижины колдуна
@@ -144,6 +148,12 @@ text_shack = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red
 text_fountain_mana = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red',' Вы выпили воду из колодца',frame_buildings.X,frame_buildings.Y + settings['SCREEN_WIDTH']//19)
 #Текст для дерева знаний
 text_fountain_exp = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','Вы получили знания дерева',frame_buildings.X,frame_buildings.Y + settings['SCREEN_WIDTH']//19)
+#Текст для ошибки недостаточно ресурсов
+text_not_enough_resource = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','Не хватает ресурсов!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
+#Текст для ошибки купленого здания
+text_build_alredy_bought = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Здание уже куплено!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
+#Текст для ошибки нельзя купить здание
+text_buy_previous_build = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//37,'red','Нельзя купить здание!;  Купите предыдущее!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12,index=2)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*6.9)
 amount_iron = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*7.7)
@@ -171,6 +181,7 @@ desc_skill_hero = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREE
 market_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 camp_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 altar_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
+castle_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 #Cундук
 chest = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19,path='images/chest/chest.png')
 chest_open = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT']//2-settings['SCREEN_WIDTH']//19*3,settings['SCREEN_WIDTH']//19*6,settings['SCREEN_WIDTH']//19*6,path='images/chest/chest_open.png')
@@ -182,6 +193,7 @@ background_market = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCRE
 city_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/city.bmp')
 scene_camp = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/scene_camp.bmp')
 scene_altar = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/altar_scene.png')
+scene_castle = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/castle_scene.png')
 #Звук отткрытия книги
 sound_book = Sounds('sounds/book_opened.wav', settings['SOUNDS_VOLUME'])
 
@@ -286,6 +298,18 @@ with open('images/artifacts/artifact_list.txt','r') as file:
     for text in file:
         text = text.split(',')
     list_matrix_artifact = text
+list_buildings_castle = [
+                            Graphic_elements(x=settings['SCREEN_WIDTH']//49.2,y=settings['SCREEN_HEIGHT']//2.2,width=settings['SCREEN_WIDTH']//8.1,height=settings['SCREEN_WIDTH']//8.1,path=None),
+                            Graphic_elements(x=settings['SCREEN_WIDTH']//49.2,y=settings['SCREEN_HEIGHT']//2.2,width=settings['SCREEN_WIDTH']//8.1,height=settings['SCREEN_WIDTH']//8.1,path=None),
+                            Graphic_elements(x=settings['SCREEN_WIDTH']//49.2,y=settings['SCREEN_HEIGHT']//2.2,width=settings['SCREEN_WIDTH']//8.1,height=settings['SCREEN_WIDTH']//8.1,path=None),
+                            Graphic_elements(x=settings['SCREEN_WIDTH']//49.2,y=settings['SCREEN_HEIGHT']//2.2,width=settings['SCREEN_WIDTH']//8.1,height=settings['SCREEN_WIDTH']//8.1,path=None),
+                            Graphic_elements(x=settings['SCREEN_WIDTH']//49.2,y=settings['SCREEN_HEIGHT']//2.2,width=settings['SCREEN_WIDTH']//8.1,height=settings['SCREEN_WIDTH']//8.1,path=None),
+]
+for i in range(len(list_buildings_castle)):
+    list_buildings_castle[i].X += i*settings['SCREEN_WIDTH']//4.78
+    list_buildings_castle[i].path = 'images\city\castle\\'+list(dict_arguments['dict_bought_city'].keys())[i]+'_locked.png'
+    list_buildings_castle[i].NAME = list(dict_arguments['dict_bought_city'].keys())[i]
+    list_buildings_castle[i].image_load()
 list_slots_market_hero = [
     #Артефакты 
     Graphic_elements(x=settings['SCREEN_WIDTH']//36.57-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='artifact',path=None),

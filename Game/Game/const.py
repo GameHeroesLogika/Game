@@ -127,9 +127,12 @@ flag_show_new_day = 100
 flag_use_fountain_exp = True
 past_lvl_skill_fight = 0
 flag_use_fountain_mana = True
+flag_buy_previous_build = 30
 flag_show_shack = 30
 flag_show_fountain_mana = 30
 flag_show_fountain_exp = 30
+flag_build_alredy_bought = 30
+flag_not_enough_resource = 30
 flag_use_tavern = True
 flag_button_end = False
 flag_market_selected = False
@@ -219,20 +222,20 @@ mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
 list_objects_cells_lvl1 = []
 
 dict_card_characteristics = {
-                            'бард':[1,2,3,'earth'],
-                            'клаус':[5,0,6,'hell'],
-                            'гигант':[4,3,2,'mountain'],
-                            'ями':[2,3,5,'hell'],
-                            'подрывник':[6,0,3,'earth'],
-                            'арбалетчик':[4,4,7,'earth'],
+                            'бард':[2,2,'earth'],
+                            'клаус':[5,0,'hell'],
+                            'гигант':[7,3,'mountain'],
+                            'ями':[4,1,'hell'],
+                            'подрывник':[3,5,'earth'],
+                            'арбалетчик':[4,3,'earth'],
 }
 dict_card_price = {
-                    'бард':3,
-                    'клаус':6,
-                    'гигант':2,
-                    'ями':5,
-                    'подрывник':3,
-                    'арбалетчик':7,
+                    'бард':'gold_bullion/4;',
+                    'клаус':'gold_bullion/5;crystal/2',
+                    'гигант':'gold_bullion/8;food/15',
+                    'ями':'gold_bullion/4;crystal/1',
+                    'подрывник':'gold_bullion/12;',
+                    'арбалетчик':'gold_bullion/9;',
 }
 list_cards_pl = [[None,1,2],['клаус',5,0],['клаус',3,5],['клаус',4,3],['ями',2,3],['ями',3,2]]
 list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
@@ -244,13 +247,20 @@ list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interfac
 list_cor_portals = [ [[1,3],[1,17]],[[0,0],[15,0]] ]
 
 dict_bought_city = {
-                    'altar':True,
-                    'camp':True,
-                    'church':True,
-                    'forge':True,
-                    'portal_resource':True,
+                    'camp':False,
+                    'portal_resource':False,
+                    'altar':False,
+                    'church':False,
+                    'forge':False,
+                    
 }
-
+dict_price_city = {
+                    'camp':'gold_bullion/10;food/10',
+                    'portal_resource':'gold_bullion/20;stone/10;crystal/5',
+                    'altar':'gold_bullion/15;stone/15;crystal/2;iron_bullion/5',
+                    'church':'gold_bullion/25;stone/10;wood/10;food/15;crystal/4',
+                    'forge':'gold_bullion/20;food/10;iron_bullion/10;stone/20;crystal/3',
+}
     
 create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
                     list_cards_pl=list_cards_pl,
@@ -314,5 +324,8 @@ dict_arguments = {
     'flag_show_shack':flag_show_shack,
     'flag_show_fountain_mana':flag_show_fountain_mana,
     'flag_show_fountain_exp':flag_show_fountain_exp,
+    'flag_build_alredy_bought':flag_build_alredy_bought,
+    'flag_not_enough_resource':flag_not_enough_resource,
+    'flag_buy_previous_build':flag_buy_previous_build,
 
 }
