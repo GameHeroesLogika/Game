@@ -46,7 +46,8 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 SCREEN_H,count_move,changed_x,changed_y,
                 ironmine, goldmine, farm, gemsmine,sawmill, stonebreaker,flag_green,list_studied_map,portal, fog_war,
                 list_cor_player_xy,W_CELL_MINI_MAP ,H_CELL_MINI_MAP,X_FRAME_MM,Y_FRAME_MM,list_cells_MM,list_cor_portals,
-                LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,list_cor_castle_xy):
+                LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,list_cor_castle_xy,
+                dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,):
     list_xy = [0,0]
     #Индекс клетки, к которой привязан объект
     index_cells = 0
@@ -66,7 +67,6 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     #Привязываем координаты персонажа к клетке
                     player_lvl1.X = list_objects_cells_lvl1[index_cells].X+changed_x
                     player_lvl1.Y = list_objects_cells_lvl1[index_cells].Y+changed_y
-                    print(list_objects_cells_lvl1[index_cells].Y+changed_y)
                     list_cor_player_xy[0] = list_objects_cells_lvl1[index_cells].X+changed_x
                     list_cor_player_xy[1] = list_objects_cells_lvl1[index_cells].Y+changed_y
                     #отображаем персонажа
@@ -102,6 +102,65 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     tree.X = list_objects_cells_lvl1[index_cells].X
                     tree.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
                     tree.show_image(win)
+                #Начало отрисовка на матрице карт 
+                elif obj =='А':
+                    crossbowman.X = list_objects_cells_lvl1[index_cells].X
+                    crossbowman.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    crossbowman.show_image(win)
+                elif obj =='Б':
+                    bard.X = list_objects_cells_lvl1[index_cells].X
+                    bard.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    bard.show_image(win)
+                elif obj =='В':
+                    dvorf.X = list_objects_cells_lvl1[index_cells].X
+                    dvorf.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    dvorf.show_image(win)
+                elif obj =='Г':
+                    giant.X = list_objects_cells_lvl1[index_cells].X
+                    giant.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    giant.show_image(win)
+                elif obj =='Д':
+                    druid.X = list_objects_cells_lvl1[index_cells].X
+                    druid.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    druid.show_image(win)
+                elif obj =='Е':
+                    golem.X = list_objects_cells_lvl1[index_cells].X
+                    golem.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    golem.show_image(win)
+                elif obj =='К':
+                    centaur.X = list_objects_cells_lvl1[index_cells].X
+                    centaur.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    centaur.show_image(win)
+                elif obj =='М':
+                    klaus.X = list_objects_cells_lvl1[index_cells].X
+                    klaus.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    klaus.show_image(win)
+                elif obj =='Л':
+                    ludorn.X = list_objects_cells_lvl1[index_cells].X
+                    ludorn.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    ludorn.show_image(win)
+                elif obj =='Р':
+                    roggy.X = list_objects_cells_lvl1[index_cells].X
+                    roggy.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    roggy.show_image(win)
+                elif obj =='С':
+                    surtur.X = list_objects_cells_lvl1[index_cells].X
+                    surtur.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    surtur.show_image(win)
+                elif obj =='Я':
+                    yamy.X = list_objects_cells_lvl1[index_cells].X
+                    yamy.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    yamy.show_image(win)
+                elif obj =='П':
+                    bomb_man.X = list_objects_cells_lvl1[index_cells].X
+                    bomb_man.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    bomb_man.show_image(win)
+                elif obj =='О':
+                    ork.X = list_objects_cells_lvl1[index_cells].X
+                    ork.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                    ork.show_image(win)
+
+                ##Конец отрисовки на матрице карт
                 elif obj == 'M':
                     fountain_mana.X = list_objects_cells_lvl1[index_cells].X
                     fountain_mana.Y = list_objects_cells_lvl1[index_cells].Y

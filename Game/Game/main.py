@@ -1,11 +1,18 @@
-from unicodedata import name
 from const import*
 from objects import*
 from Addition_Module import*
 from Menu import*
+from constants_cardgame import*
+from additional_functions_cardgame import*
+from battle_functions_cardgame import*
+from event_functions_cardgame import*
+from sounds_cardgame import*
+from Text_cardgame import*
+from draw_function import draw_all
 pygame.init()
+
 #Основная фунуция
-def run_game(dict_arguments):
+def run_main(dict_arguments):
     time = pygame.time.Clock()
     while dict_arguments['game']:
         effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price)
@@ -21,6 +28,63 @@ def run_game(dict_arguments):
             mouse_cor = pygame.mouse.get_pos() 
             if event.type == pygame.QUIT:
                 dict_arguments['game'] = False
+            if dict_arguments['scene'] == 'result_screen':
+                # Если навелись на кнопку окончания боя
+                if event.type == pygame.MOUSEMOTION:
+                    if check_mouse_cor(button_end_fight,mouse_cor):
+                        button_end_fight.path = 'images/buttons/end_fight_w.png'
+                    else:
+                        button_end_fight.path = 'images/buttons/end_fight_y.png'
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    # Если нажали на кнопку окончания боя
+                    if check_mouse_cor(button_end_fight,mouse_cor):
+                        print('Бой закончен!')
+                        dict_arguments['scene'] = 'lvl1'
+                        dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
+                        player_lvl1.flag_card = None
+                        characteristic_dict['exp']+=dict_arguments['trophy_exp']
+                        dict_arguments['trophy_exp'] = 0
+                        dict_arguments['trophy_gold'] = 0
+                        dict_arguments['cardgame_variables'] = {
+                                                'need_to_play_final_music':True,#Нужно ли проиграть финальную музыку
+                                                'flag_show_desc':30,#Флаг для показа описаний карт
+                                                'flag_show_desc_skill':30,#Флаг для показа описания скилла
+                                                'flag_show_error':30,#Флаг для показа ошибок
+                                                'card_attacker': None,#Атакующая карта
+                                                'card_victim':None,#Карта-жертва
+                                                'card_that_move_pl':None,#
+                                                'count_play_sound':50,#Счетчик для проигрыша звука взятой карты
+                                                'index_picked_card':0,#Индекс взятой карты в списке
+                                                'picked_card':None,#Взятая игроком карта
+                                                'text_error_content': None,# Контент отображаемой ошибки
+                                                'need_to_show_skill':False, # Нужно ли отображать целебое облако или мечь, при использовании скилла
+                                                'active_skill':None,#Применяется ли скилл в данный момент
+                                                'is_healing':None, #Происходит ли сейчас лечение 
+                                                'card_that_showing_desc':None,   #Карта, описание которой нужно показать
+                                                'who_move':'player', #Пременная означает, кто ходит
+                                                'count_text_move':0, #Счетчик для отображения тескта для хода
+                                                'card_that_move_index':0, #Индекс карты игрока, которая должна ходить  
+                                                'card_that_move_en':None,#Карта, которая должна ходить у врага
+                                                'index_card_that_move_en':0,# Индекс карты, которая должна ходить у врага
+                                                'flag_animation_attack':0, #Счетчик для анимации атаки
+                                                "double_damage":None,  #Должна ли атакующая карта делать двойной урон
+                                                'healed_card':None,#Карта, которую нужно похилить
+                                                'hp_for_heal':None,# Кол-во хп, которое нужно прибавить карте
+                                                'who_won':None,#Означает, кто победил
+                                                'hp_text':None#Объект текста, который отображает прибавляемое хп карте
+                                            }
+                        dict_arguments['cardgame_variables']['hero_skill'] = dict_skills[str(settings['SKILL'])]
+                        for card_losed in dict_arguments['list_losed_card_pl']:
+                            for card_pl in list_cards_pl:
+                                if card_losed == card_pl[0]:
+                                    list_cards_pl[list_cards_pl.index(card_pl)][0] = None
+                                    dict_arguments['list_losed_card_enemy'] = list()
+                                    dict_arguments['list_losed_card_pl'] = list()
+                        create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
+                                    
+
+
             if dict_arguments['scene'] == 'city':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if check_mouse_cor(castle,mouse_cor):
@@ -86,6 +150,27 @@ def run_game(dict_arguments):
                 else:
                     button_castle_back.path = 'images/menu_hero_back_y.png'
                     button_castle_back.image_load()
+                for obj in list_buildings_castle:
+                    if check_mouse_cor(obj,mouse_cor) and obj.path != None:
+                        # print(obj.path.split('/')[-1])
+                        if not '_locked' in obj.path:
+                            name_build = obj.path.split('/')[-1]
+                            name_build = name_build.split('\\')[-1]
+                            desc_buildings_city.path = 'images/city/desc/desc_'+name_build
+                            desc_buildings_city.image_load()
+                            break
+                        if '_locked' in obj.path:
+                            name_build = obj.path.split('/')[-1]
+                            name_build = name_build.split('\\')[-1]
+                            name_build = name_build.split('_')[0]
+                            desc_buildings_city.path = 'images/city/desc/desc_'+name_build+'.png'
+                            desc_buildings_city.image_load()
+
+                            break
+                    else:
+                        desc_buildings_city.path = None
+                    
+                    
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     for obj in list_buildings_castle:
                         not_locked = (list_buildings_castle[0] == list_buildings_castle[list_buildings_castle.index(obj)] or not 'locked' in list_buildings_castle[list_buildings_castle.index(obj)-1].path)
@@ -439,6 +524,8 @@ def run_game(dict_arguments):
                 for obj in list_buildings_castle:
                     if  obj.path != None:
                         obj.show_image(win)
+                if desc_buildings_city.path != None:
+                    desc_buildings_city.show_image(win)
                 
                 
             if dict_arguments['scene'] == 'camp':
@@ -717,6 +804,7 @@ def run_game(dict_arguments):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if check_mouse_cor(button_play,mouse_cor):
                         sound_book.play_sound()
+                        
                         dict_arguments['scene'] = 'lvl1'
                     elif check_mouse_cor(button_exit,mouse_cor):
                         sound_book.play_sound()
@@ -729,7 +817,29 @@ def run_game(dict_arguments):
                 for key in dict_card_characteristics.keys():
                     dict_card_characteristics[key][0]+=1
                     dict_card_characteristics[key][1]+=1
-            
+
+            if dict_arguments['scene'] =='card_game':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    
+                    if dict_arguments['cardgame_variables']['who_move'] == 'player':
+                        dict_arguments['cardgame_variables']['index_picked_card'] = 0
+                        #Функция взятия карты в руки
+                        take_card(dict_arguments['cardgame_variables'],list_objects_cards_pl,check_mouse_cor,mouse_cor)
+                        #Функция приминения скилла  героя
+                        activate_hero_skill(dict_arguments['cardgame_variables'],heal_cloud,dmg_img,check_mouse_cor,dict_arguments['cardgame_variables']['hero_skill'],mouse_cor)
+                    dict_arguments['cardgame_variables']['card_that_showing_desc'] = None
+
+                #Если отпущена ЛКМ                
+                if  event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    #Отвечает за обнаружение цели, которую выбрал игрок, когда отпустил карту или скилл
+                    target_searching(dict_arguments['cardgame_variables'],list_objects_cards_en,list_objects_cards_pl,check_mouse_cor,mouse_cor,dict_card_characteristics)
+                      
+                #Условие движения мыши
+                if event.type == pygame.MOUSEMOTION:
+                    mousemoution_react(dict_arguments['cardgame_variables'],mouse_cor,list_objects_cards_en,check_mouse_cor,
+                    list_objects_cards_pl,desc_skill,heal_cloud,dmg_img)
+
+
             if dict_arguments['scene'] == 'lvl1':
                 
                 #Если нажата левая кнопка мыши
@@ -833,7 +943,62 @@ def run_game(dict_arguments):
                             i+=1
         # if dict_arguments['scene'] == 'sandwich':
         # print(list_cards_pl)
+        if dict_arguments['scene'] == 'card_game':
+            #Алгоритм поочередности ходов игрока и врага
+            move_players_algorithm(dict_arguments['cardgame_variables'],list_objects_cards_pl,text_move,list_objects_cards_en,dict_card_characteristics)
+            #Отрисовуем все граф. эелементы
+            draw_all(bg,dict_arguments['cardgame_variables'],win,text_move,list_objects_cards_pl,list_objects_cards_en,
+            stun_img,heal_cloud,dmg_img)
+            
+            
+            #Проверка на то, кто победил 
+            count_cards_player = 0
+            for c in list_objects_cards_pl:
+                if c.path != None:
+                    count_cards_player += 1
+            if count_cards_player == 0 and dict_arguments['cardgame_variables']['flag_animation_attack'] <= 1:
+                dict_arguments['cardgame_variables']['who_won'] = 'enemy'
+                dict_arguments['scene'] = 'result_screen'
+                
+            count_cards_enemy = 0
+            for c in list_objects_cards_en:
+                if c.path != None:
+                    count_cards_enemy += 1
+
+            if count_cards_enemy == 0 and dict_arguments['cardgame_variables']['flag_animation_attack'] <= 1:
+                dict_arguments['cardgame_variables']['who_won'] = 'player'
+                dict_arguments['scene'] = 'result_screen'
+                for c in dict_arguments['list_losed_card_enemy']:
+                    dict_arguments['trophy_exp'] += int(dict_card_price[c].split('/')[1].split(';')[0])*15
+                    dict_arguments['trophy_gold'] += int(dict_card_price[c].split('/')[1].split(';')[0])//2
+                for name in dict_arguments['list_losed_card_pl']:
+                    print(name)
+
+            dict_arguments['cardgame_variables']['count_play_sound'] += 1
+
+            #Функция атаки игрока
+            player_attack(dict_arguments['cardgame_variables'],list_objects_cards_pl,list_objects_cards_en,flashing_card,
+            Font,win,dict_arguments['list_losed_card_enemy'],dict_card_characteristics,dict_arguments)
+            # Функция атаки врагаs
+            enemy_attack(dict_arguments['cardgame_variables'],flashing_card,dict_arguments['list_losed_card_pl'],show_all_windows,win=win,dict_card_characteristics=dict_card_characteristics)
+        elif dict_arguments['scene'] == 'result_screen':
+            # pygame.mixer.music.stop()
+            #Функция для показа экрана результата
+            show_result_screen(win,bg_win,music_win,bg_lose,music_lose,card_for_result_screen,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],
+            dict_arguments['list_losed_card_enemy'],dict_arguments['list_losed_card_pl'],dict_arguments['trophy_exp'],dict_arguments['trophy_gold'],gold_icon,exp_icon,trophy_recourse_text,button_end_fight,
+            dict_arguments['cardgame_variables'])
         if dict_arguments['scene'] == 'lvl1':
+            if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
+                card_number = 0 
+                for card in list_cards_pl:
+                    if card[0] != None:
+                        card_number +=1
+                if card_number != 0:
+                    for i in range(card_number):
+                        dict_arguments['list_cards_en'][i][0] = player_lvl1.flag_card
+                    cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
+                    dict_arguments['scene'] = 'card_game'
+
             amount_crystal.font_content = str(dict_arguments['resources_dict']['crystal'])
             amount_food.font_content = str(dict_arguments['resources_dict']['food'])
             amount_iron.font_content = str(dict_arguments['resources_dict']['iron_bullion'])
@@ -872,7 +1037,8 @@ def run_game(dict_arguments):
                         H_CELL_MINI_MAP=H_CELL_MINI_MAP,X_FRAME_MM=X_FRAME_MM,
                         Y_FRAME_MM=Y_FRAME_MM, list_cells_MM = dict_arguments['list_cells_MM'], list_cor_portals = list_cor_portals,
                         LENGTH_MAP = LENGTH_MAP_LVL1,chest=chest,fountain_mana=fountain_mana,fountain_exp=fountain_exp,watchtower=watchtower,
-                        shack=shack,royal_academy=royal_academy,tavern=tavern,market=market,castle=city,list_cor_castle_xy=list_cor_castle_xy)
+                        shack=shack,royal_academy=royal_academy,tavern=tavern,market=market,castle=city,list_cor_castle_xy=list_cor_castle_xy,
+                        dvorf=dvorf,klaus=klaus,bard=bard,golem=golem,giant=giant,yamy=yamy,ork=ork,bomb_man=bomb_man,crossbowman=crossbowman,druid=druid,centaur=centaur,ludorn=ludorn,roggy=roggy,surtur=surtur)
             
             # matrix_image_blind(list_objects_cells_lvl1,mat_objetcs_lvl1,player_lvl1,list_objects_cells_lvl1,player_lvl1.changed_x,player_lvl1.changed_y,win)
             #Отрисовуем полоску справа
@@ -1167,7 +1333,7 @@ def run_game(dict_arguments):
             text_step_count.font_content = 'Осталось ходов: '+str(player_lvl1.count_step)
             
             player_lvl1.move_sprite(mat_objetcs_lvl1, LENGTH_MAP_LVL1,dict_arguments['resources_dict'],recourse_sounds,list_cor_portals=list_cor_portals,
-                                    )
+                                    list_card_matrix=list_card_matrix,)
             # Перемещение к игроку после телепорта
             if player_lvl1.need_to_move_to_hero:
                 if dict_arguments['flag_to_move_to_hero'] == 12:
@@ -1240,7 +1406,6 @@ def run_game(dict_arguments):
         pygame.display.flip()
 
 def text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=None):
-    print(list_text_cost)
     for resource in list_text_cost:
         resource_full_name = resource
         
@@ -1266,4 +1431,4 @@ def text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=None):
     return finally_text,text_x
 
 
-run_game(dict_arguments)
+run_main(dict_arguments)

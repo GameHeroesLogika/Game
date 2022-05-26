@@ -38,6 +38,13 @@ CENTER_CELL_COR = [settings['SCREEN_WIDTH']//19*8,settings['SCREEN_HEIGHT']//2]
 #Константа громкости звука
 SOUNDS_VOLUME = 1
 
+
+list_losed_card_enemy = []
+list_losed_card_pl = []
+# Опыт и золото, которое получил игрок при победе
+trophy_exp = 0
+trophy_gold = 0
+
 draw_cells = False
 #Переменная, отвечающяя за сцену
 scene = settings['SCENE']
@@ -143,6 +150,7 @@ flag_show_error_not_inventory = 50
 flag_show_error_locked = 30
 flag_show_error_blocked_camp = 50
 flag_show_error_bought_card = 30
+count_animation= 0
 flag_church = True
 skill_cost = 200
 max_exp_lvl = 1000
@@ -194,7 +202,7 @@ mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
                     list('00C0C0000000aa0000000000000000'),#S-Хижина
                     list('00Ff0000000000000T00000t000000'),#B-Храм
                     list('00ff00000000000000000000000000'),#
-                    list('00000Hh00000000000000000000000'),#
+                    list('00000Hh00000АБВГДКСЛОЕРМЯП0000'),#
                     list('00000hh00000000000000000000000'),#
                     list('00000000Dd00000000000000000000'),#
                     list('00000000dd00000000000000000000'),#
@@ -222,13 +230,21 @@ mat_objetcs_lvl1 =[ list('P00000000000000000000000000000'),#M,p,P,E,g,i,c,w,T,t,
 list_objects_cells_lvl1 = []
 
 dict_card_characteristics = {
-                            'бард':[2,2,'earth'],
-                            'клаус':[5,0,'hell'],
-                            'гигант':[7,3,'mountain'],
-                            'ями':[4,1,'hell'],
-                            'подрывник':[3,5,'earth'],
-                            'арбалетчик':[4,3,'earth'],
+                            'бард':[1,2,'earth'],
+                            'клаус':[1,0,'hell'],
+                            'гигант':[1,3,'mountain'],
+                            'ями':[9,1,'hell'],
+                            'подрывник':[8,5,'earth'],
+                            'арбалетчик':[9,3,'earth'],
+                            'кентавр':[10,3,'hell'],
+                            'орк':[10,2,'mountain'],
+                            'дворф':[10,2,'mountain'],
+                            'рогги':[6,3,'hell'],
+                            'суртур':[7,3,'hell'],
+                            'лудорн':[8,3,'mountain'],
+                            'друид':[7,4,'earth']
 }
+dict_card_characteristics_enemy = dict_card_characteristics.copy()
 dict_card_price = {
                     'бард':'gold_bullion/4;',
                     'клаус':'gold_bullion/5;crystal/2',
@@ -236,11 +252,14 @@ dict_card_price = {
                     'ями':'gold_bullion/4;crystal/1',
                     'подрывник':'gold_bullion/12;',
                     'арбалетчик':'gold_bullion/9;',
+                    'кентавр':'gold_bullion/9;',
+                    'орк':'gold_bullion/9;',
+                    'дворф':'gold_bullion/9;',
 }
-list_cards_pl = [[None,1,2],['клаус',5,0],['клаус',3,5],['клаус',4,3],['ями',2,3],['ями',3,2]]
+list_cards_pl = [['гигант',1,2],['гигант',10,10],['клаус',3,5],['гигант',4,3],[None,2,3],[None,3,2]]
 list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
+list_cards_en = [['кентавр',10,3],[None,9,3],[None,10,0],[None,10,1],[None,5,2],[None,0,0]]
 list_cards_menu_hero = list()
-
 create_map(list_cells_lvl1, list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
  
 list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interface/to_hero_w.png'],['images/game_interface/to_castle.png','images/game_interface/to_castle_w.png',],['images/game_interface/end_moves.png','images/game_interface/end_moves_w.png',]]
@@ -266,7 +285,35 @@ create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEI
                     list_cards_pl=list_cards_pl,
                     list_card_pl_reserv=list_card_pl_reserv,
                     list_cards_menu_hero=list_cards_menu_hero)
-    
+
+cardgame_variables = {
+    'need_to_play_final_music':True,#Нужно ли проиграть финальную музыку
+    'flag_show_desc':30,#Флаг для показа описаний карт
+    'flag_show_desc_skill':30,#Флаг для показа описания скилла
+    'flag_show_error':30,#Флаг для показа ошибок
+    'card_attacker': None,#Атакующая карта
+    'card_victim':None,#Карта-жертва
+    'card_that_move_pl':None,#
+    'count_play_sound':50,#Счетчик для проигрыша звука взятой карты
+    'index_picked_card':0,#Индекс взятой карты в списке
+    'picked_card':None,#Взятая игроком карта
+    'text_error_content': None,# Контент отображаемой ошибки
+    'need_to_show_skill':False, # Нужно ли отображать целебое облако или мечь, при использовании скилла
+    'active_skill':None,#Применяется ли скилл в данный момент
+    'is_healing':None, #Происходит ли сейчас лечение 
+    'card_that_showing_desc':None,   #Карта, описание которой нужно показать
+    'who_move':'player', #Пременная означает, кто ходит
+    'count_text_move':0, #Счетчик для отображения тескта для хода
+    'card_that_move_index':0, #Индекс карты игрока, которая должна ходить  
+    'card_that_move_en':None,#Карта, которая должна ходить у врага
+    'index_card_that_move_en':0,# Индекс карты, которая должна ходить у врага
+    'flag_animation_attack':0, #Счетчик для анимации атаки
+    "double_damage":None,  #Должна ли атакующая карта делать двойной урон
+    'healed_card':None,#Карта, которую нужно похилить
+    'hp_for_heal':None,# Кол-во хп, которое нужно прибавить карте
+    'who_won':None,#Означает, кто победил
+    'hp_text':None#Объект текста, который отображает прибавляемое хп карте
+}
 dict_arguments = {
     'flag_show_error':flag_show_error,
     'CENTER_CELL_COR':CENTER_CELL_COR,
@@ -327,5 +374,11 @@ dict_arguments = {
     'flag_build_alredy_bought':flag_build_alredy_bought,
     'flag_not_enough_resource':flag_not_enough_resource,
     'flag_buy_previous_build':flag_buy_previous_build,
-
+    'trophy_exp':trophy_exp,
+    'trophy_gold':trophy_gold,
+    'list_cards_en':list_cards_en,
+    'count_animation':count_animation,
+    'cardgame_variables':cardgame_variables,
+    'list_losed_card_enemy':list_losed_card_enemy,
+    'list_losed_card_pl':list_losed_card_pl,
 }

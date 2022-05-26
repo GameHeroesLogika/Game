@@ -2,6 +2,14 @@ from const import *
 from Hero import Main_Hero
 from Menu import Menu
 from random import choice
+from constants_cardgame import*
+from cards_class import Cards
+from graphic_elements_cards import Graphic_elements_cards
+from sounds_cardgame import Sounds
+from Text import Font
+import Text_cardgame
+
+
 #Создаем окно, с параметром БЕЗ РАМКИ
 if settings['FULLSCREEN'] == True:
     win = pygame.display.set_mode((settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT']),pygame.FULLSCREEN)#
@@ -178,6 +186,8 @@ desc = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,
 desc_artifact = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
 desc_base_skill = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
 desc_skill_hero = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
+desc_buildings_city = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//2,settings['SCREEN_HEIGHT']//2,path=None)
+
 market_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 camp_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 altar_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
@@ -343,6 +353,101 @@ list_artifact_graphic_elements = list()
 for i in list_matrix_artifact:
     artifact = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_WIDTH']//19*1.5,path='images/artifacts/'+i+'.png')
     list_artifact_graphic_elements.append(artifact)
-
+#Карты на матрице
+crossbowman = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/арбалетчик.png',name='А')#А
+druid = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/друид.png',name='Д')#Д
+bard = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/бард.png',name='Б')#Б
+giant = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/гигант.png',name='Г')#Г
+golem = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/голем.png',name='Е')#Е
+centaur = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/кентавр.png',name='К')#К
+klaus = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/клаус.png',name='М')#М
+ludorn = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/лудорн.png',name='Л')#Л
+ork = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/орк.png',name='О')#О
+bomb_man = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/подрывник.png',name='П')#П
+roggy = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/рогги.png',name='Р')#Р
+surtur = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/суртур.png',name='С')#С
+yamy = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/ями.png',name='Я')#Я
+dvorf = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/дворф.png',name='В')#В
+list_card_matrix = [crossbowman,druid,bard,giant,golem,centaur,klaus,ludorn,ork,bomb_man,roggy,surtur,yamy,dvorf]
 #Картинка зеленого флага
 flag_green = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/flags/flag_g.png')
+
+
+
+
+
+
+
+
+#Карточный бой
+#Создаем объект фона
+bg = Graphic_elements_cards(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg.bmp')
+#Создаем объекты карт
+card_pl_1 = Cards(settings['SCREEN_WIDTH']//12*3.2,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='pl_1')
+card_pl_2 = Cards(settings['SCREEN_WIDTH']//12*4.6,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='pl_2')
+card_pl_3 = Cards(settings['SCREEN_WIDTH']//12*6,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='pl_3')
+card_pl_4 = Cards(settings['SCREEN_WIDTH']//12*7.4,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='pl_4')
+card_pl_5 = Cards(settings['SCREEN_WIDTH']//12*8.9,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='pl_5')
+card_pl_6 = Cards(settings['SCREEN_WIDTH']//12*10.4,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='pl_6')
+card_en_1 = Cards(settings['SCREEN_WIDTH']//12*3.2,settings['SCREEN_HEIGHT']//20, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='en_1')
+card_en_2 = Cards(settings['SCREEN_WIDTH']//12*4.6,settings['SCREEN_HEIGHT']//20, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='en_2')
+card_en_3 = Cards(settings['SCREEN_WIDTH']//12*6,settings['SCREEN_HEIGHT']//20, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='en_3')
+card_en_4 = Cards(settings['SCREEN_WIDTH']//12*7.4,settings['SCREEN_HEIGHT']//20, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='en_4')
+card_en_5 = Cards(settings['SCREEN_WIDTH']//12*8.9,settings['SCREEN_HEIGHT']//20, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='en_5')
+card_en_6 = Cards(settings['SCREEN_WIDTH']//12*10.4,settings['SCREEN_HEIGHT']//20, settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,path = None,hp = None,damage = None,desc_path = None,name='en_6')
+#Списки объектов карт
+list_objects_cards_pl = [card_pl_1,card_pl_2,card_pl_3,card_pl_4,card_pl_5,card_pl_6]
+list_objects_cards_en = [card_en_1,card_en_2,card_en_3,card_en_4,card_en_5,card_en_6]
+# Картинка взрыва для способности подрывника
+img_boom = Graphic_elements_cards(None,None,settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//12,'images/boom.png')
+#Картинка иссцеляющего облака
+heal_cloud = Graphic_elements_cards(0,0,settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//12,'images/hill_cloud.png')
+#Картинка "Оглушение" 
+stun_img = Graphic_elements_cards(0,0,settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9,'images/stun.png')
+#Картинка меча
+dmg_img = Graphic_elements_cards(0,0,settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//12,'images/dmg_symb2.png')
+#Иконка способностей
+flash_light_icon = Graphic_elements_cards(settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//1.3,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//15,'images/skills_icons/flash_icon.png', name='flash_light')
+heal_skill_Icon = Graphic_elements_cards(settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//1.3,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//15,'images/skills_icons/heal_icon.png', name='heal')
+damage_skill_Icon = Graphic_elements_cards(settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//1.3,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//15,'images/skills_icons/dmg_icon.png', name='damage')
+dict_skills = {
+                'flash_light':flash_light_icon,
+                'heal':heal_skill_Icon,
+                'damage':damage_skill_Icon,
+                }
+dict_arguments['cardgame_variables']['hero_skill'] = dict_skills[str(settings['SKILL'])]
+#Описание скилла героя 
+desc_skill = Graphic_elements_cards(settings['SCREEN_WIDTH']//2.5,settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2,None)
+
+#Картинка молнии
+flash_light_image = Graphic_elements_cards(0,0,settings['SCREEN_WIDTH']//12,settings['SCREEN_WIDTH']//12,None)
+# Рамка для ошибки
+frame_error = Graphic_elements_cards(settings['SCREEN_WIDTH']//2 - settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//2 - settings['SCREEN_HEIGHT']//8, settings['SCREEN_WIDTH']//3, settings['SCREEN_HEIGHT']//4, 'images/error_sheet.png')
+# Объект текста ошибки
+error_text_obj = Text_cardgame.Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red',None,frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10)
+
+# Подгружаем звуки для игры
+sound_hit = Sounds('sounds/sword.wav',1)
+sound_heal = Sounds('sounds/healsound.wav',1)
+sound_flashlight = Sounds('sounds/flashlight.wav',1)
+sound_explosion = Sounds('sounds/explosion.wav',1)
+sound_paper = Sounds('sounds/book_opened.wav',1)
+# Объект карты для отображения потерь в сцене результата боя
+card_for_result_screen =Graphic_elements_cards(None,None,settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,None)
+
+#Иконки ресурсов для сцены результата боя
+gold_icon = Graphic_elements_cards(settings['SCREEN_WIDTH']//12*3.2,settings['SCREEN_HEIGHT']//1.15,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//20,'images/gold_bullion.png')
+exp_icon = Graphic_elements_cards(settings['SCREEN_WIDTH']//12*6,settings['SCREEN_HEIGHT']//1.15,settings['SCREEN_WIDTH']//20,settings['SCREEN_WIDTH']//20,'images/exp.png')
+# Текст для кол-ва ресурсов для сцены результата боя
+trophy_recourse_text = Text_cardgame.Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//20,'white',None,None,None)
+# Кнопка завершения боя
+button_end_fight = Graphic_elements_cards(settings['SCREEN_WIDTH']//12*10,settings['SCREEN_HEIGHT']//1.2, settings['SCREEN_WIDTH']//8, settings['SCREEN_WIDTH']//15,'images/buttons/end_fight_y.png')
+#Экраны для победы и поражения
+bg_win = Graphic_elements_cards(0,0, settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT'],'images/bg_win.png')
+bg_lose = Graphic_elements_cards(0,0, settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT'],'images/bg_lose.png')
+
+music_win = Sounds('sounds/music_win.wav',1)
+music_lose = Sounds('sounds/music_lose.wav',1)
+
+# Объект текста хода
+text_move = Text_cardgame.Font('images/Font/pixel_font.ttf',60,'white','Твой ход!',settings['SCREEN_WIDTH']//2.5, settings['SCREEN_HEIGHT']//2.3)

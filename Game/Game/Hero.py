@@ -1,4 +1,3 @@
-from xml.dom.minidom import Element
 from const import*
 import pygame
 from random import choice,randint
@@ -45,10 +44,14 @@ class Main_Hero(Graphic_elements):
         self.near_market = False
         self.near_fountain_exp = False
         self.near_fountain_mana = False
+        self.near_card = False
 
+        self.card_cor = False
         self.chest_cor = None
         self.tower_cor = None
         self.building_cor = None
+
+        self.flag_card = False
         self.flag_city = False
         self.flag_fountain_mana = False
         self.flag_fountain_exp = False
@@ -73,7 +76,7 @@ class Main_Hero(Graphic_elements):
 
         
         
-    def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals):
+    def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals,list_card_matrix):
         
         #Если нажата клавиша ВПРАВО
         if self.count_step != 0:
@@ -279,6 +282,7 @@ class Main_Hero(Graphic_elements):
 
           
             list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
+            list_symbol_cards = ['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П']
             #Узнаем: рядом ли игрок со зданием
             if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and self.player_cor[0] != 0 and self.player_cor[1] != 0: 
             #Здания
@@ -298,6 +302,22 @@ class Main_Hero(Graphic_elements):
                 else:
                     self.near_building = False
                     self.building_cor = None
+
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_cor = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_cor = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                else:
+                    self.near_card = False
+                    self.card_cor = None
                 #Сундук
                 self.near_chest,self.chest_cor = self.check_near_build(element='C',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 #Башня
@@ -316,6 +336,7 @@ class Main_Hero(Graphic_elements):
                 self.near_fountain_mana = self.check_near_build(element='M',mat_objetcs=mat_objetcs,flag_building_cor=False)
                 self.near_fountain_exp = self.check_near_build(element='E',mat_objetcs=mat_objetcs,flag_building_cor=False)
             else:
+                self.near_card = False
                 self.near_academy = False
                 self.near_building = False
                 self.near_chest = False
@@ -326,6 +347,12 @@ class Main_Hero(Graphic_elements):
                 self.near_tavern = False
                 self.near_tower = False
                 self.near_city = False
+            if self.near_card:
+                for obj in list_card_matrix:
+                    if obj.NAME == self.card_cor:
+                        self.show_tip( '[F] Битва с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
+                        if keys[pygame.K_f]:
+                            self.flag_card = obj.path.split('/')[-1].split('.')[0]
             if self.near_chest:
                 self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
