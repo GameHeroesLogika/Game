@@ -3,6 +3,8 @@ from random import randint
 from objects import*
 #
 def cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics):
+    for obj in list_objects_cards_pl:
+        obj.path = None
     #Даем картам игрока начальные параметры
     for i in range(len(dict_arguments['list_cards_en'])):
         if  dict_arguments['list_cards_en'][i][0] != None:
@@ -22,7 +24,14 @@ def cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_ob
             list_objects_cards_pl[i].DAMAGE = dict_card_characteristics[list_cards_pl[i][0]][1]
             list_objects_cards_pl[i].price = dict_card_characteristics[list_cards_pl[i][0]][2]
             list_objects_cards_pl[i].sound_card.path = 'sounds/'+ list_cards_pl[i][0]+'_sound.wav'
-            
+    index_choice = list_objects_cards_pl.index(choice(list_objects_cards_pl))
+    while list_objects_cards_pl[index_choice].path == None:
+        index_choice = list_objects_cards_pl.index(choice(list_objects_cards_pl)) 
+    list_objects_cards_pl[index_choice].HP += dict_arguments['changed_hp']
+    index_choice = list_objects_cards_pl.index(choice(list_objects_cards_pl))
+    while list_objects_cards_pl[index_choice].path == None:
+        index_choice = list_objects_cards_pl.index(choice(list_objects_cards_pl)) 
+    list_objects_cards_pl[index_choice].DAMAGE += dict_arguments['changed_dmg']
 #Функция для показа экрана результата
 def show_result_screen(win,bg_win,music_win,bg_lose,music_lose,card_for_result_screen,SCREEN_W,SCREEN_H,
 list_losed_card_enemy,list_losed_card_pl,trophy_exp,trophy_gold,gold_icon,exp_icon,trophy_recourse_text,button_end_fight,

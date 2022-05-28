@@ -15,7 +15,8 @@ pygame.init()
 def run_main(dict_arguments):
     time = pygame.time.Clock()
     while dict_arguments['game']:
-        effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price)
+        print(dict_card_characteristics)
+        effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments)
         dict_arguments['dict_artifact_on_past'] = dict_artifact_on.copy()
         for obj in list_text_lvl_base_skills:
             name_skill = list_text_lvl_base_skills.index(obj)
@@ -42,7 +43,7 @@ def run_main(dict_arguments):
                         print('Бой закончен!')
                         dict_arguments['scene'] = 'lvl1'
                         dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
-                        player_lvl1.flag_card = None
+                        player_lvl1.flag_card = False
                         characteristic_dict['exp']+=dict_arguments['trophy_exp']
                         dict_arguments['trophy_exp'] = 0
                         dict_arguments['trophy_gold'] = 0
@@ -74,13 +75,22 @@ def run_main(dict_arguments):
                                                 'who_won':None,#Означает, кто победил
                                                 'hp_text':None#Объект текста, который отображает прибавляемое хп карте
                                             }
+
                         dict_arguments['cardgame_variables']['hero_skill'] = dict_skills[str(settings['SKILL'])]
+                        if '_bw' in dict_arguments['cardgame_variables']['hero_skill'].path:
+                            dict_arguments['cardgame_variables']['hero_skill'].path = dict_arguments['cardgame_variables']['hero_skill'].path.split('_bw')[0]+'.png'
+                        dict_arguments['cardgame_variables']['hero_skill'].image_load()
                         for card_losed in dict_arguments['list_losed_card_pl']:
                             for card_pl in list_cards_pl:
                                 if card_losed == card_pl[0]:
                                     list_cards_pl[list_cards_pl.index(card_pl)][0] = None
-                                    dict_arguments['list_losed_card_enemy'] = list()
-                                    dict_arguments['list_losed_card_pl'] = list()
+                                    break
+                        
+
+                        for i in range(len(dict_arguments['list_cards_en'])):
+                            dict_arguments['list_cards_en'][i][0] = None
+                        dict_arguments['list_losed_card_enemy'] = list()
+                        dict_arguments['list_losed_card_pl'] = list()
                         create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
                                     
 
@@ -635,8 +645,6 @@ def run_main(dict_arguments):
                                             list_card_pl_reserv[index_pressed_card-6][0] = list_cards_pl[index_choice_card][0]
                                             list_cards_pl[index_choice_card][0] = name_card
                                     create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
-
-                                    
                                     break
                             else:
                                 dict_arguments['card_pressed'].X = dict_arguments['card_pressed'].start_x
@@ -988,16 +996,22 @@ def run_main(dict_arguments):
             dict_arguments['list_losed_card_enemy'],dict_arguments['list_losed_card_pl'],dict_arguments['trophy_exp'],dict_arguments['trophy_gold'],gold_icon,exp_icon,trophy_recourse_text,button_end_fight,
             dict_arguments['cardgame_variables'])
         if dict_arguments['scene'] == 'lvl1':
-            if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
+            
+            if player_lvl1.flag_card != None and player_lvl1.flag_card != False and player_lvl1.where_move == None and player_lvl1.flag_move:
                 card_number = 0 
                 for card in list_cards_pl:
                     if card[0] != None:
                         card_number +=1
                 if card_number != 0:
-                    for i in range(card_number):
+                    for i in range(dict_arguments['number_opened_card']):
                         dict_arguments['list_cards_en'][i][0] = player_lvl1.flag_card
+                    
                     cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
                     dict_arguments['scene'] = 'card_game'
+                    player_lvl1.flag_card = False
+                if card_number == 0:
+                    player_lvl1.flag_card = False
+                    player_lvl1.near_card = False
 
             amount_crystal.font_content = str(dict_arguments['resources_dict']['crystal'])
             amount_food.font_content = str(dict_arguments['resources_dict']['food'])
@@ -1051,8 +1065,8 @@ def run_main(dict_arguments):
             text_date.show_text(win)
             elliot_img.show_image(win)
             player_info.show_text(win)
-            
-            dict_arguments['number_opened_card'] = characteristic_dict['lvl'] // 3
+            if dict_arguments['number_opened_card'] <=5:
+                dict_arguments['number_opened_card'] = characteristic_dict['lvl'] // 3
             if player_lvl1.flag_city:
                 dict_arguments['scene'] = 'city'
 

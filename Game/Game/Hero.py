@@ -353,6 +353,7 @@ class Main_Hero(Graphic_elements):
                         self.show_tip( '[F] Битва с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
                         if keys[pygame.K_f]:
                             self.flag_card = obj.path.split('/')[-1].split('.')[0]
+                            self.near_card = False
             if self.near_chest:
                 self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:

@@ -149,6 +149,8 @@ flag_not_enough_gold = 30
 flag_show_error_not_inventory = 50
 flag_show_error_locked = 30
 flag_show_error_blocked_camp = 50
+changed_hp = 0
+changed_dmg = 0
 flag_show_error_bought_card = 30
 count_animation= 0
 flag_church = True
@@ -381,4 +383,6 @@ dict_arguments = {
     'cardgame_variables':cardgame_variables,
     'list_losed_card_enemy':list_losed_card_enemy,
     'list_losed_card_pl':list_losed_card_pl,
+    'changed_hp':changed_hp,
+    'changed_dmg':changed_dmg,
 }
