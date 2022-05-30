@@ -197,15 +197,15 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     castle.show_image(win)
                     list_cor_castle_xy[0] = list_objects_cells_lvl1[index_cells].X+SCREEN_W//19
                     list_cor_castle_xy[1] = list_objects_cells_lvl1[index_cells].Y+SCREEN_W//19
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
-                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP*2,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
-                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP,Y_CELL_MM + H_CELL_MINI_MAP*2,'white'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+H_CELL_MINI_MAP,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP*2,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
+                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
                     flag_cell_MM = False
                 elif obj == 'O':
                     market.X = list_objects_cells_lvl1[index_cells].X

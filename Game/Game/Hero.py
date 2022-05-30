@@ -46,7 +46,10 @@ class Main_Hero(Graphic_elements):
         self.near_fountain_mana = False
         self.near_card = False
 
+        self.card_name = False
+
         self.card_cor = False
+        self.city_cor = None
         self.chest_cor = None
         self.tower_cor = None
         self.building_cor = None
@@ -121,7 +124,8 @@ class Main_Hero(Graphic_elements):
                 self.where_move = None
                 self.changed_x = 0
                 mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] = 'p'
-                mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1]] == 'p':
+                    mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
                 self.player_cor[1] += 1
                 
               
@@ -194,7 +198,8 @@ class Main_Hero(Graphic_elements):
                 # self.image_load()
                 self.changed_y = 0
                 mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] = 'p'
-                mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1]] == 'p':
+                    mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
                 self.player_cor[0] -= 1
 
             if self.where_move == 'down' and self.count_move <= 9:
@@ -215,7 +220,8 @@ class Main_Hero(Graphic_elements):
                 # self.image_load()
                 self.changed_y = 0
                 mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] = 'p'
-                mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
+                if mat_objetcs[self.player_cor[0]][self.player_cor[1]] == 'p':
+                    mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
                 self.player_cor[0] += 1
             keys = pygame.key.get_pressed()
             if keys[pygame.K_RIGHT] and self.flag_move:
@@ -305,19 +311,23 @@ class Main_Hero(Graphic_elements):
 
                 if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbol_cards:
                     self.near_card = True
-                    self.card_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                    self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                    self.card_cor = [self.player_cor[0],self.player_cor[1] + 1]
                 elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbol_cards:
                     self.near_card = True
-                    self.card_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                    self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                    self.card_cor = [self.player_cor[0],self.player_cor[1] - 1]
                 elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbol_cards:
                     self.near_card = True
-                    self.card_cor = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                    self.card_name = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                    self.card_cor = [self.player_cor[0] + 1,self.player_cor[1]]
                 elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbol_cards:
                     self.near_card = True
-                    self.card_cor = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                    self.card_name = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                    self.card_cor = [self.player_cor[0] - 1,self.player_cor[1]]
                 else:
                     self.near_card = False
-                    self.card_cor = None
+                    self.card_name = None
                 #Сундук
                 self.near_chest,self.chest_cor = self.check_near_build(element='C',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 #Башня
@@ -349,7 +359,7 @@ class Main_Hero(Graphic_elements):
                 self.near_city = False
             if self.near_card:
                 for obj in list_card_matrix:
-                    if obj.NAME == self.card_cor:
+                    if obj.NAME == self.card_name:
                         self.show_tip( '[F] Битва с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
                         if keys[pygame.K_f]:
                             self.flag_card = obj.path.split('/')[-1].split('.')[0]

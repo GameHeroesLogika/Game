@@ -15,7 +15,6 @@ pygame.init()
 def run_main(dict_arguments):
     time = pygame.time.Clock()
     while dict_arguments['game']:
-        print(dict_card_characteristics)
         effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments)
         dict_arguments['dict_artifact_on_past'] = dict_artifact_on.copy()
         for obj in list_text_lvl_base_skills:
@@ -40,11 +39,16 @@ def run_main(dict_arguments):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     # Если нажали на кнопку окончания боя
                     if check_mouse_cor(button_end_fight,mouse_cor):
-                        print('Бой закончен!')
                         dict_arguments['scene'] = 'lvl1'
-                        dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
+                        if dict_arguments['cardgame_variables']['who_won'] == 'player':
+                            dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
+                            characteristic_dict['exp']+=dict_arguments['trophy_exp']
+                            mat_objetcs_lvl1[player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
+                        if dict_arguments['cardgame_variables']['who_won'] != 'player':
+                            mat_objetcs_lvl1[player_lvl1.player_cor[0]][player_lvl1.player_cor[1]] = '0'
+                            player_lvl1.player_cor = city_cor_enter
+                            mat_objetcs_lvl1[city_cor_enter[0]][city_cor_enter[1]] = 'p'
                         player_lvl1.flag_card = False
-                        characteristic_dict['exp']+=dict_arguments['trophy_exp']
                         dict_arguments['trophy_exp'] = 0
                         dict_arguments['trophy_gold'] = 0
                         dict_arguments['cardgame_variables'] = {
@@ -75,7 +79,6 @@ def run_main(dict_arguments):
                                                 'who_won':None,#Означает, кто победил
                                                 'hp_text':None#Объект текста, который отображает прибавляемое хп карте
                                             }
-
                         dict_arguments['cardgame_variables']['hero_skill'] = dict_skills[str(settings['SKILL'])]
                         if '_bw' in dict_arguments['cardgame_variables']['hero_skill'].path:
                             dict_arguments['cardgame_variables']['hero_skill'].path = dict_arguments['cardgame_variables']['hero_skill'].path.split('_bw')[0]+'.png'
@@ -85,16 +88,11 @@ def run_main(dict_arguments):
                                 if card_losed == card_pl[0]:
                                     list_cards_pl[list_cards_pl.index(card_pl)][0] = None
                                     break
-                        
-
                         for i in range(len(dict_arguments['list_cards_en'])):
                             dict_arguments['list_cards_en'][i][0] = None
                         dict_arguments['list_losed_card_enemy'] = list()
                         dict_arguments['list_losed_card_pl'] = list()
                         create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
-                                    
-
-
             if dict_arguments['scene'] == 'city':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if check_mouse_cor(castle,mouse_cor):
@@ -979,9 +977,6 @@ def run_main(dict_arguments):
                 for c in dict_arguments['list_losed_card_enemy']:
                     dict_arguments['trophy_exp'] += int(dict_card_price[c].split('/')[1].split(';')[0])*15
                     dict_arguments['trophy_gold'] += int(dict_card_price[c].split('/')[1].split(';')[0])//2
-                for name in dict_arguments['list_losed_card_pl']:
-                    print(name)
-
             dict_arguments['cardgame_variables']['count_play_sound'] += 1
 
             #Функция атаки игрока
