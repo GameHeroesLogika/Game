@@ -23,6 +23,26 @@ player_lvl1 = Main_Hero(
                         SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
                         where_move=where_move,count_move=int(settings['COUNT_MOVE']),
                         win=win,count_step=int(settings['COUNT_STEP_HERO']))
+
+#Объекты матрицы
+
+
+flower0 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower0.png')
+flower1 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower1.png')
+flower2 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower2.png')
+flower3 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower3.png')
+list_forest =[]
+for i in range(4):
+    forest = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/forest'+str(i)+'.png')
+    list_forest.append(forest)
+field_path = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/field_path.png')
+mountain = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19*2, settings['SCREEN_WIDTH']//19*2, 'images/MatrixImage/mountain.png')
+
+list_water = []
+for i in range(5):
+    water = Graphic_elements(0,0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/water'+str(i)+'.png')
+    list_water.append(water)
+water = choice(list_water)
 #Контент ошибки 
 text_error_content = None
 # Рамка для ошибки
@@ -45,6 +65,8 @@ green_dark = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/green_
 
 fountain_exp = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*2, 'images/buildings/fountain_exp.png')
 fountain_mana = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/buildings/fountain_mana.png')
+fountain_exp_empty = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*2, 'images/buildings/fountain_exp_empty.png')
+fountain_mana_empty = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/buildings/fountain_mana_empty.png')
 gemsmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/gemsmine.png')
 farm = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/farm.png')
 goldmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/goldmine.png')
@@ -76,6 +98,7 @@ wood = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WID
 stone = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/resources/stone_liana.png')
 tree_full = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree_full.png')
 tree = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree.png')
+
 
 apple = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, settings['SCREEN_WIDTH']//19*6.7, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/food.png')
 iron_bullion = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, settings['SCREEN_WIDTH']//19*7.5, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/iron_bullion.png')
@@ -353,6 +376,7 @@ list_artifact_graphic_elements = list()
 for i in list_matrix_artifact:
     artifact = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_WIDTH']//19*1.5,path='images/artifacts/'+i+'.png')
     list_artifact_graphic_elements.append(artifact)
+
 #Карты на матрице
 crossbowman = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/арбалетчик.png',name='А')#А
 druid = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/друид.png',name='Д')#Д

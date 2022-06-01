@@ -13,6 +13,7 @@ pygame.init()
 
 #Основная фунуция
 def run_main(dict_arguments):
+    water = choice(list_water)
     time = pygame.time.Clock()
     while dict_arguments['game']:
         effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments)
@@ -1047,7 +1048,8 @@ def run_main(dict_arguments):
                         Y_FRAME_MM=Y_FRAME_MM, list_cells_MM = dict_arguments['list_cells_MM'], list_cor_portals = list_cor_portals,
                         LENGTH_MAP = LENGTH_MAP_LVL1,chest=chest,fountain_mana=fountain_mana,fountain_exp=fountain_exp,watchtower=watchtower,
                         shack=shack,royal_academy=royal_academy,tavern=tavern,market=market,castle=city,list_cor_castle_xy=list_cor_castle_xy,
-                        dvorf=dvorf,klaus=klaus,bard=bard,golem=golem,giant=giant,yamy=yamy,ork=ork,bomb_man=bomb_man,crossbowman=crossbowman,druid=druid,centaur=centaur,ludorn=ludorn,roggy=roggy,surtur=surtur)
+                        dvorf=dvorf,klaus=klaus,bard=bard,golem=golem,giant=giant,yamy=yamy,ork=ork,bomb_man=bomb_man,crossbowman=crossbowman,druid=druid,centaur=centaur,ludorn=ludorn,roggy=roggy,surtur=surtur,
+                        fountain_mana_empty=fountain_mana_empty,fountain_exp_empty=fountain_exp_empty,mountain=mountain,water=water,list_forest=list_forest)
             
             # matrix_image_blind(list_objects_cells_lvl1,mat_objetcs_lvl1,player_lvl1,list_objects_cells_lvl1,player_lvl1.changed_x,player_lvl1.changed_y,win)
             #Отрисовуем полоску справа
@@ -1079,11 +1081,13 @@ def run_main(dict_arguments):
                     fountain_exp.path = 'images/buildings/fountain_exp.png'
                     fountain_exp.image_load()
                     dict_arguments['flag_buy_card'] = True
-                    dict_arguments['flag_use_fountain_exp'] = True
-                    dict_arguments['flag_use_fountain_mana'] = True
                     dict_arguments['flag_use_tavern'] = True
                     dict_arguments['flag_use_royal_academy'] = True
-                    dict_arguments['flag_use_shack'] = True
+                    for el in range(len(mat_objetcs_lvl1)):
+                        for element in range(len(mat_objetcs_lvl1[el])):
+                            if mat_objetcs_lvl1[el][element] == 'e' or  mat_objetcs_lvl1[el][element] == 'm' or mat_objetcs_lvl1[el][element] == 's':
+                                mat_objetcs_lvl1[el][element] = mat_objetcs_lvl1[el][element].upper()
+
                     for i in range(dict_arguments['number_opened_card']) :
                         if 'locked' in list_card_camp[i].path:
                             list_card_camp[i].path = list_card_camp[i].path.split('_locked')[0]+'.png'
@@ -1237,20 +1241,17 @@ def run_main(dict_arguments):
                     amount_money.WIDTH = settings['SCREEN_WIDTH']//19*1.5
                     amount_money.HEIGHT = settings['SCREEN_WIDTH']//19*1.5
                 amount_money.image_load()
-            if player_lvl1.flag_fountain_exp and dict_arguments['flag_use_fountain_exp']:
+            if player_lvl1.flag_fountain_exp and player_lvl1.fountain_exp_cor != None and mat_objetcs_lvl1[player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] == 'E':
                 characteristic_dict['exp']+=exp_fountain
-                dict_arguments['flag_use_fountain_exp'] = False
                 player_lvl1.flag_fountain_exp = False
+                mat_objetcs_lvl1[player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] = 'e'
                 dict_arguments['flag_show_fountain_exp'] = 0
-                fountain_exp.path = 'images/buildings/fountain_exp_empty.png'
-                fountain_exp.image_load()
-            elif player_lvl1.flag_fountain_mana and dict_arguments['flag_use_fountain_mana']:
+            elif player_lvl1.flag_fountain_mana and player_lvl1.fountain_mana_cor != None and  mat_objetcs_lvl1[player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] == 'M':
                 characteristic_dict['mana']+=mana_fountain*characteristic_dict['change_mana']
                 dict_arguments['flag_use_fountain_mana'] = False
                 player_lvl1.flag_fountain_mana = False
                 dict_arguments['flag_show_fountain_mana'] = 0
-                fountain_mana.path = 'images/buildings/fountain_mana_empty.png'
-                fountain_mana.image_load()
+                mat_objetcs_lvl1[player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] = 'm'
             if player_lvl1.flag_tavern  and player_lvl1.flag_draw_chest == False and player_lvl1.flag_tower==False and dict_arguments['flag_use_tavern']:
                 player_lvl1.flag_tavern = False
                 dict_arguments['flag_button_end'] = False
@@ -1275,19 +1276,19 @@ def run_main(dict_arguments):
             if player_lvl1.flag_tower:
                 player_lvl1.blind_move(index=6,flag_player=[player_lvl1.tower_cor[1],player_lvl1.tower_cor[0],False])
                 player_lvl1.flag_tower = False
-            if player_lvl1.flag_shack and dict_arguments['flag_use_shack']:
+            if player_lvl1.flag_shack and player_lvl1.shack_cor != None and mat_objetcs_lvl1[player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] == 'S':
                 characteristic_dict['mana']+=mana_shack*characteristic_dict['change_mana']
-                dict_arguments['flag_use_shack'] = False
-                dict_arguments['flag_show_shack'] = 0
+                mat_objetcs_lvl1[player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] = 's'
                 player_lvl1.flag_shack = False
+                dict_arguments['flag_show_shack'] = 0
             
-            if player_lvl1.flag_shack and dict_arguments['flag_use_shack'] == False and player_lvl1.flag_pressed:
+            if player_lvl1.flag_shack  and player_lvl1.flag_pressed  and mat_objetcs_lvl1[player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] == 's':
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_shack = False
-            if player_lvl1.flag_fountain_exp and dict_arguments['flag_use_fountain_exp'] == False and player_lvl1.flag_pressed:
+            if player_lvl1.flag_fountain_exp and  player_lvl1.flag_pressed and mat_objetcs_lvl1[player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] == 'e':
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_fountain_exp = False
-            if player_lvl1.flag_fountain_mana and dict_arguments['flag_use_fountain_mana'] == False and player_lvl1.flag_pressed:
+            if player_lvl1.flag_fountain_mana and  player_lvl1.flag_pressed and mat_objetcs_lvl1[player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] == 'm':
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_fountain_mana = False
             if player_lvl1.flag_academy and dict_arguments['flag_use_royal_academy'] == False and player_lvl1.flag_pressed :
@@ -1410,6 +1411,9 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_buy_previous_build.show_text(win)
             dict_arguments['flag_buy_previous_build'] += 1  
+        dict_arguments['index_water'] +=1
+        if dict_arguments['index_water'] % 10 == 0:
+            water = choice(list_water)
         time.tick(int(settings['FPS']))
         #Обновляем экран
         pygame.display.flip()

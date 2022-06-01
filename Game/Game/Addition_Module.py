@@ -47,8 +47,10 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 ironmine, goldmine, farm, gemsmine,sawmill, stonebreaker,flag_green,list_studied_map,portal, fog_war,
                 list_cor_player_xy,W_CELL_MINI_MAP ,H_CELL_MINI_MAP,X_FRAME_MM,Y_FRAME_MM,list_cells_MM,list_cor_portals,
                 LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,list_cor_castle_xy,
-                dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,):
+                dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,fountain_mana_empty,fountain_exp_empty,
+                mountain,water,list_forest):
     list_xy = [0,0]
+    
     #Индекс клетки, к которой привязан объект
     index_cells = 0
     # Координата конкретной клетки для миникарты
@@ -58,11 +60,9 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
     flag_cell_MM = True
     #Перебераем список объектов
     for obj_list1 in mat_objetcs_lvl1:
-        for obj_list2 in obj_list1:
+        for obj_list2 in obj_list1:        
             for obj in obj_list2:
                 flag_cell_MM =True
-                    
-                
                 if obj == 'p':   
                     #Привязываем координаты персонажа к клетке
                     player_lvl1.X = list_objects_cells_lvl1[index_cells].X+changed_x
@@ -86,7 +86,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     wood.X = list_objects_cells_lvl1[index_cells].X
                     wood.Y = list_objects_cells_lvl1[index_cells].Y
                     wood.show_image(win)
-                elif obj == 's':
+                elif obj == 'b':
                     stone.X = list_objects_cells_lvl1[index_cells].X
                     stone.Y = list_objects_cells_lvl1[index_cells].Y
                     stone.show_image(win)
@@ -102,6 +102,30 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     tree.X = list_objects_cells_lvl1[index_cells].X
                     tree.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
                     tree.show_image(win)
+                elif obj == 'г':
+                    mountain.X = list_objects_cells_lvl1[index_cells].X 
+                    mountain.Y = list_objects_cells_lvl1[index_cells].Y 
+                    mountain.show_image(win)
+                elif obj == 'в':
+                    water.X = list_objects_cells_lvl1[index_cells].X 
+                    water.Y = list_objects_cells_lvl1[index_cells].Y 
+                    water.show_image(win)
+                elif obj == 'л':
+                    list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
+                    list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y 
+                    list_forest[0].show_image(win)
+                elif obj == '\\':
+                    list_forest[1].X = list_objects_cells_lvl1[index_cells].X 
+                    list_forest[1].Y = list_objects_cells_lvl1[index_cells].Y 
+                    list_forest[1].show_image(win)
+                elif obj == '/':
+                    list_forest[2].X = list_objects_cells_lvl1[index_cells].X 
+                    list_forest[2].Y = list_objects_cells_lvl1[index_cells].Y 
+                    list_forest[2].show_image(win)
+                elif obj == '|':
+                    list_forest[3].X = list_objects_cells_lvl1[index_cells].X 
+                    list_forest[3].Y = list_objects_cells_lvl1[index_cells].Y 
+                    list_forest[3].show_image(win)
                 #Начало отрисовка на матрице карт 
                 elif obj =='А':
                     crossbowman.X = list_objects_cells_lvl1[index_cells].X
@@ -169,6 +193,14 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     fountain_exp.X = list_objects_cells_lvl1[index_cells].X
                     fountain_exp.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19
                     fountain_exp.show_image(win)
+                elif obj == 'm':
+                    fountain_mana_empty.X = list_objects_cells_lvl1[index_cells].X
+                    fountain_mana_empty.Y = list_objects_cells_lvl1[index_cells].Y
+                    fountain_mana_empty.show_image(win)
+                elif obj == 'e':
+                    fountain_exp_empty.X = list_objects_cells_lvl1[index_cells].X
+                    fountain_exp_empty.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19
+                    fountain_exp_empty.show_image(win)
                 elif obj == 'F':
                     farm.X = list_objects_cells_lvl1[index_cells].X
                     farm.Y = list_objects_cells_lvl1[index_cells].Y 
@@ -226,6 +258,12 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
                     flag_cell_MM = False
                 elif obj == 'S':
+                    shack.X = list_objects_cells_lvl1[index_cells].X
+                    shack.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
+                    shack.show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                    flag_cell_MM = False
+                elif obj == 's':
                     shack.X = list_objects_cells_lvl1[index_cells].X
                     shack.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
                     shack.show_image(win)
@@ -311,6 +349,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         break
                 if flag_cell_MM ==True :
                     list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'green'))
+                # print(index_water)
             """"Индексы текущей клетки по циклу"""
             
             list_xy[0]+= 1
@@ -373,6 +412,16 @@ def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
             if cell == '0':
                 #В список клеток добавляем объект клетки
                 list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/cell.jpg'))
+            if cell == 't':
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/field_path.png'))
+            if cell == '1':
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/flower0.png'))
+            if cell == '2':
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/flower1.png'))
+            if cell == '3':
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/flower2.png'))
+            if cell == '4':
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/flower3.png'))
             #Увеличиваем х, двигаясь по ряду
             x += SCREEN_W//19
         #Увеличиваем y, двигаясь по столбцамя
@@ -388,11 +437,11 @@ def resourse_accural(list_capture_buildings_symbol, resources_dict):
         elif i == 'H':
             resources_dict['wood'] += randint(4,5)
         elif i == 'D':
-            resources_dict['iron'] += randint(2,3)
+            resources_dict['iron_bullion'] += randint(2,3)
         elif i == 'N':
             resources_dict['stone'] += randint(3,4)
         elif i == 'R':
-            resources_dict['gold'] += randint(1,2)
+            resources_dict['gold_bullion'] += randint(1,2)
         elif i == 'X':
             resources_dict['crystal'] += 1
 

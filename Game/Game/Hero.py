@@ -1,6 +1,6 @@
 from const import*
 import pygame
-from random import choice,randint
+from random import choice,randint,shuffle
 from Addition_Module import move_to_hero
 from sounds import Sounds
 from graphic_elements import Graphic_elements
@@ -15,7 +15,7 @@ class Main_Hero(Graphic_elements):
         self.flag_move = True
         self.list_studied_map = []# Список изученых клеток
         self.index_cor = []
-        self.player_cor = [1,2]# Индексы(координаты) пресонажа по матрице
+        self.player_cor = [3,1]# Индексы(координаты) пресонажа по матрице
         self.SCREEN_W = SCREEN_W# Ширина эекрана
         self.SCREEN_H = SCREEN_H# Высота эекрана
         self.where_move = where_move# Сторона в которую движется персонаж
@@ -53,6 +53,14 @@ class Main_Hero(Graphic_elements):
         self.chest_cor = None
         self.tower_cor = None
         self.building_cor = None
+        self.fountain_exp_cor = None
+        self.fountain_mana_cor = None
+        self.shack_cor = None
+
+        self.flag_up = False
+        self.flag_down = False
+        self.flag_right = False
+        self.flag_left = False
 
         self.flag_card = False
         self.flag_city = False
@@ -231,7 +239,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
                 
@@ -248,7 +256,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
                 
@@ -264,7 +272,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
                 
@@ -278,7 +286,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'stone','s',mat_objetcs,6,8,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
 
@@ -289,74 +297,77 @@ class Main_Hero(Graphic_elements):
           
             list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
             list_symbol_cards = ['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П']
-            #Узнаем: рядом ли игрок со зданием
-            if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and self.player_cor[0] != 0 and self.player_cor[1] != 0: 
-            #Здания
-                
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbols_biuldings:
-                    self.near_building = True
-                    self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbols_biuldings:
-                    self.near_building = True
-                    self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbols_biuldings:
-                    self.near_building = True
-                    self.building_cor = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbols_biuldings:
-                    self.near_building = True
-                    self.building_cor = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
-                else:
-                    self.near_building = False
-                    self.building_cor = None
+            if self.player_cor[1] == LENGTH_MAP - 1:
+                self.flag_right = True
+            else:
+                self.flag_right = False
+            if self.player_cor[0] == LENGTH_MAP - 1:
+                self.flag_down = True
+            else:
+                self.flag_down = False
+            if self.player_cor[0] == 0:
+                self.flag_up = True
+            else:
+                self.flag_up = False
+            if self.player_cor[1] == 0:
+                self.flag_left = True
+            else:
+                self.flag_left = False
+        #Здания
+            # if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and self.player_cor[0] != 0 and self.player_cor[1] != 0: 
+            if not self.flag_right and mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbols_biuldings:
+                self.near_building = True
+                self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+            elif not self.flag_left and mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbols_biuldings:
+                self.near_building = True
+                self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+            elif not self.flag_down and mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbols_biuldings:
+                self.near_building = True
+                self.building_cor = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+            elif not self.flag_up and mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbols_biuldings:
+                self.near_building = True
+                self.building_cor = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+            else:
+                self.near_building = False
+                self.building_cor = None
 
-                if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbol_cards:
-                    self.near_card = True
-                    self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
-                    self.card_cor = [self.player_cor[0],self.player_cor[1] + 1]
-                elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbol_cards:
-                    self.near_card = True
-                    self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
-                    self.card_cor = [self.player_cor[0],self.player_cor[1] - 1]
-                elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbol_cards:
-                    self.near_card = True
-                    self.card_name = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
-                    self.card_cor = [self.player_cor[0] + 1,self.player_cor[1]]
-                elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbol_cards:
-                    self.near_card = True
-                    self.card_name = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
-                    self.card_cor = [self.player_cor[0] - 1,self.player_cor[1]]
-                else:
-                    self.near_card = False
-                    self.card_name = None
-                #Сундук
-                self.near_chest,self.chest_cor = self.check_near_build(element='C',mat_objetcs=mat_objetcs,flag_building_cor=True)
-                #Башня
-                self.near_tower,self.tower_cor = self.check_near_build(element='W',mat_objetcs=mat_objetcs,flag_building_cor=True)
-                #Таверна
-                self.near_tavern = self.check_near_build(element='J',sub_element='j',mat_objetcs=mat_objetcs,flag_building_cor=False)
-                #Рынок
-                self.near_market = self.check_near_build(element='O',sub_element='o',mat_objetcs=mat_objetcs,flag_building_cor=False)
-                #Академия
-                self.near_academy = self.check_near_build(element='A',sub_element='a',mat_objetcs=mat_objetcs,flag_building_cor=False)
-                #Город
-                self.near_city = self.check_near_build(element='K',sub_element='k',mat_objetcs=mat_objetcs,flag_building_cor=False)
-                #Башня колдуна
-                self.near_shack = self.check_near_build(element='S',mat_objetcs=mat_objetcs,flag_building_cor=False)
-                #Фонтаны
-                self.near_fountain_mana = self.check_near_build(element='M',mat_objetcs=mat_objetcs,flag_building_cor=False)
-                self.near_fountain_exp = self.check_near_build(element='E',mat_objetcs=mat_objetcs,flag_building_cor=False)
+            if not self.flag_right and mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbol_cards:
+                self.near_card = True
+                self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                self.card_cor = [self.player_cor[0],self.player_cor[1] + 1]
+            elif not self.flag_left and mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbol_cards:
+                self.near_card = True
+                self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                self.card_cor = [self.player_cor[0],self.player_cor[1] - 1]
+            elif not self.flag_down and mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbol_cards:
+                self.near_card = True
+                self.card_name = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                self.card_cor = [self.player_cor[0] + 1,self.player_cor[1]]
+            elif not self.flag_up and mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbol_cards:
+                self.near_card = True
+                self.card_name = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                self.card_cor = [self.player_cor[0] - 1,self.player_cor[1]]
             else:
                 self.near_card = False
-                self.near_academy = False
-                self.near_building = False
-                self.near_chest = False
-                self.near_market = False
-                self.near_fountain_exp = False
-                self.near_fountain_mana = False
-                self.near_shack = False
-                self.near_tavern = False
-                self.near_tower = False
-                self.near_city = False
+                self.card_name = None
+            #Сундук
+            self.near_chest,self.chest_cor = self.check_near_build(element='C',mat_objetcs=mat_objetcs,flag_building_cor=True)
+            #Башня
+            self.near_tower,self.tower_cor = self.check_near_build(element='W',mat_objetcs=mat_objetcs,flag_building_cor=True)
+            #Таверна
+            self.near_tavern = self.check_near_build(element='J',sub_element='j',mat_objetcs=mat_objetcs,flag_building_cor=False)
+            #Рынок
+            self.near_market = self.check_near_build(element='O',sub_element='o',mat_objetcs=mat_objetcs,flag_building_cor=False)
+            #Академия
+            self.near_academy = self.check_near_build(element='A',sub_element='a',mat_objetcs=mat_objetcs,flag_building_cor=False)
+            #Город
+            self.near_city = self.check_near_build(element='K',sub_element='k',mat_objetcs=mat_objetcs,flag_building_cor=False)
+            #Башня колдуна
+            self.near_shack,self.shack_cor = self.check_near_build(element='S',sub_element='s',mat_objetcs=mat_objetcs,flag_building_cor=True)
+            #Фонтаны
+            self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
+            self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
+
             if self.near_card:
                 for obj in list_card_matrix:
                     if obj.NAME == self.card_name:
@@ -554,19 +565,19 @@ class Main_Hero(Graphic_elements):
         self.index_cor = [index_x,index_y] 
     def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None):
         building_cor = None
-        if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == sub_element:
+        if not self.flag_right and (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == sub_element)  :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0],self.player_cor[1] + 1]
-        elif mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == sub_element:
+        elif not self.flag_left and (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == sub_element)  :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0],self.player_cor[1] - 1]
-        elif mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == sub_element:
+        elif not self.flag_down and (mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == sub_element) :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]+1,self.player_cor[1]]
-        elif mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == sub_element:
+        elif not self.flag_up and (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == sub_element) :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]-1,self.player_cor[1]]
