@@ -1,3 +1,4 @@
+from typing import final
 from const import*
 from objects import*
 from Addition_Module import*
@@ -851,6 +852,54 @@ def run_main(dict_arguments):
                 
                 #Если нажата левая кнопка мыши
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if dict_arguments['flag_show_offer']:
+                        if check_mouse_cor_font(text_offer_yes,mouse_cor):
+                            if dict_arguments['resources_dict']['gold_bullion'] >= gold_count_enemy:
+                                dict_arguments['resources_dict']['gold_bullion']-=gold_count_enemy
+                                dict_arguments['flag_show_offer'] = False
+                                dict_arguments['flag_show_dialog'] = False
+                                dict_arguments['flag_offer'] = False
+                                mat_objetcs_lvl1[player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
+                                player_lvl1.flag_move = True
+                            elif dict_arguments['resources_dict']['gold_bullion'] < gold_count_enemy:
+                                dict_arguments['flag_not_enough_gold'] = 0
+                                dict_arguments['flag_show_offer'] = False
+                        if check_mouse_cor_font(text_offer_no,mouse_cor):
+                            dict_arguments['flag_offer'] = False
+                            
+                            dict_arguments['flag_show_offer'] = False
+                            dict_arguments['flag_show_dialog'] = True
+                    if dict_arguments['flag_show_dialog']:
+                        if check_mouse_cor_font(button_leave,mouse_cor):
+                            dict_arguments['flag_show_dialog'] = False
+                            player_lvl1.flag_move = True
+                            player_lvl1.flag_card = False
+                            player_lvl1.near_card = False
+                        elif check_mouse_cor_font(button_fight,mouse_cor):
+                            dict_arguments['flag_show_dialog'] = False
+                            dict_arguments['flag_fight_start'] = True
+                        elif check_mouse_cor_font(button_offer,mouse_cor) and dict_arguments['flag_offer']:
+                            dict_arguments['flag_show_offer'] = True
+                            player_lvl1.flag_card = False
+                            player_lvl1.near_card = False
+                            dict_arguments['flag_show_dialog'] = False
+                            gold_count_enemy = int(characteristic_dict['lvl'])*randint(4,5)-int(characteristic_dict['lvl_skill_diplomacy'])*randint(3,4)+5
+                            text_offer_enemy.font_content = 'Вы хотите подкупить за '+str(gold_count_enemy)+'?'
+                        elif check_mouse_cor_font(button_threat,mouse_cor):
+                            chance_base = randint(0,100)
+                            chance_diplomaty = 33+int(characteristic_dict['lvl_skill_diplomacy'])*5
+                            if chance_diplomaty > 80:
+                                chance_diplomaty = 80
+                            if chance_base <= chance_diplomaty:
+                                dict_arguments['flag_show_dialog'] = False
+                                player_lvl1.flag_move = True
+                                player_lvl1.flag_card = False
+                                player_lvl1.near_card = False
+                                mat_objetcs_lvl1[player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
+                            else:
+                                dict_arguments['flag_fight_start'] = True
+
+
                     #Если заканчиваем ход
                     if check_mouse_cor(button_end_move,mouse_cor) and (player_lvl1.where_move == None or player_lvl1.count_step == 0) and player_lvl1.flag_move:
                         #Обновляем количество ходов игрока
@@ -918,6 +967,7 @@ def run_main(dict_arguments):
                     
                         
                     #Когда нажали на кнопку "К ГЕРОЮ" 
+                    
                     if check_mouse_cor(button_to_hero,mouse_cor):
                         #Перемещаемся к герою 
                         move_to_hero(CENTER_CELL_COR,list_cor_player_xy,list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
@@ -945,11 +995,35 @@ def run_main(dict_arguments):
                             else:
                                 b.path = list_paths_pressed[i][0]
                                 b.image_load()
-                            
-
                             i+=1
+                if dict_arguments['flag_show_dialog']:
+                    for obj in list_buttons_dialog:
+                        if check_mouse_cor_font(obj,mouse_cor):
+                            obj.font_color = 'orange'
+                            obj.font_size = settings['SCREEN_WIDTH']//16
+                        else:
+                            obj.font_color = 'black'
+                            obj.font_size = settings['SCREEN_WIDTH']//19
         # if dict_arguments['scene'] == 'sandwich':
         # print(list_cards_pl)
+        if dict_arguments['flag_fight_start']:
+            dict_arguments['flag_offer'] = True
+            card_number = 0 
+            for card in list_cards_pl:
+                if card[0] != None:
+                    card_number +=1
+            if card_number != 0:
+                for i in range(dict_arguments['number_opened_card']):
+                    dict_arguments['list_cards_en'][i][0] = player_lvl1.flag_card
+                
+                cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
+                dict_arguments['scene'] = 'card_game'
+                player_lvl1.flag_card = False
+            if card_number == 0:
+                dict_arguments['flag_not_enough_cards'] = 0
+                player_lvl1.flag_card = False
+                player_lvl1.near_card = False
+            dict_arguments['flag_fight_start'] = False
         if dict_arguments['scene'] == 'card_game':
             #Алгоритм поочередности ходов игрока и врага
             move_players_algorithm(dict_arguments['cardgame_variables'],list_objects_cards_pl,text_move,list_objects_cards_en,dict_card_characteristics)
@@ -992,22 +1066,11 @@ def run_main(dict_arguments):
             dict_arguments['list_losed_card_enemy'],dict_arguments['list_losed_card_pl'],dict_arguments['trophy_exp'],dict_arguments['trophy_gold'],gold_icon,exp_icon,trophy_recourse_text,button_end_fight,
             dict_arguments['cardgame_variables'])
         if dict_arguments['scene'] == 'lvl1':
+            if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
+                dict_arguments['flag_show_dialog'] = True
+            # if player_lvl1.flag_card != None and player_lvl1.flag_card != False and player_lvl1.where_move == None and player_lvl1.flag_move:
             
-            if player_lvl1.flag_card != None and player_lvl1.flag_card != False and player_lvl1.where_move == None and player_lvl1.flag_move:
-                card_number = 0 
-                for card in list_cards_pl:
-                    if card[0] != None:
-                        card_number +=1
-                if card_number != 0:
-                    for i in range(dict_arguments['number_opened_card']):
-                        dict_arguments['list_cards_en'][i][0] = player_lvl1.flag_card
-                    
-                    cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
-                    dict_arguments['scene'] = 'card_game'
-                    player_lvl1.flag_card = False
-                if card_number == 0:
-                    player_lvl1.flag_card = False
-                    player_lvl1.near_card = False
+                
 
             amount_crystal.font_content = str(dict_arguments['resources_dict']['crystal'])
             amount_food.font_content = str(dict_arguments['resources_dict']['food'])
@@ -1050,7 +1113,18 @@ def run_main(dict_arguments):
                         shack=shack,royal_academy=royal_academy,tavern=tavern,market=market,castle=city,list_cor_castle_xy=list_cor_castle_xy,
                         dvorf=dvorf,klaus=klaus,bard=bard,golem=golem,giant=giant,yamy=yamy,ork=ork,bomb_man=bomb_man,crossbowman=crossbowman,druid=druid,centaur=centaur,ludorn=ludorn,roggy=roggy,surtur=surtur,
                         fountain_mana_empty=fountain_mana_empty,fountain_exp_empty=fountain_exp_empty,mountain=mountain,water=water,list_forest=list_forest)
-            
+            if dict_arguments['flag_show_dialog']:
+                dialog_book.show_image(win)
+                for obj in list_buttons_dialog:
+                    obj.show_text(win)
+                player_lvl1.flag_move = False
+            if dict_arguments['flag_show_offer']:
+                frame_error.show_image(win)
+                text_offer_enemy.show_text(win)
+                text_offer_yes.show_text(win)
+                text_offer_no.show_text(win)
+                
+
             # matrix_image_blind(list_objects_cells_lvl1,mat_objetcs_lvl1,player_lvl1,list_objects_cells_lvl1,player_lvl1.changed_x,player_lvl1.changed_y,win)
             #Отрисовуем полоску справа
             # pygame.draw.rect(win, (255,223,196), (settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*3,0,settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT']))
@@ -1154,12 +1228,13 @@ def run_main(dict_arguments):
                 frame_new_day.show_image(win)        
                 text_new_day.show_text(win)
                 dict_arguments['flag_show_new_day'] += 1
-            else:
+            if dict_arguments['flag_show_new_day'] == 100:
                 player_lvl1.flag_move = True
+                dict_arguments['flag_show_new_day'] = 101
             #Условие нового уровня              
             if characteristic_dict['exp'] >= dict_arguments['max_exp_lvl']:
                 dict_arguments['flag_new_lvl'] = True
-            if  dict_arguments['flag_new_lvl'] and player_lvl1.flag_move:
+            if  dict_arguments['flag_new_lvl'] and dict_arguments['flag_show_new_day'] >= 100:
                 frame_notification.show_image(win)
                 player_lvl1.flag_move = False
                 for obj in list_choice_base_skill:
@@ -1202,7 +1277,7 @@ def run_main(dict_arguments):
                 text_new_lvl.index = 2
                 text_new_lvl.show_text(win)
             #Условие открытого сундука
-            if player_lvl1.flag_draw_chest and player_lvl1.flag_move:
+            if player_lvl1.flag_draw_chest and dict_arguments['flag_show_new_day'] >= 100:
                 player_lvl1.flag_move = False
                 dict_arguments['flag_button_end'] = False
                 player_lvl1.near_chest = False
@@ -1371,6 +1446,10 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_not_enough_gold.show_text(win)
             dict_arguments['flag_not_enough_gold'] +=1
+        if dict_arguments['flag_not_enough_cards'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_not_enough_cards.show_text(win)
+            dict_arguments['flag_not_enough_cards'] +=1
         if dict_arguments['flag_show_error_not_inventory'] <50:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_not_inventory.show_text(win)

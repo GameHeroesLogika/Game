@@ -145,6 +145,7 @@ flag_use_tavern = True
 flag_button_end = False
 flag_market_selected = False
 flag_new_lvl_skill_fight = False
+flag_not_enough_cards = 30
 flag_market_aritfact_no_slots = 30
 flag_not_enough_gold = 30
 flag_show_error_not_inventory = 50
@@ -152,6 +153,7 @@ flag_show_error_locked = 30
 flag_show_error_blocked_camp = 50
 changed_hp = 0
 changed_dmg = 0
+flag_show_dialog = False
 flag_show_error_bought_card = 30
 index_water = 0
 count_animation= 0
@@ -161,6 +163,9 @@ max_exp_lvl = 1000
 max_mana = 1000
 mana_shack = 200
 change_mana_x = 0
+flag_show_offer = False
+flag_offer = True
+flag_fight_start = False
 step_exp_text = settings['SCREEN_WIDTH']//93
 change_exp_x = 0
 flag_show_error_next_week = 30
@@ -204,7 +209,7 @@ list_cells_lvl1 = [list('0000000000000000000000000000000'),
 mat_objetcs_lvl1 =[ list('KkkP00000000БCл0000000000Nnгггг'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B,e,m,s
                     list('kkk0000b0000ллл0000000000nn11гг'),#A,a-academia
                     list('kkk000000000лллHh0000P000000вг1'),#J,j-taverna
-                    list('0p0000000000Mллhh0000000000вв11'),#S-Хижина
+                    list('0p000А000000Mллhh0000000000вв11'),#S-Хижина
                     list('000000000000лл0000000000W0вв00S'),#B-Храм
                     list('000000W00000лл0000000000ввв0000'),#\ / | л
                     list('00000000000лл000000E000вв000000'),#
@@ -415,4 +420,9 @@ dict_arguments = {
     'changed_hp':changed_hp,
     'changed_dmg':changed_dmg,
     'index_water':index_water,
+    'flag_show_dialog':flag_show_dialog,
+    'flag_show_offer':flag_show_offer,
+    'flag_offer':flag_offer,
+    'flag_fight_start':flag_fight_start,
+    'flag_not_enough_cards':flag_not_enough_cards,
 }

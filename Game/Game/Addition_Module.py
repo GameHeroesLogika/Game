@@ -1,3 +1,4 @@
+
 import pygame
 from graphic_elements import Graphic_elements
 from random import randint,choice
@@ -7,6 +8,11 @@ from random import randint,choice
 
 def check_mouse_cor(sprite,mouse_cor):
     if mouse_cor[0] > sprite.X and mouse_cor[0] < sprite.X + sprite.WIDTH and mouse_cor[1] > sprite.Y and mouse_cor[1] < sprite.Y + sprite.HEIGHT:
+        return True
+def check_mouse_cor_font(sprite,mouse_cor):
+    width = len(sprite.font_content)*sprite.font_size//2
+    height = sprite.font_size
+    if mouse_cor[0] > sprite.font_x and mouse_cor[0] < sprite.font_x + width and mouse_cor[1] > sprite.font_y and mouse_cor[1] < sprite.font_y + height:
         return True
 
 

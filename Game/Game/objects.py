@@ -23,7 +23,7 @@ player_lvl1 = Main_Hero(
                         SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
                         where_move=where_move,count_move=int(settings['COUNT_MOVE']),
                         win=win,count_step=int(settings['COUNT_STEP_HERO']))
-
+dialog_book = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_WIDTH']//19,width=settings['SCREEN_WIDTH']//19*14,height=settings['SCREEN_WIDTH']//19*9,path='images/dialog_book.png')
 #Объекты матрицы
 
 
@@ -126,6 +126,14 @@ button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//1.5,
 button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//4,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/camp_hire_b.png')
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
 button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
+
+button_fight = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Сразится',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*1.5)
+button_offer = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Подкупить',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*3)
+button_threat= Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Угроза',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*4.5)
+button_leave = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Уйти',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*6)
+list_buttons_dialog = [button_fight,button_offer,button_threat,button_leave]
+
+
 list_buttons = [button_play,button_help,button_set,button_exit] 
 
 #Текст
@@ -185,6 +193,12 @@ text_not_enough_resource = Font('images/Font/pixel_font.ttf',settings['SCREEN_WI
 text_build_alredy_bought = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Здание уже куплено!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для ошибки нельзя купить здание
 text_buy_previous_build = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//37,'red','Нельзя купить здание!;  Купите предыдущее!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12,index=2)
+#Текст для подкупа противника
+text_offer_enemy = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19)
+text_offer_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+settings['SCREEN_WIDTH']//19*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
+text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+settings['SCREEN_WIDTH']//19*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
+#Текст недостаточно карт
+text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Не хватает карт!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*6.9)
 amount_iron = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*7.7)
@@ -204,6 +218,7 @@ elliot_img = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH'
 player_info = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Эллиот, ур 1',settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*3 + settings['SCREEN_WIDTH']//350,settings['SCREEN_WIDTH']//19*4.7 + settings['SCREEN_WIDTH']//15)
 list_interface_button = [button_to_hero,button_to_castle,button_end_move]
 menu_hero_icon_eliot = Graphic_elements(x=settings['SCREEN_WIDTH']//1.64,y=settings['SCREEN_HEIGHT']//2.08,width=settings['SCREEN_WIDTH']//8.25,height=settings['SCREEN_HEIGHT']//5.1,path='images/game_interface/elliot_img.png')
+
 
 desc = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//2,settings['SCREEN_HEIGHT']//2,path=None)
 desc_artifact = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)

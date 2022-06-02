@@ -371,7 +371,7 @@ class Main_Hero(Graphic_elements):
             if self.near_card:
                 for obj in list_card_matrix:
                     if obj.NAME == self.card_name:
-                        self.show_tip( '[F] Битва с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
+                        self.show_tip( '[F] Поговорить с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
                         if keys[pygame.K_f]:
                             self.flag_card = obj.path.split('/')[-1].split('.')[0]
                             self.near_card = False
