@@ -14,7 +14,30 @@ def check_mouse_cor_font(sprite,mouse_cor):
     height = sprite.font_size
     if mouse_cor[0] > sprite.font_x and mouse_cor[0] < sprite.font_x + width and mouse_cor[1] > sprite.font_y and mouse_cor[1] < sprite.font_y + height:
         return True
-
+def text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=None,settings=None):
+    for resource in list_text_cost:
+        resource_full_name = resource
+        
+        resource = resource.split('/')
+        if resource[0] == 'gold_bullion':
+            finally_text += ' '+resource[1]+' золота'
+        if resource[0] == 'food':
+            finally_text += ' '+resource[1]+' еды'
+        if resource[0] == 'iron_bullion':
+            finally_text += ' '+resource[1]+' железа'
+        if resource[0] == 'crystal': 
+            finally_text += ' '+resource[1]+' кристалла'
+        if resource[0] == 'wood': 
+            finally_text += ' '+resource[1]+' дерева'
+        if resource[0] == 'stone': 
+            finally_text += ' '+resource[1]+' камня'
+        if len(list_text_cost[-1]) != 0:
+            if list_text_cost[-1] != resource_full_name:
+                finally_text +=','
+    finally_text +='.'
+    text_len = len(finally_text)
+    text_x = settings['SCREEN_WIDTH']//2-((text_len//2)*text_obj.font_size)//2
+    return finally_text,text_x
 
         
 def move_map(event, list_map,SCREEN_W,SCREEN_H):
@@ -112,26 +135,38 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     mountain.X = list_objects_cells_lvl1[index_cells].X 
                     mountain.Y = list_objects_cells_lvl1[index_cells].Y 
                     mountain.show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'mountain'))
+                    flag_cell_MM = False
                 elif obj == 'в':
                     water.X = list_objects_cells_lvl1[index_cells].X 
                     water.Y = list_objects_cells_lvl1[index_cells].Y 
                     water.show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'water'))
+                    flag_cell_MM = False
                 elif obj == 'л':
                     list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
                     list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y 
                     list_forest[0].show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                    flag_cell_MM = False
                 elif obj == '\\':
                     list_forest[1].X = list_objects_cells_lvl1[index_cells].X 
                     list_forest[1].Y = list_objects_cells_lvl1[index_cells].Y 
                     list_forest[1].show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                    flag_cell_MM = False
                 elif obj == '/':
                     list_forest[2].X = list_objects_cells_lvl1[index_cells].X 
                     list_forest[2].Y = list_objects_cells_lvl1[index_cells].Y 
                     list_forest[2].show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                    flag_cell_MM = False
                 elif obj == '|':
                     list_forest[3].X = list_objects_cells_lvl1[index_cells].X 
                     list_forest[3].Y = list_objects_cells_lvl1[index_cells].Y 
                     list_forest[3].show_image(win)
+                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                    flag_cell_MM = False
                 #Начало отрисовка на матрице карт 
                 elif obj =='А':
                     crossbowman.X = list_objects_cells_lvl1[index_cells].X

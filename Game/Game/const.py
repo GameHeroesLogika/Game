@@ -157,6 +157,9 @@ flag_show_dialog = False
 flag_show_error_bought_card = 30
 index_water = 0
 count_animation= 0
+count_dialog_offer = 50
+count_dialog_fight = 50
+count_dialog_threat = 50
 flag_church = True
 skill_cost = 200
 max_exp_lvl = 1000
@@ -172,6 +175,14 @@ flag_show_error_next_week = 30
 flag_buy_skill = True
 flag_use_royal_academy = True
 number_opened_card = 2
+count_dialog = 50
+flag_dialog_offer_yes = False
+flag_dialog_offer_no = False
+flag_dialog_threat_win = False
+flag_dialog_threat_lose = False
+flag_dialog_fight = False
+
+
 #Список из клеток первого уровня
 list_cells_lvl1 = [list('0000000000000000000000000000000'),
                    list('00000000000000000tttttttt000000'),
@@ -209,9 +220,9 @@ list_cells_lvl1 = [list('0000000000000000000000000000000'),
 mat_objetcs_lvl1 =[ list('KkkP00000000БCл0000000000Nnгггг'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B,e,m,s
                     list('kkk0000b0000ллл0000000000nn11гг'),#A,a-academia
                     list('kkk000000000лллHh0000P000000вг1'),#J,j-taverna
-                    list('0p000А000000Mллhh0000000000вв11'),#S-Хижина
+                    list('0p0000000000Mллhh0000000000вв11'),#S-Хижина
                     list('000000000000лл0000000000W0вв00S'),#B-Храм
-                    list('000000W00000лл0000000000ввв0000'),#\ / | л
+                    list('00000W000000лл0000000000ввв0000'),#\ / | л
                     list('00000000000лл000000E000вв000000'),#
                     list('00000000000лл0000000000в0000000'),#
                     list('000Jj000лл00000000000ввв0000000'),#
@@ -219,20 +230,20 @@ mat_objetcs_lvl1 =[ list('KkkP00000000БCл0000000000Nnгггг'),#M,p,P,E,g,i,c
                     list('Гл0ллллллл00000000000вв0000000C'),#
                     list('Cллллллллл000000000000в00000000'),#
                     list('000000000000000000000Ав0000E000'),#
-                    list('S0000000000000000000в0в00000000'),#
-                    list('000000Dd000000ввв00вв0000000000'),#
-                    list('000000dd000000в0вввв00Oo0000000'),#
-                    list('00000000000000в00в0000oo0000000'),#
-                    list('0000000000000ввXxв000P000000000'),#
-                    list('000000000000вв0xxв0000000000000'),
-                    list('00000000E000в0000вв000000000000'),
-                    list('00P00000000Г00000Г0000000000000'),
-                    list('000000000000вRr00вв000000000ллА'),
-                    list('0Ff000000000вrr0ввC00000000ллл0'),
-                    list('0ff00000000вввввв000000лллл0000'),
-                    list('00000000000в0000000000Wлллл0000'),
-                    list('00000000вввв0000000000лл00000лC'),
-                    list('Б000000вв0000000000000лл000лллл'),
+                    list('S000Б000000000000000в0в00000000'),#
+                    list('0000М0Dd000000ввв00вв0000000000'),#
+                    list('0000Г0dd000000в0вввв00Oo0000000'),#
+                    list('0000Я000000000в00в0000oo0000000'),#
+                    list('0000П00000000ввXxв000P000000000'),#
+                    list('0000А0000000вв0xxв0000000000000'),
+                    list('0000К000E000в0000вв000000000000'),
+                    list('00P0О000000Г00000Г0000000000000'),
+                    list('0000В0000000вRr00вв000000000ллА'),
+                    list('0Ff0Р0000000вrr0ввC00000000ллл0'),
+                    list('0ff0С000000вввввв000000лллл0000'),
+                    list('0000Л000000в0000000000Wлллл0000'),
+                    list('0000Д000вввв0000000000лл00000лC'),
+                    list('Б000Е00вв0000000000000лл000лллл'),
                     list('Cвв000вв00000000000000ллГллл000'),
                     list('ввввW0в000000Aa0000000лл0лл0Ззз'), 
                     list('ввввввв000000aa000000лл00лл0ззз'), 
@@ -249,6 +260,24 @@ for el in range(len(list_cells_lvl1)):
             list_cells_lvl1[el][element] = choice(list_flower_element)
 #Список, в которм будут храниться объекты клеток
 list_objects_cells_lvl1 = []
+dict_card_dialog = {
+                    'бард':'1',
+                    'клаус':'2',
+                    'гигант':'3',
+                    'ями':'4',
+                    'подрывник':'5',
+                    'арбалетчик':'6',
+                    'кентавр':'7',
+                    'орк':'8',
+                    'дворф':'9',
+                    'рогги':'10',
+                    'суртур':'11',
+                    'лудорн':'12',
+                    'друид':'13',
+                    'голем':'14',
+                    'рудорн':'15',
+
+}
 
 dict_card_characteristics = {
                             'бард':[1,2,'earth'],
@@ -425,4 +454,10 @@ dict_arguments = {
     'flag_offer':flag_offer,
     'flag_fight_start':flag_fight_start,
     'flag_not_enough_cards':flag_not_enough_cards,
+    'count_dialog':count_dialog,
+    'flag_dialog_offer_yes':flag_dialog_offer_yes,
+    'flag_dialog_offer_no':flag_dialog_offer_no,
+    'flag_dialog_threat_win':flag_dialog_threat_win,
+    'flag_dialog_threat_lose':flag_dialog_threat_lose,
+    'flag_dialog_fight':flag_dialog_fight,
 }
