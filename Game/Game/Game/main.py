@@ -9,8 +9,10 @@ from event_functions_cardgame import*
 from sounds_cardgame import*
 from Text_cardgame import*
 from draw_function import draw_all
-pygame.init()
+from profilehooks import profile
 
+pygame.init()
+@profile
 #Основная фунуция
 def run_main(dict_arguments):
     water = choice(list_water)
@@ -1098,13 +1100,13 @@ def run_main(dict_arguments):
             # Отрисовуем клетки
             list_xy = [0,0]
             for cell in list_objects_cells_lvl1:
-                
-                for cor in player_lvl1.list_studied_map:
-                    if list_xy == cor:
-                        dict_arguments['draw_cells']=True
-                        break
-                    else: 
-                        dict_arguments['draw_cells'] = False
+                if check_rect_cell(cell=cell,rect=win_rect):
+                    for cor in player_lvl1.list_studied_map:
+                        if list_xy == cor:
+                            dict_arguments['draw_cells']=True
+                            break
+                        else: 
+                            dict_arguments['draw_cells'] = False
                 list_xy[0]+= 1
                 if list_xy[0] == LENGTH_MAP_LVL1:
                     list_xy[0] = 0
@@ -1128,6 +1130,7 @@ def run_main(dict_arguments):
                         shack=shack,royal_academy=royal_academy,tavern=tavern,market=market,castle=city,list_cor_castle_xy=list_cor_castle_xy,
                         dvorf=dvorf,klaus=klaus,bard=bard,golem=golem,giant=giant,yamy=yamy,ork=ork,bomb_man=bomb_man,crossbowman=crossbowman,druid=druid,centaur=centaur,ludorn=ludorn,roggy=roggy,surtur=surtur,
                         fountain_mana_empty=fountain_mana_empty,fountain_exp_empty=fountain_exp_empty,mountain=mountain,water=water,list_forest=list_forest)
+            fog_war_func(mat_objetcs_lvl1,X_FRAME_MM,Y_FRAME_MM,player_lvl1.list_studied_map,fog_war,list_objects_cells_lvl1,win,dict_arguments['list_cells_MM'],LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP)
             if dict_arguments['flag_show_dialog']:
                 if text_card == None:
                     text_card = dict_card_dialog[player_lvl1.flag_card]
@@ -1553,6 +1556,7 @@ def run_main(dict_arguments):
         if dict_arguments['index_water'] % 10 == 0:
             water = choice(list_water)
         time.tick(int(settings['FPS']))
+        print(time.get_fps())
         #Обновляем экран
         pygame.display.flip()
 

@@ -15,7 +15,7 @@ if settings['FULLSCREEN'] == True:
     win = pygame.display.set_mode((settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT']),pygame.FULLSCREEN)#
 elif settings['FULLSCREEN'] == False:
     win = pygame.display.set_mode((settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT']))#
-
+win_rect = Rect(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
 player_lvl1 = Main_Hero(
                         x=0,y=0,
                         height=settings['SCREEN_WIDTH']//19,width=settings['SCREEN_WIDTH']//19,

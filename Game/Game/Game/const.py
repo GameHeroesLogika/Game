@@ -18,6 +18,7 @@ with open('settings.txt','r') as file:
             settings[text[0]] = int(text[1])
         else:
             settings[text[0]] = text[1]
+
 if settings['FULLSCREEN'] == 'True':
     settings['FULLSCREEN'] = True
 else:
