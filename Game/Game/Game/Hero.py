@@ -232,7 +232,7 @@ class Main_Hero(Graphic_elements):
                     mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
                 self.player_cor[0] += 1
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_RIGHT] and self.flag_move:
+            if keys[pygame.K_RIGHT] and self.flag_move and self.where_move == None:
                 #Если мы стоим не с правого краю карты
                 if self.player_cor[1] != LENGTH_MAP - 1:
                     #Вызываем функции подбора ресрусов
@@ -251,7 +251,7 @@ class Main_Hero(Graphic_elements):
                         #Указываем, что игрок переместился на клетку вправо
                     
             #Если нажата клавиша ВЛЕВО
-            elif keys[pygame.K_LEFT] and self.flag_move:
+            elif keys[pygame.K_LEFT] and self.flag_move and self.where_move == None:
                 if self.player_cor[1] != 0:
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
@@ -266,7 +266,7 @@ class Main_Hero(Graphic_elements):
 
                         
             #Если нажата клавиша ВВЕРХ
-            elif keys[pygame.K_UP] and self.flag_move:
+            elif keys[pygame.K_UP] and self.flag_move and self.where_move == None:
                 if self.player_cor[0] != 0:
                     
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
@@ -281,7 +281,7 @@ class Main_Hero(Graphic_elements):
                         self.count_step -= 1
                         
             #Если нажата клавиша ВНИЗ
-            elif keys[pygame.K_DOWN] and self.flag_move:
+            elif keys[pygame.K_DOWN] and self.flag_move and self.where_move == None:
                 if self.player_cor[0] != LENGTH_MAP - 1:
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
@@ -497,6 +497,7 @@ class Main_Hero(Graphic_elements):
 
     # Метод тумана войны 
     def blind_move(self,index,flag_player): 
+        # print(len(self.list_studied_map))
         #Константы координат персонажа
         if flag_player[2]:
             index_y = self.player_cor[0]
@@ -514,18 +515,30 @@ class Main_Hero(Graphic_elements):
         #Движение вправо 
             self.index_cor[0]+=i+1
             list_cor= [self.index_cor[0],self.index_cor[1]]
-            if not self.index_cor in self.list_studied_map:
+            if list_cor[0] < 0:
+                list_cor[0] = list_cor[0]*-1
+            if list_cor[1] < 0:
+                list_cor[1] = list_cor[1]*-1
+            if not list_cor in self.list_studied_map:
                 self.list_studied_map.append(list_cor)
             #Движение вправо, дальше по вертикали 
             for number in range(index):
                 self.index_cor[1]+=-number-1
                 list_cor= [self.index_cor[0],self.index_cor[1]]
-                if not self.index_cor in self.list_studied_map:
+                if list_cor[0] < 0:
+                    list_cor[0] = list_cor[0]*-1
+                if list_cor[1] < 0:
+                    list_cor[1] = list_cor[1]*-1
+                if not list_cor in self.list_studied_map:
                     self.list_studied_map.append(list_cor)
                 self.index_cor[1] = index_y
                 self.index_cor[1]+=number+1
                 list_cor= [self.index_cor[0],self.index_cor[1]]
-                if not self.index_cor in self.list_studied_map:
+                if list_cor[0] < 0:
+                    list_cor[0] = list_cor[0]*-1
+                if list_cor[1] < 0:
+                    list_cor[1] = list_cor[1]*-1
+                if not list_cor in self.list_studied_map:
                     self.list_studied_map.append(list_cor)
                 self.index_cor[1] = index_y
             self.index_cor = [index_x,index_y] 
@@ -533,34 +546,61 @@ class Main_Hero(Graphic_elements):
             #Движение влево
             self.index_cor[0]+=-i-1
             list_cor= [self.index_cor[0],self.index_cor[1]]
-            if not self.index_cor in self.list_studied_map:
-                self.list_studied_map.append(self.index_cor)
+            if list_cor[0] < 0:
+                list_cor[0] = list_cor[0]*-1
+            if list_cor[1] < 0:
+                list_cor[1] = list_cor[1]*-1
+            if not list_cor in self.list_studied_map:
+                self.list_studied_map.append(list_cor)
             #Движение вправо, дальше по вертикали 
             for number in range(index):
                 self.index_cor[1]+=-number-1
                 list_cor= [self.index_cor[0],self.index_cor[1]]
-                if not self.index_cor in self.list_studied_map:
+                if list_cor[0] < 0:
+                    list_cor[0] = list_cor[0]*-1
+                if list_cor[1] < 0:
+                    list_cor[1] = list_cor[1]*-1
+                if not list_cor in self.list_studied_map:
                     self.list_studied_map.append(list_cor)
                 self.index_cor[1] = index_y
                 self.index_cor[1]+=number+1
                 list_cor= [self.index_cor[0],self.index_cor[1]]
-                if not self.index_cor in self.list_studied_map:
+                if list_cor[0] < 0:
+                    list_cor[0] = list_cor[0]*-1
+                if list_cor[1] < 0:
+                    list_cor[1] = list_cor[1]*-1
+                if not list_cor in self.list_studied_map:
                     self.list_studied_map.append(list_cor)
                 self.index_cor[1] = index_y
             self.index_cor = [index_x,index_y] 
             #Движение вниз
             self.index_cor[1]+=i+1
-            if not self.index_cor in self.list_studied_map:
-                self.list_studied_map.append(self.index_cor)
+            list_cor= [self.index_cor[0],self.index_cor[1]]
+            if list_cor[0] < 0:
+                list_cor[0] = list_cor[0]*-1
+            if list_cor[1] < 0:
+                list_cor[1] = list_cor[1]*-1
+            if not list_cor in self.list_studied_map:
+                self.list_studied_map.append(list_cor)
             self.index_cor = [index_x,index_y] 
             #Движение вверх
             self.index_cor[1]+=-i-1
-            if not self.index_cor in self.list_studied_map:
-                self.list_studied_map.append(self.index_cor)
+            list_cor= [self.index_cor[0],self.index_cor[1]]
+            if list_cor[0] < 0:
+                list_cor[0] = list_cor[0]*-1
+            if list_cor[1] < 0:
+                list_cor[1] = list_cor[1]*-1
+            if not list_cor in self.list_studied_map:
+                self.list_studied_map.append(list_cor)
             self.index_cor = [index_x,index_y] 
             #Координаты персонажа не двигаясь 
-            if not self.index_cor in self.list_studied_map: 
-                self.list_studied_map.append(self.index_cor)
+            list_cor= [self.index_cor[0],self.index_cor[1]]
+            if list_cor[0] < 0:
+                list_cor[0] = list_cor[0]*-1
+            if list_cor[1] < 0:
+                list_cor[1] = list_cor[1]*-1
+            if not list_cor in self.list_studied_map: 
+                self.list_studied_map.append(list_cor)
             
         self.index_cor = [index_x,index_y] 
     def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None):

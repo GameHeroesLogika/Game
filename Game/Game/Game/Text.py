@@ -18,6 +18,7 @@ class Font():
         if self.font_content != None and self.index != 1:
             self.font_content = self.font_content.split(';')
     def show_text(self,win):
+        
         for i in range(self.index):
             self.font = pygame.font.Font(self.font_path,self.font_size)
             if self.index == 1:

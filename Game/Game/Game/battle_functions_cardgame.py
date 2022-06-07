@@ -7,7 +7,7 @@ def cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_ob
         obj.path = None
     #Даем картам игрока начальные параметры
     for i in range(len(dict_arguments['list_cards_en'])):
-        if  dict_arguments['list_cards_en'][i][0] != None:
+        if  dict_arguments['list_cards_en'][i][0] != None and dict_arguments['list_cards_en'][i][0] != type(True):
             list_objects_cards_en[i].path = 'images/cards/'+dict_arguments['list_cards_en'][i][0]+'.png'
             list_objects_cards_en[i].DESC_PATH = 'images/cards/desc/desc_' +dict_arguments['list_cards_en'][i][0]+'.png'
             list_objects_cards_en[i].NAME = dict_arguments['list_cards_en'][i][0]
@@ -16,7 +16,7 @@ def cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_ob
             list_objects_cards_en[i].sound_card.path = 'sounds/'+ dict_arguments['list_cards_en'][i][0]+'_sound.wav'
     #Даем картам врага начальные параметры
     for i in range(len(list_cards_pl)):
-        if  list_cards_pl[i][0] != None:
+        if  list_cards_pl[i][0] != None and dict_arguments['list_cards_en'][i][0] != type(True):
             list_objects_cards_pl[i].path = 'images/cards/'+list_cards_pl[i][0]+'.png'
             list_objects_cards_pl[i].DESC_PATH = 'images/cards/desc/desc_' +list_cards_pl[i][0]+'.png'
             list_objects_cards_pl[i].NAME = list_cards_pl[i][0]

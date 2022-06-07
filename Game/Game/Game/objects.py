@@ -204,8 +204,9 @@ text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'
 #Текст недостаточно карт
 text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Не хватает карт!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для карт 
-text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19)
-
+text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19,index=2)
+#Текст для события
+text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',frame_notification.X+settings['SCREEN_WIDTH']//19,frame_notification.Y+settings['SCREEN_WIDTH']//19)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*6.9)
 amount_iron = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*7.7)

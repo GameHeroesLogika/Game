@@ -855,6 +855,7 @@ def run_main(dict_arguments):
                 
                 #Если нажата левая кнопка мыши
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    #Окно предложения сделки 
                     if dict_arguments['flag_show_offer']:
                         
                         if check_mouse_cor_font(text_offer_yes,mouse_cor):
@@ -879,25 +880,25 @@ def run_main(dict_arguments):
                             text_card = 'Чел ты...'
                             dict_arguments['flag_show_dialog'] = True
                     if dict_arguments['flag_show_dialog']:
-                        if check_mouse_cor_font(button_leave,mouse_cor):
+                        if check_mouse_cor_font(button_leave,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_show_dialog'] = False
-                            player_lvl1.flag_move = True
                             player_lvl1.flag_card = False
+                            player_lvl1.flag_move = True
                             player_lvl1.near_card = False
                             text_card = None
-                        elif check_mouse_cor_font(button_fight,mouse_cor):
+                        elif check_mouse_cor_font(button_fight,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_dialog_fight'] = True
                             text_card = 'Кровавая арена смерти'
                             dict_arguments['flag_show_dialog'] = True
                             dict_arguments['count_dialog'] = 0
-                        elif check_mouse_cor_font(button_offer,mouse_cor) and dict_arguments['flag_offer']:
+                        elif check_mouse_cor_font(button_offer,mouse_cor) and dict_arguments['flag_offer'] and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_show_offer'] = True
                             player_lvl1.flag_card = False
                             player_lvl1.near_card = False
                             dict_arguments['flag_show_dialog'] = False
                             gold_count_enemy = int(characteristic_dict['lvl'])*randint(4,5)-int(characteristic_dict['lvl_skill_diplomacy'])*randint(3,4)+5
                             text_offer_enemy.font_content = 'Вы хотите подкупить за '+str(gold_count_enemy)+'?'
-                        elif check_mouse_cor_font(button_threat,mouse_cor):
+                        elif check_mouse_cor_font(button_threat,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             
                             chance_base = randint(0,100)
                             chance_diplomaty = 33+int(characteristic_dict['lvl_skill_diplomacy'])*5
@@ -922,6 +923,8 @@ def run_main(dict_arguments):
                         player_lvl1.where_move = None
                         dict_arguments['flag_button_end'] = True
                         dict_arguments['flag_show_new_day'] = 0
+                        if randint(0,100) <= int(settings['DAILY_EVENT']):
+                            dict_arguments['daily_event'] = choice(list_daily_events)
                         #Начисляем русурсы за захваченые здания
                         resourse_accural(player_lvl1.list_capture_buildings_symbol, dict_arguments['resources_dict'])
                     if dict_arguments['artifact_chest'] != None and check_mouse_cor(dict_arguments['artifact_chest'],mouse_cor):
@@ -1031,7 +1034,7 @@ def run_main(dict_arguments):
             if card_number != 0:
                 for i in range(dict_arguments['number_opened_card']):
                     dict_arguments['list_cards_en'][i][0] = player_lvl1.flag_card
-                
+                print(dict_arguments['list_cards_en'])
                 cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
                 dict_arguments['scene'] = 'card_game'
                 player_lvl1.flag_card = False
@@ -1083,6 +1086,46 @@ def run_main(dict_arguments):
             dict_arguments['list_losed_card_enemy'],dict_arguments['list_losed_card_pl'],dict_arguments['trophy_exp'],dict_arguments['trophy_gold'],gold_icon,exp_icon,trophy_recourse_text,button_end_fight,
             dict_arguments['cardgame_variables'])
         if dict_arguments['scene'] == 'lvl1':
+            #Условие события 
+            if dict_arguments['daily_event'] != None:
+                dict_arguments['count_daily_event'] = 0
+                if dict_arguments['daily_event'] == 'goblin':
+                    list_resource = list()
+                    text_daily_event.font_content = '           Внимание!;На своём пути вы обнаружили ;тело гоблина. ;Обыскав его вы находите:;  '
+                    text_daily_event.index = 5
+                    for i in range(randint(1,4)):
+                        resource = choice(list(dict_arguments['resources_dict'].keys()))
+                        resoruce_count = randint(1,3)
+                        dict_arguments['resources_dict'][resource] += resoruce_count
+                        list_resource.append(str(str(resource)+'/'+str(resoruce_count)))
+                    text_daily_event.font_content += text_cost(list_resource,finally_text='',text_obj=text_daily_event,settings=settings)[0]
+                    text_daily_event.font_content = text_daily_event.font_content.split(';')
+                    print(text_daily_event.font_content)
+
+                        
+
+                if dict_arguments['daily_event'] == 'gold':
+                    text_daily_event.font_content = '           Внимание!;Прошлой ночью метеорологами был ;зафиксирован золотопад. ;;Шанс найти золото увеличен.'.split(';')
+                    text_daily_event.index = 5
+                    for i in range(5):
+                        while True:
+                            random_y = randint(0,LENGTH_MAP_LVL1-1)
+                            random_x = randint(0,LENGTH_MAP_LVL1-1)
+                            if mat_objetcs_lvl1[random_y][random_x] == '0' and not [random_y,random_x] in list_untochable_cells:
+                                mat_objetcs_lvl1[random_y][random_x] = 'g'
+                                break
+                    print(text_daily_event.font_content)
+                if dict_arguments['daily_event'] == 'enemy':
+                    text_daily_event.font_content = '           Внимание!;За последнее время уровень ;преступности вырос. ;;Шанс наткнутся на разбойников;увеличен.'.split(';')
+                    text_daily_event.index = 6
+                    for i in range(1,3):
+                        while True:
+                            random_y = randint(0,LENGTH_MAP_LVL1-1)
+                            random_x = randint(0,LENGTH_MAP_LVL1-1)
+                            if mat_objetcs_lvl1[random_y][random_x] == '0' and not [random_y,random_x] in list_untochable_cells:
+                                mat_objetcs_lvl1[random_y][random_x] = choice(['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П'])
+                                break
+                dict_arguments['daily_event'] = None
             if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
                 dict_arguments['flag_show_dialog'] = True
             # if player_lvl1.flag_card != None and player_lvl1.flag_card != False and player_lvl1.where_move == None and player_lvl1.flag_move:
@@ -1524,8 +1567,13 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_buy_previous_build.show_text(win)
             dict_arguments['flag_buy_previous_build'] += 1  
+        if dict_arguments['count_daily_event'] <80 and player_lvl1.flag_move:
+            generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_daily_event.show_text(win)
+            dict_arguments['count_daily_event'] += 1  
         if dict_arguments['count_dialog'] <50:
-            print(dict_arguments['count_dialog'])
+            for obj in list_buttons_dialog:
+                obj.font_content = ''
             dict_arguments['count_dialog']+=1
             if dict_arguments['count_dialog'] == 50:
                 if dict_arguments['flag_dialog_offer_yes']:
@@ -1551,13 +1599,16 @@ def run_main(dict_arguments):
                     dict_arguments['flag_show_dialog'] = False
                     dict_arguments['flag_dialog_fight'] = False
                 dict_arguments['flag_offer'] = True
+                for obj in list_buttons_dialog:
+                    obj.font_content = obj.start_content
 
         dict_arguments['index_water'] +=1
         if dict_arguments['index_water'] % 10 == 0:
             water = choice(list_water)
         time.tick(int(settings['FPS']))
-        print(time.get_fps())
+        # print(time.get_fps())
         #Обновляем экран
+        
         pygame.display.flip()
 
 run_main(dict_arguments)
