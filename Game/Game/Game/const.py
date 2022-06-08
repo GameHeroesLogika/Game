@@ -162,6 +162,7 @@ count_dialog_offer = 50
 count_dialog_fight = 50
 count_daily_event = 80
 count_dialog_threat = 50
+flag_fight_start_post = False
 flag_church = True
 skill_cost = 200
 max_exp_lvl = 1000
@@ -183,10 +184,10 @@ flag_dialog_offer_no = False
 flag_dialog_threat_win = False
 flag_dialog_threat_lose = False
 flag_dialog_fight = False
-
+count_daily_event_post_fight = 80
 daily_event = None
 
-list_daily_events = ['goblin','enemy','gold']
+list_daily_events = ['post_fight']#'goblin','enemy','gold',
 #Список из клеток первого уровня
 list_cells_lvl1 = [list('0000000000000000000000000000000'),
                    list('00000000000000000tttttttt000000'),
@@ -328,6 +329,7 @@ dict_card_price = {
 }
 city_cor_enter = [3,15]
 list_cards_pl = [[None,1,2],['гигант',10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
+list_cards_pl_post_army = [[None,1,2],[None,10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
 list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
 list_cards_en = [['кентавр',10,3],[None,9,3],[None,10,0],[None,10,1],[None,5,2],[None,0,0]]
 list_cards_menu_hero = list()
@@ -468,4 +470,6 @@ dict_arguments = {
     'flag_dialog_fight':flag_dialog_fight,
     'daily_event':daily_event,
     'count_daily_event':count_daily_event,
+    'flag_fight_start_post':flag_fight_start_post,
+    'count_daily_event_post_fight':count_daily_event_post_fight,
 }

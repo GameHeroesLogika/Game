@@ -136,7 +136,8 @@ button_offer = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'b
 button_threat= Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Угроза',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*4.5)
 button_leave = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Уйти',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*6)
 list_buttons_dialog = [button_fight,button_offer,button_threat,button_leave]
-
+#Текст для кнопки гарнизона
+button_post_army = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19-button_menu_hero_back.HEIGHT,settings['SCREEN_WIDTH']//19*2.5,settings['SCREEN_WIDTH']//19,'images/post_army_b.png')
 
 list_buttons = [button_play,button_help,button_set,button_exit] 
 
@@ -207,6 +208,8 @@ text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH
 text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19,index=2)
 #Текст для события
 text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',frame_notification.X+settings['SCREEN_WIDTH']//19,frame_notification.Y+settings['SCREEN_WIDTH']//19)
+
+
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*6.9)
 amount_iron = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*7.7)
@@ -250,6 +253,7 @@ city_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIG
 scene_camp = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/scene_camp.bmp')
 scene_altar = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/altar_scene.png')
 scene_castle = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/castle_scene.png')
+scene_post_army  = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/post_army.png')
 #Звук отткрытия книги
 sound_book = Sounds('sounds/book_opened.wav', settings['SOUNDS_VOLUME'])
 
@@ -393,7 +397,13 @@ list_slots_market = [
     Graphic_elements(x=settings['SCREEN_WIDTH']//1.18-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//1.22,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='resource',path='images/resources/wood.png'),
 ]
 amount_gold_market = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'red','0',settings['SCREEN_WIDTH']//1.8, settings['SCREEN_HEIGHT']//1.07)
-
+list_cards_post_army = []
+for i in range(6):
+    card = Graphic_elements(x=settings['SCREEN_WIDTH']//37.64+i*settings['SCREEN_WIDTH']//5.75,y=settings['SCREEN_HEIGHT']//5.07,width=settings['SCREEN_WIDTH']//13.06,height=settings['SCREEN_HEIGHT']//4,path=None)
+    list_cards_post_army.append(card)
+for i in range(6):
+    card = Graphic_elements(x=settings['SCREEN_WIDTH']//37.64+i*settings['SCREEN_WIDTH']//5.75,y=settings['SCREEN_HEIGHT']//1.68,width=settings['SCREEN_WIDTH']//13.06,height=settings['SCREEN_HEIGHT']//4,path=None)
+    list_cards_post_army.append(card)
 
 list_artifact_graphic_elements = list()
 for i in list_matrix_artifact:

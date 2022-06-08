@@ -18,6 +18,10 @@ def run_main(dict_arguments):
     water = choice(list_water)
     time = pygame.time.Clock()
     while dict_arguments['game']:
+        if dict_arguments['cardgame_variables']['who_won'] == 'enemy' and dict_arguments['flag_fight_start_post'] : 
+            dict_arguments['flag_fight_start_post'] = False
+            print('loser')
+            dict_arguments['game'] = False
         effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments)
         dict_arguments['dict_artifact_on_past'] = dict_artifact_on.copy()
         for obj in list_text_lvl_base_skills:
@@ -46,7 +50,8 @@ def run_main(dict_arguments):
                         if dict_arguments['cardgame_variables']['who_won'] == 'player':
                             dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
                             characteristic_dict['exp']+=dict_arguments['trophy_exp']
-                            mat_objetcs_lvl1[player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
+                            if dict_arguments['flag_fight_start_post'] != True:
+                                mat_objetcs_lvl1[player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
                         if dict_arguments['cardgame_variables']['who_won'] != 'player':
                             mat_objetcs_lvl1[player_lvl1.player_cor[0]][player_lvl1.player_cor[1]] = '0'
                             player_lvl1.player_cor = city_cor_enter
@@ -97,6 +102,7 @@ def run_main(dict_arguments):
                         dict_arguments['list_losed_card_pl'] = list()
                         create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
                         player_lvl1.flag_move = True
+                        dict_arguments['flag_fight_start_post'] = False
             if dict_arguments['scene'] == 'city':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if check_mouse_cor(castle,mouse_cor):
@@ -110,12 +116,21 @@ def run_main(dict_arguments):
                     if check_mouse_cor(button_city_back,mouse_cor):
                         player_lvl1.flag_city = False
                         dict_arguments['scene'] = 'lvl1'
+                    if check_mouse_cor(button_post_army,mouse_cor):
+                        dict_arguments['scene'] = 'post_army'
+                        create_icon_card_post_army(list_cards_post_army,list_cards_pl,list_cards_pl_post_army)
                 if check_mouse_cor(button_city_back,mouse_cor):
                     button_city_back.path = 'images/menu_hero_back_b.png'
                     button_city_back.image_load()
                 else:
                     button_city_back.path = 'images/menu_hero_back_y.png'
                     button_city_back.image_load()
+                if check_mouse_cor(button_post_army,mouse_cor):
+                    button_post_army.path = 'images/post_army_y.png'
+                    button_post_army.image_load()
+                else:
+                    button_post_army.path = 'images/post_army_b.png'
+                    button_post_army.image_load()
                 if dict_arguments['dict_bought_city']['church'] and dict_arguments['flag_church']:
                     characteristic_dict['lvl_skill_domesticpolitics']+=5 
                     dict_arguments['flag_church'] = False
@@ -124,7 +139,66 @@ def run_main(dict_arguments):
                         dict_card_characteristics[key][0]+=3
                         dict_card_characteristics[key][1]+=3
                     dict_arguments['flag_forge'] = False
-        
+
+            if dict_arguments['scene'] == 'post_army':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if check_mouse_cor(button_city_back,mouse_cor):
+                        dict_arguments['scene'] = 'city'
+                if check_mouse_cor(button_city_back,mouse_cor):
+                    button_city_back.path = 'images/menu_hero_back_b.png'
+                    button_city_back.image_load()
+                else:
+                    button_city_back.path = 'images/menu_hero_back_y.png'
+                    button_city_back.image_load()
+                if event.type == pygame.MOUSEMOTION:
+                    pos  = pygame.mouse.get_pos()
+                    if dict_arguments['card_pressed'] != None:
+                        dict_arguments['card_pressed'].X = pos[0] - dict_arguments['card_pressed'].WIDTH//2
+                        dict_arguments['card_pressed'].Y = pos[1] - dict_arguments['card_pressed'].HEIGHT//2
+                        dict_arguments['index_card'] = list_cards_post_army.index(dict_arguments['card_pressed'])
+                for obj in list_cards_post_army:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        if check_mouse_cor(obj,mouse_cor=mouse_cor):
+                            dict_arguments['card_pressed'] = obj
+                    if obj != dict_arguments['card_pressed'] and obj.path != None:
+                        obj.show_image(win)
+                    if dict_arguments['card_pressed'] != None and dict_arguments['card_pressed'].path != None:
+                        dict_arguments['card_pressed'].show_image(win)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if dict_arguments['card_pressed'] != None:
+                        for sprite in list_cards_post_army:
+                            if check_mouse_cor(sprite,mouse_cor=mouse_cor) and dict_arguments['index_card'] != list_cards_post_army.index(sprite):
+                                if dict_arguments['card_pressed'].path != None:
+                                    change_images(dict_arguments['card_pressed'], sprite)
+                                    index_choice_card = list_cards_post_army.index(sprite)
+                                    index_pressed_card = list_cards_post_army.index(dict_arguments['card_pressed'])
+                                    if index_choice_card > 5:
+                                        if index_pressed_card > 5:
+                                            name_card = list_cards_pl[index_pressed_card-6][0]
+                                            list_cards_pl[index_pressed_card-6][0] = list_cards_pl[index_choice_card-6][0]
+                                            list_cards_pl[index_choice_card-6][0] = name_card
+                                        if index_pressed_card <= 5:
+                                            name_card = list_cards_pl_post_army[index_pressed_card][0]
+                                            list_cards_pl_post_army[index_pressed_card][0] = list_cards_pl[index_choice_card-6][0]
+                                            list_cards_pl[index_choice_card-6][0] = name_card
+                                    if index_choice_card <= 5:
+                                        if index_pressed_card <= 5:#Армия в армию
+                                            name_card = list_cards_pl_post_army[index_pressed_card][0]
+                                            list_cards_pl_post_army[index_pressed_card][0] = list_cards_pl_post_army[index_choice_card][0]
+                                            list_cards_pl_post_army[index_choice_card][0] = name_card
+
+                                        if index_pressed_card > 5:#резерв Армию 
+                                            name_card = list_cards_pl[index_pressed_card-6][0]
+                                            list_cards_pl[index_pressed_card-6][0] = list_cards_pl_post_army[index_choice_card][0]
+                                            list_cards_pl_post_army[index_choice_card][0] = name_card
+                                    create_icon_card_post_army(list_cards_post_army,list_cards_pl,list_cards_pl_post_army)
+                                    break
+                            else:
+                                dict_arguments['card_pressed'].X = dict_arguments['card_pressed'].start_x
+                                dict_arguments['card_pressed'].Y = dict_arguments['card_pressed'].start_y
+                        dict_arguments['card_pressed'] = None
+                print(list_cards_pl)
+                print(list_cards_pl_post_army)
             if dict_arguments['scene'] == 'castle':
                 if check_mouse_cor(button_build,mouse_cor):
                     button_build.path = 'images/button_build_w.png'
@@ -577,7 +651,7 @@ def run_main(dict_arguments):
 
             if dict_arguments['scene'] == 'city':
                 city_scene.show_image(win)
-
+                button_post_army.show_image(win)
                 button_city_back.show_image(win)
                 castle.show_image(win)
                 if dict_arguments['dict_bought_city']['camp']:
@@ -592,6 +666,12 @@ def run_main(dict_arguments):
                     portal_resource.show_image(win)
 
 
+            if dict_arguments['scene'] == 'post_army':
+                scene_post_army.show_image(win)
+                button_city_back.show_image(win)
+                for obj in list_cards_post_army:
+                    if obj.path != None:
+                        obj.show_image(win)
 
             #Условие Меню Героя
             if dict_arguments['scene'] == 'menu_hero':
@@ -993,6 +1073,7 @@ def run_main(dict_arguments):
                         move_to_hero(CENTER_CELL_COR,list_cor_castle_xy,list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
                     if check_mouse_cor(frame,mouse_cor):
                         dict_arguments['scene'] = 'menu_hero'
+                        create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
                     dict_arguments['buttonIsPressed'] = True
                 #Кнопка мыши отпущена
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -1024,7 +1105,7 @@ def run_main(dict_arguments):
                             obj.font_size = settings['SCREEN_WIDTH']//19
                     
         # if dict_arguments['scene'] == 'sandwich':
-        # print(list_cards_pl)
+
         if dict_arguments['flag_fight_start']:
             dict_arguments['flag_offer'] = True
             card_number = 0 
@@ -1034,7 +1115,6 @@ def run_main(dict_arguments):
             if card_number != 0:
                 for i in range(dict_arguments['number_opened_card']):
                     dict_arguments['list_cards_en'][i][0] = player_lvl1.flag_card
-                print(dict_arguments['list_cards_en'])
                 cards_arrangement(dict_arguments,list_cards_pl,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
                 dict_arguments['scene'] = 'card_game'
                 player_lvl1.flag_card = False
@@ -1044,6 +1124,19 @@ def run_main(dict_arguments):
                 player_lvl1.near_card = False
             dict_arguments['flag_fight_start'] = False
             text_card = None
+        if dict_arguments['flag_fight_start_post']  and dict_arguments['scene'] != 'card_game' and dict_arguments['scene'] != 'result_screen':
+            card_number = 0 
+            for card in list_cards_pl_post_army:
+                if card[0] != None:
+                    card_number +=1
+            if card_number != 0:
+                for i in range(dict_arguments['number_opened_card']):
+                    dict_arguments['list_cards_en'][i][0] = choice(list(dict_card_characteristics_enemy.keys()))
+                cards_arrangement(dict_arguments,list_cards_pl_post_army,list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
+                dict_arguments['scene'] = 'card_game'
+            if card_number == 0:
+                dict_arguments['game'] = False
+                print('loser')
         if dict_arguments['scene'] == 'card_game':
             #Алгоритм поочередности ходов игрока и врага
             move_players_algorithm(dict_arguments['cardgame_variables'],list_objects_cards_pl,text_move,list_objects_cards_en,dict_card_characteristics)
@@ -1091,19 +1184,22 @@ def run_main(dict_arguments):
                 dict_arguments['count_daily_event'] = 0
                 if dict_arguments['daily_event'] == 'goblin':
                     list_resource = list()
-                    text_daily_event.font_content = '           Внимание!;На своём пути вы обнаружили ;тело гоблина. ;Обыскав его вы находите:;  '
+                    text_daily_event.font_content = '           Внимание!;На своём пути вы обнаружили ;тело гоблина. ;Обыскав его вы находите:;'
                     text_daily_event.index = 5
+                    list_unavailable_resource = []
                     for i in range(randint(1,4)):
                         resource = choice(list(dict_arguments['resources_dict'].keys()))
-                        resoruce_count = randint(1,3)
-                        dict_arguments['resources_dict'][resource] += resoruce_count
-                        list_resource.append(str(str(resource)+'/'+str(resoruce_count)))
+                        if not resource in list_unavailable_resource:
+                            resoruce_count = randint(1,3)
+                            list_unavailable_resource.append(resource)
+
+                            dict_arguments['resources_dict'][resource] += resoruce_count
+                            list_resource.append(str(str(resource)+'/'+str(resoruce_count)))
+                            if i == 2:
+                                text_daily_event.font_content+= ';'
+                                text_daily_event.index +=1
                     text_daily_event.font_content += text_cost(list_resource,finally_text='',text_obj=text_daily_event,settings=settings)[0]
                     text_daily_event.font_content = text_daily_event.font_content.split(';')
-                    print(text_daily_event.font_content)
-
-                        
-
                 if dict_arguments['daily_event'] == 'gold':
                     text_daily_event.font_content = '           Внимание!;Прошлой ночью метеорологами был ;зафиксирован золотопад. ;;Шанс найти золото увеличен.'.split(';')
                     text_daily_event.index = 5
@@ -1114,7 +1210,6 @@ def run_main(dict_arguments):
                             if mat_objetcs_lvl1[random_y][random_x] == '0' and not [random_y,random_x] in list_untochable_cells:
                                 mat_objetcs_lvl1[random_y][random_x] = 'g'
                                 break
-                    print(text_daily_event.font_content)
                 if dict_arguments['daily_event'] == 'enemy':
                     text_daily_event.font_content = '           Внимание!;За последнее время уровень ;преступности вырос. ;;Шанс наткнутся на разбойников;увеличен.'.split(';')
                     text_daily_event.index = 6
@@ -1125,6 +1220,12 @@ def run_main(dict_arguments):
                             if mat_objetcs_lvl1[random_y][random_x] == '0' and not [random_y,random_x] in list_untochable_cells:
                                 mat_objetcs_lvl1[random_y][random_x] = choice(['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П'])
                                 break
+                if dict_arguments['daily_event'] == 'post_fight':
+                    text_daily_event.font_content = '           Внимание!;;   На ваш замок напали! ;;Немедленно перейдите к обороне!'.split(';')
+                    text_daily_event.index = 5
+                    dict_arguments['daily_event'] = None
+                    dict_arguments['count_daily_event_post_fight'] = 0
+                
                 dict_arguments['daily_event'] = None
             if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
                 dict_arguments['flag_show_dialog'] = True
@@ -1567,10 +1668,16 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_buy_previous_build.show_text(win)
             dict_arguments['flag_buy_previous_build'] += 1  
-        if dict_arguments['count_daily_event'] <80 and player_lvl1.flag_move:
+        if dict_arguments['count_daily_event'] <80 and player_lvl1.flag_move and dict_arguments['count_daily_event_post_fight'] == 80:
             generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
             text_daily_event.show_text(win)
             dict_arguments['count_daily_event'] += 1  
+        if dict_arguments['count_daily_event_post_fight'] <80 and player_lvl1.flag_move:
+            generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_daily_event.show_text(win)
+            dict_arguments['count_daily_event_post_fight'] += 1  
+            if dict_arguments['count_daily_event_post_fight'] == 80:
+                dict_arguments['flag_fight_start_post'] = True
         if dict_arguments['count_dialog'] <50:
             for obj in list_buttons_dialog:
                 obj.font_content = ''
@@ -1608,7 +1715,6 @@ def run_main(dict_arguments):
         time.tick(int(settings['FPS']))
         # print(time.get_fps())
         #Обновляем экран
-        
         pygame.display.flip()
 
 run_main(dict_arguments)

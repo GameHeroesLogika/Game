@@ -561,6 +561,18 @@ def create_icon_card(SCREEN_W,SCREEN_H,list_cards_pl,list_cards_menu_hero,list_c
         if not card in list_cards_menu_hero:
             list_cards_menu_hero.append(card)
         x+= SCREEN_W//11
+def create_icon_card_post_army(list_cards_post_army,list_cards_pl,list_cards_pl_post_army):
+    for obj in list_cards_pl_post_army:
+        if obj[0] != None:
+            index = list_cards_pl_post_army.index(obj)
+            list_cards_post_army[index].path = 'images/cards/'+str(obj[0])+'.png'
+            list_cards_post_army[index].image_load()
+    for obj in list_cards_pl:
+        if obj[0] != None:
+            index = list_cards_pl.index(obj)+6
+            list_cards_post_army[index].path = 'images/cards/'+str(obj[0])+'.png'
+            list_cards_post_army[index].image_load()
+
 def change_x_y_width_height(artifact_pressed, sprite):
     sprite.X = artifact_pressed.start_x
     sprite.Y = artifact_pressed.start_y
