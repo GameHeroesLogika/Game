@@ -18,6 +18,11 @@ def check_rect_cell(cell,rect):
     cell_rect = pygame.Rect(cell.X,cell.Y,cell.WIDTH,cell.HEIGHT)
     if pygame.Rect.colliderect(rect,cell_rect):
         return True
+def check_rect_cell_list(list_cells,rect):
+    for cell in list_cells:
+        cell_rect = pygame.Rect(cell.X,cell.Y,cell.WIDTH,cell.HEIGHT)
+        if pygame.Rect.colliderect(rect,cell_rect):
+            return True
 def text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=None,settings=None):
     for resource in list_text_cost:
         resource_full_name = resource
@@ -81,9 +86,10 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 list_cor_player_xy,W_CELL_MINI_MAP ,H_CELL_MINI_MAP,X_FRAME_MM,Y_FRAME_MM,list_cells_MM,list_cor_portals,
                 LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,list_cor_castle_xy,
                 dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,fountain_mana_empty,fountain_exp_empty,
-                mountain,water,list_forest):
+                mountain,water,list_forest,win_rect):
     list_xy = [0,0]
-    
+    list_object = [player_lvl1, gold, iron, crystal, wood, stone, tree_full,tree,ironmine, goldmine, farm, gemsmine,sawmill, stonebreaker,portal,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,fountain_mana_empty,fountain_exp_empty,
+                mountain,water]
     #Индекс клетки, к которой привязан объект
     index_cells = 0
     # Координата конкретной клетки для миникарты
@@ -96,285 +102,286 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
         for obj in obj_list1:        
             flag_cell_MM =True
             if obj != '0':
-                if obj == 'p':   
-                    #Привязываем координаты персонажа к клетке
-                    player_lvl1.X = list_objects_cells_lvl1[index_cells].X+changed_x
-                    player_lvl1.Y = list_objects_cells_lvl1[index_cells].Y+changed_y
-                    list_cor_player_xy[0] = list_objects_cells_lvl1[index_cells].X+changed_x
-                    list_cor_player_xy[1] = list_objects_cells_lvl1[index_cells].Y+changed_y
-                    #отображаем персонажа
-                    player_lvl1.show_image(win)
-                    flag_cell_MM = False
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'yellow'))
-                #Отрисовуем ресурсы
-                elif obj == 'i':
-                    iron.X = list_objects_cells_lvl1[index_cells].X
-                    iron.Y = list_objects_cells_lvl1[index_cells].Y
-                    iron.show_image(win)
-                elif obj == 'g':
-                    gold.X = list_objects_cells_lvl1[index_cells].X
-                    gold.Y = list_objects_cells_lvl1[index_cells].Y
-                    gold.show_image(win)
-                elif obj == 'w':
-                    wood.X = list_objects_cells_lvl1[index_cells].X
-                    wood.Y = list_objects_cells_lvl1[index_cells].Y
-                    wood.show_image(win)
-                elif obj == 'b':
-                    stone.X = list_objects_cells_lvl1[index_cells].X
-                    stone.Y = list_objects_cells_lvl1[index_cells].Y
-                    stone.show_image(win)
-                elif obj == 'c':
-                    crystal.X = list_objects_cells_lvl1[index_cells].X
-                    crystal.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
-                    crystal.show_image(win)
-                elif obj == 'T':
-                    tree_full.X = list_objects_cells_lvl1[index_cells].X
-                    tree_full.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
-                    tree_full.show_image(win)
-                elif obj == 't':
-                    tree.X = list_objects_cells_lvl1[index_cells].X
-                    tree.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    tree.show_image(win)
-                elif obj == 'г':
-                    mountain.X = list_objects_cells_lvl1[index_cells].X 
-                    mountain.Y = list_objects_cells_lvl1[index_cells].Y 
-                    mountain.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'mountain'))
-                    flag_cell_MM = False
-                elif obj == 'в':
-                    water.X = list_objects_cells_lvl1[index_cells].X 
-                    water.Y = list_objects_cells_lvl1[index_cells].Y 
-                    water.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'water'))
-                    flag_cell_MM = False
-                elif obj == 'л':
-                    list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
-                    list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y 
-                    list_forest[0].show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
-                    flag_cell_MM = False
-                elif obj == '\\':
-                    list_forest[1].X = list_objects_cells_lvl1[index_cells].X 
-                    list_forest[1].Y = list_objects_cells_lvl1[index_cells].Y 
-                    list_forest[1].show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
-                    flag_cell_MM = False
-                elif obj == '/':
-                    list_forest[2].X = list_objects_cells_lvl1[index_cells].X 
-                    list_forest[2].Y = list_objects_cells_lvl1[index_cells].Y 
-                    list_forest[2].show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
-                    flag_cell_MM = False
-                elif obj == '|':
-                    list_forest[3].X = list_objects_cells_lvl1[index_cells].X 
-                    list_forest[3].Y = list_objects_cells_lvl1[index_cells].Y 
-                    list_forest[3].show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
-                    flag_cell_MM = False
-                #Начало отрисовка на матрице карт 
-                elif obj =='А':
-                    crossbowman.X = list_objects_cells_lvl1[index_cells].X
-                    crossbowman.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    crossbowman.show_image(win)
-                elif obj =='Б':
-                    bard.X = list_objects_cells_lvl1[index_cells].X
-                    bard.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    bard.show_image(win)
-                elif obj =='В':
-                    dvorf.X = list_objects_cells_lvl1[index_cells].X
-                    dvorf.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    dvorf.show_image(win)
-                elif obj =='Г':
-                    giant.X = list_objects_cells_lvl1[index_cells].X
-                    giant.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    giant.show_image(win)
-                elif obj =='Д':
-                    druid.X = list_objects_cells_lvl1[index_cells].X
-                    druid.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    druid.show_image(win)
-                elif obj =='Е':
-                    golem.X = list_objects_cells_lvl1[index_cells].X
-                    golem.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    golem.show_image(win)
-                elif obj =='К':
-                    centaur.X = list_objects_cells_lvl1[index_cells].X
-                    centaur.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    centaur.show_image(win)
-                elif obj =='М':
-                    klaus.X = list_objects_cells_lvl1[index_cells].X
-                    klaus.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    klaus.show_image(win)
-                elif obj =='Л':
-                    ludorn.X = list_objects_cells_lvl1[index_cells].X
-                    ludorn.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    ludorn.show_image(win)
-                elif obj =='Р':
-                    roggy.X = list_objects_cells_lvl1[index_cells].X
-                    roggy.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    roggy.show_image(win)
-                elif obj =='С':
-                    surtur.X = list_objects_cells_lvl1[index_cells].X
-                    surtur.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    surtur.show_image(win)
-                elif obj =='Я':
-                    yamy.X = list_objects_cells_lvl1[index_cells].X
-                    yamy.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    yamy.show_image(win)
-                elif obj =='П':
-                    bomb_man.X = list_objects_cells_lvl1[index_cells].X
-                    bomb_man.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    bomb_man.show_image(win)
-                elif obj =='О':
-                    ork.X = list_objects_cells_lvl1[index_cells].X
-                    ork.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    ork.show_image(win)
+                if check_rect_cell_list(list_object,win_rect):
+                    if obj == 'p':   
+                        #Привязываем координаты персонажа к клетке
+                        player_lvl1.X = list_objects_cells_lvl1[index_cells].X+changed_x
+                        player_lvl1.Y = list_objects_cells_lvl1[index_cells].Y+changed_y
+                        list_cor_player_xy[0] = list_objects_cells_lvl1[index_cells].X+changed_x
+                        list_cor_player_xy[1] = list_objects_cells_lvl1[index_cells].Y+changed_y
+                        #отображаем персонажа
+                        player_lvl1.show_image(win)
+                        flag_cell_MM = False
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'yellow'))
+                    #Отрисовуем ресурсы
+                    elif obj == 'i':
+                        iron.X = list_objects_cells_lvl1[index_cells].X
+                        iron.Y = list_objects_cells_lvl1[index_cells].Y
+                        iron.show_image(win)
+                    elif obj == 'g':
+                        gold.X = list_objects_cells_lvl1[index_cells].X
+                        gold.Y = list_objects_cells_lvl1[index_cells].Y
+                        gold.show_image(win)
+                    elif obj == 'w':
+                        wood.X = list_objects_cells_lvl1[index_cells].X
+                        wood.Y = list_objects_cells_lvl1[index_cells].Y
+                        wood.show_image(win)
+                    elif obj == 'b':
+                        stone.X = list_objects_cells_lvl1[index_cells].X
+                        stone.Y = list_objects_cells_lvl1[index_cells].Y
+                        stone.show_image(win)
+                    elif obj == 'c':
+                        crystal.X = list_objects_cells_lvl1[index_cells].X
+                        crystal.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
+                        crystal.show_image(win)
+                    elif obj == 'T':
+                        tree_full.X = list_objects_cells_lvl1[index_cells].X
+                        tree_full.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
+                        tree_full.show_image(win)
+                    elif obj == 't':
+                        tree.X = list_objects_cells_lvl1[index_cells].X
+                        tree.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        tree.show_image(win)
+                    elif obj == 'г':
+                        mountain.X = list_objects_cells_lvl1[index_cells].X 
+                        mountain.Y = list_objects_cells_lvl1[index_cells].Y 
+                        mountain.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'mountain'))
+                        flag_cell_MM = False
+                    elif obj == 'в':
+                        water.X = list_objects_cells_lvl1[index_cells].X 
+                        water.Y = list_objects_cells_lvl1[index_cells].Y 
+                        water.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'water'))
+                        flag_cell_MM = False
+                    elif obj == 'л':
+                        list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
+                        list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y 
+                        list_forest[0].show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        flag_cell_MM = False
+                    elif obj == '\\':
+                        list_forest[1].X = list_objects_cells_lvl1[index_cells].X 
+                        list_forest[1].Y = list_objects_cells_lvl1[index_cells].Y 
+                        list_forest[1].show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        flag_cell_MM = False
+                    elif obj == '/':
+                        list_forest[2].X = list_objects_cells_lvl1[index_cells].X 
+                        list_forest[2].Y = list_objects_cells_lvl1[index_cells].Y 
+                        list_forest[2].show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        flag_cell_MM = False
+                    elif obj == '|':
+                        list_forest[3].X = list_objects_cells_lvl1[index_cells].X 
+                        list_forest[3].Y = list_objects_cells_lvl1[index_cells].Y 
+                        list_forest[3].show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        flag_cell_MM = False
+                    #Начало отрисовка на матрице карт 
+                    elif obj =='А':
+                        crossbowman.X = list_objects_cells_lvl1[index_cells].X
+                        crossbowman.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        crossbowman.show_image(win)
+                    elif obj =='Б':
+                        bard.X = list_objects_cells_lvl1[index_cells].X
+                        bard.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        bard.show_image(win)
+                    elif obj =='В':
+                        dvorf.X = list_objects_cells_lvl1[index_cells].X
+                        dvorf.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        dvorf.show_image(win)
+                    elif obj =='Г':
+                        giant.X = list_objects_cells_lvl1[index_cells].X
+                        giant.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        giant.show_image(win)
+                    elif obj =='Д':
+                        druid.X = list_objects_cells_lvl1[index_cells].X
+                        druid.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        druid.show_image(win)
+                    elif obj =='Е':
+                        golem.X = list_objects_cells_lvl1[index_cells].X
+                        golem.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        golem.show_image(win)
+                    elif obj =='К':
+                        centaur.X = list_objects_cells_lvl1[index_cells].X
+                        centaur.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        centaur.show_image(win)
+                    elif obj =='М':
+                        klaus.X = list_objects_cells_lvl1[index_cells].X
+                        klaus.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        klaus.show_image(win)
+                    elif obj =='Л':
+                        ludorn.X = list_objects_cells_lvl1[index_cells].X
+                        ludorn.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        ludorn.show_image(win)
+                    elif obj =='Р':
+                        roggy.X = list_objects_cells_lvl1[index_cells].X
+                        roggy.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        roggy.show_image(win)
+                    elif obj =='С':
+                        surtur.X = list_objects_cells_lvl1[index_cells].X
+                        surtur.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        surtur.show_image(win)
+                    elif obj =='Я':
+                        yamy.X = list_objects_cells_lvl1[index_cells].X
+                        yamy.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        yamy.show_image(win)
+                    elif obj =='П':
+                        bomb_man.X = list_objects_cells_lvl1[index_cells].X
+                        bomb_man.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        bomb_man.show_image(win)
+                    elif obj =='О':
+                        ork.X = list_objects_cells_lvl1[index_cells].X
+                        ork.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        ork.show_image(win)
 
-                ##Конец отрисовки на матрице карт
-                elif obj == 'M':
-                    fountain_mana.X = list_objects_cells_lvl1[index_cells].X
-                    fountain_mana.Y = list_objects_cells_lvl1[index_cells].Y
-                    fountain_mana.show_image(win)
-                elif obj == 'E':
-                    fountain_exp.X = list_objects_cells_lvl1[index_cells].X
-                    fountain_exp.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19
-                    fountain_exp.show_image(win)
-                elif obj == 'm':
-                    fountain_mana_empty.X = list_objects_cells_lvl1[index_cells].X
-                    fountain_mana_empty.Y = list_objects_cells_lvl1[index_cells].Y
-                    fountain_mana_empty.show_image(win)
-                elif obj == 'e':
-                    fountain_exp_empty.X = list_objects_cells_lvl1[index_cells].X
-                    fountain_exp_empty.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19
-                    fountain_exp_empty.show_image(win)
-                elif obj == 'F':
-                    farm.X = list_objects_cells_lvl1[index_cells].X
-                    farm.Y = list_objects_cells_lvl1[index_cells].Y 
-                    farm.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'A':
-                    royal_academy.X = list_objects_cells_lvl1[index_cells].X
-                    royal_academy.Y = list_objects_cells_lvl1[index_cells].Y 
-                    royal_academy.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                # elif obj == 'B':
-                #     tavern.X = list_objects_cells_lvl1[index_cells].X
-                #     tavern.Y = list_objects_cells_lvl1[index_cells].Y 
-                #     tavern.show_image(win)
-                elif obj == 'K':
-                    castle.X = list_objects_cells_lvl1[index_cells].X
-                    castle.Y = list_objects_cells_lvl1[index_cells].Y 
-                    castle.show_image(win)
-                    list_cor_castle_xy[0] = list_objects_cells_lvl1[index_cells].X+SCREEN_W//19
-                    list_cor_castle_xy[1] = list_objects_cells_lvl1[index_cells].Y+SCREEN_W//19
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+H_CELL_MINI_MAP,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP*2,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
-                    list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
-                    flag_cell_MM = False
-                elif obj == 'O':
-                    market.X = list_objects_cells_lvl1[index_cells].X
-                    market.Y = list_objects_cells_lvl1[index_cells].Y 
-                    market.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'J':
-                    tavern.X = list_objects_cells_lvl1[index_cells].X
-                    tavern.Y = list_objects_cells_lvl1[index_cells].Y 
-                    tavern.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'S':
-                    shack.X = list_objects_cells_lvl1[index_cells].X
-                    shack.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
-                    shack.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    flag_cell_MM = False
-                elif obj == 's':
-                    shack.X = list_objects_cells_lvl1[index_cells].X
-                    shack.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
-                    shack.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    flag_cell_MM = False
-                    
-                elif obj == 'N':
-                    stonebreaker.X = list_objects_cells_lvl1[index_cells].X
-                    stonebreaker.Y = list_objects_cells_lvl1[index_cells].Y 
-                    stonebreaker.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'W':
-                    watchtower.X = list_objects_cells_lvl1[index_cells].X
-                    watchtower.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
-                    watchtower.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    flag_cell_MM = False
-                elif obj == 'X':
-                    gemsmine.X = list_objects_cells_lvl1[index_cells].X
-                    gemsmine.Y = list_objects_cells_lvl1[index_cells].Y 
-                    gemsmine.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'R':
-                    goldmine.X = list_objects_cells_lvl1[index_cells].X
-                    goldmine.Y = list_objects_cells_lvl1[index_cells].Y 
-                    goldmine.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'H':
-                    sawmill.X = list_objects_cells_lvl1[index_cells].X
-                    sawmill.Y = list_objects_cells_lvl1[index_cells].Y 
-                    sawmill.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'D':
-                    ironmine.X = list_objects_cells_lvl1[index_cells].X
-                    ironmine.Y = list_objects_cells_lvl1[index_cells].Y 
-                    ironmine.show_image(win)
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
-                    list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
-                    list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
-                    flag_cell_MM = False
-                elif obj == 'P':
-                    
-                    portal.X = list_objects_cells_lvl1[index_cells].X
-                    portal.Y = list_objects_cells_lvl1[index_cells].Y
-                    portal.show_image(win)
-                elif obj == 'C':
-                    chest.X = list_objects_cells_lvl1[index_cells].X
-                    chest.Y = list_objects_cells_lvl1[index_cells].Y
-                    chest.show_image(win)
+                    ##Конец отрисовки на матрице карт
+                    elif obj == 'M':
+                        fountain_mana.X = list_objects_cells_lvl1[index_cells].X
+                        fountain_mana.Y = list_objects_cells_lvl1[index_cells].Y
+                        fountain_mana.show_image(win)
+                    elif obj == 'E':
+                        fountain_exp.X = list_objects_cells_lvl1[index_cells].X
+                        fountain_exp.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19
+                        fountain_exp.show_image(win)
+                    elif obj == 'm':
+                        fountain_mana_empty.X = list_objects_cells_lvl1[index_cells].X
+                        fountain_mana_empty.Y = list_objects_cells_lvl1[index_cells].Y
+                        fountain_mana_empty.show_image(win)
+                    elif obj == 'e':
+                        fountain_exp_empty.X = list_objects_cells_lvl1[index_cells].X
+                        fountain_exp_empty.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19
+                        fountain_exp_empty.show_image(win)
+                    elif obj == 'F':
+                        farm.X = list_objects_cells_lvl1[index_cells].X
+                        farm.Y = list_objects_cells_lvl1[index_cells].Y 
+                        farm.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'A':
+                        royal_academy.X = list_objects_cells_lvl1[index_cells].X
+                        royal_academy.Y = list_objects_cells_lvl1[index_cells].Y 
+                        royal_academy.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    # elif obj == 'B':
+                    #     tavern.X = list_objects_cells_lvl1[index_cells].X
+                    #     tavern.Y = list_objects_cells_lvl1[index_cells].Y 
+                    #     tavern.show_image(win)
+                    elif obj == 'K':
+                        castle.X = list_objects_cells_lvl1[index_cells].X
+                        castle.Y = list_objects_cells_lvl1[index_cells].Y 
+                        castle.show_image(win)
+                        list_cor_castle_xy[0] = list_objects_cells_lvl1[index_cells].X+SCREEN_W//19
+                        list_cor_castle_xy[1] = list_objects_cells_lvl1[index_cells].Y+SCREEN_W//19
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+H_CELL_MINI_MAP,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP*2,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
+                        list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
+                        flag_cell_MM = False
+                    elif obj == 'O':
+                        market.X = list_objects_cells_lvl1[index_cells].X
+                        market.Y = list_objects_cells_lvl1[index_cells].Y 
+                        market.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'J':
+                        tavern.X = list_objects_cells_lvl1[index_cells].X
+                        tavern.Y = list_objects_cells_lvl1[index_cells].Y 
+                        tavern.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'S':
+                        shack.X = list_objects_cells_lvl1[index_cells].X
+                        shack.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
+                        shack.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        flag_cell_MM = False
+                    elif obj == 's':
+                        shack.X = list_objects_cells_lvl1[index_cells].X
+                        shack.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2 
+                        shack.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        flag_cell_MM = False
+                        
+                    elif obj == 'N':
+                        stonebreaker.X = list_objects_cells_lvl1[index_cells].X
+                        stonebreaker.Y = list_objects_cells_lvl1[index_cells].Y 
+                        stonebreaker.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'W':
+                        watchtower.X = list_objects_cells_lvl1[index_cells].X
+                        watchtower.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        watchtower.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'X':
+                        gemsmine.X = list_objects_cells_lvl1[index_cells].X
+                        gemsmine.Y = list_objects_cells_lvl1[index_cells].Y 
+                        gemsmine.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'R':
+                        goldmine.X = list_objects_cells_lvl1[index_cells].X
+                        goldmine.Y = list_objects_cells_lvl1[index_cells].Y 
+                        goldmine.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'H':
+                        sawmill.X = list_objects_cells_lvl1[index_cells].X
+                        sawmill.Y = list_objects_cells_lvl1[index_cells].Y 
+                        sawmill.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'D':
+                        ironmine.X = list_objects_cells_lvl1[index_cells].X
+                        ironmine.Y = list_objects_cells_lvl1[index_cells].Y 
+                        ironmine.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'white'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'white'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
+                        flag_cell_MM = False
+                    elif obj == 'P':
+                        
+                        portal.X = list_objects_cells_lvl1[index_cells].X
+                        portal.Y = list_objects_cells_lvl1[index_cells].Y
+                        portal.show_image(win)
+                    elif obj == 'C':
+                        chest.X = list_objects_cells_lvl1[index_cells].X
+                        chest.Y = list_objects_cells_lvl1[index_cells].Y
+                        chest.show_image(win)
             for i in player_lvl1.list_capture_buildings:
                 if list_xy[0] == i[1] and list_xy[1] == i[0]:
                     flag_green.X = list_objects_cells_lvl1[index_cells].X + SCREEN_W // 38
@@ -394,7 +401,6 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     break
             if flag_cell_MM ==True :
                 list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'green'))
-                # print(index_water)
             """"Индексы текущей клетки по циклу"""
             
             list_xy[0]+= 1

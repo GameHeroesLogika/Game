@@ -169,8 +169,8 @@ max_exp_lvl = 1000
 max_mana = 1000
 mana_shack = 200
 change_mana_x = 0
-flag_show_offer = False
 flag_offer = True
+flag_show_offer = False
 flag_fight_start = False
 step_exp_text = settings['SCREEN_WIDTH']//93
 change_exp_x = 0
@@ -186,8 +186,19 @@ flag_dialog_threat_lose = False
 flag_dialog_fight = False
 count_daily_event_post_fight = 80
 daily_event = None
-
-list_daily_events = ['post_fight']#'goblin','enemy','gold',
+index_fog = 0
+list_daily_events = [
+                    'post_fight',
+                    'goblin',
+                    'enemy',
+                    'gold',
+                    'heist',
+                    'artifact',
+                    'add_army',
+                    'fog_more',
+                    'fog_less',
+                    'discount',
+                    ]
 #Список из клеток первого уровня
 list_cells_lvl1 = [list('0000000000000000000000000000000'),
                    list('00000000000000000tttttttt000000'),
@@ -472,4 +483,5 @@ dict_arguments = {
     'count_daily_event':count_daily_event,
     'flag_fight_start_post':flag_fight_start_post,
     'count_daily_event_post_fight':count_daily_event_post_fight,
+    'index_fog':index_fog,
 }
