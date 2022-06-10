@@ -11,9 +11,10 @@ from Text_cardgame import*
 from draw_function import draw_all
 from profilehooks import profile
 pygame.init()
-# @profile
+@profile
 #Основная фунуция
 def run_main(dict_arguments):
+    index = 0
     water = choice(list_water)
     time = pygame.time.Clock()
     while dict_arguments['game']:
@@ -899,6 +900,62 @@ def run_main(dict_arguments):
                         sound_book.play_sound()
                         dict_arguments['game'] = False
                             #Отрисовуем книгу
+                    elif check_mouse_cor(button_set,mouse_cor):
+                        dict_arguments['scene'] = 'settings_scene'
+            if dict_arguments['scene'] == 'settings_scene':
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if check_mouse_cor(button_menu_hero_back,mouse_cor):
+                        dict_arguments['scene'] = 'menu'
+                    for obj in list_buttons_display_size:
+                        if list_button_display_fullsize[0].font_color != 'red':
+                            if check_mouse_cor_font(obj,mouse_cor):
+                                for obj2 in  list_buttons_display_size:
+                                    obj2.font_color = 'black'
+                                obj.font_color = 'red'
+                                break
+                    for obj in list_button_display_fullsize:
+                        if check_mouse_cor_font(obj,mouse_cor):
+                            for obj2 in  list_button_display_fullsize:
+                                obj2.font_color = 'black'
+                            obj.font_color = 'red'
+                            break
+                    for obj in list_button_auto_save:
+                        if check_mouse_cor_font(obj,mouse_cor):
+                            for obj2 in  list_button_auto_save:
+                                obj2.font_color = 'black'
+                            obj.font_color = 'red'
+                            break
+                    if check_mouse_cor_font(button_save,mouse_cor):
+                        with open('saves/settings_display.json','w') as file:
+                            for obj in list_buttons_display_size:
+                                if obj.font_color == 'red':
+                                    width = obj.font_content.split('x')[0]
+                                    height = obj.font_content.split('x')[1]
+                            if list_button_auto_save[0].font_color == 'red':
+                                settings_display['AUTOSAVE'] = "True"
+                            if list_button_auto_save[1].font_color == 'red':
+                                settings_display['AUTOSAVE'] = "False"
+                            if list_button_display_fullsize[0].font_color == 'red':
+                                settings_display['FULLSCREEN'] = "True"
+                                width = 0
+                                height = 0
+                            elif list_button_display_fullsize[1].font_color == 'red':
+                                settings_display['FULLSCREEN'] = "False"
+                            settings_display['SCREEN_WIDTH'] = int(width)
+                            settings_display['SCREEN_HEIGHT'] = int(height)
+                            settings_display['SOUNDS_VOLUME'] = int(count_volume_sound.font_content)
+                            json.dump(settings_display,file,indent=4)
+                        dict_arguments['flag_save'] = 0
+
+                            
+
+                    if pygame.Rect.collidepoint(mouse_volume_sound,mouse_cor[0],mouse_cor[1]):
+                        dict_arguments['flag_mouse_volume_sound'] = True
+
+                
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if dict_arguments['flag_mouse_volume_sound']:
+                        dict_arguments['flag_mouse_volume_sound'] = False
                 
                 #Отрисовуем кнопки
             if dict_arguments['past_lvl_skill_fight'] == 3:
@@ -1103,7 +1160,37 @@ def run_main(dict_arguments):
                             obj.font_size = settings['SCREEN_WIDTH']//19
                     
         # if dict_arguments['scene'] == 'sandwich':
-
+        if dict_arguments['scene'] == 'settings_scene':
+            book.show_image(win)
+            button_menu_hero_back.show_image(win)
+            button_volume_sound.show_text(win)
+            button_display_size.show_text(win)
+            pygame.draw.rect(win,color='DimGrey',rect=rect_volume_sound)
+            pygame.draw.rect(win,color='black',rect=mouse_volume_sound)
+            count_volume_sound.show_text(win)
+            if list_button_display_fullsize[0].font_color != 'red':
+                button_display_size.font_color = 'black'
+                for obj in list_buttons_display_size:
+                    obj.show_text(win)
+            else:
+                button_display_size.font_color = 'DimGrey'
+            
+            button_display_fullsize.show_text(win)
+            for obj in list_button_display_fullsize:
+                obj.show_text(win)
+            button_auto_save.show_text(win)
+            for obj in list_button_auto_save:
+                obj.show_text(win)
+            button_save.show_text(win)
+            if dict_arguments['flag_mouse_volume_sound']:
+                if mouse_volume_sound.x >= rect_volume_sound.x and mouse_volume_sound.x <= rect_volume_sound.x+rect_volume_sound.width:
+                    mouse_volume_sound.x = mouse_cor[0]
+                if mouse_volume_sound.x <= rect_volume_sound.x:
+                    mouse_volume_sound.x = rect_volume_sound.x
+                if mouse_volume_sound.x >= rect_volume_sound.x+rect_volume_sound.width:
+                    mouse_volume_sound.x = rect_volume_sound.x+rect_volume_sound.width
+            count_volume = round((mouse_volume_sound.x-rect_volume_sound.x)/rect_volume_sound.width*100)
+            count_volume_sound.font_content = str(count_volume)
         if dict_arguments['flag_fight_start']:
             dict_arguments['flag_offer'] = True
             card_number = 0 
@@ -1741,6 +1828,10 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
             text_daily_event.show_text(win)
             dict_arguments['count_daily_event'] += 1  
+        if dict_arguments['flag_save'] <50:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_save.show_text(win)
+            dict_arguments['flag_save'] += 1  
         if dict_arguments['count_daily_event_post_fight'] <80 and player_lvl1.flag_move:
             generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
             text_daily_event.show_text(win)
@@ -1782,7 +1873,12 @@ def run_main(dict_arguments):
         if dict_arguments['index_water'] % 10 == 0:
             water = choice(list_water)
         time.tick(int(settings['FPS']))
-        # print(time.get_fps())
+        if index//1.8 >= int(time.get_fps()):
+            dict_arguments['minute_in_game'] +=1
+            index = 0
+        if dict_arguments['minute_in_game'] == 30:
+            pass
+        index+=1
         #Обновляем экран
         pygame.display.flip()
 

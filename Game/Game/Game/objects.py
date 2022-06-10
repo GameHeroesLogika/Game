@@ -12,7 +12,9 @@ import Text_cardgame
 
 #Создаем окно, с параметром БЕЗ РАМКИ
 if settings['FULLSCREEN'] == True:
-    win = pygame.display.set_mode((settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT']),pygame.FULLSCREEN)#
+    width_fullscreen = pygame.display.Info().current_w
+    height_fullscreen = pygame.display.Info().current_h
+    win = pygame.display.set_mode((width_fullscreen, height_fullscreen),pygame.FULLSCREEN)#
 elif settings['FULLSCREEN'] == False:
     win = pygame.display.set_mode((settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT']))#
 win_rect = Rect(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
@@ -131,6 +133,47 @@ button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WI
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
 button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
 
+button_display_size = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Разрешение:',settings['SCREEN_WIDTH']//14.2,settings['SCREEN_HEIGHT']//8)
+list_buttons_display_size =[
+                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','800x600',button_display_size.font_x,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
+                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1280x720',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*2,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
+                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1920x1080',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*4,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
+]
+for obj in list_buttons_display_size:
+    width = settings_display['SCREEN_WIDTH']
+    height = settings_display['SCREEN_HEIGHT']
+    obj_width = obj.font_content.split('x')[0]
+    obj_height = obj.font_content.split('x')[1]
+    if int(obj_width) == width and int(obj_height) == height:
+        obj.font_color = 'red'
+        break
+button_display_fullsize = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Полноэкранный режим:',settings['SCREEN_WIDTH']//14.2,settings['SCREEN_HEIGHT']//8*4)
+list_button_display_fullsize = [
+    Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Да',settings['SCREEN_WIDTH']//14.2*2,settings['SCREEN_HEIGHT']//8*5),
+    Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Нет',settings['SCREEN_WIDTH']//14.2*4,settings['SCREEN_HEIGHT']//8*5)
+]
+
+if settings_display['FULLSCREEN'] == 'True':
+    list_button_display_fullsize[0].font_color = 'red'
+else:
+    list_button_display_fullsize[1].font_color = 'red'
+    
+button_volume_sound = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Громкость звуков:',settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//8)
+rect_volume_sound = Rect(settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//8*2,settings['SCREEN_WIDTH']//1.09-settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//72)
+mouse_volume_sound = Rect(settings_display['SOUNDS_VOLUME']*rect_volume_sound.width/100+rect_volume_sound.x,settings['SCREEN_HEIGHT']//8*1.9,settings['SCREEN_HEIGHT']//72,settings['SCREEN_HEIGHT']//72*3)
+count_volume_sound = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black',str(settings_display['SOUNDS_VOLUME']),settings['SCREEN_WIDTH']//1.09,settings['SCREEN_HEIGHT']//8)
+
+button_auto_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Автосохранение:',settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//8*4)
+list_button_auto_save = [
+    Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Да',settings['SCREEN_WIDTH']//1.75+settings['SCREEN_WIDTH']//14.2*1,settings['SCREEN_HEIGHT']//8*5),
+    Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Нет',settings['SCREEN_WIDTH']//1.75+settings['SCREEN_WIDTH']//14.2*3,settings['SCREEN_HEIGHT']//8*5)
+] 
+if settings_display['AUTOSAVE'] == 'True':
+    list_button_auto_save[0].font_color = 'red'
+else:
+    list_button_auto_save[1].font_color = 'red'
+button_save = Font('images/Font/pixel_font.ttf', settings['SCREEN_WIDTH']//38,'black','Сохранить',settings['SCREEN_WIDTH']//1.14,settings['SCREEN_HEIGHT']//1.34)
+
 button_fight = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Сразится',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*1.5)
 button_offer = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Подкупить',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*3)
 button_threat= Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Угроза',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*4.5)
@@ -208,7 +251,8 @@ text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH
 text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19,index=2)
 #Текст для события
 text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',frame_notification.X+settings['SCREEN_WIDTH']//19,frame_notification.Y+settings['SCREEN_WIDTH']//19)
-
+#Текст для сохранения
+text_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','  Настройки сохранены.;  Перезайдите в игру!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19,index=2)
 
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*6.9)

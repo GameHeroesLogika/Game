@@ -1,4 +1,3 @@
-from dataclasses import replace
 import pygame
 import os
 from graphic_elements import*
@@ -6,19 +5,16 @@ from sounds import Sounds
 from random import randint, choice
 from Addition_Module import*
 from Text import Font
+import json
 pygame.init()
 settings = dict()
-with open('settings.txt','r') as file:
-    for text in file:
-        text = text.split('=')
-        text[1] = text[1].split('\n')[0]
-        if text[0] == 'SCREEN_WIDTH' or text[0] == 'SCREEN_HEIGHT':
-            settings[text[0]] = int(text[1])
-        elif text[0] == 'SOUNDS_VOLUME':
-            settings[text[0]] = int(text[1])
-        else:
-            settings[text[0]] = text[1]
-
+settings_display = dict()
+with open('saves/settings_display.json','r') as file:
+    settings_display = json.load(file)
+with open('saves/config.json','r') as file:
+    settings = json.load(file)
+for key in settings_display.keys():
+    settings[key] = settings_display[key]
 if settings['FULLSCREEN'] == 'True':
     settings['FULLSCREEN'] = True
 else:
@@ -26,7 +22,6 @@ else:
 if settings['SCREEN_WIDTH'] == 0 and settings['SCREEN_HEIGHT'] == 0:
     settings['SCREEN_WIDTH'] = pygame.display.Info().current_w
     settings['SCREEN_HEIGHT'] = pygame.display.Info().current_h
-
 
 key_is_pressed = False
 count_move = 0
@@ -51,7 +46,7 @@ draw_cells = False
 #Переменная, отвечающяя за сцену
 scene = settings['SCENE']
 #Создаем карту 1-го уровня
-
+minute_in_game = 0
 buttonIsPressed = False
 #Влаг для перемещаения к игроку после телепорта
 flag_to_move_to_hero = 0
@@ -164,6 +159,7 @@ count_daily_event = 80
 count_dialog_threat = 50
 flag_fight_start_post = False
 flag_church = True
+flag_save = 50
 skill_cost = 200
 max_exp_lvl = 1000
 max_mana = 1000
@@ -186,6 +182,7 @@ flag_dialog_threat_lose = False
 flag_dialog_fight = False
 count_daily_event_post_fight = 80
 daily_event = None
+flag_mouse_volume_sound = False
 index_fog = 0
 list_daily_events = [
                     'post_fight',
@@ -484,4 +481,7 @@ dict_arguments = {
     'flag_fight_start_post':flag_fight_start_post,
     'count_daily_event_post_fight':count_daily_event_post_fight,
     'index_fog':index_fog,
+    'minute_in_game':minute_in_game,
+    'flag_mouse_volume_sound':flag_mouse_volume_sound,
+    'flag_save':flag_save,
 }
