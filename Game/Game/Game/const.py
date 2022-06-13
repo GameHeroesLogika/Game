@@ -33,7 +33,9 @@ flag_show_tavern = 30
 # КООРДИНАТЫ ЦЕНТРАЛЬНОЙ КЛЕТКИ
 CENTER_CELL_COR = [settings['SCREEN_WIDTH']//19*8,settings['SCREEN_HEIGHT']//2]
 #Константа громкости звука
-SOUNDS_VOLUME = 1
+
+settings['SOUNDS_VOLUME'] = settings['SOUNDS_VOLUME']/100
+settings['MUSIC_VOLUME'] = settings['MUSIC_VOLUME']/100
 
 
 list_losed_card_enemy = []
@@ -70,7 +72,6 @@ X_FRAME_MM, Y_FRAME_MM = (settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//1
 # список клеток для мини-карты
 list_cells_MM = list()
 #Список из звуков подбора ресурсов
-recourse_sounds = [Sounds('sounds/res1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res2.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res3.wav',settings['SOUNDS_VOLUME'])]
 flag_new_lvl = False
 #Словарь отвечает за кол-во ресурсов у игрока
 resources_dict = {
@@ -183,6 +184,7 @@ flag_dialog_fight = False
 count_daily_event_post_fight = 80
 daily_event = None
 flag_mouse_volume_sound = False
+flag_mouse_volume_music = False
 index_fog = 0
 list_daily_events = [
                     'post_fight',
@@ -276,21 +278,21 @@ list_untochable_cells = [ [1,3],[2,3],[3,3],[3,0],[3,1],[3,2] ]
 #Список, в которм будут храниться объекты клеток
 list_objects_cells_lvl1 = []
 dict_card_dialog = {
-                    'бард':['Стой! Останавись!',''],
-                    'клаус':['Я, Клаус!','Великий Маг!'],
-                    'гигант':['Гиганты большие.',''],
-                    'ями':['Призрак ада!','Пожиратель душ, Ями'],
-                    'подрывник':['БУМ-БУМ.','Взорву всё вокруг'],
-                    'арбалетчик':['Мои стрелы остры',''],
-                    'кентавр':['Я не животное!',''],
-                    'орк':['Ргррхрхрх!',''],
-                    'дворф':['Я лучший кузнец','этого мира!'],
-                    'рогги':['Не вставай',' у меня на пути!'],
-                    'суртур':['Огненный меч','правит судьбой'],
-                    'лудорн':['Мой,Брат - глупец',''],
-                    'друид':['Я покровитель леса',''],
-                    'голем':['Братья мои!','Вставайте!'],
-                    'рудорн':['Мой,Брат - глупец',''],
+                    'бард':['Бард: Стой! Останавись!',''],
+                    'клаус':['Клаус: Я, Клаус!','Великий Маг!'],
+                    'гигант':['Гигант: Гиганты','большие.'],
+                    'ями':['Ями: Призрак ада!','Пожиратель душ, Ями'],
+                    'подрывник':['Подрывник: БУМ-БУМ!','Взорву всё вокруг!'],
+                    'арбалетчик':['Арбалетчик: Мои стрелы','остры.'],
+                    'кентавр':['Кентавр: Я не позволю','контролировать меня'],
+                    'орк':['Орк: Ргррхрхрх!',''],
+                    'дворф':['Дворф: Я лучший кузнец','этого мира!'],
+                    'рогги':['Рогги: Не вставай',' у меня на пути!'],
+                    'суртур':['Суртур: Огненный меч','правит судьбой'],
+                    'лудорн':['Лудорн: Мой,Брат','глупец!'],
+                    'друид':['Друид: Я покровитель','леса.'],
+                    'голем':['Голем: Братья мои!','Вставайте!'],
+                    'рудорн':['Рудорн: Мой,Брат','глупец!'],
 
 }
 
@@ -414,7 +416,6 @@ dict_arguments = {
     'X_FRAME_MM':X_FRAME_MM,
     'Y_FRAME_MM':Y_FRAME_MM,
     'list_cells_MM':list_cells_MM,
-    'recourse_sounds':recourse_sounds,
     'resources_dict':resources_dict,
     'settings':settings,
     'change_exp_x':change_exp_x,
@@ -484,4 +485,5 @@ dict_arguments = {
     'minute_in_game':minute_in_game,
     'flag_mouse_volume_sound':flag_mouse_volume_sound,
     'flag_save':flag_save,
+    'flag_mouse_volume_music':flag_mouse_volume_music,
 }

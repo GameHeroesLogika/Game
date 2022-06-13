@@ -1,7 +1,6 @@
 from Text_cardgame import Font
 from graphic_elements_cards import Graphic_elements_cards
-from sounds_cardgame import Sounds
-from constants_cardgame import*
+from sounds import Sounds
 from const import*
 class Cards(Graphic_elements_cards):
     def __init__(self, x, y, width, height, path, hp, damage, desc_path, name='name',price = None,SCREEN_W =settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT']):
@@ -25,7 +24,7 @@ class Cards(Graphic_elements_cards):
         # Может ли ходить карта
         self.can_move = True
         # Уникальный звук для карты
-        self.sound_card = Sounds(None, 1)
+        self.sound_card = Sounds(None, settings['SOUNDS_VOLUME'])
         # цена карты
         self.price = price
     #Метод, отображающий на карте ее урон и хп

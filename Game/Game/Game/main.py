@@ -2,16 +2,15 @@ from const import*
 from objects import*
 from Addition_Module import*
 from Menu import*
-from constants_cardgame import*
 from additional_functions_cardgame import*
 from battle_functions_cardgame import*
 from event_functions_cardgame import*
-from sounds_cardgame import*
+from sounds import*
 from Text_cardgame import*
 from draw_function import draw_all
 from profilehooks import profile
 pygame.init()
-@profile
+# @profile
 #Основная фунуция
 def run_main(dict_arguments):
     index = 0
@@ -45,6 +44,7 @@ def run_main(dict_arguments):
                         button_end_fight.path = 'images/buttons/end_fight_y.png'
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    click_sound.play_sound()
                     # Если нажали на кнопку окончания боя
                     if check_mouse_cor(button_end_fight,mouse_cor):
                         dict_arguments['scene'] = 'lvl1'
@@ -57,6 +57,7 @@ def run_main(dict_arguments):
                             mat_objetcs_lvl1[player_lvl1.player_cor[0]][player_lvl1.player_cor[1]] = '0'
                             player_lvl1.player_cor = city_cor_enter
                             mat_objetcs_lvl1[city_cor_enter[0]][city_cor_enter[1]] = 'p'
+                        
                         player_lvl1.flag_card = False
                         dict_arguments['trophy_exp'] = 0
                         dict_arguments['trophy_gold'] = 0
@@ -104,8 +105,11 @@ def run_main(dict_arguments):
                         create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],list_cards_pl,list_cards_menu_hero,list_card_pl_reserv)
                         player_lvl1.flag_move = True
                         dict_arguments['flag_fight_start_post'] = False
+                        background_music_card_game.stop_sound()
+                        background_music.play_sound(-1)
             if dict_arguments['scene'] == 'city':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     if check_mouse_cor(castle,mouse_cor):
                         dict_arguments['scene'] = 'castle'
                     if check_mouse_cor(camp,mouse_cor) and dict_arguments['dict_bought_city']['camp']:
@@ -143,6 +147,7 @@ def run_main(dict_arguments):
 
             if dict_arguments['scene'] == 'post_army':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     if check_mouse_cor(button_city_back,mouse_cor):
                         dict_arguments['scene'] = 'city'
                 if check_mouse_cor(button_city_back,mouse_cor):
@@ -159,6 +164,7 @@ def run_main(dict_arguments):
                         dict_arguments['index_card'] = list_cards_post_army.index(dict_arguments['card_pressed'])
                 for obj in list_cards_post_army:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        click_sound.play_sound()
                         if check_mouse_cor(obj,mouse_cor=mouse_cor):
                             dict_arguments['card_pressed'] = obj
                     if obj != dict_arguments['card_pressed'] and obj.path != None:
@@ -203,6 +209,7 @@ def run_main(dict_arguments):
                     button_build.path = 'images/button_build_w.png'
                     button_build.image_load()
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        click_sound.play_sound()
                         if castle_selected.NAME != 'name' and castle_selected.NAME != None and  dict_arguments['dict_bought_city'][castle_selected.NAME.NAME] == False:
                             name_resource = dict_price_city[castle_selected.NAME.NAME]
                             list_text_cost = name_resource.split(';')
@@ -231,6 +238,7 @@ def run_main(dict_arguments):
                     button_castle_back.path = 'images/menu_hero_back_b.png'
                     button_castle_back.image_load()
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        click_sound.play_sound()
                         dict_arguments['scene'] = 'city'
                 else:
                     button_castle_back.path = 'images/menu_hero_back_y.png'
@@ -257,6 +265,7 @@ def run_main(dict_arguments):
                     
                     
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     for obj in list_buildings_castle:
                         not_locked = (list_buildings_castle[0] == list_buildings_castle[list_buildings_castle.index(obj)] or not 'locked' in list_buildings_castle[list_buildings_castle.index(obj)-1].path)
                         locked = ( not (list_buildings_castle[0] == list_buildings_castle[list_buildings_castle.index(obj)]) and 'locked' in list_buildings_castle[list_buildings_castle.index(obj)-1].path)
@@ -272,6 +281,7 @@ def run_main(dict_arguments):
                         
             if dict_arguments['scene'] == 'altar':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     if check_mouse_cor(button_altar_back,mouse_cor):
                         dict_arguments['scene'] = 'city'
                         altar_selected.NAME = None
@@ -332,6 +342,7 @@ def run_main(dict_arguments):
                         list_card_camp[i].image_load()
                     
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     for obj in list_card_camp:
                         if check_mouse_cor(obj,mouse_cor) and not 'locked' in obj.path :
                             camp_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
@@ -346,7 +357,7 @@ def run_main(dict_arguments):
                             dict_arguments['flag_show_error_bought_card'] = 0
                     if check_mouse_cor(button_camp_back,mouse_cor):
                         dict_arguments['scene'] = 'city'
-                    if check_mouse_cor(button_hire,mouse_cor) and camp_selected.NAME != None:
+                    if check_mouse_cor(button_hire,mouse_cor) and camp_selected.NAME != None and camp_selected.NAME != 'name':
                         name_card = dict_card_price[camp_selected.NAME.path.split('/')[-1].split('.')[0]]
                         list_text_cost = name_card.split(';')
                         for resource in list_text_cost:
@@ -410,12 +421,14 @@ def run_main(dict_arguments):
                     button_market_back.path = 'images/menu_hero_back_y.png'
                     button_market_back.image_load()
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        click_sound.play_sound()
                         dict_arguments['scene'] = 'lvl1'
                         player_lvl1.flag_market = False
                 else:
                     button_market_back.path = 'images/menu_hero_back_b.png'
                     button_market_back.image_load()
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     if check_mouse_cor(button_market_back,mouse_cor): 
                         dict_arguments['scene'] = 'lvl1'
                     for obj in list_slots_market_hero:
@@ -681,6 +694,7 @@ def run_main(dict_arguments):
                     button_menu_hero_back.path = 'images/menu_hero_back_b.png'
                     button_menu_hero_back.image_load()
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        click_sound.play_sound()
                         dict_arguments['scene'] = 'lvl1'
                 else:
                     button_menu_hero_back.path = 'images/menu_hero_back_y.png'
@@ -793,6 +807,7 @@ def run_main(dict_arguments):
                 
                 for obj in list_slots_skills_hero:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        click_sound.play_sound()
                         if check_mouse_cor(obj,mouse_cor=mouse_cor):
                             path_skill = obj.path.split('/')[-1]
                             path_skill = path_skill.split('.')[0]
@@ -821,6 +836,7 @@ def run_main(dict_arguments):
                     obj.show_image(win)
                 for obj in list_cards_menu_hero:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        click_sound.play_sound()
                         if check_mouse_cor(obj,mouse_cor=mouse_cor):
                             dict_arguments['card_pressed'] = obj
                     if obj != dict_arguments['card_pressed'] and obj.path != None:
@@ -830,6 +846,7 @@ def run_main(dict_arguments):
                 #Условия взятия и отрисовки артефакта
                 for obj in list_all_artifact:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        click_sound.play_sound()
                         if check_mouse_cor(obj,mouse_cor=mouse_cor) and obj.path != None:
                             dict_arguments['artifact_pressed'] = obj
                     if obj != dict_arguments['artifact_pressed'] and obj.path != None:
@@ -892,6 +909,7 @@ def run_main(dict_arguments):
                     button.show_image(win)
                 # Реакция на нажатие кнопок
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    click_sound.play_sound()
                     if check_mouse_cor(button_play,mouse_cor):
                         sound_book.play_sound()
                         
@@ -904,6 +922,7 @@ def run_main(dict_arguments):
                         dict_arguments['scene'] = 'settings_scene'
             if dict_arguments['scene'] == 'settings_scene':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     if check_mouse_cor(button_menu_hero_back,mouse_cor):
                         dict_arguments['scene'] = 'menu'
                     for obj in list_buttons_display_size:
@@ -944,6 +963,7 @@ def run_main(dict_arguments):
                             settings_display['SCREEN_WIDTH'] = int(width)
                             settings_display['SCREEN_HEIGHT'] = int(height)
                             settings_display['SOUNDS_VOLUME'] = int(count_volume_sound.font_content)
+                            settings_display['MUSIC_VOLUME'] = int(count_volume_music.font_content)
                             json.dump(settings_display,file,indent=4)
                         dict_arguments['flag_save'] = 0
 
@@ -951,11 +971,18 @@ def run_main(dict_arguments):
 
                     if pygame.Rect.collidepoint(mouse_volume_sound,mouse_cor[0],mouse_cor[1]):
                         dict_arguments['flag_mouse_volume_sound'] = True
+                    if pygame.Rect.collidepoint(mouse_volume_music,mouse_cor[0],mouse_cor[1]):
+                        dict_arguments['flag_mouse_volume_music'] = True
+                        
 
                 
                 if event.type == pygame.MOUSEBUTTONUP:
                     if dict_arguments['flag_mouse_volume_sound']:
                         dict_arguments['flag_mouse_volume_sound'] = False
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if dict_arguments['flag_mouse_volume_music']:
+                        dict_arguments['flag_mouse_volume_music'] = False
+                        print('fdslkfsldfksdlf')
                 
                 #Отрисовуем кнопки
             if dict_arguments['past_lvl_skill_fight'] == 3:
@@ -966,7 +993,7 @@ def run_main(dict_arguments):
 
             if dict_arguments['scene'] =='card_game':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    
+                    click_sound.play_sound()
                     if dict_arguments['cardgame_variables']['who_move'] == 'player':
                         dict_arguments['cardgame_variables']['index_picked_card'] = 0
                         #Функция взятия карты в руки
@@ -990,6 +1017,7 @@ def run_main(dict_arguments):
                 
                 #Если нажата левая кнопка мыши
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click_sound.play_sound()
                     #Окно предложения сделки 
                     if dict_arguments['flag_show_offer']:
                         
@@ -999,7 +1027,7 @@ def run_main(dict_arguments):
                                 dict_arguments['flag_dialog_offer_yes'] = True
                                 dict_arguments['resources_dict']['gold_bullion']-=gold_count_enemy
                                 dict_arguments['flag_show_offer'] = False
-                                text_card = 'Заскамил мамонта бб '
+                                text_card = [str(name_card).title()+': Благодарю','']
                                 dict_arguments['count_dialog'] = 0
                                 dict_arguments['flag_offer'] = False
                                 dict_arguments['flag_show_dialog'] = True
@@ -1012,7 +1040,7 @@ def run_main(dict_arguments):
                             dict_arguments['flag_show_offer'] = False
                             dict_arguments['flag_offer'] = False
                             dict_arguments['count_dialog'] = 0
-                            text_card = 'Чел ты...'
+                            text_card = [str(name_card).title()+': Очень жаль!','']
                             dict_arguments['flag_show_dialog'] = True
                     if dict_arguments['flag_show_dialog']:
                         if check_mouse_cor_font(button_leave,mouse_cor) and dict_arguments['count_dialog'] == 50:
@@ -1023,11 +1051,12 @@ def run_main(dict_arguments):
                             text_card = None
                         elif check_mouse_cor_font(button_fight,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_dialog_fight'] = True
-                            text_card = 'Кровавая арена смерти'
+                            text_card = [str(player_lvl1.flag_card).title()+': Да начнётся','битва!']
                             dict_arguments['flag_show_dialog'] = True
                             dict_arguments['count_dialog'] = 0
                         elif check_mouse_cor_font(button_offer,mouse_cor) and dict_arguments['flag_offer'] and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_show_offer'] = True
+                            name_card = player_lvl1.flag_card
                             player_lvl1.flag_card = False
                             player_lvl1.near_card = False
                             dict_arguments['flag_show_dialog'] = False
@@ -1042,12 +1071,12 @@ def run_main(dict_arguments):
                             if chance_base <= chance_diplomaty:
                                 dict_arguments['flag_dialog_threat_win'] = True
                                 dict_arguments['count_dialog'] = 0
-                                text_card = 'Не надо Дядя'
+                                text_card = [str(player_lvl1.flag_card).title()+': Спокойно,','Я ухожу']
                                 dict_arguments['flag_show_dialog'] = True
                             else:
                                 dict_arguments['flag_dialog_threat_lose'] = True
                                 dict_arguments['count_dialog'] = 0
-                                text_card = 'У меня шелли с ультой'
+                                text_card = [str(player_lvl1.flag_card).title()+': Да начнётся','битва!']
                                 dict_arguments['flag_show_dialog'] = True
 
 
@@ -1164,10 +1193,15 @@ def run_main(dict_arguments):
             book.show_image(win)
             button_menu_hero_back.show_image(win)
             button_volume_sound.show_text(win)
+            button_volume_music.show_text(win)
             button_display_size.show_text(win)
             pygame.draw.rect(win,color='DimGrey',rect=rect_volume_sound)
             pygame.draw.rect(win,color='black',rect=mouse_volume_sound)
+            pygame.draw.rect(win,color='DimGrey',rect=rect_volume_music)
+            pygame.draw.rect(win,color='black',rect=mouse_volume_music)
+            
             count_volume_sound.show_text(win)
+            count_volume_music.show_text(win)
             if list_button_display_fullsize[0].font_color != 'red':
                 button_display_size.font_color = 'black'
                 for obj in list_buttons_display_size:
@@ -1189,8 +1223,17 @@ def run_main(dict_arguments):
                     mouse_volume_sound.x = rect_volume_sound.x
                 if mouse_volume_sound.x >= rect_volume_sound.x+rect_volume_sound.width:
                     mouse_volume_sound.x = rect_volume_sound.x+rect_volume_sound.width
+            if dict_arguments['flag_mouse_volume_music']:
+                if mouse_volume_music.x >= rect_volume_music.x and mouse_volume_music.x <= rect_volume_music.x+rect_volume_music.width:
+                    mouse_volume_music.x = mouse_cor[0]
+                if mouse_volume_music.x <= rect_volume_music.x:
+                    mouse_volume_music.x = rect_volume_music.x
+                if mouse_volume_music.x >= rect_volume_music.x+rect_volume_music.width:
+                    mouse_volume_music.x = rect_volume_music.x+rect_volume_music.width
             count_volume = round((mouse_volume_sound.x-rect_volume_sound.x)/rect_volume_sound.width*100)
             count_volume_sound.font_content = str(count_volume)
+            count_music_volume = round((mouse_volume_music.x-rect_volume_music.x)/rect_volume_music.width*100)
+            count_volume_music.font_content = str(count_music_volume)
         if dict_arguments['flag_fight_start']:
             dict_arguments['flag_offer'] = True
             card_number = 0 
@@ -1209,6 +1252,8 @@ def run_main(dict_arguments):
                 player_lvl1.near_card = False
             dict_arguments['flag_fight_start'] = False
             text_card = None
+            background_music.stop_sound()
+            background_music_card_game.play_sound(-1)
         if dict_arguments['flag_fight_start_post']  and dict_arguments['scene'] != 'card_game' and dict_arguments['scene'] != 'result_screen':
             card_number = 0 
             for card in list_cards_pl_post_army:
@@ -1850,6 +1895,7 @@ def run_main(dict_arguments):
                     dict_arguments['flag_dialog_offer_yes'] = False
                 if dict_arguments['flag_dialog_offer_no']:
                     dict_arguments['flag_dialog_offer_no'] = False
+                    dict_arguments['flag_show_dialog'] = False
                 if dict_arguments['flag_dialog_threat_win']:
                     player_lvl1.flag_move = True
                     player_lvl1.flag_card = False

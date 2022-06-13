@@ -14,6 +14,7 @@ class Main_Hero(Graphic_elements):
         self.flag_pressed = True
         self.flag_move = True
         self.list_studied_map = []# Список изученых клеток
+
         self.index_cor = []
         self.player_cor = [3,1]# Индексы(координаты) пресонажа по матрице
         self.SCREEN_W = SCREEN_W# Ширина эекрана
@@ -72,6 +73,20 @@ class Main_Hero(Graphic_elements):
         self.flag_academy = False
         self.flag_shack = False
         self.flag_tavern = False
+
+        self.move_sound = Sounds('sounds/res1.wav',settings['SOUNDS_VOLUME'])#Звук ходьбы по траве
+        self.portal_sound = Sounds('sounds/portal.wav',settings['SOUNDS_VOLUME'])#Звук портала
+        self.build_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
+        self.tavern_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.city_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.shack_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.tower_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.academy_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.fountain_exp_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.fountain_mana_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.market_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        
         for i in range(4):# Заполнение списков изобржаний с движением 
             path = os.path.join(os.path.abspath(__file__+'/..'),'images/player/right/'+str(i)+'.png')
             self.list_images_right.append(path)
@@ -91,11 +106,14 @@ class Main_Hero(Graphic_elements):
         
         #Если нажата клавиша ВПРАВО
         if self.count_step != 0:
+            
             if self.where_move == 'right' and self.count_move <= 9:
                 # Условия для телепорта
+                
                 if self.count_move == 8:
                     # Если клетка справа - телеопрт
                     if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P':
+                        self.portal_sound.play_sound()
                         # Перебираме список координат порталов
                         for i in list_cor_portals:
                             # Узнаем на каком именно портале мы находимся
@@ -143,6 +161,7 @@ class Main_Hero(Graphic_elements):
                 # Условия для телепорта
                 if self.count_move == 8:
                     if mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'P':
+                        self.portal_sound.play_sound()
                         for i in list_cor_portals:
                             for cors in i:
                                 if self.player_cor[1] - 1 == cors[1] and self.player_cor[0]   == cors[0]:
@@ -179,6 +198,7 @@ class Main_Hero(Graphic_elements):
                 # Условия для портала
                 if self.count_move == 8: 
                     if mat_objetcs[self.player_cor[0]-1][self.player_cor[1]] == 'P': 
+                        self.portal_sound.play_sound()
                         for i in list_cor_portals:
                             for cors in i:
                                 if self.player_cor[1] == cors[1] and self.player_cor[0] - 1   == cors[0]: 
@@ -246,6 +266,7 @@ class Main_Hero(Graphic_elements):
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P') and self.where_move == None:
                         self.where_move = 'right'
                         self.count_step -= 1
+                        self.move_sound.play_sound()
                 # if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P' and :
                     # self.player_cor[1]+=10
                         #Указываем, что игрок переместился на клетку вправо
@@ -263,6 +284,7 @@ class Main_Hero(Graphic_elements):
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'P') and self.where_move == None:
                         self.where_move = 'left'
                         self.count_step -= 1
+                        self.move_sound.play_sound()
 
                         
             #Если нажата клавиша ВВЕРХ
@@ -279,6 +301,7 @@ class Main_Hero(Graphic_elements):
                     if (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == '0' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'P') and self.where_move == None:
                         self.where_move = 'up'
                         self.count_step -= 1
+                        self.move_sound.play_sound()
                         
             #Если нажата клавиша ВНИЗ
             elif keys[pygame.K_DOWN] and self.flag_move and self.where_move == None:
@@ -293,6 +316,7 @@ class Main_Hero(Graphic_elements):
                     if mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == '0'  and self.where_move == None:
                         self.where_move = 'down'
                         self.count_step -= 1
+                        self.move_sound.play_sound()
 
           
             list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
@@ -378,48 +402,57 @@ class Main_Hero(Graphic_elements):
             if self.near_chest:
                 self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
+                    self.chest_open_sound.play_sound()
                     self.near_chest = False
                     self.flag_draw_chest = True
                     self.flag_move = False
             if self.near_fountain_exp:
                 self.show_tip(' [E] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.fountain_exp_sound()
                     self.flag_fountain_exp = True
                     self.flag_pressed = True
             if self.near_fountain_mana :
                 self.show_tip(' [E] Колодец маны',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.fountain_mana_sound.play_sound()
                     self.flag_fountain_mana = True
                     self.flag_pressed = True
             if self.near_tower:
                 self.show_tip(' [E] Поставить дозорного',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5,font_size=settings['SCREEN_WIDTH']//80)
                 if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.tower_sound.play_sound()
                     self.flag_tower = True
                     self.flag_pressed = True
             if self.near_academy:
                 self.show_tip(' [E] Академия',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.academy_sound.play_sound()
                     self.flag_academy = True
                     self.flag_pressed = True
             if self.near_shack :
                 self.show_tip(' [E] Хижина Колдуна',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.shack_sound.play_sound()
                     self.flag_shack = True
                     self.flag_pressed = True
             if self.near_tavern:
                 self.show_tip(' [E] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.tavern_sound.play_sound()
                     self.flag_tavern = True
                     self.flag_pressed = True
             if self.near_market:
                 # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
+                    self.market_sound.play_sound()
                     self.near_market = False
                     self.flag_market = True
             if self.near_city:
                 self.show_tip( '[F] Зайти в город', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if keys[pygame.K_f]:
+                    self.city_sound.play_sound()
                     self.flag_city = True
                     self.near_city = False
             if not keys[pygame.K_e] and self.flag_pressed:
@@ -428,6 +461,7 @@ class Main_Hero(Graphic_elements):
             if self.near_building:
                 self.show_tip( '[E] Захватить здание', self.SCREEN_W-self.SCREEN_W//6.4, 0)
                 if  keys[pygame.K_e] and self.building_cor!=None:
+                    self.build_sound.play_sound()
                     if self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]]:
                         if (self.player_cor[0]+1,self.player_cor[1]) not in  self.list_capture_buildings:
                             self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]))

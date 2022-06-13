@@ -2,10 +2,9 @@ from const import *
 from Hero import Main_Hero
 from Menu import Menu
 from random import choice
-from constants_cardgame import*
 from cards_class import Cards
 from graphic_elements_cards import Graphic_elements_cards
-from sounds_cardgame import Sounds
+from sounds import Sounds
 from Text import Font
 import Text_cardgame
 
@@ -163,6 +162,11 @@ rect_volume_sound = Rect(settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT'
 mouse_volume_sound = Rect(settings_display['SOUNDS_VOLUME']*rect_volume_sound.width/100+rect_volume_sound.x,settings['SCREEN_HEIGHT']//8*1.9,settings['SCREEN_HEIGHT']//72,settings['SCREEN_HEIGHT']//72*3)
 count_volume_sound = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black',str(settings_display['SOUNDS_VOLUME']),settings['SCREEN_WIDTH']//1.09,settings['SCREEN_HEIGHT']//8)
 
+button_volume_music = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Громкость музыки:',settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//8*2.5)
+rect_volume_music = Rect(settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//8*3.5,settings['SCREEN_WIDTH']//1.09-settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//72)
+mouse_volume_music = Rect(settings_display['MUSIC_VOLUME']*rect_volume_sound.width/100+rect_volume_sound.x,settings['SCREEN_HEIGHT']//8*3.4,settings['SCREEN_HEIGHT']//72,settings['SCREEN_HEIGHT']//72*3)
+count_volume_music = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black',str(settings_display['MUSIC_VOLUME']),settings['SCREEN_WIDTH']//1.09,settings['SCREEN_HEIGHT']//8*2.5)
+
 button_auto_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Автосохранение:',settings['SCREEN_WIDTH']//1.75,settings['SCREEN_HEIGHT']//8*4)
 list_button_auto_save = [
     Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Да',settings['SCREEN_WIDTH']//1.75+settings['SCREEN_WIDTH']//14.2*1,settings['SCREEN_HEIGHT']//8*5),
@@ -298,9 +302,19 @@ scene_camp = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIG
 scene_altar = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/altar_scene.png')
 scene_castle = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/castle_scene.png')
 scene_post_army  = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/post_army.png')
-#Звук отткрытия книги
+#Звуки
+#Звук открытия книги
 sound_book = Sounds('sounds/book_opened.wav', settings['SOUNDS_VOLUME'])
-
+#Звуки ресурсов
+recourse_sounds = [Sounds('sounds/res1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res2.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res3.wav',settings['SOUNDS_VOLUME'])]
+#Звук нажатия
+click_sound = Sounds('sounds/click.wav',settings['SOUNDS_VOLUME'])
+#Музыка
+#Фоновая музыка
+background_music = Sounds('sounds/background_music.wav',settings['MUSIC_VOLUME'])
+background_music.play_sound(index=-1)
+#Фоновая музыка для карточного боя
+background_music_card_game = Sounds('sounds/game_music.wav',settings['MUSIC_VOLUME'])
 
 list_card_camp = [
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*8,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_WIDTH']//7.5,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_WIDTH']//7.5,path='images/cards/бард_locked.png'),
@@ -528,11 +542,11 @@ frame_error = Graphic_elements_cards(settings['SCREEN_WIDTH']//2 - settings['SCR
 error_text_obj = Text_cardgame.Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red',None,frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10)
 
 # Подгружаем звуки для игры
-sound_hit = Sounds('sounds/sword.wav',1)
-sound_heal = Sounds('sounds/healsound.wav',1)
-sound_flashlight = Sounds('sounds/flashlight.wav',1)
-sound_explosion = Sounds('sounds/explosion.wav',1)
-sound_paper = Sounds('sounds/book_opened.wav',1)
+sound_hit = Sounds('sounds/sword.wav',settings['SOUNDS_VOLUME'])
+sound_heal = Sounds('sounds/healsound.wav',settings['SOUNDS_VOLUME'])
+sound_flashlight = Sounds('sounds/flashlight.wav',settings['SOUNDS_VOLUME'])
+sound_explosion = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])
+sound_paper = Sounds('sounds/book_opened.wav',settings['SOUNDS_VOLUME'])
 # Объект карты для отображения потерь в сцене результата боя
 card_for_result_screen =Graphic_elements_cards(None,None,settings['SCREEN_WIDTH']//12, settings['SCREEN_WIDTH']//7,None)
 
@@ -547,8 +561,9 @@ button_end_fight = Graphic_elements_cards(settings['SCREEN_WIDTH']//12*10,settin
 bg_win = Graphic_elements_cards(0,0, settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT'],'images/bg_win.png')
 bg_lose = Graphic_elements_cards(0,0, settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT'],'images/bg_lose.png')
 
-music_win = Sounds('sounds/music_win.wav',1)
-music_lose = Sounds('sounds/music_lose.wav',1)
+music_win = Sounds('sounds/music_win.wav',settings['MUSIC_VOLUME'])
+music_lose = Sounds('sounds/music_lose.wav',settings['MUSIC_VOLUME'])
 
+list_cards_on_table_pl = []
 # Объект текста хода
 text_move = Text_cardgame.Font('images/Font/pixel_font.ttf',60,'white','Твой ход!',settings['SCREEN_WIDTH']//2.5, settings['SCREEN_HEIGHT']//2.3)
