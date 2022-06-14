@@ -2,7 +2,7 @@ from const import*
 import pygame
 from random import choice,randint,shuffle
 from Addition_Module import move_to_hero
-from sounds import Sounds
+from sounds import Sounds,Music
 from graphic_elements import Graphic_elements
 from Text import Font
 import os
@@ -34,7 +34,7 @@ class Main_Hero(Graphic_elements):
         self.list_capture_buildings = []# Список захваченных зданий
         self.list_capture_buildings_symbol = []# Список символов захваченных зданий
         self.need_to_move_to_hero = False#Нужно ли перемещаться к игроку после телепорта
-        
+        self.RECT = pygame.Rect(self.X-settings['SCREEN_WIDTH']//19*2,self.Y-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19*5,settings['SCREEN_WIDTH']//19*5)
 
         self.near_chest = False
         self.near_city = False
@@ -74,19 +74,19 @@ class Main_Hero(Graphic_elements):
         self.flag_shack = False
         self.flag_tavern = False
 
-        self.move_sound = Sounds('sounds/res1.wav',settings['SOUNDS_VOLUME'])#Звук ходьбы по траве
+        self.move_sound = [Sounds('sounds/grass.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass2.wav',settings['SOUNDS_VOLUME'])]#Звук ходьбы по траве
         self.portal_sound = Sounds('sounds/portal.wav',settings['SOUNDS_VOLUME'])#Звук портала
         self.build_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
-        self.tavern_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.tavern_music = Music('sounds/tavern.mp3',settings['MUSIC_VOLUME'])
         self.city_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        self.shack_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.shack_sound = Sounds('sounds/tavern.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием
         self.tower_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.academy_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        self.fountain_exp_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        self.fountain_mana_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.fountain_exp_sound = Sounds('sounds/fountain_exp.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.fountain_mana_sound = Sounds('sounds/fountain_mana.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.market_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        
+        self.water_sound = Music('sounds/water.mp3',settings['MUSIC_VOLUME'])
         for i in range(4):# Заполнение списков изобржаний с движением 
             path = os.path.join(os.path.abspath(__file__+'/..'),'images/player/right/'+str(i)+'.png')
             self.list_images_right.append(path)
@@ -102,8 +102,8 @@ class Main_Hero(Graphic_elements):
 
         
         
-    def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals,list_card_matrix):
-        
+    def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals,list_card_matrix,water):
+        self.RECT = pygame.Rect(self.X-settings['SCREEN_WIDTH']//19*2,self.Y-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19*5,settings['SCREEN_WIDTH']//19*5)
         #Если нажата клавиша ВПРАВО
         if self.count_step != 0:
             
@@ -266,7 +266,7 @@ class Main_Hero(Graphic_elements):
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P') and self.where_move == None:
                         self.where_move = 'right'
                         self.count_step -= 1
-                        self.move_sound.play_sound()
+                        choice(self.move_sound).play_sound()
                 # if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P' and :
                     # self.player_cor[1]+=10
                         #Указываем, что игрок переместился на клетку вправо
@@ -284,7 +284,7 @@ class Main_Hero(Graphic_elements):
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'P') and self.where_move == None:
                         self.where_move = 'left'
                         self.count_step -= 1
-                        self.move_sound.play_sound()
+                        choice(self.move_sound).play_sound()
 
                         
             #Если нажата клавиша ВВЕРХ
@@ -301,7 +301,7 @@ class Main_Hero(Graphic_elements):
                     if (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == '0' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'P') and self.where_move == None:
                         self.where_move = 'up'
                         self.count_step -= 1
-                        self.move_sound.play_sound()
+                        choice(self.move_sound).play_sound()
                         
             #Если нажата клавиша ВНИЗ
             elif keys[pygame.K_DOWN] and self.flag_move and self.where_move == None:
@@ -316,7 +316,7 @@ class Main_Hero(Graphic_elements):
                     if mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == '0'  and self.where_move == None:
                         self.where_move = 'down'
                         self.count_step -= 1
-                        self.move_sound.play_sound()
+                        choice(self.move_sound).play_sound()
 
           
             list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
@@ -391,7 +391,18 @@ class Main_Hero(Graphic_elements):
             #Фонтаны
             self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
             self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
-
+            self.near_water1  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False)
+            # self.near_water2  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False,index=2)
+            # self.near_water3  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False,index=3)
+            # self.near_water4  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False,index=4)
+            
+            if self.near_water1:
+                if not pygame.mixer.music.get_busy():
+                    self.water_sound.load_music()
+                    pygame.mixer.music.play(-1)
+            if not self.near_tavern and not  self.near_water1:
+                if pygame.mixer.music.get_busy():
+                    pygame.mixer.music.unload()
             if self.near_card:
                 for obj in list_card_matrix:
                     if obj.NAME == self.card_name:
@@ -437,11 +448,14 @@ class Main_Hero(Graphic_elements):
                     self.flag_shack = True
                     self.flag_pressed = True
             if self.near_tavern:
+                if not pygame.mixer.music.get_busy():
+                    self.tavern_music.load_music()
+                    pygame.mixer.music.play(-1)
                 self.show_tip(' [E] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.tavern_sound.play_sound()
                     self.flag_tavern = True
                     self.flag_pressed = True
+            
             if self.near_market:
                 # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
@@ -637,21 +651,21 @@ class Main_Hero(Graphic_elements):
                 self.list_studied_map.append(list_cor)
             
         self.index_cor = [index_x,index_y] 
-    def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None):
+    def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None,index=1):
         building_cor = None
-        if not self.flag_right and (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == sub_element)  :
+        if not self.flag_right and (mat_objetcs[self.player_cor[0]][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] + index] == sub_element)  :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0],self.player_cor[1] + 1]
-        elif not self.flag_left and (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == sub_element)  :
+        elif not self.flag_left and (mat_objetcs[self.player_cor[0]][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] - index] == sub_element)  :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0],self.player_cor[1] - 1]
-        elif not self.flag_down and (mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == sub_element) :
+        elif not self.flag_down and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] + index][self.player_cor[1]] == sub_element) :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]+1,self.player_cor[1]]
-        elif not self.flag_up and (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == sub_element) :
+        elif not self.flag_up and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] - index][self.player_cor[1]] == sub_element) :
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]-1,self.player_cor[1]]

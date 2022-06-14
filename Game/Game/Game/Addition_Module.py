@@ -154,6 +154,8 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         water.show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'water'))
                         flag_cell_MM = False
+                        
+                    
                     elif obj == 'л':
                         list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
                         list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y 
@@ -392,6 +394,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'green_dark'))
                     list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'green_dark'))
                     flag_cell_MM = False
+            
 
 
             
@@ -410,10 +413,10 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
             index_cells += 1
 
             X_CELL_MM += W_CELL_MINI_MAP
+        
+            
         Y_CELL_MM += H_CELL_MINI_MAP
         X_CELL_MM = X_FRAME_MM
-        
-
 
 def fog_war_func(mat_objetcs_lvl1,X_FRAME_MM,Y_FRAME_MM,list_studied_map,fog_war,list_objects_cells_lvl1,win,list_cells_MM,LENGTH_MAP,W_CELL_MINI_MAP,H_CELL_MINI_MAP):
     X_CELL_MM = X_FRAME_MM

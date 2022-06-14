@@ -4,7 +4,7 @@ from Menu import Menu
 from random import choice
 from cards_class import Cards
 from graphic_elements_cards import Graphic_elements_cards
-from sounds import Sounds
+from sounds import Sounds,Music
 from Text import Font
 import Text_cardgame
 
@@ -308,13 +308,21 @@ sound_book = Sounds('sounds/book_opened.wav', settings['SOUNDS_VOLUME'])
 #Звуки ресурсов
 recourse_sounds = [Sounds('sounds/res1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res2.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/res3.wav',settings['SOUNDS_VOLUME'])]
 #Звук нажатия
-click_sound = Sounds('sounds/click.wav',settings['SOUNDS_VOLUME'])
+click_sound = Sounds('sounds/click.wav',settings['SOUNDS_VOLUME']/2)
+#Звук нажатия  в меню героя
+# click_menu_hero_sound = Sounds('sounds/click_menu_hero.wav',settings['SOUNDS_VOLUME']/2)
+#Звук события
+event_sound = Sounds('sounds/event.wav',settings['SOUNDS_VOLUME'])
+#Звук нового дня
+new_day_sound = Sounds('sounds/new_day.wav',settings['SOUNDS_VOLUME'])
 #Музыка
 #Фоновая музыка
 background_music = Sounds('sounds/background_music.wav',settings['MUSIC_VOLUME'])
-background_music.play_sound(index=-1)
+# background_music.play_sound(index=-1)
 #Фоновая музыка для карточного боя
 background_music_card_game = Sounds('sounds/game_music.wav',settings['MUSIC_VOLUME'])
+
+
 
 list_card_camp = [
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*8,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_WIDTH']//7.5,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_WIDTH']//7.5,path='images/cards/бард_locked.png'),
