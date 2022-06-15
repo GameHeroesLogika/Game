@@ -154,31 +154,45 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         water.show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'water'))
                         flag_cell_MM = False
-                        
-                    
                     elif obj == 'л':
                         list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
-                        list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y 
+                        list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y
                         list_forest[0].show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'forest'))
+                        flag_cell_MM = False
                         flag_cell_MM = False
                     elif obj == '\\':
                         list_forest[1].X = list_objects_cells_lvl1[index_cells].X 
                         list_forest[1].Y = list_objects_cells_lvl1[index_cells].Y 
                         list_forest[1].show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'forest'))
+                        flag_cell_MM = False
                         flag_cell_MM = False
                     elif obj == '/':
                         list_forest[2].X = list_objects_cells_lvl1[index_cells].X 
                         list_forest[2].Y = list_objects_cells_lvl1[index_cells].Y 
                         list_forest[2].show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'forest'))
+                        flag_cell_MM = False
                         flag_cell_MM = False
                     elif obj == '|':
                         list_forest[3].X = list_objects_cells_lvl1[index_cells].X 
                         list_forest[3].Y = list_objects_cells_lvl1[index_cells].Y 
                         list_forest[3].show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'forest'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'forest'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'forest'))
+                        flag_cell_MM = False
                         flag_cell_MM = False
                     #Начало отрисовка на матрице карт 
                     elif obj =='А':

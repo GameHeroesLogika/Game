@@ -16,25 +16,28 @@ def run_main(dict_arguments):
     index = 0
     water = choice(list_water)
     time = pygame.time.Clock()
+    player_lvl1.flag_move = True
     while dict_arguments['game']:
         if dict_arguments['cardgame_variables']['who_won'] == 'enemy' and dict_arguments['flag_fight_start_post'] : 
             dict_arguments['flag_fight_start_post'] = False
             for i in dict_arguments['resources_dict'].keys():
                 if dict_arguments['resources_dict'][i] != 0:
                     dict_arguments['resources_dict'][i] = dict_arguments['resources_dict'][i]//2
-        effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments)
+        effect_hero(list_all_artifact,dict_artifact_on,dict_arguments['dict_artifact_on_past'],dict_arguments['characteristic_dict'],list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments)
         dict_arguments['dict_artifact_on_past'] = dict_artifact_on.copy()
         for obj in list_text_lvl_base_skills:
             name_skill = list_text_lvl_base_skills.index(obj)
             name_skill = list_choice_base_skill[name_skill]
             name_skill = name_skill.path.split('/')[-1].split('.')[0]
-            obj.font_content = "Уровень: "+str(characteristic_dict['lvl_'+name_skill])
+            obj.font_content = "Уровень: "+str(dict_arguments['characteristic_dict']['lvl_'+name_skill])
         #Цикл проверки событий
         for event in pygame.event.get():
             #Услове выхода из игры
             mouse_cor = pygame.mouse.get_pos() 
             if event.type == pygame.QUIT:
                 dict_arguments['game'] = False
+                with open('saves/config1.json','w') as file:
+                    json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
             if dict_arguments['scene'] == 'result_screen':
                 # Если навелись на кнопку окончания боя
                 if event.type == pygame.MOUSEMOTION:
@@ -50,7 +53,7 @@ def run_main(dict_arguments):
                         dict_arguments['scene'] = 'lvl1'
                         if dict_arguments['cardgame_variables']['who_won'] == 'player':
                             dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
-                            characteristic_dict['exp']+=dict_arguments['trophy_exp']
+                            dict_arguments['characteristic_dict']['exp']+=dict_arguments['trophy_exp']
                             if dict_arguments['flag_fight_start_post'] != True:
                                 mat_objetcs_lvl1[player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
                         if dict_arguments['cardgame_variables']['who_won'] != 'player':
@@ -89,10 +92,10 @@ def run_main(dict_arguments):
                                                 'who_won':None,#Означает, кто победил
                                                 'hp_text':None#Объект текста, который отображает прибавляемое хп карте
                                             }
-                        dict_arguments['cardgame_variables']['hero_skill'] = dict_skills[str(settings['SKILL'])]
-                        if '_bw' in dict_arguments['cardgame_variables']['hero_skill'].path:
-                            dict_arguments['cardgame_variables']['hero_skill'].path = dict_arguments['cardgame_variables']['hero_skill'].path.split('_bw')[0]+'.png'
-                        dict_arguments['cardgame_variables']['hero_skill'].image_load()
+                        hero_skill = dict_skills[str(settings['SKILL'])]
+                        if '_bw' in hero_skill.path:
+                            hero_skill.path = hero_skill.path.split('_bw')[0]+'.png'
+                        hero_skill.image_load()
                         for card_losed in dict_arguments['list_losed_card_pl']:
                             for card_pl in list_cards_pl:
                                 if card_losed == card_pl[0]:
@@ -137,7 +140,7 @@ def run_main(dict_arguments):
                     button_post_army.path = 'images/post_army_b.png'
                     button_post_army.image_load()
                 if dict_arguments['dict_bought_city']['church'] and dict_arguments['flag_church']:
-                    characteristic_dict['lvl_skill_domesticpolitics']+=5 
+                    dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics']+=5 
                     dict_arguments['flag_church'] = False
                 if dict_arguments['dict_bought_city']['forge'] and dict_arguments['flag_forge']:
                     for key in dict_card_characteristics.keys():
@@ -779,21 +782,22 @@ def run_main(dict_arguments):
                     dict_arguments['artifact_pressed'] = None
                 
                 text_lvl_hero.show_text(win)
-                if len(str(characteristic_dict['exp'])) > dict_arguments['change_exp_x']:
-                    exp_img.X = exp_img.start_x+(len(str(characteristic_dict['exp']))-1)*step_exp_text
-                    dict_arguments['change_exp_x'] = len(str(characteristic_dict['exp']))
-                if len(str(characteristic_dict['exp']))  < dict_arguments['change_exp_x']:
-                    exp_img.X = exp_img.start_x+(len(str(characteristic_dict['exp']))-1)*step_exp_text
-                    dict_arguments['change_exp_x'] = len(str(characteristic_dict['exp']))
-                text_exp_hero.font_content = str(characteristic_dict['exp'])+'/'+str(dict_arguments['max_exp_lvl'])
+                if len(str(dict_arguments['characteristic_dict']['exp'])) > dict_arguments['change_exp_x']:
+                    exp_img.X = exp_img.start_x+(len(str(dict_arguments['characteristic_dict']['exp']))-1)*step_exp_text
+                    dict_arguments['change_exp_x'] = len(str(dict_arguments['characteristic_dict']['exp']))
+                if len(str(dict_arguments['characteristic_dict']['exp']))  < dict_arguments['change_exp_x']:
+                    exp_img.X = exp_img.start_x+(len(str(dict_arguments['characteristic_dict']['exp']))-1)*step_exp_text
+                    dict_arguments['change_exp_x'] = len(str(dict_arguments['characteristic_dict']['exp']))
+                text_exp_hero.font_content = str(dict_arguments['characteristic_dict']['exp'])+'/'+str(dict_arguments['max_exp_lvl'])
                 text_exp_hero.show_text(win)
-                if len(str(characteristic_dict['mana'])) > dict_arguments['change_mana_x']:
-                    mana_img.X = mana_img.start_x+(len(str(characteristic_dict['mana']))-1)*step_exp_text
-                    dict_arguments['change_mana_x'] = len(str(characteristic_dict['mana']))
-                if len(str(characteristic_dict['mana'])) < dict_arguments['change_mana_x']:
-                    mana_img.X = mana_img.start_x+(len(str(characteristic_dict['mana']))-1)*step_exp_text
-                    dict_arguments['change_mana_x'] = len(str(characteristic_dict['mana']))
-                text_mana.font_content = 'Мана: '+str(characteristic_dict['mana'])+'/'+str(dict_arguments['max_mana'])
+                if len(str(dict_arguments['characteristic_dict']['mana'])) > dict_arguments['change_mana_x']:
+                    mana_img.X = mana_img.start_x+(len(str(dict_arguments['characteristic_dict']['mana']))-1)*step_exp_text
+                    dict_arguments['change_mana_x'] = len(str(dict_arguments['characteristic_dict']['mana']))
+                if len(str(dict_arguments['characteristic_dict']['mana'])) < dict_arguments['change_mana_x']:
+                    mana_img.X = mana_img.start_x+(len(str(dict_arguments['characteristic_dict']['mana']))-1)*step_exp_text
+                    dict_arguments['change_mana_x'] = len(str(dict_arguments['characteristic_dict']['mana']))
+                text_mana.font_content = 'Мана: '+str(dict_arguments['characteristic_dict']['mana'])+'/'+str(dict_arguments['max_mana'])
+                text_lvl_hero.font_content = ('Текущий уровень - '+str(dict_arguments['characteristic_dict']['lvl'])+';До следующего уровня:').split(';')
                 text_mana.show_text(win)
                 menu_hero_icon_eliot.show_image(win)
                 exp_img.show_image(win)
@@ -820,9 +824,9 @@ def run_main(dict_arguments):
                                 else:
                                     dict_arguments['flag_buy_skill'] = True
                                 if  dict_arguments['flag_buy_skill']:
-                                    if characteristic_dict['mana'] >= dict_arguments['skill_cost'] and path_skill.split('_')[-1] != 'learn':
+                                    if dict_arguments['characteristic_dict']['mana'] >= dict_arguments['skill_cost'] and path_skill.split('_')[-1] != 'learn':
                                         
-                                        characteristic_dict['mana']-=dict_arguments['skill_cost']
+                                        dict_arguments['characteristic_dict']['mana']-=dict_arguments['skill_cost']
                                         list_order_skills[list_order_skills.index(path_skill)] = path_skill+'_learn'
                                         path_skill = obj.path.split('/')[-1]
                                         
@@ -894,7 +898,7 @@ def run_main(dict_arguments):
                 for obj in list_text_lvl_base_skills:
                     obj.show_text(win)
             if dict_arguments['flag_show_dialog'] == False:
-                text_card = None
+                dict_arguments['text_card'] = None
                 #############################################################################   
             if dict_arguments['scene'] == 'menu':
                 book.show_image(win)
@@ -977,7 +981,6 @@ def run_main(dict_arguments):
                 if event.type == pygame.MOUSEBUTTONUP:
                     if dict_arguments['flag_mouse_volume_music']:
                         dict_arguments['flag_mouse_volume_music'] = False
-                        print('fdslkfsldfksdlf')
                 
                 #Отрисовуем кнопки
             if dict_arguments['past_lvl_skill_fight'] == 3:
@@ -993,7 +996,7 @@ def run_main(dict_arguments):
                         #Функция взятия карты в руки
                         take_card(dict_arguments['cardgame_variables'],list_objects_cards_pl,check_mouse_cor,mouse_cor)
                         #Функция приминения скилла  героя
-                        activate_hero_skill(dict_arguments['cardgame_variables'],heal_cloud,dmg_img,check_mouse_cor,dict_arguments['cardgame_variables']['hero_skill'],mouse_cor)
+                        activate_hero_skill(dict_arguments['cardgame_variables'],heal_cloud,dmg_img,check_mouse_cor,hero_skill,mouse_cor)
                     dict_arguments['cardgame_variables']['card_that_showing_desc'] = None
 
                 #Если отпущена ЛКМ                
@@ -1020,7 +1023,7 @@ def run_main(dict_arguments):
                                 dict_arguments['flag_dialog_offer_yes'] = True
                                 dict_arguments['resources_dict']['gold_bullion']-=gold_count_enemy
                                 dict_arguments['flag_show_offer'] = False
-                                text_card = [str(name_card).title()+': Благодарю','']
+                                dict_arguments['text_card'] = [str(name_card).title()+': Благодарю','']
                                 dict_arguments['count_dialog'] = 0
                                 dict_arguments['flag_offer'] = False
                                 dict_arguments['flag_show_dialog'] = True
@@ -1033,7 +1036,7 @@ def run_main(dict_arguments):
                             dict_arguments['flag_show_offer'] = False
                             dict_arguments['flag_offer'] = False
                             dict_arguments['count_dialog'] = 0
-                            text_card = [str(name_card).title()+': Очень жаль!','']
+                            dict_arguments['text_card'] = [str(name_card).title()+': Очень жаль!','']
                             dict_arguments['flag_show_dialog'] = True
                     if dict_arguments['flag_show_dialog']:
                         if check_mouse_cor_font(button_leave,mouse_cor) and dict_arguments['count_dialog'] == 50:
@@ -1041,10 +1044,10 @@ def run_main(dict_arguments):
                             player_lvl1.flag_card = False
                             player_lvl1.flag_move = True
                             player_lvl1.near_card = False
-                            text_card = None
+                            dict_arguments['text_card'] = None
                         elif check_mouse_cor_font(button_fight,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_dialog_fight'] = True
-                            text_card = [str(player_lvl1.flag_card).title()+': Да начнётся','битва!']
+                            dict_arguments['text_card'] = [str(player_lvl1.flag_card).title()+': Да начнётся','битва!']
                             dict_arguments['flag_show_dialog'] = True
                             dict_arguments['count_dialog'] = 0
                         elif check_mouse_cor_font(button_offer,mouse_cor) and dict_arguments['flag_offer'] and dict_arguments['count_dialog'] == 50:
@@ -1053,30 +1056,30 @@ def run_main(dict_arguments):
                             player_lvl1.flag_card = False
                             player_lvl1.near_card = False
                             dict_arguments['flag_show_dialog'] = False
-                            gold_count_enemy = int(characteristic_dict['lvl'])*randint(4,5)-int(characteristic_dict['lvl_skill_diplomacy'])*randint(3,4)+5
+                            gold_count_enemy = int(dict_arguments['characteristic_dict']['lvl'])*randint(4,5)-int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*randint(3,4)+5
                             text_offer_enemy.font_content = 'Вы хотите подкупить за '+str(gold_count_enemy)+'?'
                         elif check_mouse_cor_font(button_threat,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             
                             chance_base = randint(0,100)
-                            chance_diplomaty = 33+int(characteristic_dict['lvl_skill_diplomacy'])*5
+                            chance_diplomaty = 33+int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*5
                             if chance_diplomaty > 80:
                                 chance_diplomaty = 80
                             if chance_base <= chance_diplomaty:
                                 dict_arguments['flag_dialog_threat_win'] = True
                                 dict_arguments['count_dialog'] = 0
-                                text_card = [str(player_lvl1.flag_card).title()+': Спокойно,','Я ухожу']
+                                dict_arguments['text_card'] = [str(player_lvl1.flag_card).title()+': Спокойно,','Я ухожу']
                                 dict_arguments['flag_show_dialog'] = True
                             else:
                                 dict_arguments['flag_dialog_threat_lose'] = True
                                 dict_arguments['count_dialog'] = 0
-                                text_card = [str(player_lvl1.flag_card).title()+': Да начнётся','битва!']
+                                dict_arguments['text_card'] = [str(player_lvl1.flag_card).title()+': Да начнётся','битва!']
                                 dict_arguments['flag_show_dialog'] = True
 
 
                     #Если заканчиваем ход
                     if check_mouse_cor(button_end_move,mouse_cor) and (player_lvl1.where_move == None or player_lvl1.count_step == 0) and player_lvl1.flag_move:
                         #Обновляем количество ходов игрока
-                        player_lvl1.count_step = characteristic_dict['count_step']
+                        player_lvl1.count_step = dict_arguments['characteristic_dict']['count_step']
                         player_lvl1.where_move = None
                         dict_arguments['flag_button_end'] = True
                         dict_arguments['flag_show_new_day'] = 0
@@ -1117,7 +1120,7 @@ def run_main(dict_arguments):
                         if check_mouse_cor(obj,mouse_cor) and dict_arguments['flag_use_royal_academy'] and player_lvl1.flag_academy:
                             name_skill = obj.path.split('/')[-1]
                             name_skill = name_skill.split('.')[0]
-                            characteristic_dict['lvl_'+name_skill]+=1
+                            dict_arguments['characteristic_dict']['lvl_'+name_skill]+=1
                             if name_skill == 'skill_fight':
                                 dict_arguments['past_lvl_skill_fight']+=1
                             player_lvl1.flag_move = True
@@ -1126,21 +1129,20 @@ def run_main(dict_arguments):
                             player_lvl1.near_academy = False
                             
                     for obj in list_choice_base_skill:
-                        if check_mouse_cor(obj,mouse_cor) and characteristic_dict['exp']>=dict_arguments['max_exp_lvl']:
+                        if check_mouse_cor(obj,mouse_cor) and dict_arguments['characteristic_dict']['exp']>=dict_arguments['max_exp_lvl']:
                             name_skill = obj.path.split('/')[-1]
                             name_skill = name_skill.split('.')[0]
-                            characteristic_dict['lvl_'+name_skill]+=1
+                            dict_arguments['characteristic_dict']['lvl_'+name_skill]+=1
                             if name_skill == 'skill_fight':
                                 dict_arguments['past_lvl_skill_fight']+=1
                             player_lvl1.flag_move = True
-                            characteristic_dict['exp'] -=dict_arguments['max_exp_lvl']
-                            characteristic_dict['lvl']+=1
+                            dict_arguments['characteristic_dict']['exp'] -=dict_arguments['max_exp_lvl']
+                            dict_arguments['characteristic_dict']['lvl']+=1
                             dict_arguments['max_exp_lvl']+=100
-                            text_new_lvl.font_content = ('Поздровляем! У вас новый уровень;Выберите улучшение способности;'+'Новый уровень - '+str(characteristic_dict['lvl']+1)).split(';')
-                            text_lvl_hero.font_content = ('Текущий уровень - '+str(characteristic_dict['lvl'])+';До следующего уровня:').split(';')
+                            text_new_lvl.font_content = ('Поздровляем! У вас новый уровень;Выберите улучшение способности;'+'Новый уровень - '+str(dict_arguments['characteristic_dict']['lvl']+1)).split(';')
                             dict_arguments['flag_new_lvl'] = False
                     
-                        
+                    print(dict_arguments['characteristic_dict']['lvl'])
                     #Когда нажали на кнопку "К ГЕРОЮ" 
                     
                     if check_mouse_cor(button_to_hero,mouse_cor):
@@ -1247,7 +1249,7 @@ def run_main(dict_arguments):
                 player_lvl1.flag_card = False
                 player_lvl1.near_card = False
             dict_arguments['flag_fight_start'] = False
-            text_card = None
+            dict_arguments['text_card'] = None
             background_music.stop_sound()
             background_music_card_game.play_sound(-1)
         if dict_arguments['flag_fight_start_post']  and dict_arguments['scene'] != 'card_game' and dict_arguments['scene'] != 'result_screen':
@@ -1355,13 +1357,13 @@ def run_main(dict_arguments):
                         fountain_mana_empty=fountain_mana_empty,fountain_exp_empty=fountain_exp_empty,mountain=mountain,water=water,list_forest=list_forest,win_rect=win_rect)
             fog_war_func(mat_objetcs_lvl1,X_FRAME_MM,Y_FRAME_MM,player_lvl1.list_studied_map,fog_war,list_objects_cells_lvl1,win,dict_arguments['list_cells_MM'],LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP)
             if dict_arguments['flag_show_dialog']:
-                if text_card == None:
-                    text_card = dict_card_dialog[player_lvl1.flag_card]
+                if dict_arguments['text_card'] == None:
+                    dict_arguments['text_card'] = dict_card_dialog[player_lvl1.flag_card]
                 dialog_book.show_image(win)
                 for obj in list_buttons_dialog:
                     obj.show_text(win)
                 player_lvl1.flag_move = False
-                text_dialog_card.font_content = text_card
+                text_dialog_card.font_content = dict_arguments['text_card']
                 text_dialog_card.show_text(win)
             if dict_arguments['flag_show_offer']:
                 frame_error.show_image(win)
@@ -1382,7 +1384,7 @@ def run_main(dict_arguments):
             elliot_img.show_image(win)
             player_info.show_text(win)
             if dict_arguments['number_opened_card'] <=5:
-                dict_arguments['number_opened_card'] = characteristic_dict['lvl'] // 3
+                dict_arguments['number_opened_card'] = dict_arguments['characteristic_dict']['lvl'] // 3
             if player_lvl1.flag_city:
                 dict_arguments['scene'] = 'city'
 
@@ -1392,9 +1394,9 @@ def run_main(dict_arguments):
                 dict_arguments['scene'] = 'market'
             if dict_arguments['flag_button_end'] and player_lvl1.where_move == None and player_lvl1.flag_move:
                 player_lvl1.flag_move = False
-                if characteristic_dict['day'] == 7:
-                    characteristic_dict['week']+=1
-                    characteristic_dict['day'] = 0
+                if dict_arguments['characteristic_dict']['day'] == 7:
+                    dict_arguments['characteristic_dict']['week']+=1
+                    dict_arguments['characteristic_dict']['day'] = 0
                     fountain_mana.path = 'images/buildings/fountain_mana.png'
                     fountain_mana.image_load()
                     fountain_exp.path = 'images/buildings/fountain_exp.png'
@@ -1455,19 +1457,19 @@ def run_main(dict_arguments):
                     dict_arguments['index_fog'] = 0
                 if dict_arguments['dict_price_artifact']['boots_fire'] != dict_price_artifact['boots_fire']:
                     dict_arguments['dict_price_artifact'] = dict_price_artifact
-                characteristic_dict['day']+=1
+                dict_arguments['characteristic_dict']['day']+=1
                 #Ежедновное золото
                 if 'skill_idol_people_learn' in list_learn_skills:
                     if randint(0,4) == 4:
-                        resources_dict['gold_bullion']+=characteristic_dict['contribution']*characteristic_dict['lvl_skill_domesticpolitics']
-                resources_dict['gold_bullion']+=characteristic_dict['contribution']*characteristic_dict['lvl_skill_domesticpolitics']
-                text_date.font_content = ('День: '+str(characteristic_dict['day'])+';Неделя: '+str(characteristic_dict['week'])).split(';')
+                        resources_dict['gold_bullion']+=dict_arguments['characteristic_dict']['contribution']*dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics']
+                resources_dict['gold_bullion']+=dict_arguments['characteristic_dict']['contribution']*dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics']
+                text_date.font_content = ('День: '+str(dict_arguments['characteristic_dict']['day'])+';Неделя: '+str(dict_arguments['characteristic_dict']['week'])).split(';')
                 dict_arguments['flag_button_end'] = False
                 for obj in list_all_artifact:
                     if obj.NAME != None and obj.path != None:
-                        effect_resource(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict)
+                        effect_resource(resources_dict, obj,effect_art_skills_name_dict,dict_arguments['characteristic_dict'])
                 for obj in list_slots_skills_hero:
-                    effect_resource(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict)
+                    effect_resource(resources_dict, obj,effect_art_skills_name_dict,dict_arguments['characteristic_dict'])
             #Новый день
             if dict_arguments['flag_show_new_day'] < 100:
                 player_lvl1.flag_move = False
@@ -1478,11 +1480,11 @@ def run_main(dict_arguments):
                 frame_new_day.show_image(win)        
                 text_new_day.show_text(win)
                 dict_arguments['flag_show_new_day'] += 1
-            if dict_arguments['flag_show_new_day'] == 100:
-                player_lvl1.flag_move = True
-                dict_arguments['flag_show_new_day'] = 101
+                if dict_arguments['flag_show_new_day'] == 100:
+                    player_lvl1.flag_move = True
+                    dict_arguments['flag_show_new_day'] = 100
             #Условие нового уровня              
-            if characteristic_dict['exp'] >= dict_arguments['max_exp_lvl']:
+            if dict_arguments['characteristic_dict']['exp'] >= dict_arguments['max_exp_lvl']:
                 dict_arguments['flag_new_lvl'] = True
             if  dict_arguments['flag_new_lvl'] and dict_arguments['flag_show_new_day'] >= 100:
                 frame_notification.show_image(win)
@@ -1567,12 +1569,12 @@ def run_main(dict_arguments):
                     amount_money.HEIGHT = settings['SCREEN_WIDTH']//19*1.5
                 amount_money.image_load()
             if player_lvl1.flag_fountain_exp and player_lvl1.fountain_exp_cor != None and mat_objetcs_lvl1[player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] == 'E':
-                characteristic_dict['exp']+=exp_fountain
+                dict_arguments['characteristic_dict']['exp']+=exp_fountain
                 player_lvl1.flag_fountain_exp = False
                 mat_objetcs_lvl1[player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] = 'e'
                 dict_arguments['flag_show_fountain_exp'] = 0
             elif player_lvl1.flag_fountain_mana and player_lvl1.fountain_mana_cor != None and  mat_objetcs_lvl1[player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] == 'M':
-                characteristic_dict['mana']+=mana_fountain*characteristic_dict['change_mana']
+                dict_arguments['characteristic_dict']['mana']+=mana_fountain*dict_arguments['characteristic_dict']['change_mana']
                 dict_arguments['flag_use_fountain_mana'] = False
                 player_lvl1.flag_fountain_mana = False
                 dict_arguments['flag_show_fountain_mana'] = 0
@@ -1602,7 +1604,7 @@ def run_main(dict_arguments):
                 player_lvl1.blind_move(index=6,flag_player=[player_lvl1.tower_cor[1],player_lvl1.tower_cor[0],False])
                 player_lvl1.flag_tower = False
             if player_lvl1.flag_shack and player_lvl1.shack_cor != None and mat_objetcs_lvl1[player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] == 'S':
-                characteristic_dict['mana']+=mana_shack*characteristic_dict['change_mana']
+                dict_arguments['characteristic_dict']['mana']+=mana_shack*dict_arguments['characteristic_dict']['change_mana']
                 mat_objetcs_lvl1[player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] = 's'
                 player_lvl1.flag_shack = False
                 dict_arguments['flag_show_shack'] = 0
@@ -1678,7 +1680,7 @@ def run_main(dict_arguments):
             text_step_count.show_text(win)
             button_end_move.show_image(win)
             text_step_count.font_content = 'Осталось ходов: '+str(player_lvl1.count_step)
-            if dict_arguments['daily_event'] != None:
+            if dict_arguments['daily_event'] != None and dict_arguments['count_daily_event'] == 80:
                 
                 dict_arguments['count_daily_event'] = 0
                 if dict_arguments['daily_event'] == 'goblin':
@@ -1791,7 +1793,7 @@ def run_main(dict_arguments):
                     for i in dict_price_artifact.keys():
                         dict_price_artifact[i] = dict_price_artifact[i]//2
                 
-                dict_arguments['daily_event'] = None
+                
                 
             if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
                 dict_arguments['flag_show_dialog'] = True
@@ -1874,6 +1876,8 @@ def run_main(dict_arguments):
             dict_arguments['count_daily_event'] += 1  
             if dict_arguments['count_daily_event'] == 1:
                 event_sound.play_sound()
+            if dict_arguments['count_daily_event'] == 80:
+                dict_arguments['daily_event'] = None
         if dict_arguments['flag_save'] <50:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_save.show_text(win)
@@ -1924,7 +1928,9 @@ def run_main(dict_arguments):
             dict_arguments['minute_in_game'] +=1
             index = 0
         if dict_arguments['minute_in_game'] == 30:
-            pass
+            if settings['AUTOSAVE']:
+                with open('config.json','w') as file:
+                    json.dump(settings,file)
         index+=1
         #Обновляем экран
         pygame.display.flip()

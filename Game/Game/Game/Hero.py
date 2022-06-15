@@ -74,7 +74,7 @@ class Main_Hero(Graphic_elements):
         self.flag_shack = False
         self.flag_tavern = False
 
-        self.move_sound = [Sounds('sounds/grass.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass2.wav',settings['SOUNDS_VOLUME'])]#Звук ходьбы по траве
+        self.move_sound = [Sounds('sounds/grass.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass2.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass3.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass4.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass5.wav',settings['SOUNDS_VOLUME'])]#Звук ходьбы по траве
         self.portal_sound = Sounds('sounds/portal.wav',settings['SOUNDS_VOLUME'])#Звук портала
         self.build_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
@@ -391,16 +391,12 @@ class Main_Hero(Graphic_elements):
             #Фонтаны
             self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
             self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
-            self.near_water1  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False)
-            # self.near_water2  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False,index=2)
-            # self.near_water3  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False,index=3)
-            # self.near_water4  = self.check_near_build(element='в',sub_element='в',mat_objetcs=mat_objetcs,flag_building_cor=False,index=4)
-            
+            self.near_water1 = self.check_near_build_sound(element='в',mat_objetcs=mat_objetcs,index=1)
             if self.near_water1:
                 if not pygame.mixer.music.get_busy():
                     self.water_sound.load_music()
                     pygame.mixer.music.play(-1)
-            if not self.near_tavern and not  self.near_water1:
+            if not self.near_tavern and not self.near_water1:
                 if pygame.mixer.music.get_busy():
                     pygame.mixer.music.unload()
             if self.near_card:
@@ -675,3 +671,45 @@ class Main_Hero(Graphic_elements):
             return flag_near_building,building_cor
         if flag_building_cor == False:
             return flag_near_building
+    def check_near_build_sound(self,element,mat_objetcs,sub_element=None,flag_building_cor=False,index=1,):
+        building_cor = None
+        if not self.flag_right and (mat_objetcs[self.player_cor[0]][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] + index] == sub_element)  :
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0],self.player_cor[1] + index]
+        elif not self.flag_left and (mat_objetcs[self.player_cor[0]][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0]][self.player_cor[1] - index] == sub_element)  :
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0],self.player_cor[1] - index]
+        elif not self.flag_down and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] + index][self.player_cor[1]] == sub_element) :
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]+index,self.player_cor[1]]
+        elif not self.flag_up and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1]] == element or  mat_objetcs[self.player_cor[0] - index][self.player_cor[1]] == sub_element) :
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]-index,self.player_cor[1]]
+
+        elif not self.flag_up and not self.flag_right and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0] + index][self.player_cor[1] + index] == sub_element):
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]+index,self.player_cor[1] + index]
+        elif not self.flag_up and not self.flag_left and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0] + index][self.player_cor[1] - index] == sub_element):
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]+index,self.player_cor[1] - index]
+        elif not self.flag_down and not self.flag_right and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0] - index][self.player_cor[1] + index] == sub_element):
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]-index,self.player_cor[1] + index]
+        elif not self.flag_down and not self.flag_left and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0] - index][self.player_cor[1] - index] == sub_element):
+            flag_near_building = True
+            if flag_building_cor == True:
+                building_cor = [self.player_cor[0]-index,self.player_cor[1] - index]
+        else:
+            flag_near_building = False
+        if flag_building_cor == True:
+            return flag_near_building,building_cor
+        if flag_building_cor == False:
+            return flag_near_building
+        

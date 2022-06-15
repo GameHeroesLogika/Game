@@ -34,7 +34,7 @@ flower2 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=set
 flower3 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower3.png')
 list_forest =[]
 for i in range(4):
-    forest = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/forest'+str(i)+'.png')
+    forest = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19*2,path='images/MatrixImage/forest'+str(i)+'.png')
     list_forest.append(forest)
 field_path = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/field_path.png')
 mountain = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19*2, settings['SCREEN_WIDTH']//19*2, 'images/MatrixImage/mountain.png')
@@ -64,7 +64,7 @@ green_dark = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/green_
 
 mountain_mm = Graphic_elements(0, 0, W_CELL_MINI_MAP,H_CELL_MINI_MAP, 'images/MatrixImage/mountain.png')
 water_mm = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,path='images/MatrixImage/water0.png')
-forest_mm = Graphic_elements(x=0,y=0,width=W_CELL_MINI_MAP,height=H_CELL_MINI_MAP,path='images/MatrixImage/forest0.png')
+forest_mm = Graphic_elements(x=0,y=0,width=W_CELL_MINI_MAP,height=H_CELL_MINI_MAP,path='images/forestmm.png')
 field_path_mm = Graphic_elements(x=0,y=0,width=W_CELL_MINI_MAP,height=H_CELL_MINI_MAP,path='images/MatrixImage/field_path.png')
 #Строения
 
@@ -538,7 +538,7 @@ dict_skills = {
                 'heal':heal_skill_Icon,
                 'damage':damage_skill_Icon,
                 }
-dict_arguments['cardgame_variables']['hero_skill'] = dict_skills[str(settings['SKILL'])]
+hero_skill = dict_skills[str(settings['SKILL'])]
 #Описание скилла героя 
 desc_skill = Graphic_elements_cards(settings['SCREEN_WIDTH']//2.5,settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2,None)
 

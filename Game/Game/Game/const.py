@@ -19,6 +19,10 @@ if settings['FULLSCREEN'] == 'True':
     settings['FULLSCREEN'] = True
 else:
     settings['FULLSCREEN'] = False
+if settings['AUTOSAVE'] == 'True':
+    settings['AUTOSAVE'] = True
+else:
+    settings['AUTOSAVE'] = False
 if settings['SCREEN_WIDTH'] == 0 and settings['SCREEN_HEIGHT'] == 0:
     settings['SCREEN_WIDTH'] = pygame.display.Info().current_w
     settings['SCREEN_HEIGHT'] = pygame.display.Info().current_h
@@ -89,16 +93,6 @@ effect_art_skills_name_dict = {
     'helmet_hero.png':'exp;100;+;characteristicdict',
     'skill_lumberjack_learn.png':'wood;1;+;resourcesdict',
 }
-# effect_skills_name_dict = {
-#     'boots_hero.png':'lvl_skill_domesticpolitics;2;+;characteristicdict',
-#     'sword_fire.png':'lvl_skill_fight;2;+;characteristicdict',
-#     'boots_ice.png':'count_step;2;+;characteristicdict',
-#     'chest_fire.png':'mana;2;*;characteristicdict',
-#     'helmet_ice.png':'lvl_skill_diplomacy;2;+;characteristicdict',
-#     'skill_idol_people_learn.png':'contribution;2;*;characteristicdict',
-#     'skill_forest_path_learn.png':'count_step;2;+;characteristicdict'
-# }
-
 characteristic_dict = {
     'exp':int(settings['EXP']),
     'lvl':int(settings['LVL_HERO']),
@@ -232,19 +226,19 @@ list_cells_lvl1 = [list('0000000000000000000000000000000'),
                    list('00000000000000tt000000000000000')]
 
 #Список-матрица объектов(персонаж, здания, ресурсы)
-mat_objetcs_lvl1 =[ list('KkkP00000000БCл0000000000Nnгггг'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B,e,m,s
-                    list('kkkА000b0000ллл0000000000nn11гг'),#A,a-academia
-                    list('kkk000000000лллHh0000P000000вг1'),#J,j-taverna
-                    list('0p00А0000000Mллhh0000000000вв11'),#S-Хижина
-                    list('000000000000лл0000000000W0вв00S'),#B-Храм
-                    list('00000W000000лл0000000000ввв0000'),#\ / | л
-                    list('00000000000лл000000E000вв000000'),#
-                    list('00000000000лл0000000000в0000000'),#
-                    list('000Jj000лл00000000000ввв0000000'),#
-                    list('000jj000лл00000000000вC00000000'),#
-                    list('Гл0ллллллл00000000000вв0000000C'),#
-                    list('Cллллллллл000000000000в00000000'),#
-                    list('000000000000000000000Ав0000E000'),#
+mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B,e,m,s
+                    list('kkkА000b0000лл11000000000nn11гг'),#A,a-academia
+                    list('kkk0000000001л1Hh0000P000000вг1'),#J,j-taverna
+                    list('0p00А0000000Mл1hh0000000000вв11'),#S-Хижина
+                    list('000000000000л11000000000W0вв00S'),#B-Храм
+                    list('00000W000000л10000000000ввв0000'),#\ / | л
+                    list('00000000000л1100000E000вв000000'),#
+                    list('00000000000110000000000в0000000'),#
+                    list('000Jj000л100000000000ввв0000000'),#
+                    list('000jj000л100000000000вC00000000'),#
+                    list('Глллллллл100000000000вв0000000C'),#
+                    list('Cллл111111000000000000в00000000'),#
+                    list('011000000000000000000Ав0000E000'),#
                     list('S000Б000000000000000в0в00000000'),#
                     list('0000М0Dd000000ввв00вв0000000000'),#
                     list('0000Г0dd000000в0вввв00Oo0000000'),#
@@ -253,16 +247,16 @@ mat_objetcs_lvl1 =[ list('KkkP00000000БCл0000000000Nnгггг'),#M,p,P,E,g,i,c
                     list('0000А0000000вв0xxв0000000000000'),
                     list('0000К000E000в0000вв000000000000'),
                     list('00P0О000000Г00000Г0000000000000'),
-                    list('0000В0000000вRr00вв000000000ллА'),
-                    list('0Ff0Р0000000вrr0ввC00000000ллл0'),
-                    list('0ff0С000000вввввв000000лллл0000'),
-                    list('0000Л000000в0000000000Wлллл0000'),
-                    list('0000Д000вввв0000000000лл00000лC'),
-                    list('Б000Е00вв0000000000000лл00ллллл'),
-                    list('Cвв000вв00000000000000ллГлл0000'),
-                    list('ввввW0в000000Aa0000000лл0лл0Ззз'),
-                    list('ввввввв000000aa000000лл00лл0ззз'),
-                    list('вввC0000000000000000Mлл00Г00ззз')]
+                    list('0000В0000000вRr00вв00000000лл1А'),
+                    list('0Ff0Р0000000вrr0ввC00000000л110'),
+                    list('0ff0С000000вввввв000000лллл1100'),
+                    list('0000Л000000в0000000000Wл1111000'),
+                    list('0000Д000вввв0000000000л100000лC'),
+                    list('Б000Е00вв0000000000000л10лллллл'),
+                    list('Cвв000вв00000000000000л1Гл11111'),
+                    list('ввввW0в000000Aa0000000л10л10Ззз'),
+                    list('ввввввв000000aa000000лл00110ззз'),
+                    list('вввC0000000000000000M1л00Г00ззз')]
 list_forest_element = ['|','\\','/','л']
 for el in range(len(mat_objetcs_lvl1)):
     for element in range(len(mat_objetcs_lvl1[el])):
@@ -417,7 +411,6 @@ dict_arguments = {
     'Y_FRAME_MM':Y_FRAME_MM,
     'list_cells_MM':list_cells_MM,
     'resources_dict':resources_dict,
-    'settings':settings,
     'change_exp_x':change_exp_x,
     'max_exp_lvl':max_exp_lvl,
     'max_mana':max_mana,
@@ -486,4 +479,9 @@ dict_arguments = {
     'flag_mouse_volume_sound':flag_mouse_volume_sound,
     'flag_save':flag_save,
     'flag_mouse_volume_music':flag_mouse_volume_music,
+    'characteristic_dict':characteristic_dict,
 }
+if  os.path.exists('saves/config1.json'):
+    with open('saves/config1.json','r') as file:
+        dict_arguments = json.load(file)
+dict_arguments['game'] = True
