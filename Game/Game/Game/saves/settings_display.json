@@ -1,8 +1,8 @@
 {
     "SCREEN_WIDTH": 1280,
     "SCREEN_HEIGHT": 720,
-    "SOUNDS_VOLUME": 30,
+    "SOUNDS_VOLUME": 0,
     "AUTOSAVE": "True",
     "FULLSCREEN": "False",
-    "MUSIC_VOLUME": 50
+    "MUSIC_VOLUME": 52
 }

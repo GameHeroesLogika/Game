@@ -115,6 +115,13 @@ dict_artifact_on = {
     'boots':None,
     'shield':None,
 }
+dict_path_skills = {
+                    'skill_earth_blessing':'images/skills/eliot/skill_earth_blessing.png',
+                    'skill_lumberjack':'images/skills/eliot/skill_lumberjack.png',
+                    'skill_forest_path':'images/skills/eliot/skill_forest_path.png',
+                    'skill_idol_people':'images/skills/eliot/skill_idol_people.png',
+                    'skill_leader':'images/skills/eliot/skill_leader.png',
+}
 list_learn_skills = list()
 dict_artifact_on_past = dict_artifact_on.copy()
 list_order_skills = ['skill_earth_blessing','skill_forest_path','skill_idol_people','skill_leader','skill_lumberjack']
@@ -180,6 +187,18 @@ daily_event = None
 flag_mouse_volume_sound = False
 flag_mouse_volume_music = False
 index_fog = 0
+dict_path_artifact = {
+                        'helmet':'images/artifacts/helmet_hero.png',
+                        'chest':'images/artifacts/chest_ice.png',
+                        'sword':'images/artifacts/sword_ice.png',
+                        'shield':'images/artifacts/shield_fire.png',
+                        'boots':'images/artifacts/boots_ice.png',
+
+                        'reserv1':None,
+                        'reserv2':None,
+                        'reserv3':'images/artifacts/boots_ice.png',
+}
+
 list_daily_events = [
                     'post_fight',
                     'goblin',
@@ -238,7 +257,7 @@ mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c
                     list('000jj000л100000000000вC00000000'),#
                     list('Глллллллл100000000000вв0000000C'),#
                     list('Cллл111111000000000000в00000000'),#
-                    list('011000000000000000000Ав0000E000'),#
+                    list('011110000000000000000Ав0000E000'),#
                     list('S000Б000000000000000в0в00000000'),#
                     list('0000М0Dd000000ввв00вв0000000000'),#
                     list('0000Г0dd000000в0вввв00Oo0000000'),#
@@ -331,8 +350,8 @@ dict_card_price = {
                     'орк':'gold_bullion/9;',
                     'дворф':'gold_bullion/9;',
 }
-city_cor_enter = [3,15]
-list_cards_pl = [[None,1,2],['гигант',10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
+city_cor_enter = [3,1]
+list_cards_pl = [[None,1,2],[None,10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
 list_cards_pl_post_army = [[None,1,2],[None,10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
 list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
 list_cards_en = [['кентавр',10,3],[None,9,3],[None,10,0],[None,10,1],[None,5,2],[None,0,0]]
@@ -344,7 +363,7 @@ list_cor_portals = [ [[0,3],[1,3]],[[0,3],[17,21]],[[0,3],[29,6]],[[0,3],[20,2]]
 
 dict_bought_city = {
                     'camp':False,
-                    'portal_resource':False,
+                    'portal':False,
                     'altar':False,
                     'church':False,
                     'forge':False,
@@ -352,7 +371,7 @@ dict_bought_city = {
 }
 dict_price_city = {
                     'camp':'gold_bullion/10;food/10',
-                    'portal_resource':'gold_bullion/20;stone/10;crystal/5',
+                    'portal':'gold_bullion/20;stone/10;crystal/5',
                     'altar':'gold_bullion/15;stone/15;crystal/2;iron_bullion/5',
                     'church':'gold_bullion/25;stone/10;wood/10;food/15;crystal/4',
                     'forge':'gold_bullion/20;food/10;iron_bullion/10;stone/20;crystal/3',
@@ -378,7 +397,7 @@ cardgame_variables = {
     'need_to_show_skill':False, # Нужно ли отображать целебое облако или мечь, при использовании скилла
     'active_skill':None,#Применяется ли скилл в данный момент
     'is_healing':None, #Происходит ли сейчас лечение 
-    'card_that_showing_desc':None,   #Карта, описание которой нужно показать
+    'card_that_showing_desc':None,#Карта, описание которой нужно показать
     'who_move':'player', #Пременная означает, кто ходит
     'count_text_move':0, #Счетчик для отображения тескта для хода
     'card_that_move_index':0, #Индекс карты игрока, которая должна ходить  
@@ -413,7 +432,6 @@ dict_arguments = {
     'resources_dict':resources_dict,
     'change_exp_x':change_exp_x,
     'max_exp_lvl':max_exp_lvl,
-    'max_mana':max_mana,
     'skill_cost':skill_cost,
     'flag_show_new_day':flag_show_new_day,
     'change_mana_x':change_mana_x,
@@ -480,8 +498,15 @@ dict_arguments = {
     'flag_save':flag_save,
     'flag_mouse_volume_music':flag_mouse_volume_music,
     'characteristic_dict':characteristic_dict,
+    'mat_objetcs_lvl1':mat_objetcs_lvl1,
+    'list_studied_map':list(),
+    'list_cards_pl':list_cards_pl,
+    'list_cards_pl_post_army':list_cards_pl_post_army,
+    'list_card_pl_reserv':list_card_pl_reserv,
+    'dict_path_artifact':dict_path_artifact,
+    'dict_path_skills':dict_path_skills,
 }
-if  os.path.exists('saves/config1.json'):
+if os.path.exists('saves/config1.json'):
     with open('saves/config1.json','r') as file:
         dict_arguments = json.load(file)
 dict_arguments['game'] = True

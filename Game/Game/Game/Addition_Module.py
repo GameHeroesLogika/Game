@@ -630,7 +630,7 @@ def change_images(artifact_pressed,sprite):
         artifact_pressed.image_load()
     artifact_pressed.X = artifact_pressed.start_x
     artifact_pressed.Y = artifact_pressed.start_y
-def effect_resource(resources_dict, obj,effect_art_skills_name_dict,characteristic_dict):
+def effect_resource(resources_dict, obj,effect_art_skills_name_dict,dict_arguments):
     name_obj = obj.path.split('/')[-1]
     if name_obj in effect_art_skills_name_dict.keys():
         value_dict = effect_art_skills_name_dict[name_obj].split(';')
@@ -645,19 +645,19 @@ def effect_resource(resources_dict, obj,effect_art_skills_name_dict,characterist
                 resources_dict[value_dict[0]] /= int(value_dict[1])
         if value_dict[-1] == 'characteristicdict':
             if value_dict[-2] == '+':
-                characteristic_dict[value_dict[0]] += int(value_dict[1])
+                dict_arguments['characteristic_dict'][value_dict[0]] += int(value_dict[1])
             elif value_dict[-2] == '-':
-                characteristic_dict[value_dict[0]] -= int(value_dict[1])
+                dict_arguments['characteristic_dict'][value_dict[0]] -= int(value_dict[1])
             elif value_dict[-2] == '*':
                 if name_obj == 'skill_idol_people_learn.png':
                     if randint(0,4) == 4:
-                        characteristic_dict[value_dict[0]] *= int(value_dict[1])
+                        dict_arguments['characteristic_dict'][value_dict[0]] *= int(value_dict[1])
                 else:
-                    characteristic_dict[value_dict[0]] *= int(value_dict[1])
+                    dict_arguments['characteristic_dict'][value_dict[0]] *= int(value_dict[1])
 
             elif value_dict[-2] == '/':
-                characteristic_dict[value_dict[0]] /= int(value_dict[1])
-def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,characteristic_dict,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments):
+                dict_arguments['characteristic_dict'][value_dict[0]] /= int(value_dict[1])
+def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_learn_skills,player_lvl1,dict_card_characteristics,dict_card_price,dict_arguments):
     for obj in list_all_artifact:
         if obj.NAME != None and obj.path != None:
             dict_artifact_on[obj.NAME] = obj.path.split('/')[-1]
@@ -666,25 +666,25 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,charact
 
     if dict_artifact_on['helmet'] != dict_artifact_on_past['helmet'] :
         if dict_artifact_on['helmet'] == 'helmet_ice.png' and dict_artifact_on_past['helmet'] != 'helmet_ice.png':
-            characteristic_dict['lvl_skill_diplomacy'] +=2
+            dict_arguments['characteristic_dict']['lvl_skill_diplomacy'] +=2
         if dict_artifact_on['helmet'] != 'helmet_ice.png' and dict_artifact_on_past['helmet'] == 'helmet_ice.png':
-            characteristic_dict['lvl_skill_diplomacy'] -=2
+            dict_arguments['characteristic_dict']['lvl_skill_diplomacy'] -=2
     if dict_artifact_on['boots'] != dict_artifact_on_past['boots']:
         if dict_artifact_on['boots'] == 'boots_ice.png' and dict_artifact_on_past['boots'] != 'boots_ice.png':
-            characteristic_dict['count_step'] +=2
+            dict_arguments['characteristic_dict']['count_step'] +=2
             player_lvl1.count_step +=2
         if dict_artifact_on['boots'] != 'boots_ice.png' and dict_artifact_on_past['boots'] == 'boots_ice.png':
-            characteristic_dict['count_step'] -=2
+            dict_arguments['characteristic_dict']['count_step'] -=2
             player_lvl1.count_step -=2
         if dict_artifact_on['boots'] == 'boots_hero.png' and dict_artifact_on_past['boots'] != 'boots_hero.png':
-            characteristic_dict['lvl_skill_domesticpolitics'] +=2
+            dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics'] +=2
         if dict_artifact_on['boots'] != 'boots_hero.png' and dict_artifact_on_past['boots'] == 'boots_hero.png':
-            characteristic_dict['lvl_skill_domesticpolitics'] -=2
+            dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics'] -=2
     if dict_artifact_on['chest'] != dict_artifact_on_past['chest']:
         if dict_artifact_on['chest'] == 'chest_fire.png' and dict_artifact_on_past['chest'] != 'chest_fire.png':
-            characteristic_dict['change_mana'] +=1
+            dict_arguments['characteristic_dict']['change_mana'] +=1
         if dict_artifact_on['chest'] != 'chest_fire.png' and dict_artifact_on_past['chest'] == 'chest_fire.png':
-            characteristic_dict['change_mana'] -=1
+            dict_arguments['characteristic_dict']['change_mana'] -=1
         if dict_artifact_on['chest'] == 'chest_ice.png' and dict_artifact_on_past['chest'] != 'chest_ice.png':
             for jey in dict_card_characteristics.keys():
                 dict_card_characteristics[jey][1]+=1
@@ -693,9 +693,9 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,charact
                 dict_card_characteristics[jey][1]-=1
     if dict_artifact_on['sword'] != dict_artifact_on_past['sword']:
         if dict_artifact_on['sword'] == 'sword_fire.png' and dict_artifact_on_past['sword'] != 'sword_fire.png':
-            characteristic_dict['lvl_skill_fight'] +=2
+            dict_arguments['characteristic_dict']['lvl_skill_fight'] +=2
         if dict_artifact_on['sword'] != 'sword_fire.png' and dict_artifact_on_past['sword'] == 'sword_fire.png':
-            characteristic_dict['lvl_skill_fight'] -=2
+            dict_arguments['characteristic_dict']['lvl_skill_fight'] -=2
         if dict_artifact_on['sword'] == 'sword_hero.png' and dict_artifact_on_past['sword'] != 'sword_hero.png':
             dict_arguments['changed_dmg'] +=5
         if dict_artifact_on['sword'] != 'sword_hero.png' and dict_artifact_on_past['sword'] == 'sword_hero.png':
@@ -728,7 +728,7 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,charact
             for key in dict_card_characteristics.keys():
                 dict_card_characteristics[key][0] -= 1
     if 'skill_forest_path_learn' in list_learn_skills:
-        characteristic_dict['count_step'] +=2
+        dict_arguments['characteristic_dict']['count_step'] +=2
         player_lvl1.count_step +=2
         list_learn_skills.remove('skill_forest_path_learn')
     if 'skill_leader_learn' in list_learn_skills:

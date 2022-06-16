@@ -13,10 +13,14 @@ class Main_Hero(Graphic_elements):
         super().__init__(x,y,width,height,path)
         self.flag_pressed = True
         self.flag_move = True
-        self.list_studied_map = []# Список изученых клеток
+        self.list_studied_map = dict_arguments['list_studied_map']# Список изученых клеток
 
         self.index_cor = []
-        self.player_cor = [3,1]# Индексы(координаты) пресонажа по матрице
+        for el in dict_arguments['mat_objetcs_lvl1']:
+            for element in el:
+                if element == 'p':
+                    self.player_cor = [dict_arguments['mat_objetcs_lvl1'].index(el),el.index(element)]
+                    break
         self.SCREEN_W = SCREEN_W# Ширина эекрана
         self.SCREEN_H = SCREEN_H# Высота эекрана
         self.where_move = where_move# Сторона в которую движется персонаж
@@ -645,7 +649,7 @@ class Main_Hero(Graphic_elements):
                 list_cor[1] = list_cor[1]*-1
             if not list_cor in self.list_studied_map: 
                 self.list_studied_map.append(list_cor)
-            
+        dict_arguments['list_studied_map'] = self.list_studied_map
         self.index_cor = [index_x,index_y] 
     def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None,index=1):
         building_cor = None
