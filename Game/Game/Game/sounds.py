@@ -10,7 +10,7 @@ class Sounds():
         self.sound.set_volume(self.volume)
         self.sound.play(index)
     def stop_sound(self):
-        pygame.mixer.Sound.stop(self.sound)
+        self.sound.stop()
 
 class Music(Sounds):
     def __init__(self,path,volume):

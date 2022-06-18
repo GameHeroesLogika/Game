@@ -24,7 +24,7 @@ def take_card(cardgame_variables,list_objects_cards_pl,check_mouse_cor,mouse_cor
 #Функция приминения скилла  героя
 def activate_hero_skill(cardgame_variables,heal_cloud,dmg_img,check_mouse_cor,hero_skill,mouse_cor):
     if  hero_skill.path.endswith('bw.png') != True and cardgame_variables['card_attacker'] == None and cardgame_variables['card_that_move_pl'] != 'оглушена':
-        if check_mouse_cor(cardgame_variables['hero_skill'], mouse_cor):
+        if check_mouse_cor(hero_skill, mouse_cor):
             cardgame_variables['active_skill'] = hero_skill.NAME
             if cardgame_variables['active_skill'] == 'heal':
                 heal_cloud.X = mouse_cor[0] - heal_cloud.WIDTH // 2
@@ -85,7 +85,7 @@ def target_searching(cardgame_variables,list_objects_cards_en,list_objects_cards
 
 
 def mousemoution_react(cardgame_variables,mouse_cor,list_objects_cards_en,check_mouse_cor,list_objects_cards_pl,desc_skill,
-    heal_cloud,dmg_img):
+    heal_cloud,dmg_img,hero_skill):
     #Двигаем взятую в руки карту вместе с игроком
     if cardgame_variables['picked_card'] != None:
         cardgame_variables['picked_card'].X = mouse_cor[0] - cardgame_variables['picked_card'].WIDTH // 2
@@ -114,8 +114,8 @@ def mousemoution_react(cardgame_variables,mouse_cor,list_objects_cards_en,check_
                     cardgame_variables['card_that_showing_desc'] = None
 
         #Условие отображения описания скилла 
-        if check_mouse_cor(cardgame_variables['hero_skill'], mouse_cor):
-            desc_skill.path = 'images/skills_icons/desc/' + cardgame_variables['hero_skill'].path.split('/')[-1]
+        if check_mouse_cor(hero_skill, mouse_cor):
+            desc_skill.path = 'images/skills_icons/desc/' + hero_skill.path.split('/')[-1]
         else:
             desc_skill.path = None
             cardgame_variables['flag_show_desc_skill'] = 0

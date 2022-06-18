@@ -13,6 +13,7 @@ pygame.init()
 # @profile
 #Основная фунуция
 def run_main(dict_arguments):
+    hero_skill = dict_skills[str(settings['SKILL'])]
     index = 0
     water = choice(list_water)
     time = pygame.time.Clock()
@@ -46,6 +47,9 @@ def run_main(dict_arguments):
                 for key in list_slots_skills_hero:
                     key_dict = key.path.split('/')[-1].split('_learn')[0]
                     dict_arguments['dict_path_skills'][key_dict] = key.path
+                dict_arguments['characteristic_dict']['count_step'] = player_lvl1.count_step
+                dict_arguments['list_capture_buildings'] = player_lvl1.list_capture_buildings
+                dict_arguments['list_capture_buildings_symbol'] = player_lvl1.list_capture_buildings_symbol
                 with open('saves/config1.json','w') as file:
                     json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
                 dict_arguments['game'] = False
@@ -442,7 +446,7 @@ def run_main(dict_arguments):
                     click_sound.play_sound()
                     if check_mouse_cor(button_market_back,mouse_cor): 
                         dict_arguments['scene'] = 'lvl1'
-                    for obj in dict_arguments['list_slots_market_hero']:
+                    for obj in list_slots_market_hero:
                         if dict_arguments['flag_market_selected'] and check_mouse_cor(button_change,mouse_cor) and market_selected.NAME.path != None:
                             if market_selected.NAME.NAME == 'artifact':
                                 price_artifact = dict_arguments['dict_price_artifact'][market_selected.NAME.path.split('/')[-1].split('.')[0]]
@@ -470,10 +474,10 @@ def run_main(dict_arguments):
                                         dict_arguments['resources_dict']['gold_bullion'] -= price_artifact
                                         list_slots_market[list_slots_market.index(market_selected.NAME)].path = None
                                         dict_arguments['flag_market_selected'] = False
-                                elif market_selected.NAME in dict_arguments['list_slots_market_hero']:
+                                elif market_selected.NAME in list_slots_market_hero:
                                     dict_arguments['resources_dict']['gold_bullion'] += price_artifact-5
-                                    dict_arguments['list_slots_market_hero'][dict_arguments['list_slots_market_hero'].index(market_selected.NAME)].path = None
-                                    list_all_artifact[dict_arguments['list_slots_market_hero'].index(market_selected.NAME)+5].path = None
+                                    list_slots_market_hero[list_slots_market_hero.index(market_selected.NAME)].path = None
+                                    list_all_artifact[list_slots_market_hero.index(market_selected.NAME)+5].path = None
                                     dict_arguments['flag_market_selected'] = False
                                 
                             if market_selected.NAME.NAME == 'resource':
@@ -489,11 +493,11 @@ def run_main(dict_arguments):
                                     if dict_arguments['dict_count_resource'][name_resource] <= 0 :
                                         list_slots_market[list_slots_market.index(market_selected.NAME)].path = None
                                     dict_arguments['flag_market_selected'] = False
-                                elif market_selected.NAME in dict_arguments['list_slots_market_hero'] and dict_arguments['resources_dict'][name_resource] >= int(price_resource[1]):
+                                elif market_selected.NAME in list_slots_market_hero and dict_arguments['resources_dict'][name_resource] >= int(price_resource[1]):
                                     dict_arguments['resources_dict'][name_resource] -= int(price_resource[1])
                                     dict_arguments['resources_dict']['gold_bullion'] += int(price_resource[0])
                                     if dict_arguments['resources_dict'][name_resource] <= 0 :
-                                        dict_arguments['list_slots_market_hero'][dict_arguments['list_slots_market_hero'].index(market_selected.NAME)].path = None
+                                        list_slots_market_hero[list_slots_market_hero.index(market_selected.NAME)].path = None
                                     dict_arguments['flag_market_selected'] = False
                                 
                         if check_mouse_cor(obj,mouse_cor) and obj.path != None :
@@ -547,7 +551,7 @@ def run_main(dict_arguments):
                         else:
                             text_price_artifact.font_content = 'Купить '+price[1] + ' за '+price[0]+' золото'
                     text_price_artifact.show_text(win)
-                if dict_arguments['flag_market_selected'] and market_selected.NAME  in dict_arguments['list_slots_market_hero']:
+                if dict_arguments['flag_market_selected'] and market_selected.NAME  in list_slots_market_hero:
                     market_selected.image_load()
                     market_selected.show_image(win)
                     button_change.show_image(win)
@@ -562,11 +566,11 @@ def run_main(dict_arguments):
                             text_price_artifact.font_content = 'Продать '+price[1] + ' за '+price[0]+' золото'
                     text_price_artifact.show_text(win)
                     
-                for obj in dict_arguments['list_slots_market_hero']:
+                for obj in list_slots_market_hero:
                     
                     if obj.NAME == 'artifact':
                         list_path_artifact_reserv = list()
-                        index_obj = dict_arguments['list_slots_market_hero'].index(obj)
+                        index_obj = list_slots_market_hero.index(obj)
                         for artifact in list_all_artifact:
                             if artifact.NAME == None:
                                 list_path_artifact_reserv.append(artifact.path)
@@ -1021,7 +1025,7 @@ def run_main(dict_arguments):
                 #Условие движения мыши
                 if event.type == pygame.MOUSEMOTION:
                     mousemoution_react(dict_arguments['cardgame_variables'],mouse_cor,list_objects_cards_en,check_mouse_cor,
-                    list_objects_cards_pl,desc_skill,heal_cloud,dmg_img)
+                    list_objects_cards_pl,desc_skill,heal_cloud,dmg_img,hero_skill)
 
 
             if dict_arguments['scene'] == 'lvl1':
@@ -1258,14 +1262,16 @@ def run_main(dict_arguments):
                 cards_arrangement(dict_arguments,dict_arguments['list_cards_pl'],list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
                 dict_arguments['scene'] = 'card_game'
                 player_lvl1.flag_card = False
+                background_music.stop_sound()
+                background_music_card_game.play_sound(-1)
+                dict_arguments['flag_fight_start'] = False
+                dict_arguments['text_card'] = None
             if card_number == 0:
                 dict_arguments['flag_not_enough_cards'] = 0
                 player_lvl1.flag_card = False
                 player_lvl1.near_card = False
-            dict_arguments['flag_fight_start'] = False
-            dict_arguments['text_card'] = None
-            background_music.stop_sound()
-            background_music_card_game.play_sound(-1)
+            
+            
         if dict_arguments['flag_fight_start_post']  and dict_arguments['scene'] != 'card_game' and dict_arguments['scene'] != 'result_screen':
             card_number = 0 
             for card in dict_arguments['list_cards_pl_post_army']:
@@ -1286,7 +1292,7 @@ def run_main(dict_arguments):
             move_players_algorithm(dict_arguments['cardgame_variables'],list_objects_cards_pl,text_move,list_objects_cards_en,dict_card_characteristics)
             #Отрисовуем все граф. эелементы
             draw_all(bg,dict_arguments['cardgame_variables'],win,text_move,list_objects_cards_pl,list_objects_cards_en,
-            stun_img,heal_cloud,dmg_img)
+            stun_img,heal_cloud,dmg_img,hero_skill)
             
             
             #Проверка на то, кто победил 
@@ -1313,7 +1319,7 @@ def run_main(dict_arguments):
 
             #Функция атаки игрока
             player_attack(dict_arguments['cardgame_variables'],list_objects_cards_pl,list_objects_cards_en,flashing_card,
-            Font,win,dict_arguments['list_losed_card_enemy'],dict_card_characteristics,dict_arguments)
+            Font,win,dict_arguments['list_losed_card_enemy'],dict_card_characteristics,dict_arguments,hero_skill)
             # Функция атаки врагаs
             enemy_attack(dict_arguments['cardgame_variables'],flashing_card,dict_arguments['list_losed_card_pl'],show_all_windows,win=win,dict_card_characteristics=dict_card_characteristics)
         elif dict_arguments['scene'] == 'result_screen':

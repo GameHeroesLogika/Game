@@ -35,8 +35,8 @@ class Main_Hero(Graphic_elements):
         self.count_step = count_step# Количество шагов
         self.win = win#Объект экрана 
         self.near_building = False# Флаг нахождения возле здания 
-        self.list_capture_buildings = []# Список захваченных зданий
-        self.list_capture_buildings_symbol = []# Список символов захваченных зданий
+        self.list_capture_buildings = dict_arguments['list_capture_buildings']# Список захваченных зданий
+        self.list_capture_buildings_symbol = dict_arguments['list_capture_buildings_symbol']# Список символов захваченных зданий
         self.need_to_move_to_hero = False#Нужно ли перемещаться к игроку после телепорта
         self.RECT = pygame.Rect(self.X-settings['SCREEN_WIDTH']//19*2,self.Y-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19*5,settings['SCREEN_WIDTH']//19*5)
 
@@ -80,7 +80,7 @@ class Main_Hero(Graphic_elements):
 
         self.move_sound = [Sounds('sounds/grass.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass1.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass2.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass3.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass4.wav',settings['SOUNDS_VOLUME']),Sounds('sounds/grass5.wav',settings['SOUNDS_VOLUME'])]#Звук ходьбы по траве
         self.portal_sound = Sounds('sounds/portal.wav',settings['SOUNDS_VOLUME'])#Звук портала
-        self.build_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.build_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук захвата здания
         self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
         self.tavern_music = Music('sounds/tavern.mp3',settings['MUSIC_VOLUME'])
         self.city_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 

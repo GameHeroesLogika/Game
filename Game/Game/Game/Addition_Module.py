@@ -479,6 +479,9 @@ def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
             if cell == '0':
                 #В список клеток добавляем объект клетки
                 list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/cell.jpg'))
+            if cell == 'd':
+                #В список клеток добавляем объект клетки
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/cell.jpg'))
             if cell == 't':
                 list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/field_path.png'))
             if cell == '1':
@@ -489,6 +492,29 @@ def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
                 list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/flower2.png'))
             if cell == '4':
                 list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19,SCREEN_W//19,'images/MatrixImage/flower3.png'))
+            if cell == 'a':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand2.png'))
+            if cell == 'b':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand1.png'))
+            if cell == 'c':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand5.png'))
+            if cell == 'e':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand8.png'))
+            if cell == 'f':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand6.png'))
+            if cell == 'o':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand9.png'))
+            if cell == 'k':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand10.png'))
+            if cell == 'h':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand4.png'))
+            if cell == 'j':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand7.png'))
+            if cell == 'g':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand11.png'))
+            if cell == 'l':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand3.png'))
+            
             #Увеличиваем х, двигаясь по ряду
             x += SCREEN_W//19
         #Увеличиваем y, двигаясь по столбцамя

@@ -315,10 +315,12 @@ click_sound = Sounds('sounds/click.wav',settings['SOUNDS_VOLUME']/2)
 event_sound = Sounds('sounds/event.wav',settings['SOUNDS_VOLUME'])
 #Звук нового дня
 new_day_sound = Sounds('sounds/new_day.wav',settings['SOUNDS_VOLUME'])
+
+
 #Музыка
 #Фоновая музыка
 background_music = Sounds('sounds/background_music.wav',settings['MUSIC_VOLUME'])
-# background_music.play_sound(index=-1)
+background_music.play_sound(index=-1)
 #Фоновая музыка для карточного боя
 background_music_card_game = Sounds('sounds/game_music.wav',settings['MUSIC_VOLUME'])
 
@@ -542,7 +544,7 @@ dict_skills = {
                 'heal':heal_skill_Icon,
                 'damage':damage_skill_Icon,
                 }
-hero_skill = dict_skills[str(settings['SKILL'])]
+
 #Описание скилла героя 
 desc_skill = Graphic_elements_cards(settings['SCREEN_WIDTH']//2.5,settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2,None)
 

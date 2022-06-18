@@ -163,7 +163,7 @@ def move_players_algorithm(cardgame_variables,list_objects_cards_pl,text_move,li
 
 
 def player_attack(cardgame_variables,list_objects_cards_pl,list_objects_cards_en,flashing_card,
-                Font,win,list_losed_card_enemy,dict_card_characteristics,dict_arguments):
+                Font,win,list_losed_card_enemy,dict_card_characteristics,dict_arguments,hero_skill):
     #Прописываем анимацию атаки карты игрока на вражескую карту
     if cardgame_variables['card_attacker'] != None and cardgame_variables['is_healing'] != True and cardgame_variables['who_move'] =='player':
         #Размещаем карту игрока под картой врага
@@ -430,9 +430,9 @@ def player_attack(cardgame_variables,list_objects_cards_pl,list_objects_cards_en
             cardgame_variables['count_text_move'] = 0
             text_move.font_content ='Ход врага'
             text_move.font_color = 'yellow'
-            file_name = cardgame_variables['hero_skill'].path.split('/')[-1]
+            file_name = hero_skill.path.split('/')[-1]
             file_name = file_name.split('.')[0] + '_bw.png'
-            cardgame_variables['hero_skill'].path = 'images/skills_icons/'+file_name
+            hero_skill.path = 'images/skills_icons/'+file_name
             cardgame_variables['card_that_move_pl'].Y =  cardgame_variables['card_that_move_pl'].START_Y +  cardgame_variables['card_that_move_pl'].HEIGHT//4
             cardgame_variables['card_that_move_pl'].START_Y = cardgame_variables['card_that_move_pl'].START_Y + cardgame_variables['card_that_move_pl'].HEIGHT//4
             cardgame_variables['card_that_move_pl'] = None
@@ -475,9 +475,9 @@ def player_attack(cardgame_variables,list_objects_cards_pl,list_objects_cards_en
             cardgame_variables['count_text_move'] = 0
             text_move.font_content ='Ход врага'
             text_move.font_color = 'yellow'
-            file_name = cardgame_variables['hero_skill'].path.split('/')[-1]
+            file_name = hero_skill.path.split('/')[-1]
             file_name = file_name.split('.')[0] + '_bw.png'
-            cardgame_variables['hero_skill'].path = 'images/skills_icons/'+file_name
+            hero_skill.path = 'images/skills_icons/'+file_name
             cardgame_variables['card_that_move_pl'].Y =  cardgame_variables['card_that_move_pl'].START_Y +  cardgame_variables['card_that_move_pl'].HEIGHT//4
             cardgame_variables['card_that_move_pl'].START_Y = cardgame_variables['card_that_move_pl'].START_Y + cardgame_variables['card_that_move_pl'].HEIGHT//4
             cardgame_variables['card_that_move_pl'] = None

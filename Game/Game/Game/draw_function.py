@@ -1,10 +1,10 @@
 #Для отрисовки всех граф. эелементов
 def draw_all(bg,cardgame_variables,win,text_move,list_objects_cards_pl,list_objects_cards_en,
-                stun_img,heal_cloud,dmg_img):
+                stun_img,heal_cloud,dmg_img,hero_skill):
     #Отображаем задний фон
     bg.show_image(win)
     #Отображаем иконку скилла
-    cardgame_variables['hero_skill'].show_image(win)
+    hero_skill.show_image(win)
     # Отображение текста хода
     if  cardgame_variables['count_text_move'] <= 30:
         if cardgame_variables['count_text_move'] > 1:
