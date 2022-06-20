@@ -106,7 +106,7 @@ class Main_Hero(Graphic_elements):
 
         
         
-    def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals,list_card_matrix,water):
+    def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals,list_card_matrix,water,dict_arguments):
         self.RECT = pygame.Rect(self.X-settings['SCREEN_WIDTH']//19*2,self.Y-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19*5,settings['SCREEN_WIDTH']//19*5)
         #Если нажата клавиша ВПРАВО
         if self.count_step != 0:
@@ -321,7 +321,8 @@ class Main_Hero(Graphic_elements):
                         self.where_move = 'down'
                         self.count_step -= 1
                         choice(self.move_sound).play_sound()
-
+            elif keys[pygame.K_ESCAPE]:
+                dict_arguments['scene'] = 'menu'
           
             list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
             list_symbol_cards = ['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П']

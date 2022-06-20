@@ -128,6 +128,7 @@ button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//10, 
 button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=15,y_divider=3.5)
 button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//2.1, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/settings_b.png',image_button_b='images/menu/settings_b.png',image_button_y='images/menu/settings_y.png',x_divider=15,y_divider=2.1)
 button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=15,y_divider=1.5)
+button_new_game = Menu(settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=15,y_divider=720)
 button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//4,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/camp_hire_b.png')
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
 button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
@@ -186,7 +187,7 @@ list_buttons_dialog = [button_fight,button_offer,button_threat,button_leave]
 #Текст для кнопки гарнизона
 button_post_army = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19-button_menu_hero_back.HEIGHT,settings['SCREEN_WIDTH']//19*2.5,settings['SCREEN_WIDTH']//19,'images/post_army_b.png')
 
-list_buttons = [button_play,button_help,button_set,button_exit] 
+list_buttons = [button_play,button_help,button_set,button_exit,button_new_game] 
 
 #Текст
 #Текст стоимость скиллов 
@@ -414,18 +415,7 @@ dict_price_resource = {
     'food':'1_5',
 }
 dict_arguments['dict_price_resource'] = dict_price_resource
-dict_count_resource = {
-    'wood':20,
-    'iron_bullion':20,
-    'stone':20,
-    'crystal':20,
-    'food':20,
-}
-dict_arguments['dict_count_resource'] = dict_count_resource
-with open('images/artifacts/artifact_list.txt','r') as file:
-    for text in file:
-        text = text.split(',')
-    list_matrix_artifact = text
+    
 list_buildings_castle = [
                             Graphic_elements(x=settings['SCREEN_WIDTH']//49.2,y=settings['SCREEN_HEIGHT']//2.2,width=settings['SCREEN_WIDTH']//8.1,height=settings['SCREEN_WIDTH']//8.1,path=None),
                             Graphic_elements(x=settings['SCREEN_WIDTH']//49.2,y=settings['SCREEN_HEIGHT']//2.2,width=settings['SCREEN_WIDTH']//8.1,height=settings['SCREEN_WIDTH']//8.1,path=None),
@@ -455,11 +445,13 @@ list_slots_market_hero = [
     Graphic_elements(x=settings['SCREEN_WIDTH']//12.8-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//1.2265,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='resource',path='images/resources/stone.png'),
     Graphic_elements(x=settings['SCREEN_WIDTH']//5.49-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//1.2265,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='resource',path='images/resources/wood.png'),
 ]
+
+
 list_slots_market = [
     #Артефакты 
-    Graphic_elements(x=settings['SCREEN_WIDTH']//1.46-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='artifact',path='images/artifacts/'+choice(list_matrix_artifact)+'.png'),
-    Graphic_elements(x=settings['SCREEN_WIDTH']//1.27-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='artifact',path='images/artifacts/'+choice(list_matrix_artifact)+'.png'),
-    Graphic_elements(x=settings['SCREEN_WIDTH']//1.12-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='artifact',path='images/artifacts/'+choice(list_matrix_artifact)+'.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.46-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='artifact',path='images/artifacts/'+dict_arguments['list_choice_slots_market'][0]+'.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.27-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='artifact',path='images/artifacts/'+dict_arguments['list_choice_slots_market'][1]+'.png'),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//1.12-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//3.13,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='artifact',path='images/artifacts/'+dict_arguments['list_choice_slots_market'][2]+'.png'),
     #Ресурсы сверху
     Graphic_elements(x=settings['SCREEN_WIDTH']//1.46-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='resource',path='images/resources/food.png'),
     Graphic_elements(x=settings['SCREEN_WIDTH']//1.26-settings['SCREEN_WIDTH']//1280,y=settings['SCREEN_HEIGHT']//1.57,width=settings['SCREEN_WIDTH']//12.3,height=settings['SCREEN_HEIGHT']//7,name='resource',path='images/resources/crystal.png'),
@@ -478,7 +470,7 @@ for i in range(6):
     list_cards_post_army.append(card)
 
 list_artifact_graphic_elements = list()
-for i in list_matrix_artifact:
+for i in dict_arguments['list_matrix_artifact']:
     artifact = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_WIDTH']//19*1.5,path='images/artifacts/'+i+'.png')
     list_artifact_graphic_elements.append(artifact)
 

@@ -514,6 +514,10 @@ def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
                 list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand11.png'))
             if cell == 'l':
                 list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand3.png'))
+            if cell == 'm':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand12.png'))
+            if cell == 'n':
+                list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand13.png'))
             
             #Увеличиваем х, двигаясь по ряду
             x += SCREEN_W//19

@@ -13,6 +13,7 @@ pygame.init()
 # @profile
 #Основная фунуция
 def run_main(dict_arguments):
+
     hero_skill = dict_skills[str(settings['SKILL'])]
     index = 0
     water = choice(list_water)
@@ -929,14 +930,17 @@ def run_main(dict_arguments):
                     click_sound.play_sound()
                     if check_mouse_cor(button_play,mouse_cor):
                         sound_book.play_sound()
-                        
                         dict_arguments['scene'] = 'lvl1'
                     elif check_mouse_cor(button_exit,mouse_cor):
                         sound_book.play_sound()
                         dict_arguments['game'] = False
-                            #Отрисовуем книгу
                     elif check_mouse_cor(button_set,mouse_cor):
                         dict_arguments['scene'] = 'settings_scene'
+                    elif check_mouse_cor(button_new_game,mouse_cor):
+                        dict_arguments = new_game_dict
+                        player_lvl1.list_studied_map = dict_arguments['list_studied_map']
+                        dict_arguments['scene'] = 'lvl1'
+                        
             if dict_arguments['scene'] == 'settings_scene':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     click_sound.play_sound()
@@ -1097,7 +1101,7 @@ def run_main(dict_arguments):
                     #Если заканчиваем ход
                     if check_mouse_cor(button_end_move,mouse_cor) and (player_lvl1.where_move == None or player_lvl1.count_step == 0) and player_lvl1.flag_move:
                         #Обновляем количество ходов игрока
-                        player_lvl1.count_step = dict_arguments['characteristic_dict']['count_step']
+                        player_lvl1.count_step = settings['COUNT_STEP_HERO']
                         player_lvl1.where_move = None
                         dict_arguments['flag_button_end'] = True
                         dict_arguments['flag_show_new_day'] = 0
@@ -1330,11 +1334,7 @@ def run_main(dict_arguments):
             dict_arguments['cardgame_variables'])
         if dict_arguments['scene'] == 'lvl1':
             #Условие события 
-            
             # if player_lvl1.flag_card != None and player_lvl1.flag_card != False and player_lvl1.where_move == None and player_lvl1.flag_move:
-            
-                
-
             amount_crystal.font_content = str(dict_arguments['resources_dict']['crystal'])
             amount_food.font_content = str(dict_arguments['resources_dict']['food'])
             amount_iron.font_content = str(dict_arguments['resources_dict']['iron_bullion'])
@@ -1468,11 +1468,17 @@ def run_main(dict_arguments):
                         dict_arguments['resources_dict']['stone'] += randint(6,8)
                         dict_arguments['resources_dict']['food'] += randint(10,12)
                         dict_arguments['resources_dict']['gold_bullion'] += randint(2,4)
-                    
+                    list_choice_slots_market = [
+                            choice(dict_arguments['list_matrix_artifact']),
+                            choice(dict_arguments['list_matrix_artifact']),
+                            choice(dict_arguments['list_matrix_artifact']),
+                            ]           
+                    i=0
                     for obj in list_slots_market:
                         if obj.NAME == 'artifact':
-                            obj.path = 'images/artifacts/'+choice(list_matrix_artifact)+'.png'
+                            obj.path = 'images/artifacts/'+list_choice_slots_market[i]+'.png'
                             obj.image_load()
+                            i+=1
                 if dict_arguments['index_fog'] != 0:
                     dict_arguments['index_fog'] = 0
                 if dict_arguments['dict_price_artifact']['boots_fire'] != dict_price_artifact['boots_fire']:
@@ -1723,7 +1729,7 @@ def run_main(dict_arguments):
                     text_daily_event.font_content = text_daily_event.font_content.split(';')
                 if dict_arguments['daily_event'] == 'heist':
                     list_resource = list()
-                    text_daily_event.font_content = '           Внимание!;Вы прошли по лесу и;вас ограбили разбойники!;Потеряно:'
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;Вы прошли по лесу и;вас ограбили разбойники!;Потеряно:'
                     text_daily_event.index = 4
                     list_unavailable_resource = []
                     for i in range(randint(1,4)):
@@ -1743,6 +1749,7 @@ def run_main(dict_arguments):
                     text_daily_event.font_content = text_daily_event.font_content.split(';')
                 if dict_arguments['daily_event'] == 'gold':
                     text_daily_event.font_content = '           Внимание!;Прошлой ночью метеорологами был ;зафиксирован золотопад. ;;Шанс найти золото увеличен.'.split(';')
+                    
                     text_daily_event.index = 5
                     for i in range(5):
                         while True:
@@ -1812,13 +1819,13 @@ def run_main(dict_arguments):
                     text_daily_event.index = 7
                     for i in dict_price_artifact.keys():
                         dict_price_artifact[i] = dict_price_artifact[i]//2
-                
+                dict_arguments['text_daily_event_font_content'] = text_daily_event.font_content
                 
                 
             if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
                 dict_arguments['flag_show_dialog'] = True
             player_lvl1.move_sprite(dict_arguments['mat_objetcs_lvl1'], LENGTH_MAP_LVL1,dict_arguments['resources_dict'],recourse_sounds,list_cor_portals=list_cor_portals,
-                                    list_card_matrix=list_card_matrix,water=water)
+                                    list_card_matrix=list_card_matrix,water=water,dict_arguments=dict_arguments)
             # Перемещение к игроку после телепорта
             if player_lvl1.need_to_move_to_hero:
                 if dict_arguments['flag_to_move_to_hero'] == 12:
@@ -1892,12 +1899,17 @@ def run_main(dict_arguments):
             dict_arguments['flag_buy_previous_build'] += 1  
         if dict_arguments['count_daily_event'] <80 and player_lvl1.flag_move and dict_arguments['count_daily_event_post_fight'] == 80:
             generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
-            text_daily_event.show_text(win)
             dict_arguments['count_daily_event'] += 1  
+            index_font = 0
+            for i in dict_arguments['text_daily_event_font_content']:
+                index_font +=1
+            text_daily_event.index = index_font
+            text_daily_event.font_content = dict_arguments['text_daily_event_font_content']
             if dict_arguments['count_daily_event'] == 1:
                 event_sound.play_sound()
             if dict_arguments['count_daily_event'] == 80:
                 dict_arguments['daily_event'] = None
+            text_daily_event.show_text(win)
         if dict_arguments['flag_save'] <50:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_save.show_text(win)

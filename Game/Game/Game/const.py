@@ -218,30 +218,30 @@ list_cells_lvl1 = [
                    list('00000000000000000t000000t0ckd00'),
                    list('0t000000000000000t000000tckdd00'),
                    list('0t0000000000000ttt00000cbkddgt0'),
-                   list('0ttttt000000000t000000ckdddgj00'),
-                   list('0t000tttttt0000t000000addghj000'),
-                   list('0t00000000t0000t0000cbkdgj00000'),
-                   list('0tt0000000t0000t0000adddl000000'),
-                   list('0000000000tttttt0000adogj000000'),
-                   list('0000000000t0000ttt00addl0000000'),
-                   list('0000000000t000000ttteedl0000000'),
-                   list('000000ttttt00000000tttdl0000000'),
-                   list('00000tt000000cbbbfckdtdl0000000'),
-                   list('t0000t0000000adddfcddtttt000000'),
-                   list('t0000t0000000adoddddgj00t000000'),
-                   list('tttttt000000ckdoodghj000t000000'),
-                   list('000t00000000ckddodl000tttttttt0'),
-                   list('000t0000000addooodjjbtt000000t0'),
-                   list('000t0000000adooooddoot0000000tt'),
+                   list('0ttttt000000000t000000ckdddgjt0'),
+                   list('0t000tttttt0000t000000addghj0t0'),
+                   list('0t00000000t0000t0000cbkdgj000t0'),
+                   list('0tt0000000t0000t0000adddl0000t0'),
+                   list('0000000000tttttt0000adogj0000t0'),
+                   list('0000000000t0000ttt00addl00000t0'),
+                   list('0000000000t000000tttemdltttttt0'),
+                   list('000000ttttt00000000tttdlt0000t0'),
+                   list('00000tt000000cbbbfckdtdlt0000t0'),
+                   list('t0000t0000000adddooddtttt0000t0'),
+                   list('t0000t0000000adoddddg000t0000t0'),
+                   list('tttttt000000ckdoodghj000t0000t0'),
+                   list('000t0000000ckkdoodl000tttttttt0'),
+                   list('000t0000000addooodnf0tt000000t0'),
+                   list('000t0000000adooooddl0t0000000tt'),
                    list('000ttttttttttttttttttt00000000t'),
-                   list('tttt0000000adooooddl00000000000'),
-                   list('t000000000ckdoooddgj00000000000'),
-                   list('t000000000addddddgjttt000000000'),
+                   list('tttt0000000adooooddl0t000000000'),
+                   list('t000000000ckdoooddgj0t000000000'),
+                   list('t000000000addddddgj00t000000000'),
                    list('t000000cbbkdghhhhj000t000000000'),
-                   list('tt0000ckddddl000t00000000000000'),
+                   list('tt0000ckddddl000tttttt000000000'),
                    list('bbbf0ckddghhj00tt00000000000000'),
-                   list('odtbfadhhj00000t000000000000000'),
-                   list('ddddfkdl0000000t000000000000000'), 
+                   list('odtnfaddgj00000t000000000000000'),
+                   list('ddddoodgj000000t000000000000000'), 
                    list('dddddddl0000000t000000000000000'), 
                    list('dddohhhj000000tt000000000000000')]
 
@@ -288,7 +288,10 @@ for el in range(len(list_cells_lvl1)):
         if list_cells_lvl1[el][element] == '0':
             list_cells_lvl1[el][element] = choice(list_flower_element)
 list_untochable_cells = [ [1,3],[2,3],[3,3],[3,0],[3,1],[3,2] ]
-
+with open('images/artifacts/artifact_list.txt','r') as file:
+    for text in file:
+        text = text.split(',')
+    list_matrix_artifact = text
 #Список, в которм будут храниться объекты клеток
 list_objects_cells_lvl1 = []
 dict_card_dialog = {
@@ -309,7 +312,11 @@ dict_card_dialog = {
                     'рудорн':['Рудорн: Мой,Брат','глупец!'],
 
 }
-
+list_choice_slots_market = [
+                            choice(list_matrix_artifact),
+                            choice(list_matrix_artifact),
+                            choice(list_matrix_artifact),
+]
 dict_card_characteristics = {
                             'бард':[1,2,'earth'],
                             'клаус':[1,0,'hell'],
@@ -350,6 +357,13 @@ dict_card_price = {
                     'кентавр':'gold_bullion/9;',
                     'орк':'gold_bullion/9;',
                     'дворф':'gold_bullion/9;',
+}
+dict_count_resource = {
+    'wood':20,
+    'iron_bullion':20,
+    'stone':20,
+    'crystal':20,
+    'food':20,
 }
 city_cor_enter = [3,1]
 list_cards_pl = [[None,1,2],[None,10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
@@ -508,7 +522,12 @@ dict_arguments = {
     'dict_path_skills':dict_path_skills,
     'list_capture_buildings':list(),
     'list_capture_buildings_symbol':list(),
+    'list_choice_slots_market':list_choice_slots_market,
+    'list_matrix_artifact':list_matrix_artifact,
+    'dict_count_resource':dict_count_resource
 }
+new_game_dict = dict_arguments.copy()
+print(new_game_dict)
 if os.path.exists('saves/config1.json'):
     with open('saves/config1.json','r') as file:
         dict_arguments = json.load(file)

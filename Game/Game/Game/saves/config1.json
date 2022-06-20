@@ -5,16 +5,16 @@
         360
     ],
     "draw_cells": false,
-    "scene": "menu_hero",
+    "scene": "lvl1",
     "buttonIsPressed": true,
     "flag_to_move_to_hero": 0,
     "game": true,
     "card_pressed": null,
-    "index_card": 7,
+    "index_card": null,
     "artifact_pressed": null,
     "artifact_chest": null,
     "list_cor_player_xy": [
-        200,
+        55,
         201
     ],
     "LENGTH_MAP_LVL1": 31,
@@ -541,19 +541,19 @@
         [
             1097.0,
             87.0,
-            "green"
-        ],
-        [
-            1102.0,
-            87.0,
-            "green"
-        ],
-        [
-            1107.0,
-            87.0,
             "yellow"
         ],
         [
+            1102.0,
+            87.0,
+            "green"
+        ],
+        [
+            1107.0,
+            87.0,
+            "green"
+        ],
+        [
             1112.0,
             87.0,
             "green"
@@ -5244,6 +5244,16 @@
             "green"
         ],
         [
+            1117.0,
+            72,
+            "black"
+        ],
+        [
+            1122.0,
+            72,
+            "black"
+        ],
+        [
             1127.0,
             72,
             "black"
@@ -5364,6 +5374,16 @@
             "black"
         ],
         [
+            1117.0,
+            77.0,
+            "black"
+        ],
+        [
+            1122.0,
+            77.0,
+            "black"
+        ],
+        [
             1127.0,
             77.0,
             "black"
@@ -5484,6 +5504,16 @@
             "black"
         ],
         [
+            1117.0,
+            82.0,
+            "black"
+        ],
+        [
+            1122.0,
+            82.0,
+            "black"
+        ],
+        [
             1127.0,
             82.0,
             "black"
@@ -5604,6 +5634,16 @@
             "black"
         ],
         [
+            1117.0,
+            87.0,
+            "black"
+        ],
+        [
+            1122.0,
+            87.0,
+            "black"
+        ],
+        [
             1127.0,
             87.0,
             "black"
@@ -5724,6 +5764,16 @@
             "black"
         ],
         [
+            1117.0,
+            92.0,
+            "black"
+        ],
+        [
+            1122.0,
+            92.0,
+            "black"
+        ],
+        [
             1127.0,
             92.0,
             "black"
@@ -5844,6 +5894,16 @@
             "black"
         ],
         [
+            1117.0,
+            97.0,
+            "black"
+        ],
+        [
+            1122.0,
+            97.0,
+            "black"
+        ],
+        [
             1127.0,
             97.0,
             "black"
@@ -5961,6 +6021,16 @@
         [
             1242.0,
             97.0,
+            "black"
+        ],
+        [
+            1117.0,
+            102.0,
+            "black"
+        ],
+        [
+            1122.0,
+            102.0,
             "black"
         ],
         [
@@ -9808,15 +9878,15 @@
         "food": 50,
         "iron_bullion": 50,
         "wood": 50,
-        "gold_bullion": 62,
+        "gold_bullion": 50,
         "crystal": 50,
         "stone": 50
     },
-    "change_exp_x": 3,
-    "max_exp_lvl": 1100,
+    "change_exp_x": 0,
+    "max_exp_lvl": 1000,
     "skill_cost": 200,
     "flag_show_new_day": 100,
-    "change_mana_x": 1,
+    "change_mana_x": 0,
     "flag_button_end": false,
     "past_resources_dict": {
         "food": 50,
@@ -9862,7 +9932,7 @@
     "flag_show_error_bought_card": 30,
     "past_lvl_skill_fight": false,
     "list_cor_castle_xy": [
-        66,
+        55,
         67
     ],
     "flag_show_shack": 30,
@@ -9875,7 +9945,7 @@
     "trophy_gold": 0,
     "list_cards_en": [
         [
-            null,
+            "\u043a\u0435\u043d\u0442\u0430\u0432\u0440",
             10,
             3
         ],
@@ -9938,7 +10008,7 @@
     "list_losed_card_pl": [],
     "changed_hp": 5,
     "changed_dmg": 0,
-    "index_water": 5962,
+    "index_water": 37,
     "flag_show_dialog": false,
     "flag_show_offer": false,
     "flag_offer": true,
@@ -9955,17 +10025,17 @@
     "flag_fight_start_post": false,
     "count_daily_event_post_fight": 80,
     "index_fog": 0,
-    "minute_in_game": 64,
+    "minute_in_game": 0,
     "flag_mouse_volume_sound": false,
     "flag_save": 50,
     "flag_mouse_volume_music": false,
     "characteristic_dict": {
-        "exp": 305,
-        "lvl": 10,
+        "exp": 900,
+        "lvl": 9,
         "lvl_skill_diplomacy": 3,
-        "lvl_skill_domesticpolitics": 5,
+        "lvl_skill_domesticpolitics": 4,
         "lvl_skill_fight": 3,
-        "mana": 0,
+        "mana": 1000,
         "day": 7,
         "week": 1,
         "count_step": 104,
@@ -9989,7 +10059,7 @@
             "0",
             "\u0411",
             "C",
-            "/",
+            "\u043b",
             "1",
             "0",
             "0",
@@ -10020,7 +10090,7 @@
             "0",
             "0",
             "0",
-            "\\",
+            "/",
             "|",
             "1",
             "1",
@@ -10075,10 +10145,10 @@
         ],
         [
             "0",
-            "0",
-            "0",
             "p",
             "0",
+            "0",
+            "\u0410",
             "0",
             "0",
             "0",
@@ -10119,7 +10189,7 @@
             "0",
             "0",
             "0",
-            "|",
+            "/",
             "1",
             "1",
             "0",
@@ -10152,7 +10222,7 @@
             "0",
             "0",
             "0",
-            "\u043b",
+            "\\",
             "1",
             "0",
             "0",
@@ -10247,7 +10317,7 @@
             "0",
             "0",
             "0",
-            "/",
+            "\u043b",
             "1",
             "0",
             "0",
@@ -10280,7 +10350,7 @@
             "0",
             "0",
             "0",
-            "\\",
+            "|",
             "1",
             "0",
             "0",
@@ -10307,13 +10377,13 @@
         [
             "\u0413",
             "\u043b",
-            "|",
-            "\u043b",
             "\\",
+            "\\",
+            "\u043b",
             "/",
             "\u043b",
-            "|",
-            "|",
+            "\u043b",
+            "\\",
             "1",
             "0",
             "0",
@@ -10339,9 +10409,9 @@
         ],
         [
             "C",
-            "|",
-            "|",
             "\\",
+            "|",
+            "/",
             "1",
             "1",
             "1",
@@ -10695,8 +10765,8 @@
             "0",
             "0",
             "0",
+            "\u043b",
             "/",
-            "|",
             "1",
             "\u0410"
         ],
@@ -10757,10 +10827,10 @@
             "0",
             "0",
             "0",
-            "|",
+            "\\",
+            "\\",
             "\u043b",
-            "\\",
-            "\\",
+            "\u043b",
             "1",
             "1",
             "0",
@@ -10822,14 +10892,14 @@
             "0",
             "0",
             "0",
-            "\\",
+            "|",
             "1",
             "0",
             "0",
             "0",
             "0",
             "0",
-            "/",
+            "\u043b",
             "C"
         ],
         [
@@ -10858,12 +10928,12 @@
             "\u043b",
             "1",
             "0",
+            "/",
+            "/",
+            "\\",
             "\u043b",
-            "\\",
             "/",
-            "/",
-            "\\",
-            "|"
+            "\u043b"
         ],
         [
             "C",
@@ -10888,10 +10958,10 @@
             "0",
             "0",
             "0",
-            "\\",
+            "\u043b",
             "1",
             "\u0413",
-            "/",
+            "\\",
             "1",
             "1",
             "1",
@@ -10921,7 +10991,7 @@
             "0",
             "0",
             "0",
-            "|",
+            "\u043b",
             "1",
             "0",
             "\\",
@@ -10954,7 +11024,7 @@
             "0",
             "0",
             "|",
-            "\u043b",
+            "\\",
             "0",
             "0",
             "1",
@@ -10987,7 +11057,7 @@
             "0",
             "M",
             "1",
-            "|",
+            "\u043b",
             "0",
             "0",
             "\u0413",
@@ -11138,62 +11208,6 @@
         [
             4,
             6
-        ],
-        [
-            5,
-            3
-        ],
-        [
-            5,
-            2
-        ],
-        [
-            5,
-            4
-        ],
-        [
-            5,
-            1
-        ],
-        [
-            5,
-            5
-        ],
-        [
-            5,
-            0
-        ],
-        [
-            5,
-            6
-        ],
-        [
-            6,
-            3
-        ],
-        [
-            6,
-            2
-        ],
-        [
-            6,
-            4
-        ],
-        [
-            6,
-            1
-        ],
-        [
-            6,
-            5
-        ],
-        [
-            6,
-            0
-        ],
-        [
-            6,
-            6
         ]
     ],
     "list_cards_pl": [
@@ -11203,7 +11217,7 @@
             2
         ],
         [
-            "\u0433\u0438\u0433\u0430\u043d\u0442",
+            null,
             10,
             10
         ],
@@ -11267,22 +11281,22 @@
             2
         ],
         [
-            "\u043f\u043e\u0434\u0440\u044b\u0432\u043d\u0438\u043a",
+            null,
             5,
             0
         ],
         [
-            null,
+            "\u043f\u043e\u0434\u0440\u044b\u0432\u043d\u0438\u043a",
             3,
             5
         ],
         [
-            null,
+            "\u0430\u0440\u0431\u0430\u043b\u0435\u0442\u0447\u0438\u043a",
             4,
             3
         ],
         [
-            null,
+            "\u0433\u0438\u0433\u0430\u043d\u0442",
             2,
             3
         ],
@@ -11298,16 +11312,16 @@
         "sword": "images/artifacts/sword_ice.png",
         "shield": "images/artifacts/shield_fire.png",
         "boots": "images/artifacts/boots_ice.png",
-        "reserv1": "images/artifacts/boots_ice.png",
+        "reserv1": null,
         "reserv2": null,
-        "reserv3": null
+        "reserv3": "images/artifacts/boots_ice.png"
     },
     "dict_path_skills": {
-        "skill_earth_blessing": "images/skills/eliot/skill_earth_blessing_learn.png",
-        "skill_lumberjack": "images/skills/eliot/skill_lumberjack_learn.png",
-        "skill_forest_path": "images/skills/eliot/skill_forest_path_learn.png",
-        "skill_idol_people": "images/skills/eliot/skill_idol_people_learn.png",
-        "skill_leader": "images/skills/eliot/skill_leader_learn.png",
+        "skill_earth_blessing": "images/skills/eliot/skill_earth_blessing.png",
+        "skill_lumberjack": "images/skills/eliot/skill_lumberjack.png",
+        "skill_forest_path": "images/skills/eliot/skill_forest_path.png",
+        "skill_idol_people": "images/skills/eliot/skill_idol_people.png",
+        "skill_leader": "images/skills/eliot/skill_leader.png",
         "skill_earth_blessing.png": "images/skills/eliot/skill_earth_blessing.png",
         "skill_lumberjack.png": "images/skills/eliot/skill_lumberjack.png",
         "skill_forest_path.png": "images/skills/eliot/skill_forest_path.png",
@@ -11316,30 +11330,28 @@
     },
     "list_capture_buildings": [],
     "list_capture_buildings_symbol": [],
-    "dict_price_artifact": {
-        "boots_fire": 22,
-        "boots_hero": 32,
-        "boots_ice": 21,
-        "chest_fire": 33,
-        "chest_ice": 12,
-        "helmet_ice": 29,
-        "shield_ice": 27,
-        "sword_ice": 29,
-        "chest_hero": 16,
-        "helmet_hero": 16,
-        "shield_hero": 21,
-        "sword_hero": 28,
-        "shield_fire": 20,
-        "sword_fire": 26,
-        "helmet_fire": 11
-    },
-    "dict_price_resource": {
-        "wood": "1_4",
-        "iron_bullion": "1_2",
-        "stone": "1_3",
-        "crystal": "2_1",
-        "food": "1_5"
-    },
+    "list_choice_slots_market": [
+        "shield_fire",
+        "shield_fire",
+        "helmet_hero"
+    ],
+    "list_matrix_artifact": [
+        "boots_fire",
+        "boots_hero",
+        "boots_ice",
+        "chest_fire",
+        "chest_ice",
+        "helmet_ice",
+        "shield_ice",
+        "sword_ice",
+        "chest_hero",
+        "helmet_hero",
+        "shield_hero",
+        "sword_hero",
+        "shield_fire",
+        "sword_fire",
+        "helmet_fire"
+    ],
     "dict_count_resource": {
         "wood": 20,
         "iron_bullion": 20,
@@ -11347,6 +11359,5 @@
         "crystal": 20,
         "food": 20
     },
-    "text_card": null,
-    "name_art_res": "boots"
+    "text_card": null
 }
