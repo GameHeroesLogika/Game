@@ -389,6 +389,7 @@ list_slots_skills_hero = [
     
     Graphic_elements(x=settings['SCREEN_WIDTH']//8.25,y=settings['SCREEN_HEIGHT']//2.21,width=settings['SCREEN_WIDTH']//14.22,height=settings['SCREEN_WIDTH']//14.22,path=dict_arguments['dict_path_skills']['skill_leader'])
     ]
+artifact_chest = Graphic_elements(0,0,0,0,dict_arguments['path_artifact_chest'])
 dict_price_artifact = {
     'boots_fire':randint(20,30),
     'boots_hero':randint(30,35),

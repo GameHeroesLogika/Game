@@ -165,6 +165,7 @@ def run_main(dict_arguments):
                     dict_arguments['flag_forge'] = False
 
             if dict_arguments['scene'] == 'post_army':
+                create_icon_card_post_army(list_cards_post_army,dict_arguments['list_cards_pl'],dict_arguments['list_cards_pl_post_army'])
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     
                     if check_mouse_cor(button_city_back,mouse_cor):
@@ -200,23 +201,23 @@ def run_main(dict_arguments):
                                     index_pressed_card = list_cards_post_army.index(dict_arguments['card_pressed'])
                                     if index_choice_card > 5:
                                         if index_pressed_card > 5:
-                                            name_card = dict_arguments['list_cards_pl'][index_pressed_card-6][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_cards_pl'][index_pressed_card-6][0]
                                             dict_arguments['list_cards_pl'][index_pressed_card-6][0] = dict_arguments['list_cards_pl'][index_choice_card-6][0]
-                                            dict_arguments['list_cards_pl'][index_choice_card-6][0] = name_card
+                                            dict_arguments['list_cards_pl'][index_choice_card-6][0] = dict_arguments['name_card']
                                         if index_pressed_card <= 5:
-                                            name_card = dict_arguments['list_cards_pl_post_army'][index_pressed_card][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_cards_pl_post_army'][index_pressed_card][0]
                                             dict_arguments['list_cards_pl_post_army'][index_pressed_card][0] = dict_arguments['list_cards_pl'][index_choice_card-6][0]
-                                            dict_arguments['list_cards_pl'][index_choice_card-6][0] = name_card
+                                            dict_arguments['list_cards_pl'][index_choice_card-6][0] = dict_arguments['name_card']
                                     if index_choice_card <= 5:
                                         if index_pressed_card <= 5:#Армия в армию
-                                            name_card = dict_arguments['list_cards_pl_post_army'][index_pressed_card][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_cards_pl_post_army'][index_pressed_card][0]
                                             dict_arguments['list_cards_pl_post_army'][index_pressed_card][0] = dict_arguments['list_cards_pl_post_army'][index_choice_card][0]
-                                            dict_arguments['list_cards_pl_post_army'][index_choice_card][0] = name_card
+                                            dict_arguments['list_cards_pl_post_army'][index_choice_card][0] = dict_arguments['name_card']
 
                                         if index_pressed_card > 5:#резерв Армию 
-                                            name_card = dict_arguments['list_cards_pl'][index_pressed_card-6][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_cards_pl'][index_pressed_card-6][0]
                                             dict_arguments['list_cards_pl'][index_pressed_card-6][0] = dict_arguments['list_cards_pl_post_army'][index_choice_card][0]
-                                            dict_arguments['list_cards_pl_post_army'][index_choice_card][0] = name_card
+                                            dict_arguments['list_cards_pl_post_army'][index_choice_card][0] = dict_arguments['name_card']
                                     create_icon_card_post_army(list_cards_post_army,dict_arguments['list_cards_pl'],dict_arguments['list_cards_pl_post_army'])
                                     break
                             else:
@@ -310,8 +311,8 @@ def run_main(dict_arguments):
                             altar_selected.NAME = obj
                             altar_selected.image_load()
                     if check_mouse_cor(button_change_card,mouse_cor) and altar_selected.NAME != None and altar_selected.NAME.path != None and altar_selected.NAME.path != 'name':
-                        name_card = dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]
-                        list_text_cost = name_card.split(';')
+                        dict_arguments['name_card'] = dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]
+                        list_text_cost = dict_arguments['name_card'].split(';')
                         for resource in list_text_cost:
                             resource = resource.split('/')
                             if len(resource[0]) != 0:
@@ -374,8 +375,8 @@ def run_main(dict_arguments):
                     if check_mouse_cor(button_camp_back,mouse_cor):
                         dict_arguments['scene'] = 'city'
                     if check_mouse_cor(button_hire,mouse_cor) and camp_selected.NAME != None and camp_selected.NAME != 'name':
-                        name_card = dict_card_price[camp_selected.NAME.path.split('/')[-1].split('.')[0]]
-                        list_text_cost = name_card.split(';')
+                        dict_arguments['name_card'] = dict_card_price[camp_selected.NAME.path.split('/')[-1].split('.')[0]]
+                        list_text_cost = dict_arguments['name_card'].split(';')
                         for resource in list_text_cost:
                             resource = resource.split('/')
                             if len(resource[0]) != 0:
@@ -649,8 +650,8 @@ def run_main(dict_arguments):
                 for obj in list_card_camp:
                     obj.show_image(win)
                 if button_hire.path != None and camp_selected.NAME != None and camp_selected.path != None and camp_selected.NAME != 'name':
-                    name_card = camp_selected.NAME.path.split('/')[-1].split('.')[0]
-                    list_text_cost = dict_card_price[name_card].split(';')
+                    dict_arguments['name_card'] = camp_selected.NAME.path.split('/')[-1].split('.')[0]
+                    list_text_cost = dict_card_price[dict_arguments['name_card']].split(';')
                     finally_text, text_x = text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=text_price_card,settings=settings)
                     text_price_card.font_content = finally_text
                     text_price_card.font_x = text_x
@@ -665,8 +666,8 @@ def run_main(dict_arguments):
                 button_altar_back.show_image(win)
                 button_change_card.show_image(win)
                 if button_change_card.path != None and altar_selected.NAME != None and altar_selected.NAME != 'name' and altar_selected.NAME.path != None:
-                    name_card = dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]
-                    list_text_cost = name_card.split(';')
+                    dict_arguments['name_card'] = dict_card_price[altar_selected.NAME.path.split('/')[-1].split('.')[0]]
+                    list_text_cost = dict_arguments['name_card'].split(';')
                     finally_text,text_x = text_cost(list_text_cost,finally_text='Продать за:',text_obj=text_change_card,settings=settings)
                     text_change_card.font_content = finally_text
                     text_change_card.font_x = text_x
@@ -737,23 +738,23 @@ def run_main(dict_arguments):
                                     index_pressed_card = list_cards_menu_hero.index(dict_arguments['card_pressed'])
                                     if index_choice_card > 5:
                                         if index_pressed_card > 5:
-                                            name_card = dict_arguments['list_card_pl_reserv'][index_pressed_card-6][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_card_pl_reserv'][index_pressed_card-6][0]
                                             dict_arguments['list_card_pl_reserv'][index_pressed_card-6][0] = dict_arguments['list_card_pl_reserv'][index_choice_card-6][0]
-                                            dict_arguments['list_card_pl_reserv'][index_choice_card-6][0] = name_card
+                                            dict_arguments['list_card_pl_reserv'][index_choice_card-6][0] = dict_arguments['name_card']
                                         if index_pressed_card <= 5:
-                                            name_card = dict_arguments['list_cards_pl'][index_pressed_card][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_cards_pl'][index_pressed_card][0]
                                             dict_arguments['list_cards_pl'][index_pressed_card][0] = dict_arguments['list_card_pl_reserv'][index_choice_card-6][0]
-                                            dict_arguments['list_card_pl_reserv'][index_choice_card-6][0] = name_card
+                                            dict_arguments['list_card_pl_reserv'][index_choice_card-6][0] = dict_arguments['name_card']
                                     if index_choice_card <= 5:
                                         if index_pressed_card <= 5:#Армия в армию
-                                            name_card = dict_arguments['list_cards_pl'][index_pressed_card][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_cards_pl'][index_pressed_card][0]
                                             dict_arguments['list_cards_pl'][index_pressed_card][0] = dict_arguments['list_cards_pl'][index_choice_card][0]
-                                            dict_arguments['list_cards_pl'][index_choice_card][0] = name_card
+                                            dict_arguments['list_cards_pl'][index_choice_card][0] = dict_arguments['name_card']
 
                                         if index_pressed_card > 5:#резерв Армию 
-                                            name_card = dict_arguments['list_card_pl_reserv'][index_pressed_card-6][0]
+                                            dict_arguments['name_card'] = dict_arguments['list_card_pl_reserv'][index_pressed_card-6][0]
                                             dict_arguments['list_card_pl_reserv'][index_pressed_card-6][0] = dict_arguments['list_cards_pl'][index_choice_card][0]
-                                            dict_arguments['list_cards_pl'][index_choice_card][0] = name_card
+                                            dict_arguments['list_cards_pl'][index_choice_card][0] = dict_arguments['name_card']
                                     create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],dict_arguments['list_cards_pl'],list_cards_menu_hero,dict_arguments['list_card_pl_reserv'])
                                     break
                             else:
@@ -937,9 +938,11 @@ def run_main(dict_arguments):
                     elif check_mouse_cor(button_set,mouse_cor):
                         dict_arguments['scene'] = 'settings_scene'
                     elif check_mouse_cor(button_new_game,mouse_cor):
-                        dict_arguments = new_game_dict
-                        player_lvl1.list_studied_map = dict_arguments['list_studied_map']
-                        dict_arguments['scene'] = 'lvl1'
+                        if os.path.exists('saves/config1.json'):
+                            os.remove('saves/config1.json')
+                            dict_arguments['game'] = False
+                        if not os.path.exists('saves/config1.json'):
+                            dict_arguments['scene'] = 'lvl1'
                         
             if dict_arguments['scene'] == 'settings_scene':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -1033,7 +1036,7 @@ def run_main(dict_arguments):
 
 
             if dict_arguments['scene'] == 'lvl1':
-                
+                text_date.font_content = ('День: '+str(dict_arguments['characteristic_dict']['day'])+';Неделя: '+str(dict_arguments['characteristic_dict']['week'])).split(';')
                 #Если нажата левая кнопка мыши
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     #Окно предложения сделки 
@@ -1041,16 +1044,16 @@ def run_main(dict_arguments):
                         
                         if check_mouse_cor_font(text_offer_yes,mouse_cor):
                             
-                            if dict_arguments['resources_dict']['gold_bullion'] >= gold_count_enemy:
+                            if dict_arguments['resources_dict']['gold_bullion'] >= dict_arguments['gold_count_enemy']:
                                 dict_arguments['flag_dialog_offer_yes'] = True
-                                dict_arguments['resources_dict']['gold_bullion']-=gold_count_enemy
+                                dict_arguments['resources_dict']['gold_bullion']-=dict_arguments['gold_count_enemy']
                                 dict_arguments['flag_show_offer'] = False
-                                dict_arguments['text_card'] = [str(name_card).title()+': Благодарю','']
+                                dict_arguments['text_card'] = [str(dict_arguments['name_card']).title()+': Благодарю','']
                                 dict_arguments['count_dialog'] = 0
                                 dict_arguments['flag_offer'] = False
                                 dict_arguments['flag_show_dialog'] = True
 
-                            elif dict_arguments['resources_dict']['gold_bullion'] < gold_count_enemy:
+                            elif dict_arguments['resources_dict']['gold_bullion'] < dict_arguments['gold_count_enemy']:
                                 dict_arguments['flag_not_enough_gold'] = 0
                                 dict_arguments['flag_show_offer'] = False
                         if check_mouse_cor_font(text_offer_no,mouse_cor):
@@ -1058,7 +1061,7 @@ def run_main(dict_arguments):
                             dict_arguments['flag_show_offer'] = False
                             dict_arguments['flag_offer'] = False
                             dict_arguments['count_dialog'] = 0
-                            dict_arguments['text_card'] = [str(name_card).title()+': Очень жаль!','']
+                            dict_arguments['text_card'] = [str(dict_arguments['name_card']).title()+': Очень жаль!','']
                             dict_arguments['flag_show_dialog'] = True
                     if dict_arguments['flag_show_dialog']:
                         if check_mouse_cor_font(button_leave,mouse_cor) and dict_arguments['count_dialog'] == 50:
@@ -1074,12 +1077,11 @@ def run_main(dict_arguments):
                             dict_arguments['count_dialog'] = 0
                         elif check_mouse_cor_font(button_offer,mouse_cor) and dict_arguments['flag_offer'] and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_show_offer'] = True
-                            name_card = player_lvl1.flag_card
+                            dict_arguments['name_card'] = player_lvl1.flag_card
                             player_lvl1.flag_card = False
                             player_lvl1.near_card = False
                             dict_arguments['flag_show_dialog'] = False
-                            gold_count_enemy = int(dict_arguments['characteristic_dict']['lvl'])*randint(4,5)-int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*randint(3,4)+5
-                            text_offer_enemy.font_content = 'Вы хотите подкупить за '+str(gold_count_enemy)+'?'
+                            dict_arguments['gold_count_enemy'] = int(dict_arguments['characteristic_dict']['lvl'])*randint(4,5)-int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*randint(3,4)+5
                         elif check_mouse_cor_font(button_threat,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             
                             chance_base = randint(0,100)
@@ -1105,34 +1107,35 @@ def run_main(dict_arguments):
                         player_lvl1.where_move = None
                         dict_arguments['flag_button_end'] = True
                         dict_arguments['flag_show_new_day'] = 0
+                        new_day_sound.play_sound()
                         if randint(0,100) <= int(settings['DAILY_EVENT']):
                             dict_arguments['daily_event'] = choice(list_daily_events)
                         #Начисляем русурсы за захваченые здания
                         resourse_accural(player_lvl1.list_capture_buildings_symbol, dict_arguments['resources_dict'])
-                    if dict_arguments['artifact_chest'] != None and check_mouse_cor(dict_arguments['artifact_chest'],mouse_cor):
-                        name_artifact = dict_arguments['artifact_chest'].path.split('/')[-1]
+                    if artifact_chest.path != None and check_mouse_cor(artifact_chest,mouse_cor):
+                        name_artifact = artifact_chest.path.split('/')[-1]
                         name_artifact = name_artifact.split('.')[0]
                         name_artifact= name_artifact.split('_')[0]
                         for obj in list_all_artifact:
                             if obj.path == None:
                                 if obj.NAME != None:
                                     if name_artifact == obj.NAME:
-                                        obj.path = dict_arguments['artifact_chest'].path
+                                        obj.path = artifact_chest.path
                                         obj.image_load()
                                         break
                                 if obj.NAME == None:
-                                    obj.path = dict_arguments['artifact_chest'].path
+                                    obj.path = artifact_chest.path
                                     obj.image_load()
                                     break
                         else:
                             dict_arguments['flag_show_error'] = 0
                             dict_arguments['resources_dict']['gold_bullion'] += 20
-                        dict_arguments['artifact_chest'] = None
+                        artifact_chest.path = None
                         player_lvl1.flag_draw_chest = False
                         dict_arguments['mat_objetcs_lvl1'][player_lvl1.chest_cor[0]][player_lvl1.chest_cor[1]] = '0'
                         player_lvl1.flag_move = True
                     if check_mouse_cor(amount_money,mouse_cor) and player_lvl1.flag_draw_chest:
-                        dict_arguments['artifact_chest'] = None
+                        artifact_chest.path = None
                         player_lvl1.flag_draw_chest = False
                         if player_lvl1.chest_cor != None:
                             dict_arguments['mat_objetcs_lvl1'][player_lvl1.chest_cor[0]][player_lvl1.chest_cor[1]] = '0'
@@ -1164,7 +1167,6 @@ def run_main(dict_arguments):
                             text_new_lvl.font_content = ('Поздровляем! У вас новый уровень;Выберите улучшение способности;'+'Новый уровень - '+str(dict_arguments['characteristic_dict']['lvl']+1)).split(';')
                             dict_arguments['flag_new_lvl'] = False
                     
-                    print(dict_arguments['characteristic_dict']['lvl'])
                     #Когда нажали на кнопку "К ГЕРОЮ" 
                     
                     if check_mouse_cor(button_to_hero,mouse_cor):
@@ -1190,6 +1192,7 @@ def run_main(dict_arguments):
 
                 if event.type == pygame.MOUSEMOTION:
                     if dict_arguments['scene'] == 'lvl1':
+                        
                         i=0
                         for b in list_interface_button:
                             if check_mouse_cor(b,mouse_cor):
@@ -1274,6 +1277,7 @@ def run_main(dict_arguments):
                 dict_arguments['flag_not_enough_cards'] = 0
                 player_lvl1.flag_card = False
                 player_lvl1.near_card = False
+                dict_arguments['flag_fight_start'] = False
             
             
         if dict_arguments['flag_fight_start_post']  and dict_arguments['scene'] != 'card_game' and dict_arguments['scene'] != 'result_screen':
@@ -1386,6 +1390,7 @@ def run_main(dict_arguments):
                 text_dialog_card.font_content = dict_arguments['text_card']
                 text_dialog_card.show_text(win)
             if dict_arguments['flag_show_offer']:
+                text_offer_enemy.font_content = 'Вы хотите подкупить за '+str(dict_arguments['gold_count_enemy'])+'?'
                 frame_error.show_image(win)
                 text_offer_enemy.show_text(win)
                 text_offer_yes.show_text(win)
@@ -1405,11 +1410,11 @@ def run_main(dict_arguments):
             player_info.show_text(win)
             if dict_arguments['number_opened_card'] <=5:
                 dict_arguments['number_opened_card'] = dict_arguments['characteristic_dict']['lvl'] // 3
-            if player_lvl1.flag_city:
+            if player_lvl1.flag_city and dict_arguments['flag_show_new_day'] >= 100:
                 dict_arguments['scene'] = 'city'
 
             #Новый день
-            if player_lvl1.flag_market:
+            if player_lvl1.flag_market and dict_arguments['flag_show_new_day'] >= 100:
                 # dict_arguments['scene'] = 'sandwich'
                 dict_arguments['scene'] = 'market'
             if dict_arguments['flag_button_end'] and player_lvl1.where_move == None and player_lvl1.flag_move:
@@ -1489,7 +1494,7 @@ def run_main(dict_arguments):
                     if randint(0,4) == 4:
                         dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['characteristic_dict']['contribution']*dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics']
                 dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['characteristic_dict']['contribution']*dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics']
-                text_date.font_content = ('День: '+str(dict_arguments['characteristic_dict']['day'])+';Неделя: '+str(dict_arguments['characteristic_dict']['week'])).split(';')
+                print(dict_arguments['characteristic_dict']['contribution']*dict_arguments['characteristic_dict']['lvl_skill_domesticpolitics'])
                 dict_arguments['flag_button_end'] = False
                 for obj in list_all_artifact:
                     if obj.NAME != None and obj.path != None:
@@ -1499,10 +1504,10 @@ def run_main(dict_arguments):
             #Новый день
             if dict_arguments['flag_show_new_day'] < 100:
                 player_lvl1.flag_move = False
-                if dict_arguments['flag_show_new_day'] == 0:
-                    text_new_day.font_content = ('           Новый день;        Получено за день; ;Яблок - '+str(dict_arguments['resources_dict']['food']-dict_arguments['past_resources_dict']['food'])+'      Золота - '+str(dict_arguments['resources_dict']['gold_bullion']-dict_arguments['past_resources_dict']['gold_bullion'])+'; ;Железа - '+str(dict_arguments['resources_dict']['iron_bullion']-dict_arguments['past_resources_dict']['iron_bullion'])+'      Кристаллов - '+str(dict_arguments['resources_dict']['crystal']-dict_arguments['past_resources_dict']['crystal'])+'; ;Камня - '+str(dict_arguments['resources_dict']['stone']-dict_arguments['past_resources_dict']['stone'])+'      Дерева - '+str(dict_arguments['resources_dict']['wood']-dict_arguments['past_resources_dict']['wood'])).split(';')
+                text_new_day.font_content = ('           Новый день;        Получено за день; ;Яблок - '+str(dict_arguments['resources_dict']['food']-dict_arguments['past_resources_dict']['food'])+'      Золота - '+str(dict_arguments['resources_dict']['gold_bullion']-dict_arguments['past_resources_dict']['gold_bullion'])+'; ;Железа - '+str(dict_arguments['resources_dict']['iron_bullion']-dict_arguments['past_resources_dict']['iron_bullion'])+'      Кристаллов - '+str(dict_arguments['resources_dict']['crystal']-dict_arguments['past_resources_dict']['crystal'])+'; ;Камня - '+str(dict_arguments['resources_dict']['stone']-dict_arguments['past_resources_dict']['stone'])+'      Дерева - '+str(dict_arguments['resources_dict']['wood']-dict_arguments['past_resources_dict']['wood'])).split(';')
+                if dict_arguments['flag_show_new_day'] == 99:
                     dict_arguments['past_resources_dict'] = dict_arguments['resources_dict'].copy()
-                    new_day_sound.play_sound()
+                    
                 frame_new_day.show_image(win)        
                 text_new_day.show_text(win)
                 dict_arguments['flag_show_new_day'] += 1
@@ -1532,7 +1537,7 @@ def run_main(dict_arguments):
                         desc_base_skill.WIDTH = desc_base_skill.start_width
                 text_new_lvl.show_text(win)
             # Условие Академии         
-            if  dict_arguments['flag_use_royal_academy'] and player_lvl1.flag_academy:
+            if  dict_arguments['flag_use_royal_academy'] and player_lvl1.flag_academy and dict_arguments['flag_show_new_day'] >= 100:
                 text_new_lvl.index = 1
                 text_new_lvl.font_content = ('Вы пришли в королевскую академи!;  Выберите какой навык улучшить').split(';')
                 frame_notification.show_image(win)
@@ -1561,32 +1566,40 @@ def run_main(dict_arguments):
                 player_lvl1.near_chest = False
                 chest_open.show_image(win)
                 chest_text_choice.show_text(win)
-                if dict_arguments['artifact_chest'] == None :
-                    dict_arguments['artifact_chest'] = choice(list_artifact_graphic_elements)
+                if artifact_chest.path == None:
+                    artifact = choice(list_artifact_graphic_elements)
+                    artifact_chest.path = artifact.path
+                    artifact_chest.X = artifact.X
+                    artifact_chest.Y = artifact.Y
+                    artifact_chest.WIDTH = artifact.WIDTH
+                    artifact_chest.HEIGHT = artifact.HEIGHT
+                    dict_arguments['path_artifact_chest'] = artifact_chest.path
                     player_lvl1.flag_choice_artifact = True
-                    name_artifact = dict_arguments['artifact_chest'].path.split('/')[-1]
-                    name_artifact = name_artifact.split('.')[0]
-                dict_arguments['artifact_chest'].X = (settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*3)+settings['SCREEN_WIDTH']//19
-                dict_arguments['artifact_chest'].Y = (settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//19*3)+settings['SCREEN_WIDTH']//19
-                dict_arguments['artifact_chest'].show_image(win)
+                    
+                artifact_chest.image_load()
+                name_artifact = artifact_chest.path.split('/')[-1]
+                name_artifact = name_artifact.split('.')[0]
+                artifact_chest.X = (settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*3)+settings['SCREEN_WIDTH']//19
+                artifact_chest.Y = (settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//19*3)+settings['SCREEN_WIDTH']//19
+                artifact_chest.show_image(win)
                 amount_money.X = (settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*3)+settings['SCREEN_WIDTH']//19*3.5
                 amount_money.Y = (settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//19*3)+settings['SCREEN_WIDTH']//19
                 amount_money.show_image(win)
-                if check_mouse_cor(dict_arguments['artifact_chest'],mouse_cor):
-                    dict_arguments['artifact_chest'].WIDTH = settings['SCREEN_WIDTH']//19*1.9
-                    dict_arguments['artifact_chest'].HEIGHT = settings['SCREEN_WIDTH']//19*1.9
+                if check_mouse_cor(artifact_chest,mouse_cor):
+                    artifact_chest.WIDTH = settings['SCREEN_WIDTH']//19*1.9
+                    artifact_chest.HEIGHT = settings['SCREEN_WIDTH']//19*1.9
                     desc_artifact.path = 'images/artifacts/desc/desc_'+name_artifact+'.png'
                     desc_artifact.X = settings['SCREEN_WIDTH']//19
                     desc_artifact.Y = chest_open.Y
                     desc_artifact.image_load()
                     desc_artifact.show_image(win)
                 else:
-                    dict_arguments['artifact_chest'].WIDTH = settings['SCREEN_WIDTH']//19*1.5
-                    dict_arguments['artifact_chest'].HEIGHT = settings['SCREEN_WIDTH']//19*1.5
+                    artifact_chest.WIDTH = settings['SCREEN_WIDTH']//19*1.5
+                    artifact_chest.HEIGHT = settings['SCREEN_WIDTH']//19*1.5
                     desc_artifact.X = desc_artifact.start_x
                     desc_artifact.Y = desc_artifact.start_y
                     desc_artifact.path = None
-                dict_arguments['artifact_chest'].image_load()
+                
                 if check_mouse_cor(amount_money,mouse_cor):
                     amount_money.WIDTH = settings['SCREEN_WIDTH']//19*1.9
                     amount_money.HEIGHT = settings['SCREEN_WIDTH']//19*1.9
@@ -1594,42 +1607,47 @@ def run_main(dict_arguments):
                     amount_money.WIDTH = settings['SCREEN_WIDTH']//19*1.5
                     amount_money.HEIGHT = settings['SCREEN_WIDTH']//19*1.5
                 amount_money.image_load()
-            if player_lvl1.flag_fountain_exp and player_lvl1.fountain_exp_cor != None and dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] == 'E':
+            if player_lvl1.flag_fountain_exp and player_lvl1.fountain_exp_cor != None and dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] == 'E'  and dict_arguments['flag_show_new_day'] >= 100 :
                 dict_arguments['characteristic_dict']['exp']+=exp_fountain
                 player_lvl1.flag_fountain_exp = False
                 dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] = 'e'
                 dict_arguments['flag_show_fountain_exp'] = 0
-            elif player_lvl1.flag_fountain_mana and player_lvl1.fountain_mana_cor != None and  dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] == 'M':
+            elif player_lvl1.flag_fountain_mana and player_lvl1.fountain_mana_cor != None and  dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] == 'M' and dict_arguments['flag_show_new_day'] >= 100:
                 dict_arguments['characteristic_dict']['mana']+=mana_fountain*dict_arguments['characteristic_dict']['change_mana']
                 dict_arguments['flag_use_fountain_mana'] = False
                 player_lvl1.flag_fountain_mana = False
                 dict_arguments['flag_show_fountain_mana'] = 0
                 dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] = 'm'
-            if player_lvl1.flag_tavern  and player_lvl1.flag_draw_chest == False and player_lvl1.flag_tower==False and dict_arguments['flag_use_tavern']:
+            if player_lvl1.flag_tavern  and player_lvl1.flag_draw_chest == False and player_lvl1.flag_tower==False and dict_arguments['flag_use_tavern'] and dict_arguments['flag_show_new_day'] >= 100:
                 player_lvl1.flag_tavern = False
                 dict_arguments['flag_button_end'] = False
                 dict_arguments['flag_use_tavern'] = False
                 random = randint(0,2)
                 if random == 0:
-                    text_tavern.font_content =( '    Вы выиграли!; 20  золотых в карты. ;Приходите через неделю;').split(';')
+                    dict_arguments['text_tavern_font_content'] = ( '    Вы выиграли!; 20  золотых в карты. ;Приходите через неделю;').split(';')
+                    text_tavern.font_content =dict_arguments['text_tavern_font_content']
                     dict_arguments['resources_dict']['gold_bullion']+=20
                 if random == 1:
-                    text_tavern.font_content = ('; Вы ничего не получили. ; Приходите через неделю').split(';')
+                    dict_arguments['text_tavern_font_content'] = ('; Вы ничего не получили. ; Приходите через неделю').split(';')
+                    text_tavern.font_content = dict_arguments['text_tavern_font_content']
                 if random == 2:
                     if dict_arguments['resources_dict']['gold_bullion'] <20:
                         if dict_arguments['resources_dict']['gold_bullion'] == 1:
-                            text_tavern.font_content =( '    Вас ограбили!;    На 1 золотую;Приходите через неделю').split(';')
+                            dict_arguments['text_tavern_font_content'] = ( '    Вас ограбили!;    На 1 золотую;Приходите через неделю').split(';')
+                            text_tavern.font_content = dict_arguments['text_tavern_font_content']
                         else:
-                            text_tavern.font_content =( '    Вас ограбили!;    На '+str(dict_arguments['resources_dict']['gold_bullion'])+' золотых;Приходите через неделю').split(';')
+                            dict_arguments['text_tavern_font_content'] = ( '    Вас ограбили!;    На '+str(dict_arguments['resources_dict']['gold_bullion'])+' золотых;Приходите через неделю').split(';')
+                            text_tavern.font_content =dict_arguments['text_tavern_font_content']
                         dict_arguments['resources_dict']['gold_bullion'] = 0
                     else:
                         dict_arguments['resources_dict']['gold_bullion'] -=20
-                        text_tavern.font_content =( '    Вас ограбили!;    На 20 золотых;Приходите через неделю').split(';')
+                        dict_arguments['text_tavern_font_content'] = ( '    Вас ограбили!;    На 20 золотых;Приходите через неделю').split(';')
+                        text_tavern.font_content =dict_arguments['text_tavern_font_content']
                 dict_arguments['flag_show_tavern'] = 0
-            if player_lvl1.flag_tower:
+            if player_lvl1.flag_tower and dict_arguments['flag_show_new_day'] >= 100:
                 player_lvl1.blind_move(index=6,flag_player=[player_lvl1.tower_cor[1],player_lvl1.tower_cor[0],False])
                 player_lvl1.flag_tower = False
-            if player_lvl1.flag_shack and player_lvl1.shack_cor != None and dict_arguments['mat_objetcs_lvl1'][player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] == 'S':
+            if player_lvl1.flag_shack and player_lvl1.shack_cor != None and dict_arguments['mat_objetcs_lvl1'][player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] == 'S' and dict_arguments['flag_show_new_day'] >= 100:
                 dict_arguments['characteristic_dict']['mana']+=mana_shack*dict_arguments['characteristic_dict']['change_mana']
                 dict_arguments['mat_objetcs_lvl1'][player_lvl1.shack_cor[0]][player_lvl1.shack_cor[1]] = 's'
                 player_lvl1.flag_shack = False
@@ -1839,6 +1857,11 @@ def run_main(dict_arguments):
             dict_arguments['flag_show_error'] += 1
         if dict_arguments['flag_show_tavern'] < 30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            index_font = 0
+            for i in dict_arguments['text_tavern_font_content']:
+                index_font +=1
+            text_tavern.index = index_font
+            text_tavern.font_content = dict_arguments['text_tavern_font_content']
             text_tavern.show_text(win)
             dict_arguments['flag_show_tavern'] += 1
         if dict_arguments['flag_show_error_next_week'] <30:

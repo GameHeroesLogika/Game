@@ -62,7 +62,7 @@ card_pressed = None
 index_card = None
 artifact_pressed = None
 #Игровой цикл
-artifact_chest = None
+path_artifact_chest = None
 time = pygame.time.Clock()
 list_cor_player_xy = [0,0]
 list_cor_castle_xy = [0,0]
@@ -250,7 +250,7 @@ mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c
                     list('kkkА000b0000лл11000000000nn11гг'),#A,a-academia
                     list('kkk0000000001л1Hh0000P000000вг1'),#J,j-taverna
                     list('0p00А0000000Mл1hh0000000000вв11'),#S-Хижина
-                    list('000000000000л11000000000W0вв00S'),#B-Храм
+                    list('00C000000000л11000000000W0вв00S'),#B-Храм
                     list('00000W000000л10000000000ввв0000'),#\ / | л
                     list('00000000000л1100000E000вв000000'),#
                     list('00000000000110000000000в0000000'),#
@@ -436,7 +436,7 @@ dict_arguments = {
     'card_pressed':card_pressed,
     'index_card':index_card,
     'artifact_pressed':artifact_pressed,
-    'artifact_chest':artifact_chest,
+    'path_artifact_chest':path_artifact_chest,
     'list_cor_player_xy':list_cor_player_xy,
     'LENGTH_MAP_LVL1':LENGTH_MAP_LVL1,
     'W_CELL_MINI_MAP':W_CELL_MINI_MAP,
@@ -524,10 +524,13 @@ dict_arguments = {
     'list_capture_buildings_symbol':list(),
     'list_choice_slots_market':list_choice_slots_market,
     'list_matrix_artifact':list_matrix_artifact,
-    'dict_count_resource':dict_count_resource
+    'dict_count_resource':dict_count_resource,
+    'gold_count_enemy':0,
+    'name_card':None,
+    'text_tavern_font_content':None,
 }
+
 new_game_dict = dict_arguments.copy()
-print(new_game_dict)
 if os.path.exists('saves/config1.json'):
     with open('saves/config1.json','r') as file:
         dict_arguments = json.load(file)

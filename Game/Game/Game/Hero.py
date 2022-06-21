@@ -421,7 +421,7 @@ class Main_Hero(Graphic_elements):
             if self.near_fountain_exp:
                 self.show_tip(' [E] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                 if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.fountain_exp_sound()
+                    self.fountain_exp_sound.play_sound()
                     self.flag_fountain_exp = True
                     self.flag_pressed = True
             if self.near_fountain_mana :
@@ -651,6 +651,7 @@ class Main_Hero(Graphic_elements):
             if not list_cor in self.list_studied_map: 
                 self.list_studied_map.append(list_cor)
         dict_arguments['list_studied_map'] = self.list_studied_map
+
         self.index_cor = [index_x,index_y] 
     def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None,index=1):
         building_cor = None
@@ -695,19 +696,19 @@ class Main_Hero(Graphic_elements):
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]-index,self.player_cor[1]]
 
-        elif not self.flag_up and not self.flag_right and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0] + index][self.player_cor[1] + index] == sub_element):
+        elif not self.flag_down and not self.flag_right and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0] + index][self.player_cor[1] + index] == sub_element):
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]+index,self.player_cor[1] + index]
-        elif not self.flag_up and not self.flag_left and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0] + index][self.player_cor[1] - index] == sub_element):
+        elif not self.flag_up and not self.flag_left and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0] - index][self.player_cor[1] - index] == sub_element):
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]+index,self.player_cor[1] - index]
-        elif not self.flag_down and not self.flag_right and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0] - index][self.player_cor[1] + index] == sub_element):
+        elif not self.flag_up and not self.flag_right and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1] + index] == element or mat_objetcs[self.player_cor[0] - index][self.player_cor[1] + index] == sub_element):
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]-index,self.player_cor[1] + index]
-        elif not self.flag_down and not self.flag_left and (mat_objetcs[self.player_cor[0] - index][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0] - index][self.player_cor[1] - index] == sub_element):
+        elif not self.flag_down and not self.flag_left and (mat_objetcs[self.player_cor[0] + index][self.player_cor[1] - index] == element or mat_objetcs[self.player_cor[0] + index][self.player_cor[1] - index] == sub_element):
             flag_near_building = True
             if flag_building_cor == True:
                 building_cor = [self.player_cor[0]-index,self.player_cor[1] - index]
