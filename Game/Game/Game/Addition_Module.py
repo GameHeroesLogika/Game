@@ -2,7 +2,7 @@
 import pygame
 from graphic_elements import Graphic_elements
 from random import randint,choice
-
+import json
 
 
 
@@ -776,5 +776,21 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
         list_learn_skills.remove('skill_earth_blessing_learn')
         
     
-
+def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero):
+    for key in list_all_artifact:
+        if key.NAME !=None:
+            key_dict = key.NAME
+            dict_arguments['dict_path_artifact'][key_dict] = key.path
+        if key.NAME == None:
+            key_dict = list_all_artifact.index(key)-4
+            dict_arguments['dict_path_artifact']['reserv'+str(key_dict)] = key.path
+    for key in list_slots_skills_hero:
+        key_dict = key.path.split('/')[-1].split('_learn')[0]
+        dict_arguments['dict_path_skills'][key_dict] = key.path
+    dict_arguments['characteristic_dict']['count_step'] = player_lvl1.count_step
+    dict_arguments['list_capture_buildings'] = player_lvl1.list_capture_buildings
+    dict_arguments['list_capture_buildings_symbol'] = player_lvl1.list_capture_buildings_symbol
+    with open('saves/config1.json','w') as file:
+        json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
+    dict_arguments['game'] = False
 

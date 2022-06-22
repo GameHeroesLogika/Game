@@ -12,6 +12,7 @@ class Main_Hero(Graphic_elements):
     def __init__(self,x,y,width,height,path,SCREEN_W,SCREEN_H,where_move,count_move, win,count_step):
         super().__init__(x,y,width,height,path)
         self.flag_pressed = True
+        self.flag_pressed_escape = True
         self.flag_move = True
         self.list_studied_map = dict_arguments['list_studied_map']# Список изученых клеток
 
@@ -321,212 +322,222 @@ class Main_Hero(Graphic_elements):
                         self.where_move = 'down'
                         self.count_step -= 1
                         choice(self.move_sound).play_sound()
-            elif keys[pygame.K_ESCAPE]:
-                dict_arguments['scene'] = 'menu'
-          
-            list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
-            list_symbol_cards = ['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П']
-            if self.player_cor[1] == LENGTH_MAP - 1:
-                self.flag_right = True
-            else:
-                self.flag_right = False
-            if self.player_cor[0] == LENGTH_MAP - 1:
-                self.flag_down = True
-            else:
-                self.flag_down = False
-            if self.player_cor[0] == 0:
-                self.flag_up = True
-            else:
-                self.flag_up = False
-            if self.player_cor[1] == 0:
-                self.flag_left = True
-            else:
-                self.flag_left = False
-        #Здания
-            # if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and self.player_cor[0] != 0 and self.player_cor[1] != 0: 
-            if not self.flag_right and mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbols_biuldings:
-                self.near_building = True
-                self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
-            elif not self.flag_left and mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbols_biuldings:
-                self.near_building = True
-                self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
-            elif not self.flag_down and mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbols_biuldings:
-                self.near_building = True
-                self.building_cor = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
-            elif not self.flag_up and mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbols_biuldings:
-                self.near_building = True
-                self.building_cor = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
-            else:
-                self.near_building = False
-                self.building_cor = None
-
-            if not self.flag_right and mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbol_cards:
-                self.near_card = True
-                self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
-                self.card_cor = [self.player_cor[0],self.player_cor[1] + 1]
-            elif not self.flag_left and mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbol_cards:
-                self.near_card = True
-                self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
-                self.card_cor = [self.player_cor[0],self.player_cor[1] - 1]
-            elif not self.flag_down and mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbol_cards:
-                self.near_card = True
-                self.card_name = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
-                self.card_cor = [self.player_cor[0] + 1,self.player_cor[1]]
-            elif not self.flag_up and mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbol_cards:
-                self.near_card = True
-                self.card_name = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
-                self.card_cor = [self.player_cor[0] - 1,self.player_cor[1]]
-            else:
-                self.near_card = False
-                self.card_name = None
-            #Сундук
-            self.near_chest,self.chest_cor = self.check_near_build(element='C',mat_objetcs=mat_objetcs,flag_building_cor=True)
-            #Башня
-            self.near_tower,self.tower_cor = self.check_near_build(element='W',mat_objetcs=mat_objetcs,flag_building_cor=True)
-            #Таверна
-            self.near_tavern = self.check_near_build(element='J',sub_element='j',mat_objetcs=mat_objetcs,flag_building_cor=False)
-            #Рынок
-            self.near_market = self.check_near_build(element='O',sub_element='o',mat_objetcs=mat_objetcs,flag_building_cor=False)
-            #Академия
-            self.near_academy = self.check_near_build(element='A',sub_element='a',mat_objetcs=mat_objetcs,flag_building_cor=False)
-            #Город
-            self.near_city = self.check_near_build(element='K',sub_element='k',mat_objetcs=mat_objetcs,flag_building_cor=False)
-            #Башня колдуна
-            self.near_shack,self.shack_cor = self.check_near_build(element='S',sub_element='s',mat_objetcs=mat_objetcs,flag_building_cor=True)
-            #Фонтаны
-            self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
-            self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
-            self.near_water1 = self.check_near_build_sound(element='в',mat_objetcs=mat_objetcs,index=1)
-            if self.near_water1:
-                if not pygame.mixer.music.get_busy():
-                    self.water_sound.load_music()
-                    pygame.mixer.music.play(-1)
-            if not self.near_tavern and not self.near_water1:
-                if pygame.mixer.music.get_busy():
-                    pygame.mixer.music.unload()
-            if self.near_card:
-                for obj in list_card_matrix:
-                    if obj.NAME == self.card_name:
-                        self.show_tip( '[F] Поговорить с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
-                        if keys[pygame.K_f]:
-                            self.flag_card = obj.path.split('/')[-1].split('.')[0]
-                            self.near_card = False
-            if self.near_chest:
-                self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
-                if keys[pygame.K_f]:
-                    self.chest_open_sound.play_sound()
-                    self.near_chest = False
-                    self.flag_draw_chest = True
-                    self.flag_move = False
-            if self.near_fountain_exp:
-                self.show_tip(' [E] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.fountain_exp_sound.play_sound()
-                    self.flag_fountain_exp = True
-                    self.flag_pressed = True
-            if self.near_fountain_mana :
-                self.show_tip(' [E] Колодец маны',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.fountain_mana_sound.play_sound()
-                    self.flag_fountain_mana = True
-                    self.flag_pressed = True
-            if self.near_tower:
-                self.show_tip(' [E] Поставить дозорного',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5,font_size=settings['SCREEN_WIDTH']//80)
-                if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.tower_sound.play_sound()
-                    self.flag_tower = True
-                    self.flag_pressed = True
-            if self.near_academy:
-                self.show_tip(' [E] Академия',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.academy_sound.play_sound()
-                    self.flag_academy = True
-                    self.flag_pressed = True
-            if self.near_shack :
-                self.show_tip(' [E] Хижина Колдуна',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.shack_sound.play_sound()
-                    self.flag_shack = True
-                    self.flag_pressed = True
-            if self.near_tavern:
-                if not pygame.mixer.music.get_busy():
-                    self.tavern_music.load_music()
-                    pygame.mixer.music.play(-1)
-                self.show_tip(' [E] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                if keys[pygame.K_e] and self.flag_pressed == False:
-                    self.flag_tavern = True
-                    self.flag_pressed = True
             
-            if self.near_market:
-                # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
-                self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
-                if keys[pygame.K_f]:
-                    self.market_sound.play_sound()
-                    self.near_market = False
-                    self.flag_market = True
-            if self.near_city:
-                self.show_tip( '[F] Зайти в город', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
-                if keys[pygame.K_f]:
-                    self.city_sound.play_sound()
-                    self.flag_city = True
-                    self.near_city = False
+            elif keys[pygame.K_ESCAPE] and dict_arguments['flag_pause'] and self.flag_pressed_escape == False:
+                dict_arguments['flag_pause'] = False
+                self.flag_move = True
+                self.flag_pressed_escape = True
+            elif keys[pygame.K_ESCAPE] and not dict_arguments['flag_pause'] and self.flag_pressed_escape == False:
+                dict_arguments['flag_pause'] = True
+                self.flag_pressed_escape = True
+            print(self.flag_pressed_escape)
+            if self.flag_move:
+                list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
+                list_symbol_cards = ['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П']
+                if self.player_cor[1] == LENGTH_MAP - 1:
+                    self.flag_right = True
+                else:
+                    self.flag_right = False
+                if self.player_cor[0] == LENGTH_MAP - 1:
+                    self.flag_down = True
+                else:
+                    self.flag_down = False
+                if self.player_cor[0] == 0:
+                    self.flag_up = True
+                else:
+                    self.flag_up = False
+                if self.player_cor[1] == 0:
+                    self.flag_left = True
+                else:
+                    self.flag_left = False
+            #Здания
+                # if self.player_cor[1] != LENGTH_MAP - 1 and self.player_cor[0] != LENGTH_MAP - 1 and self.player_cor[0] != 0 and self.player_cor[1] != 0: 
+                if not self.flag_right and mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbols_biuldings:
+                    self.near_building = True
+                    self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                elif not self.flag_left and mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbols_biuldings:
+                    self.near_building = True
+                    self.building_cor = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                elif not self.flag_down and mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbols_biuldings:
+                    self.near_building = True
+                    self.building_cor = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                elif not self.flag_up and mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbols_biuldings:
+                    self.near_building = True
+                    self.building_cor = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                else:
+                    self.near_building = False
+                    self.building_cor = None
+
+                if not self.flag_right and mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
+                    self.card_cor = [self.player_cor[0],self.player_cor[1] + 1]
+                elif not self.flag_left and mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
+                    self.card_cor = [self.player_cor[0],self.player_cor[1] - 1]
+                elif not self.flag_down and mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_name = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
+                    self.card_cor = [self.player_cor[0] + 1,self.player_cor[1]]
+                elif not self.flag_up and mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbol_cards:
+                    self.near_card = True
+                    self.card_name = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
+                    self.card_cor = [self.player_cor[0] - 1,self.player_cor[1]]
+                else:
+                    self.near_card = False
+                    self.card_name = None
+                #Сундук
+                self.near_chest,self.chest_cor = self.check_near_build(element='C',mat_objetcs=mat_objetcs,flag_building_cor=True)
+                #Башня
+                self.near_tower,self.tower_cor = self.check_near_build(element='W',mat_objetcs=mat_objetcs,flag_building_cor=True)
+                #Таверна
+                self.near_tavern = self.check_near_build(element='J',sub_element='j',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                #Рынок
+                self.near_market = self.check_near_build(element='O',sub_element='o',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                #Академия
+                self.near_academy = self.check_near_build(element='A',sub_element='a',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                #Город
+                self.near_city = self.check_near_build(element='K',sub_element='k',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                #Башня колдуна
+                self.near_shack,self.shack_cor = self.check_near_build(element='S',sub_element='s',mat_objetcs=mat_objetcs,flag_building_cor=True)
+                #Фонтаны
+                self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
+                self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
+                self.near_water1 = self.check_near_build_sound(element='в',mat_objetcs=mat_objetcs,index=1)
+                if self.near_water1:
+                    if not pygame.mixer.music.get_busy():
+                        self.water_sound.load_music()
+                        pygame.mixer.music.play(-1)
+                if not self.near_tavern and not self.near_water1:
+                    if pygame.mixer.music.get_busy():
+                        pygame.mixer.music.unload()
+                if self.near_card:
+                    for obj in list_card_matrix:
+                        if obj.NAME == self.card_name:
+                            self.show_tip( '[F] Поговорить с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
+                            if keys[pygame.K_f]:
+                                self.flag_card = obj.path.split('/')[-1].split('.')[0]
+                                self.near_card = False
+                if self.near_chest:
+                    self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                    if keys[pygame.K_f]:
+                        self.chest_open_sound.play_sound()
+                        self.near_chest = False
+                        self.flag_draw_chest = True
+                        self.flag_move = False
+                if self.near_fountain_exp:
+                    self.show_tip(' [E] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_e] and self.flag_pressed == False:
+                        self.fountain_exp_sound.play_sound()
+                        self.flag_fountain_exp = True
+                        self.flag_pressed = True
+                if self.near_fountain_mana :
+                    self.show_tip(' [E] Колодец маны',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_e] and self.flag_pressed == False:
+                        self.fountain_mana_sound.play_sound()
+                        self.flag_fountain_mana = True
+                        self.flag_pressed = True
+                if self.near_tower:
+                    self.show_tip(' [E] Поставить дозорного',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5,font_size=settings['SCREEN_WIDTH']//80)
+                    if keys[pygame.K_e] and self.flag_pressed == False:
+                        self.tower_sound.play_sound()
+                        self.flag_tower = True
+                        self.flag_pressed = True
+                if self.near_academy:
+                    self.show_tip(' [E] Академия',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_e] and self.flag_pressed == False:
+                        self.academy_sound.play_sound()
+                        self.flag_academy = True
+                        self.flag_pressed = True
+                if self.near_shack :
+                    self.show_tip(' [E] Хижина Колдуна',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_e] and self.flag_pressed == False:
+                        self.shack_sound.play_sound()
+                        self.flag_shack = True
+                        self.flag_pressed = True
+                if self.near_tavern:
+                    if not pygame.mixer.music.get_busy():
+                        self.tavern_music.load_music()
+                        pygame.mixer.music.play(-1)
+                    self.show_tip(' [E] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_e] and self.flag_pressed == False:
+                        self.flag_tavern = True
+                        self.flag_pressed = True
+                
+                if self.near_market:
+                    # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                    self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                    if keys[pygame.K_f]:
+                        self.market_sound.play_sound()
+                        self.near_market = False
+                        self.flag_market = True
+                if self.near_city:
+                    self.show_tip( '[F] Зайти в город', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                    if keys[pygame.K_f]:
+                        self.city_sound.play_sound()
+                        self.flag_city = True
+                        self.near_city = False
+                
+                
+                #Если рядом со здание и нажимаем кнопку E - захватываем здание
+                if self.near_building:
+                    self.show_tip( '[E] Захватить здание', self.SCREEN_W-self.SCREEN_W//6.4, 0)
+                    if  keys[pygame.K_e] and self.building_cor!=None:
+                        self.build_sound.play_sound()
+                        if self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]]:
+                            if (self.player_cor[0]+1,self.player_cor[1]) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+1]:
+                            if (self.player_cor[0],self.player_cor[1]+1) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]+1))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]]:
+                            if (self.player_cor[0]-2,self.player_cor[1]) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]-2,self.player_cor[1]))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+2][self.player_cor[1]]:
+                            if (self.player_cor[0]+2,self.player_cor[1]) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]+2,self.player_cor[1]))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+2]:
+                            if (self.player_cor[0],self.player_cor[1]+2) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]+2))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]-2]:
+                            if (self.player_cor[0],self.player_cor[1]-2) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]-2))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-1]:
+                            if (self.player_cor[0]-1,self.player_cor[1]-1) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-1))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]+1]:
+                            if (self.player_cor[0]+1,self.player_cor[1]+1) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]+1))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]+1]:
+                            if (self.player_cor[0]-1,self.player_cor[1]+1) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]+1))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]-1]:
+                            if (self.player_cor[0]+1,self.player_cor[1]-1) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]-1))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]-1]:
+                            if (self.player_cor[0]-2,self.player_cor[1]-1) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]-2,self.player_cor[1]-1))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
+                        elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-2]:
+                            if (self.player_cor[0]-1,self.player_cor[1]-2) not in  self.list_capture_buildings:
+                                self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-2))
+                                self.list_capture_buildings_symbol.append(self.building_cor.upper())
             if not keys[pygame.K_e] and self.flag_pressed:
                 self.flag_pressed = False
-            #Если рядом со здание и нажимаем кнопку E - захватываем здание
-            if self.near_building:
-                self.show_tip( '[E] Захватить здание', self.SCREEN_W-self.SCREEN_W//6.4, 0)
-                if  keys[pygame.K_e] and self.building_cor!=None:
-                    self.build_sound.play_sound()
-                    if self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]]:
-                        if (self.player_cor[0]+1,self.player_cor[1]) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+1]:
-                        if (self.player_cor[0],self.player_cor[1]+1) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]+1))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]]:
-                        if (self.player_cor[0]-2,self.player_cor[1]) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]-2,self.player_cor[1]))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+2][self.player_cor[1]]:
-                        if (self.player_cor[0]+2,self.player_cor[1]) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]+2,self.player_cor[1]))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]+2]:
-                        if (self.player_cor[0],self.player_cor[1]+2) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]+2))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]][self.player_cor[1]-2]:
-                        if (self.player_cor[0],self.player_cor[1]-2) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0],self.player_cor[1]-2))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-1]:
-                        if (self.player_cor[0]-1,self.player_cor[1]-1) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-1))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]+1]:
-                        if (self.player_cor[0]+1,self.player_cor[1]+1) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]+1))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]+1]:
-                        if (self.player_cor[0]-1,self.player_cor[1]+1) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]+1))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]+1][self.player_cor[1]-1]:
-                        if (self.player_cor[0]+1,self.player_cor[1]-1) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]+1,self.player_cor[1]-1))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-2][self.player_cor[1]-1]:
-                        if (self.player_cor[0]-2,self.player_cor[1]-1) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]-2,self.player_cor[1]-1))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-                    elif self.building_cor.upper() == mat_objetcs[self.player_cor[0]-1][self.player_cor[1]-2]:
-                        if (self.player_cor[0]-1,self.player_cor[1]-2) not in  self.list_capture_buildings:
-                            self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-2))
-                            self.list_capture_buildings_symbol.append(self.building_cor.upper())
-            
+            if not keys[pygame.K_ESCAPE] and self.flag_pressed_escape:
+                self.flag_pressed_escape = False    
 
     #Функция для сбора ресрусов
     def take_resource(self,index_x,index_y,name_resource,resource_symb,mat_objetcs,min_count,max_count,resources_dict,recourse_sounds):

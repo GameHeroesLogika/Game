@@ -187,6 +187,8 @@ daily_event = None
 flag_mouse_volume_sound = False
 flag_mouse_volume_music = False
 index_fog = 0
+flag_show_error_choose_icon = 30
+flag_pause = False
 dict_path_artifact = {
                         'helmet':'images/artifacts/helmet_hero.png',
                         'chest':'images/artifacts/chest_ice.png',
@@ -241,8 +243,8 @@ list_cells_lvl1 = [
                    list('tt0000ckddddl000tttttt000000000'),
                    list('bbbf0ckddghhj00tt00000000000000'),
                    list('odtnfaddgj00000t000000000000000'),
-                   list('ddddoodgj000000t000000000000000'), 
-                   list('dddddddl0000000t000000000000000'), 
+                   list('ddddoodgj000000t000000000000000'),
+                   list('dddddddl0000000t000000000000000'),
                    list('dddohhhj000000tt000000000000000')]
 
 #Список-матрица объектов(персонаж, здания, ресурсы)
@@ -528,6 +530,8 @@ dict_arguments = {
     'gold_count_enemy':0,
     'name_card':None,
     'text_tavern_font_content':None,
+    'flag_show_error_choose_icon':flag_show_error_choose_icon,
+    'flag_pause':flag_pause,
 }
 
 new_game_dict = dict_arguments.copy()

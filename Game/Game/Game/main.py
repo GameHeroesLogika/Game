@@ -36,24 +36,19 @@ def run_main(dict_arguments):
         for event in pygame.event.get():
             #Услове выхода из игры
             mouse_cor = pygame.mouse.get_pos() 
+            if dict_arguments['flag_pause']:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if check_mouse_cor_font(button_quit,mouse_cor):
+                        dict_arguments['game'] = False
+                        save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
+                    if check_mouse_cor_font(button_menu,mouse_cor):
+                        dict_arguments['scene'] = 'menu'
+                        dict_arguments['flag_pause'] = False
+                    if check_mouse_cor_font(button_continue,mouse_cor):
+                        dict_arguments['flag_pause'] = False
             if event.type == pygame.QUIT:
                 
-                for key in list_all_artifact:
-                    if key.NAME !=None:
-                        key_dict = key.NAME
-                        dict_arguments['dict_path_artifact'][key_dict] = key.path
-                    if key.NAME == None:
-                        key_dict = list_all_artifact.index(key)-4
-                        dict_arguments['dict_path_artifact']['reserv'+str(key_dict)] = key.path
-                for key in list_slots_skills_hero:
-                    key_dict = key.path.split('/')[-1].split('_learn')[0]
-                    dict_arguments['dict_path_skills'][key_dict] = key.path
-                dict_arguments['characteristic_dict']['count_step'] = player_lvl1.count_step
-                dict_arguments['list_capture_buildings'] = player_lvl1.list_capture_buildings
-                dict_arguments['list_capture_buildings_symbol'] = player_lvl1.list_capture_buildings_symbol
-                with open('saves/config1.json','w') as file:
-                    json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
-                dict_arguments['game'] = False
+                save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
             if dict_arguments['scene'] == 'result_screen':
                 # Если навелись на кнопку окончания боя
                 if event.type == pygame.MOUSEMOTION:
@@ -228,7 +223,7 @@ def run_main(dict_arguments):
                 if check_mouse_cor(button_build,mouse_cor):
                     button_build.path = 'images/button_build_w.png'
                     button_build.image_load()
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                         click_sound.play_sound()
                         if castle_selected.NAME != 'name' and castle_selected.NAME != None and  dict_arguments['dict_bought_city'][castle_selected.NAME.NAME] == False:
                             name_resource = dict_price_city[castle_selected.NAME.NAME]
@@ -257,7 +252,7 @@ def run_main(dict_arguments):
                 if check_mouse_cor(button_castle_back,mouse_cor):
                     button_castle_back.path = 'images/menu_hero_back_b.png'
                     button_castle_back.image_load()
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                         dict_arguments['scene'] = 'city'
                 else:
                     button_castle_back.path = 'images/menu_hero_back_y.png'
@@ -283,7 +278,7 @@ def run_main(dict_arguments):
                         desc_buildings_city.path = None
                     
                     
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                     for obj in list_buildings_castle:
                         not_locked = (list_buildings_castle[0] == list_buildings_castle[list_buildings_castle.index(obj)] or not 'locked' in list_buildings_castle[list_buildings_castle.index(obj)-1].path)
                         locked = ( not (list_buildings_castle[0] == list_buildings_castle[list_buildings_castle.index(obj)]) and 'locked' in list_buildings_castle[list_buildings_castle.index(obj)-1].path)
@@ -298,7 +293,7 @@ def run_main(dict_arguments):
                             dict_arguments['flag_buy_previous_build'] = 0
                         
             if dict_arguments['scene'] == 'altar':
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                     if check_mouse_cor(button_altar_back,mouse_cor):
                         dict_arguments['scene'] = 'city'
                         altar_selected.NAME = None
@@ -358,7 +353,7 @@ def run_main(dict_arguments):
                         list_card_camp[i].path = list_card_camp[i].path.split('_locked')[0]+'.png'
                         list_card_camp[i].image_load()
                     
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                     click_sound.play_sound()
                     for obj in list_card_camp:
                         if check_mouse_cor(obj,mouse_cor) and not 'locked' in obj.path :
@@ -428,7 +423,6 @@ def run_main(dict_arguments):
                         
                                 
             
-                
             if dict_arguments['scene'] == 'market':
             # if dict_arguments['scene'] == 'sandwich':
                 background_market.show_image(win)
@@ -437,14 +431,14 @@ def run_main(dict_arguments):
                 if check_mouse_cor(button_market_back,mouse_cor):
                     button_market_back.path = 'images/menu_hero_back_y.png'
                     button_market_back.image_load()
-                    if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.type == pygame.MOUSEBUTTONDOWN and not dict_arguments['flag_pause']:
                         click_sound.play_sound()
                         dict_arguments['scene'] = 'lvl1'
                         player_lvl1.flag_market = False
                 else:
                     button_market_back.path = 'images/menu_hero_back_b.png'
                     button_market_back.image_load()
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                     click_sound.play_sound()
                     if check_mouse_cor(button_market_back,mouse_cor): 
                         dict_arguments['scene'] = 'lvl1'
@@ -700,6 +694,35 @@ def run_main(dict_arguments):
                 for obj in list_cards_post_army:
                     if obj.path != None:
                         obj.show_image(win)
+            if dict_arguments['scene'] == 'choose_civ_scene':
+                scene_choose_civ.show_image(win)
+                text_choose_civ.show_text(win)
+                
+                if civ_selected.NAME != 'name' and civ_selected.NAME != None:
+                    civ_selected.show_image(win)
+                for obj in list_icon_civ:
+                    obj.show_image(win)
+                for obj in list_text_civ:
+                    obj.show_text(win)
+                button_civ_choose.show_text(win)
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
+                    for obj in list_icon_civ:
+                        if check_mouse_cor(obj,mouse_cor):
+                            civ_selected.HEIGHT = obj.HEIGHT+settings['SCREEN_WIDTH']//53.3
+                            civ_selected.WIDTH = obj.WIDTH+settings['SCREEN_WIDTH']//53.3
+                            civ_selected.X = obj.X-settings['SCREEN_WIDTH']//106.6
+                            civ_selected.Y = obj.Y-settings['SCREEN_WIDTH']//106.6
+                            civ_selected.NAME = obj
+                            civ_selected.image_load()
+                            break
+                    if check_mouse_cor_font(button_civ_choose,mouse_cor):
+                        if civ_selected.NAME != 'name' and civ_selected.NAME != None:
+                            dict_arguments['scene'] = 'lvl1'
+                            print(civ_selected.NAME.path.split('/')[-1].split('_')[0])
+                        else:
+                            dict_arguments['flag_show_error_choose_icon'] = 0
+                            
+
 
             #Условие Меню Героя
             if dict_arguments['scene'] == 'menu_hero':
@@ -709,7 +732,7 @@ def run_main(dict_arguments):
                 if check_mouse_cor(button_menu_hero_back,mouse_cor):
                     button_menu_hero_back.path = 'images/menu_hero_back_b.png'
                     button_menu_hero_back.image_load()
-                    if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.type == pygame.MOUSEBUTTONDOWN and not dict_arguments['flag_pause']:
                         click_sound.play_sound()
                         dict_arguments['scene'] = 'lvl1'
                 else:
@@ -728,7 +751,7 @@ def run_main(dict_arguments):
                         dict_arguments['artifact_pressed'].Y = pos[1] - dict_arguments['artifact_pressed'].HEIGHT//2
                         dict_arguments['index_card'] = list_all_artifact.index(dict_arguments['artifact_pressed'])
 
-                if event.type == pygame.MOUSEBUTTONUP:
+                if event.type == pygame.MOUSEBUTTONUP and not dict_arguments['flag_pause']:
                     if dict_arguments['card_pressed'] != None:
                         for sprite in list_cards_menu_hero:
                             if check_mouse_cor(sprite,mouse_cor=mouse_cor) and dict_arguments['index_card'] != list_cards_menu_hero.index(sprite):
@@ -825,7 +848,7 @@ def run_main(dict_arguments):
                     obj.show_image(win)
                 
                 for obj in list_slots_skills_hero:
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                         if check_mouse_cor(obj,mouse_cor=mouse_cor):
                             click_sound.play_sound()
                             path_skill = obj.path.split('/')[-1]
@@ -856,7 +879,7 @@ def run_main(dict_arguments):
                                         obj.image_load()
                     obj.show_image(win)
                 for obj in list_cards_menu_hero:
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                         if check_mouse_cor(obj,mouse_cor=mouse_cor):
                             dict_arguments['card_pressed'] = obj
                     if obj != dict_arguments['card_pressed'] and obj.path != None:
@@ -865,7 +888,7 @@ def run_main(dict_arguments):
                         dict_arguments['card_pressed'].show_image(win)
                 #Условия взятия и отрисовки артефакта
                 for obj in list_all_artifact:
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                         if check_mouse_cor(obj,mouse_cor=mouse_cor) and obj.path != None:
                             dict_arguments['artifact_pressed'] = obj
                     if obj != dict_arguments['artifact_pressed'] and obj.path != None:
@@ -935,6 +958,7 @@ def run_main(dict_arguments):
                     elif check_mouse_cor(button_exit,mouse_cor):
                         sound_book.play_sound()
                         dict_arguments['game'] = False
+                        save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
                     elif check_mouse_cor(button_set,mouse_cor):
                         dict_arguments['scene'] = 'settings_scene'
                     elif check_mouse_cor(button_new_game,mouse_cor):
@@ -942,7 +966,7 @@ def run_main(dict_arguments):
                             os.remove('saves/config1.json')
                             dict_arguments['game'] = False
                         if not os.path.exists('saves/config1.json'):
-                            dict_arguments['scene'] = 'lvl1'
+                            dict_arguments['scene'] = 'choose_civ_scene'
                         
             if dict_arguments['scene'] == 'settings_scene':
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -1036,11 +1060,12 @@ def run_main(dict_arguments):
 
 
             if dict_arguments['scene'] == 'lvl1':
+                
                 text_date.font_content = ('День: '+str(dict_arguments['characteristic_dict']['day'])+';Неделя: '+str(dict_arguments['characteristic_dict']['week'])).split(';')
                 #Если нажата левая кнопка мыши
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     #Окно предложения сделки 
-                    if dict_arguments['flag_show_offer']:
+                    if dict_arguments['flag_show_offer'] and not dict_arguments['flag_pause']:
                         
                         if check_mouse_cor_font(text_offer_yes,mouse_cor):
                             
@@ -1169,14 +1194,14 @@ def run_main(dict_arguments):
                     
                     #Когда нажали на кнопку "К ГЕРОЮ" 
                     
-                    if check_mouse_cor(button_to_hero,mouse_cor):
+                    if check_mouse_cor(button_to_hero,mouse_cor) and not dict_arguments['flag_pause']:
                         #Перемещаемся к герою 
                         click_sound.play_sound()
                         move_to_hero(CENTER_CELL_COR,list_cor_player_xy,list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
-                    if check_mouse_cor(button_to_castle,mouse_cor):
+                    if check_mouse_cor(button_to_castle,mouse_cor) and not dict_arguments['flag_pause']:
                         click_sound.play_sound()
                         move_to_hero(CENTER_CELL_COR,list_cor_castle_xy,list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
-                    if check_mouse_cor(frame,mouse_cor):
+                    if check_mouse_cor(frame,mouse_cor) and not dict_arguments['flag_pause']:
                         click_sound.play_sound()
                         dict_arguments['scene'] = 'menu_hero'
                         create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],dict_arguments['list_cards_pl'],list_cards_menu_hero,dict_arguments['list_card_pl_reserv'])
@@ -1210,7 +1235,7 @@ def run_main(dict_arguments):
                         else:
                             obj.font_color = 'black'
                             obj.font_size = settings['SCREEN_WIDTH']//19
-                    
+                   
         # if dict_arguments['scene'] == 'sandwich':
         if dict_arguments['scene'] == 'settings_scene':
             book.show_image(win)
@@ -1855,6 +1880,10 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             chest_text_gold.show_text(win)
             dict_arguments['flag_show_error'] += 1
+        if dict_arguments['flag_show_error_choose_icon'] < 30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_error_choose_civ.show_text(win)
+            dict_arguments['flag_show_error_choose_icon'] += 1
         if dict_arguments['flag_show_tavern'] < 30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             index_font = 0
@@ -1974,7 +2003,7 @@ def run_main(dict_arguments):
                 dict_arguments['flag_offer'] = True
                 for obj in list_buttons_dialog:
                     obj.font_content = obj.start_content
-
+        
         dict_arguments['index_water'] +=1
         if dict_arguments['index_water'] % 10 == 0:
             water = choice(list_water)
@@ -1984,20 +2013,18 @@ def run_main(dict_arguments):
             index = 0
         if dict_arguments['minute_in_game'] % 30 == 0:
             if settings['AUTOSAVE']:
-                for key in list_all_artifact:
-                    if key.NAME !=None:
-                        key_dict = key.NAME
-                        dict_arguments['dict_path_artifact'][key_dict] = key.path
-                    if key.NAME == None:
-                        key_dict = list_all_artifact.index(key)-4
-                        dict_arguments['dict_path_artifact']['reserv'+str(key_dict)] = key.path
-                for key in list_slots_skills_hero:
-                    key_dict = key.path.split('/')[-1].split('_learn')[0]
-                    dict_arguments['dict_path_skills'][key_dict] = key.path
-                with open('saves/config1.json','w') as file:
-                    json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
+                save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
         index+=1
         #Обновляем экран
+        if dict_arguments['flag_pause']:
+            brightless_pause.show_image(win)
+            button_continue.show_text(win)
+            button_menu.show_text(win)
+            button_quit.show_text(win)
+            player_lvl1.flag_move = False
         pygame.display.flip()
+
+
+        
         
 run_main(dict_arguments)

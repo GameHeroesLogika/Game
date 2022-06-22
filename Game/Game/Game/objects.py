@@ -133,12 +133,27 @@ button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WI
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
 button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
 
+button_continue = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'white','Продолжить',settings['SCREEN_WIDTH']//2.5-settings['SCREEN_WIDTH']//19,settings['SCREEN_HEIGHT']//3-settings['SCREEN_WIDTH']//19)
+button_menu = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'white','Выйти в меню',settings['SCREEN_WIDTH']//2.5-settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_HEIGHT']//3+settings['SCREEN_WIDTH']//19)
+button_quit = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'white','Выйти из игры',settings['SCREEN_WIDTH']//2.5-settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_HEIGHT']//3+settings['SCREEN_WIDTH']//19*3)
+
 button_display_size = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Разрешение:',settings['SCREEN_WIDTH']//14.2,settings['SCREEN_HEIGHT']//8)
 list_buttons_display_size =[
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','800x600',button_display_size.font_x,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1280x720',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*2,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1920x1080',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*4,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
 ]
+text_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выберите расу',settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19)
+lava_icon = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_WIDTH']//19*3,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19*2,path='images/lava_icon.png')
+lava_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Огненная',settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*3.3+lava_icon.HEIGHT)
+ice_icon = Graphic_elements(x=settings['SCREEN_WIDTH']//19*4,y=settings['SCREEN_WIDTH']//19*3,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19*2,path='images/snow_icon.png')
+ice_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Ледяная',settings['SCREEN_WIDTH']//19*4,settings['SCREEN_WIDTH']//19*3.3+ice_icon.HEIGHT)
+earth_icon = Graphic_elements(x=settings['SCREEN_WIDTH']//19*7,y=settings['SCREEN_WIDTH']//19*3,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19*2,path='images/earth_icon.png')
+earth_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Земляная',settings['SCREEN_WIDTH']//19*7,settings['SCREEN_WIDTH']//19*3.3+earth_icon.HEIGHT)
+scene_choose_civ = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH'],height=settings['SCREEN_HEIGHT'],path='images/book.png')
+list_icon_civ = [lava_icon,earth_icon,ice_icon]
+list_text_civ = [lava_text,ice_text,earth_text]
+button_civ_choose = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выбрать',settings['SCREEN_WIDTH']//19*3.5,settings['SCREEN_HEIGHT']//2+settings['SCREEN_WIDTH']//19*2)
 for obj in list_buttons_display_size:
     width = settings_display['SCREEN_WIDTH']
     height = settings_display['SCREEN_HEIGHT']
@@ -258,7 +273,8 @@ text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//3
 text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',frame_notification.X+settings['SCREEN_WIDTH']//19,frame_notification.Y+settings['SCREEN_WIDTH']//19)
 #Текст для сохранения
 text_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','  Настройки сохранены.;  Перезайдите в игру!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19,index=2)
-
+#Текст для ошибки выбора расы
+text_error_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','Вы не выбрали расу!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*6.9)
 amount_iron = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//43,'white','0',settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.2//1,settings['SCREEN_WIDTH']//19*7.7)
@@ -279,17 +295,19 @@ player_info = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'wh
 list_interface_button = [button_to_hero,button_to_castle,button_end_move]
 menu_hero_icon_eliot = Graphic_elements(x=settings['SCREEN_WIDTH']//1.64,y=settings['SCREEN_HEIGHT']//2.08,width=settings['SCREEN_WIDTH']//8.25,height=settings['SCREEN_HEIGHT']//5.1,path='images/game_interface/elliot_img.png')
 
-
+#Описание чего то
 desc = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//2,settings['SCREEN_HEIGHT']//2,path=None)
 desc_artifact = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
 desc_base_skill = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
 desc_skill_hero = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_WIDTH']/3,path=None)
 desc_buildings_city = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//2,settings['SCREEN_HEIGHT']//2,path=None)
-
+#Рамка выбраного чего то
 market_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 camp_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 altar_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 castle_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
+civ_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
+
 #Cундук
 chest = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19,path='images/chest/chest.png')
 chest_open = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT']//2-settings['SCREEN_WIDTH']//19*3,settings['SCREEN_WIDTH']//19*6,settings['SCREEN_WIDTH']//19*6,path='images/chest/chest_open.png')
@@ -324,6 +342,10 @@ background_music = Sounds('sounds/background_music.wav',settings['MUSIC_VOLUME']
 background_music.play_sound(index=-1)
 #Фоновая музыка для карточного боя
 background_music_card_game = Sounds('sounds/game_music.wav',settings['MUSIC_VOLUME'])
+
+
+
+brightless_pause = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/brightless.png')
 
 
 
