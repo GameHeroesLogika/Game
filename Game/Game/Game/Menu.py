@@ -16,20 +16,21 @@ class Menu(Graphic_elements):
         self.Y_DIVIDER = y_divider
         self.path = path
     def resize_button_menu(self, mouse_cor,SCREEN_W,SCREEN_H):
-        if check_mouse_cor(self,mouse_cor):
-            self.path = self.IMAGE_BUTTON_Y
-            self.X = SCREEN_W//self.X_DIVIDER -1
-            self.Y = SCREEN_H//self.Y_DIVIDER -1
-            self.WIDTH = SCREEN_W//7
-            self.HEIGHT = SCREEN_H//8
-            self.image_load()
-        else:
-            self.path = self.IMAGE_BUTTON_B
-            self.X = SCREEN_W//self.X_DIVIDER
-            self.Y = SCREEN_H//self.Y_DIVIDER
-            self.WIDTH = SCREEN_W//8
-            self.HEIGHT = SCREEN_H//9
-            self.image_load()
+        if not 'gray'  in self.path:
+            if check_mouse_cor(self,mouse_cor):
+                self.path = self.IMAGE_BUTTON_Y
+                self.X = SCREEN_W//self.X_DIVIDER -1
+                self.Y = SCREEN_H//self.Y_DIVIDER -1
+                self.WIDTH = SCREEN_W//7
+                self.HEIGHT = SCREEN_H//8
+                self.image_load()
+            else:
+                self.path = self.IMAGE_BUTTON_B
+                self.X = SCREEN_W//self.X_DIVIDER
+                self.Y = SCREEN_H//self.Y_DIVIDER
+                self.WIDTH = SCREEN_W//8
+                self.HEIGHT = SCREEN_H//9
+                self.image_load()
 
 
     

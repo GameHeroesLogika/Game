@@ -86,7 +86,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 list_cor_player_xy,W_CELL_MINI_MAP ,H_CELL_MINI_MAP,X_FRAME_MM,Y_FRAME_MM,list_cells_MM,list_cor_portals,
                 LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,list_cor_castle_xy,
                 dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,fountain_mana_empty,fountain_exp_empty,
-                mountain,water,list_forest,win_rect):
+                mountain,water,list_forest,win_rect,castle_goblin,potion):
     list_xy = [0,0]
     list_object = [player_lvl1, gold, iron, crystal, wood, stone, tree_full,tree,ironmine, goldmine, farm, gemsmine,sawmill, stonebreaker,portal,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,fountain_mana_empty,fountain_exp_empty,
                 mountain,water]
@@ -154,6 +154,10 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         water.show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'water'))
                         flag_cell_MM = False
+                    elif obj == 'И':
+                        potion.X = list_objects_cells_lvl1[index_cells].X + SCREEN_W//19//3.5
+                        potion.Y = list_objects_cells_lvl1[index_cells].Y  + SCREEN_W//19//3
+                        potion.show_image(win)
                     elif obj == 'л':
                         list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
                         list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y
@@ -306,6 +310,20 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
                         list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP*2,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
                         list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP,Y_CELL_MM + H_CELL_MINI_MAP*2,'green_dark'))
+                        flag_cell_MM = False
+                    elif obj == 'З':
+                        castle_goblin.X = list_objects_cells_lvl1[index_cells].X
+                        castle_goblin.Y = list_objects_cells_lvl1[index_cells].Y 
+                        castle_goblin.show_image(win)
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'red'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM,'red'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM,'red'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP*2,Y_CELL_MM+H_CELL_MINI_MAP,'red'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'red'))
+                        list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'red'))
+                        list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP*2,'red'))
+                        list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP*2,Y_CELL_MM + H_CELL_MINI_MAP*2,'red'))
+                        list_cells_MM.append((X_CELL_MM+W_CELL_MINI_MAP,Y_CELL_MM + H_CELL_MINI_MAP*2,'red'))
                         flag_cell_MM = False
                     elif obj == 'O':
                         market.X = list_objects_cells_lvl1[index_cells].X
@@ -518,6 +536,8 @@ def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
                 list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand12.png'))
             if cell == 'n':
                 list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand13.png'))
+            if cell == 'б':
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19, SCREEN_W//19, 'images/MatrixImage/bridge.png'))
             
             #Увеличиваем х, двигаясь по ряду
             x += SCREEN_W//19

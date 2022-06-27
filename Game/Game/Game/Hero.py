@@ -51,6 +51,7 @@ class Main_Hero(Graphic_elements):
         self.near_fountain_exp = False
         self.near_fountain_mana = False
         self.near_card = False
+        self.near_castle_enemy = False  
 
         self.card_name = False
 
@@ -68,6 +69,7 @@ class Main_Hero(Graphic_elements):
         self.flag_right = False
         self.flag_left = False
 
+        self.flag_castle_enemy = False  
         self.flag_card = False
         self.flag_city = False
         self.flag_fountain_mana = False
@@ -84,13 +86,11 @@ class Main_Hero(Graphic_elements):
         self.build_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук захвата здания
         self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
         self.tavern_music = Music('sounds/tavern.mp3',settings['MUSIC_VOLUME'])
-        self.city_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.shack_sound = Sounds('sounds/tavern.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием
-        self.tower_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        self.academy_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.tower_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
+        self.academy_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.fountain_exp_sound = Sounds('sounds/fountain_exp.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.fountain_mana_sound = Sounds('sounds/fountain_mana.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        self.market_sound = Sounds('sounds/explosion.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.water_sound = Music('sounds/water.mp3',settings['MUSIC_VOLUME'])
         for i in range(4):# Заполнение списков изобржаний с движением 
             path = os.path.join(os.path.abspath(__file__+'/..'),'images/player/right/'+str(i)+'.png')
@@ -267,6 +267,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
                 
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P') and self.where_move == None:
                         self.where_move = 'right'
@@ -285,7 +286,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-                
+                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'P') and self.where_move == None:
                         self.where_move = 'left'
                         self.count_step -= 1
@@ -302,6 +303,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
                 
                     if (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == '0' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'P') and self.where_move == None:
                         self.where_move = 'up'
@@ -317,6 +319,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
+                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
 
                     if mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == '0'  and self.where_move == None:
                         self.where_move = 'down'
@@ -330,7 +333,6 @@ class Main_Hero(Graphic_elements):
             elif keys[pygame.K_ESCAPE] and not dict_arguments['flag_pause'] and self.flag_pressed_escape == False:
                 dict_arguments['flag_pause'] = True
                 self.flag_pressed_escape = True
-            print(self.flag_pressed_escape)
             if self.flag_move:
                 list_symbols_biuldings = ['F','f','D','d','N','n','R','r','H','h','X','x']
                 list_symbol_cards = ['А','Б','В','Г','Д','К','С','Л','О','Е','Р','М','Я','П']
@@ -402,6 +404,8 @@ class Main_Hero(Graphic_elements):
                 #Башня колдуна
                 self.near_shack,self.shack_cor = self.check_near_build(element='S',sub_element='s',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 #Фонтаны
+                self.near_castle_enemy = self.check_near_build(element='З',sub_element='з',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                #Фонтаны
                 self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 self.near_water1 = self.check_near_build_sound(element='в',mat_objetcs=mat_objetcs,index=1)
@@ -419,40 +423,45 @@ class Main_Hero(Graphic_elements):
                             if keys[pygame.K_f]:
                                 self.flag_card = obj.path.split('/')[-1].split('.')[0]
                                 self.near_card = False
-                if self.near_chest:
-                    self.show_tip( '[F] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                if self.near_castle_enemy:
+                    self.show_tip( '[F] Войти в замок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                     if keys[pygame.K_f]:
+                        self.flag_castle_enemy = True
+                        self.near_castle_enemy = False
+                if self.near_chest:
+                    self.show_tip( '[R] Открыть сундук', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_r]:
                         self.chest_open_sound.play_sound()
                         self.near_chest = False
                         self.flag_draw_chest = True
                         self.flag_move = False
                 if self.near_fountain_exp:
-                    self.show_tip(' [E] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                    if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.show_tip(' [R] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_r] and self.flag_pressed == False:
                         self.fountain_exp_sound.play_sound()
                         self.flag_fountain_exp = True
                         self.flag_pressed = True
                 if self.near_fountain_mana :
-                    self.show_tip(' [E] Колодец маны',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                    if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.show_tip(' [R] Колодец маны',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_r] and self.flag_pressed == False:
                         self.fountain_mana_sound.play_sound()
                         self.flag_fountain_mana = True
                         self.flag_pressed = True
                 if self.near_tower:
-                    self.show_tip(' [E] Поставить дозорного',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5,font_size=settings['SCREEN_WIDTH']//80)
-                    if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.show_tip(' [R] Поставить дозорного',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5,font_size=settings['SCREEN_WIDTH']//80)
+                    if keys[pygame.K_r] and self.flag_pressed == False:
                         self.tower_sound.play_sound()
                         self.flag_tower = True
                         self.flag_pressed = True
                 if self.near_academy:
-                    self.show_tip(' [E] Академия',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                    if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.show_tip(' [R] Академия',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_r] and self.flag_pressed == False:
                         self.academy_sound.play_sound()
                         self.flag_academy = True
                         self.flag_pressed = True
                 if self.near_shack :
-                    self.show_tip(' [E] Хижина Колдуна',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                    if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.show_tip(' [R] Хижина Колдуна',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_r] and self.flag_pressed == False:
                         self.shack_sound.play_sound()
                         self.flag_shack = True
                         self.flag_pressed = True
@@ -460,8 +469,8 @@ class Main_Hero(Graphic_elements):
                     if not pygame.mixer.music.get_busy():
                         self.tavern_music.load_music()
                         pygame.mixer.music.play(-1)
-                    self.show_tip(' [E] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
-                    if keys[pygame.K_e] and self.flag_pressed == False:
+                    self.show_tip(' [R] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
+                    if keys[pygame.K_r] and self.flag_pressed == False:
                         self.flag_tavern = True
                         self.flag_pressed = True
                 
@@ -469,13 +478,11 @@ class Main_Hero(Graphic_elements):
                     # self.show_tip( '[F] Съесть бутерброд', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                     self.show_tip( '[F] Зайти на рынок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                     if keys[pygame.K_f]:
-                        self.market_sound.play_sound()
                         self.near_market = False
                         self.flag_market = True
                 if self.near_city:
                     self.show_tip( '[F] Зайти в город', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                     if keys[pygame.K_f]:
-                        self.city_sound.play_sound()
                         self.flag_city = True
                         self.near_city = False
                 
@@ -557,7 +564,6 @@ class Main_Hero(Graphic_elements):
 
     # Метод тумана войны 
     def blind_move(self,index,flag_player): 
-        # print(len(self.list_studied_map))
         #Константы координат персонажа
         if flag_player[2]:
             index_y = self.player_cor[0]

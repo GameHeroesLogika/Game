@@ -4,7 +4,8 @@ def draw_all(bg,cardgame_variables,win,text_move,list_objects_cards_pl,list_obje
     #Отображаем задний фон
     bg.show_image(win)
     #Отображаем иконку скилла
-    hero_skill.show_image(win)
+    if hero_skill != None:
+        hero_skill.show_image(win)
     # Отображение текста хода
     if  cardgame_variables['count_text_move'] <= 30:
         if cardgame_variables['count_text_move'] > 1:

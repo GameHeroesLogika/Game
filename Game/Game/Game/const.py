@@ -107,6 +107,7 @@ characteristic_dict = {
     'contribution':int(settings['contribution'.upper()]),
     'change_mana':1,
     'change_exp':1,
+    'potion':0
 }
 dict_artifact_on = {
     'helmet':None,
@@ -235,7 +236,7 @@ list_cells_lvl1 = [
                    list('000t0000000ckkdoodl000tttttttt0'),
                    list('000t0000000addooodnf0tt000000t0'),
                    list('000t0000000adooooddl0t0000000tt'),
-                   list('000ttttttttttttttttttt00000000t'),
+                   list('000ttttttttбббooббббtt00000000t'),
                    list('tttt0000000adooooddl0t000000000'),
                    list('t000000000ckdoooddgj0t000000000'),
                    list('t000000000addddddgj00t000000000'),
@@ -272,13 +273,13 @@ mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c
                     list('0000В0000000вRr00вв00000000лл1А'),
                     list('0Ff0Р0000000вrr0ввC00000000л110'),
                     list('0ff0С000000вввввв000000лллл1100'),
-                    list('0000Л000000в0000000000Wл1111000'),
-                    list('0000Д000вввв0000000000л100000лC'),
+                    list('0000Л000000в0000000000W1111100C'),
+                    list('0000Д000вввв0000000000л100000лл'),
                     list('Б000Е00вв0000000000000л10лллллл'),
                     list('Cвв000вв00000000000000л1Гл11111'),
                     list('ввввW0в000000Aa0000000л10л10Ззз'),
-                    list('ввввввв000000aa000000лл00110ззз'),
-                    list('вввC0000000000000000M1л00Г00ззз')]
+                    list('ввввввв000000aa0000И0лл10110ззз'),
+                    list('вввC0000000000000000M1л10Г00ззз')]
 list_forest_element = ['|','\\','/','л']
 for el in range(len(mat_objetcs_lvl1)):
     for element in range(len(mat_objetcs_lvl1[el])):
@@ -347,7 +348,9 @@ dict_card_characteristics_enemy = {
                             'рогги':[6,3,'hell'],
                             'суртур':[7,3,'hell'],
                             'лудорн':[8,3,'mountain'],
-                            'друид':[7,4,'earth']
+                            'друид':[7,4,'earth'],
+                            'король_гоблинов':[20,10,'earth'],
+                            'гоблин':[2,2,'earth'],
 }
 dict_card_price = {
                     'бард':'gold_bullion/4;',
@@ -373,9 +376,10 @@ list_cards_pl_post_army = [[None,1,2],[None,10,10],[None,3,5],[None,4,3],[None,2
 list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
 list_cards_en = [['кентавр',10,3],[None,9,3],[None,10,0],[None,10,1],[None,5,2],[None,0,0]]
 list_cards_menu_hero = list()
+list_cards_enemy_castle = [['король_гоблинов',20,10],['гоблин',2,2],['гоблин',2,2],['гоблин',2,2],['гоблин',2,2],['гоблин',2,2]]
 create_map(list_cells_lvl1, list_objects_cells_lvl1,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
  
-list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interface/to_hero_w.png'],['images/game_interface/to_castle.png','images/game_interface/to_castle_w.png',],['images/game_interface/end_moves.png','images/game_interface/end_moves_w.png',]]
+list_paths_pressed = [['images/game_interface/to_hero.png','images/game_interface/to_hero_w.png'],['images/game_interface/pause.png','images/game_interface/pause_w.png',],['images/game_interface/end_moves.png','images/game_interface/end_moves_w.png',]]
 list_cor_portals = [ [[0,3],[1,3]],[[0,3],[17,21]],[[0,3],[29,6]],[[0,3],[20,2]],[[0,3],[2,21]] ]
 
 dict_bought_city = {
@@ -406,7 +410,6 @@ cardgame_variables = {
     'flag_show_error':30,#Флаг для показа ошибок
     'card_attacker': None,#Атакующая карта
     'card_victim':None,#Карта-жертва
-    'card_that_move_pl':None,#
     'count_play_sound':50,#Счетчик для проигрыша звука взятой карты
     'index_picked_card':0,#Индекс взятой карты в списке
     'picked_card':None,#Взятая игроком карта
@@ -532,6 +535,7 @@ dict_arguments = {
     'text_tavern_font_content':None,
     'flag_show_error_choose_icon':flag_show_error_choose_icon,
     'flag_pause':flag_pause,
+    'civ_selected':None
 }
 
 new_game_dict = dict_arguments.copy()
