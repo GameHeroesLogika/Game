@@ -86,7 +86,7 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                 list_cor_player_xy,W_CELL_MINI_MAP ,H_CELL_MINI_MAP,X_FRAME_MM,Y_FRAME_MM,list_cells_MM,list_cor_portals,
                 LENGTH_MAP,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,list_cor_castle_xy,
                 dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,fountain_mana_empty,fountain_exp_empty,
-                mountain,water,list_forest,win_rect,castle_goblin,potion):
+                mountain,water,list_forest,win_rect,castle_goblin,man_potion):
     list_xy = [0,0]
     list_object = [player_lvl1, gold, iron, crystal, wood, stone, tree_full,tree,ironmine, goldmine, farm, gemsmine,sawmill, stonebreaker,portal,chest,fountain_exp,fountain_mana,watchtower,royal_academy,shack,tavern,market,castle,dvorf,klaus,bard,golem,giant,yamy,ork,bomb_man,crossbowman,druid,centaur,ludorn,roggy,surtur,fountain_mana_empty,fountain_exp_empty,
                 mountain,water]
@@ -155,9 +155,9 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'water'))
                         flag_cell_MM = False
                     elif obj == 'И':
-                        potion.X = list_objects_cells_lvl1[index_cells].X + SCREEN_W//19//3.5
-                        potion.Y = list_objects_cells_lvl1[index_cells].Y  + SCREEN_W//19//3
-                        potion.show_image(win)
+                        man_potion.X = list_objects_cells_lvl1[index_cells].X
+                        man_potion.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
+                        man_potion.show_image(win)
                     elif obj == 'л':
                         list_forest[0].X = list_objects_cells_lvl1[index_cells].X 
                         list_forest[0].Y = list_objects_cells_lvl1[index_cells].Y

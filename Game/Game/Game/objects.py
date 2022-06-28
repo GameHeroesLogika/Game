@@ -87,7 +87,7 @@ tavern = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['S
 shack = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5,'images/buildings/shack.png')
 market = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*2, settings['SCREEN_WIDTH']//19*2,'images/buildings/market.png')
 city = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*3, settings['SCREEN_WIDTH']//19*3,'images/buildings/castle.png')
-potion = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19//2, settings['SCREEN_WIDTH']//19//2,'images/potion.png')
+man_potion = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5,'images/man_potion.png')
 #Строения города
 castle = Graphic_elements(x=settings['SCREEN_WIDTH']//2.2,y=0,width=settings['SCREEN_WIDTH']//3.65,height=settings['SCREEN_HEIGHT']//3.6,path = 'images/city/castle.png')
 camp = Graphic_elements(x=settings['SCREEN_WIDTH']//4.83,y=settings['SCREEN_HEIGHT']//1.58,width=settings['SCREEN_WIDTH']//6.4,height=settings['SCREEN_HEIGHT']//5.53,path = 'images/city/camp.png')
@@ -132,7 +132,7 @@ button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//10, 
 button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=15,y_divider=3.5)
 button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//2.1, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/settings_b.png',image_button_b='images/menu/settings_b.png',image_button_y='images/menu/settings_y.png',x_divider=15,y_divider=2.1)
 button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=15,y_divider=1.5)
-button_new_game = Menu(settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=15,y_divider=720)
+button_new_game = Menu(settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=15,y_divider=720)
 button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//4,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/camp_hire_b.png')
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
 button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
@@ -203,6 +203,9 @@ button_offer = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'b
 button_threat= Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Угроза',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*4.5)
 button_leave = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Уйти',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*6)
 list_buttons_dialog = [button_fight,button_offer,button_threat,button_leave]
+button_deal = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Сделка',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19*3)
+
+list_buttons_dialog_potion = [button_leave,button_threat,button_deal]
 #Текст для кнопки гарнизона
 button_post_army = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19-button_menu_hero_back.HEIGHT,settings['SCREEN_WIDTH']//19*2.5,settings['SCREEN_WIDTH']//19,'images/post_army_b.png')
 
@@ -275,6 +278,8 @@ text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'
 text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Не хватает карт!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для карт 
 text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19,index=2)
+#Текст для зелья
+text_dialog_potion = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_WIDTH']//19)
 #Текст для события
 text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',frame_notification.X+settings['SCREEN_WIDTH']//19,frame_notification.Y+settings['SCREEN_WIDTH']//19)
 #Текст для сохранения
@@ -612,3 +617,5 @@ music_lose = Sounds('sounds/music_lose.wav',settings['MUSIC_VOLUME'])
 list_cards_on_table_pl = []
 # Объект текста хода
 text_move = Text_cardgame.Font('images/Font/pixel_font.ttf',60,'white','Твой ход!',settings['SCREEN_WIDTH']//2.5, settings['SCREEN_HEIGHT']//2.3)
+
+

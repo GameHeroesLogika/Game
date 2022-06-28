@@ -278,8 +278,8 @@ mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c
                     list('Б000Е00вв0000000000000л10лллллл'),
                     list('Cвв000вв00000000000000л1Гл11111'),
                     list('ввввW0в000000Aa0000000л10л10Ззз'),
-                    list('ввввввв000000aa0000И0лл10110ззз'),
-                    list('вввC0000000000000000M1л10Г00ззз')]
+                    list('ввввввв000000aa000000лл10110ззз'),
+                    list('вввC0000000000000И00M1л10Г00ззз')]
 list_forest_element = ['|','\\','/','л']
 for el in range(len(mat_objetcs_lvl1)):
     for element in range(len(mat_objetcs_lvl1[el])):
@@ -409,6 +409,7 @@ cardgame_variables = {
     'flag_show_desc_skill':30,#Флаг для показа описания скилла
     'flag_show_error':30,#Флаг для показа ошибок
     'card_attacker': None,#Атакующая карта
+    'card_that_move_pl':None,
     'card_victim':None,#Карта-жертва
     'count_play_sound':50,#Счетчик для проигрыша звука взятой карты
     'index_picked_card':0,#Индекс взятой карты в списке
@@ -535,7 +536,12 @@ dict_arguments = {
     'text_tavern_font_content':None,
     'flag_show_error_choose_icon':flag_show_error_choose_icon,
     'flag_pause':flag_pause,
-    'civ_selected':None
+    'civ_selected':None,
+    'flag_show_dialog_potion':False,
+    'count_dialog_potion':50,
+    'flag_show_deal':False,
+    'text_potion':None,
+    'gold_count_potion':0,
 }
 
 new_game_dict = dict_arguments.copy()

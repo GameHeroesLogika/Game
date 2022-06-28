@@ -52,10 +52,13 @@ class Main_Hero(Graphic_elements):
         self.near_fountain_mana = False
         self.near_card = False
         self.near_castle_enemy = False  
+        self.near_potion  = False
 
         self.card_name = False
 
         self.card_cor = False
+
+        self.potion_cor = None
         self.city_cor = None
         self.chest_cor = None
         self.tower_cor = None
@@ -63,12 +66,13 @@ class Main_Hero(Graphic_elements):
         self.fountain_exp_cor = None
         self.fountain_mana_cor = None
         self.shack_cor = None
+        
 
         self.flag_up = False
         self.flag_down = False
         self.flag_right = False
         self.flag_left = False
-
+        self.flag_potion  = False
         self.flag_castle_enemy = False  
         self.flag_card = False
         self.flag_city = False
@@ -267,7 +271,6 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
                 
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P') and self.where_move == None:
                         self.where_move = 'right'
@@ -286,7 +289,6 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] == 'P') and self.where_move == None:
                         self.where_move = 'left'
                         self.count_step -= 1
@@ -303,7 +305,6 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0]-1,self.player_cor[1],'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
                 
                     if (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == '0' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'P') and self.where_move == None:
                         self.where_move = 'up'
@@ -319,7 +320,6 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-                    self.take_resource(self.player_cor[0]+1,self.player_cor[1],'potion','И',mat_objetcs,1,1,dict_arguments['characteristic_dict'],recourse_sounds)
 
                     if mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == '0'  and self.where_move == None:
                         self.where_move = 'down'
@@ -374,18 +374,22 @@ class Main_Hero(Graphic_elements):
                     self.near_card = True
                     self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
                     self.card_cor = [self.player_cor[0],self.player_cor[1] + 1]
+                    dict_arguments['card_cor'] = self.card_cor
                 elif not self.flag_left and mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1] in list_symbol_cards:
                     self.near_card = True
                     self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]
                     self.card_cor = [self.player_cor[0],self.player_cor[1] - 1]
+                    dict_arguments['card_cor'] = self.card_cor
                 elif not self.flag_down and mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] in list_symbol_cards:
                     self.near_card = True
                     self.card_name = mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]]
                     self.card_cor = [self.player_cor[0] + 1,self.player_cor[1]]
+                    dict_arguments['card_cor'] = self.card_cor
                 elif not self.flag_up and mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] in list_symbol_cards:
                     self.near_card = True
                     self.card_name = mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]]
                     self.card_cor = [self.player_cor[0] - 1,self.player_cor[1]]
+                    dict_arguments['card_cor'] = self.card_cor
                 else:
                     self.near_card = False
                     self.card_name = None
@@ -405,6 +409,7 @@ class Main_Hero(Graphic_elements):
                 self.near_shack,self.shack_cor = self.check_near_build(element='S',sub_element='s',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 #Фонтаны
                 self.near_castle_enemy = self.check_near_build(element='З',sub_element='з',mat_objetcs=mat_objetcs,flag_building_cor=False)
+                self.near_potion,self.potion_cor = self.check_near_build(element='И',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 #Фонтаны
                 self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
@@ -435,6 +440,11 @@ class Main_Hero(Graphic_elements):
                         self.near_chest = False
                         self.flag_draw_chest = True
                         self.flag_move = False
+                if self.near_potion:
+                    self.show_tip(' [R] Незнакомец...', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5) 
+                    if keys[pygame.K_r] and self.flag_pressed == False:
+                        self.flag_potion = True
+                        self.flag_pressed = False
                 if self.near_fountain_exp:
                     self.show_tip(' [R] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                     if keys[pygame.K_r] and self.flag_pressed == False:

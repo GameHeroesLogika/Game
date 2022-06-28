@@ -13,7 +13,14 @@ pygame.init()
 # @profile
 #Основная фунуция
 def run_main(dict_arguments):
-
+    if dict_arguments['scene'] == 'card_game':
+        # dict_arguments['cardgame_variables']['card_that_move_en'] = list_objects_cards_en[dict_arguments['cardgame_variables']['index_card_that_move_en']]
+        # dict_arguments['cardgame_variables']['card_that_move_pl'] = list_objects_cards_pl[dict_arguments['cardgame_variables']['card_that_move_index']]
+        # dict_arguments['cardgame_variables']['picked_card'] = list_objects_cards_pl[dict_arguments['cardgame_variables']['index_picked_card_in_list']]
+        # dict_arguments['cardgame_variables']['card_attacker'] = list_objects_cards_en[cardgame_variables['index_card_that_move_en']]
+        # dict_arguments['cardgame_variables']['card_victim'] = list_objects_cards_en[cardgame_variables['card_victim_index']]
+        # cards_arrangement(dict_arguments,dict_arguments['list_cards_pl'],list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
+        dict_arguments['scene'] = 'lvl1'
     hero_skill = None
     index = 0
     water = choice(list_water)
@@ -166,7 +173,7 @@ def run_main(dict_arguments):
                             dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
                             dict_arguments['characteristic_dict']['exp']+=dict_arguments['trophy_exp']
                             if dict_arguments['flag_fight_start_post'] != True:
-                                dict_arguments['mat_objetcs_lvl1'][player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
+                                dict_arguments['mat_objetcs_lvl1'][dict_arguments['card_cor'][0]][dict_arguments['card_cor'][1]] = '0'
                         if dict_arguments['cardgame_variables']['who_won'] != 'player':
                             dict_arguments['mat_objetcs_lvl1'][player_lvl1.player_cor[0]][player_lvl1.player_cor[1]] = '0'
                             player_lvl1.player_cor = city_cor_enter
@@ -182,6 +189,7 @@ def run_main(dict_arguments):
                                                 'flag_show_error':30,#Флаг для показа ошибок
                                                 'card_attacker': None,#Атакующая карта
                                                 'card_victim':None,#Карта-жертва
+                                                'card_that_move_pl':None,
                                                 'count_play_sound':50,#Счетчик для проигрыша звука взятой карты
                                                 'index_picked_card':0,#Индекс взятой карты в списке
                                                 'picked_card':None,#Взятая игроком карта
@@ -320,7 +328,7 @@ def run_main(dict_arguments):
                         dict_arguments['card_pressed'] = None
             if dict_arguments['scene'] == 'castle':
                 if check_mouse_cor(button_build,mouse_cor):
-                    button_build.path = 'images/button_build_w.png'
+                    button_build.path = 'images/button_build_b.png'
                     button_build.image_load()
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                         click_sound.play_sound()
@@ -346,7 +354,7 @@ def run_main(dict_arguments):
 
                             
                 else:
-                    button_build.path = 'images/button_build_b.png'
+                    button_build.path = 'images/button_build_y.png'
                     button_build.image_load()
                 if check_mouse_cor(button_castle_back,mouse_cor):
                     button_castle_back.path = 'images/menu_hero_back_b.png'
@@ -1184,7 +1192,53 @@ def run_main(dict_arguments):
                         if check_mouse_cor(damageskill_Icon,mouse_cor):
                             hero_skill = damage_skill_Icon
                             player_lvl1.flag_move = True
+                    if dict_arguments['flag_show_dialog_potion']:
+                        if check_mouse_cor_font(button_leave,mouse_cor):
+                            dict_arguments['text_potion'] = None
+                            dict_arguments['flag_show_dialog_potion'] = False
+                            player_lvl1.flag_potion = False
+                            player_lvl1.flag_move = True
+                        if check_mouse_cor_font(button_deal,mouse_cor) and dict_arguments['count_dialog_potion'] == 50:
+                            player_lvl1.flag_potion = False
+                            player_lvl1.flag_move = False
+                            dict_arguments['flag_show_dialog_potion'] = False
+                            dict_arguments['flag_show_deal'] = True
+                            dict_arguments['count_dialog_potion'] = 0
+                            dict_arguments['gold_count_enemy'] = int(dict_arguments['characteristic_dict']['lvl'])*randint(4,5)-int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*randint(3,4)+5
+                        if check_mouse_cor_font(button_threat,mouse_cor) and dict_arguments['count_dialog_potion'] == 50:
+                            player_lvl1.flag_potion = False
+                            player_lvl1.flag_move = True
 
+                            chance_base = randint(0,100)
+                            chance_diplomaty = 33+int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*5
+                            if chance_diplomaty > 80:
+                                chance_diplomaty = 80
+                            if chance_base <= chance_diplomaty:
+                                dict_arguments['flag_dialog_threat_win'] = True
+                                dict_arguments['count_dialog_potion'] = 0
+                                dict_arguments['text_potion'] = 'Незнакомец: Забирай!'
+                            else:
+                                dict_arguments['flag_dialog_threat_lose'] = True
+                                dict_arguments['count_dialog_potion'] = 0
+                                dict_arguments['text_potion'] = 'Незнакомец: Грубиян!'
+                    if dict_arguments['flag_show_deal'] and not dict_arguments['flag_pause']:
+                        if check_mouse_cor_font(text_offer_yes,mouse_cor):
+                            if dict_arguments['resources_dict']['gold_bullion'] >= dict_arguments['gold_count_potion']:
+                                dict_arguments['flag_show_dialog_potion'] = True
+                                dict_arguments['resources_dict']['gold_bullion']-=dict_arguments['gold_count_enemy']
+                                dict_arguments['flag_dialog_offer_yes'] = True
+                                dict_arguments['count_dialog_potion'] = 0
+                                dict_arguments['text_potion'] = 'Незнакомец: Благодарю'
+                                dict_arguments['flag_show_deal'] = False
+                            elif dict_arguments['resources_dict']['gold_bullion'] < dict_arguments['gold_count_enemy']:
+                                dict_arguments['flag_not_enough_gold'] = 0
+                                dict_arguments['flag_show_offer'] = False
+                        if check_mouse_cor_font(text_offer_no,mouse_cor):
+                            dict_arguments['flag_show_dialog_potion'] = True
+                            dict_arguments['flag_dialog_offer_no'] = True
+                            dict_arguments['flag_show_deal'] = False
+                            dict_arguments['count_dialog_potion'] = 0
+                            dict_arguments['text_potion'] = 'Незнакомец: Прощай!'
                     if dict_arguments['flag_show_offer'] and not dict_arguments['flag_pause']:
                         
                         if check_mouse_cor_font(text_offer_yes,mouse_cor):
@@ -1531,7 +1585,7 @@ def run_main(dict_arguments):
                         shack=shack,royal_academy=royal_academy,tavern=tavern,market=market,castle=city,list_cor_castle_xy=list_cor_castle_xy,
                         dvorf=dvorf,klaus=klaus,bard=bard,golem=golem,giant=giant,yamy=yamy,ork=ork,bomb_man=bomb_man,crossbowman=crossbowman,druid=druid,centaur=centaur,ludorn=ludorn,roggy=roggy,surtur=surtur,
                         fountain_mana_empty=fountain_mana_empty,fountain_exp_empty=fountain_exp_empty,mountain=mountain,water=water,list_forest=list_forest,win_rect=win_rect,castle_goblin=castle_goblin,
-                        potion=potion)
+                        man_potion=man_potion)
             fog_war_func(dict_arguments['mat_objetcs_lvl1'],X_FRAME_MM,Y_FRAME_MM,dict_arguments['list_studied_map'],fog_war,list_objects_cells_lvl1,win,dict_arguments['list_cells_MM'],LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP)
             if dict_arguments['flag_show_dialog']:
                 if dict_arguments['text_card'] == None:
@@ -1548,8 +1602,26 @@ def run_main(dict_arguments):
                 text_offer_enemy.show_text(win)
                 text_offer_yes.show_text(win)
                 text_offer_no.show_text(win)
-                
-
+            if dict_arguments['flag_show_dialog_potion']:
+                dialog_book.show_image(win)
+                if dict_arguments['text_potion'] == None:
+                    dict_arguments['text_potion'] = 'Незнакомец: Чего тебе?'
+                text_dialog_potion.font_content = dict_arguments['text_potion']
+                text_dialog_potion.show_text(win)
+                for obj in list_buttons_dialog_potion:
+                    if check_mouse_cor_font(obj,mouse_cor):
+                        obj.font_color = 'orange'
+                        obj.font_size = settings['SCREEN_WIDTH']//16
+                    else:
+                        obj.font_color = 'black'
+                        obj.font_size = settings['SCREEN_WIDTH']//19
+                    obj.show_text(win)
+            if dict_arguments['flag_show_deal']:
+                text_offer_enemy.font_content = 'Вы хотите купить за '+str(dict_arguments['gold_count_enemy'])+'?'
+                frame_error.show_image(win)
+                text_offer_enemy.show_text(win)
+                text_offer_yes.show_text(win)
+                text_offer_no.show_text(win)
             # matrix_image_blind(list_objects_cells_lvl1,dict_arguments['mat_objetcs_lvl1'],player_lvl1,list_objects_cells_lvl1,player_lvl1.changed_x,player_lvl1.changed_y,win)
             #Отрисовуем полоску справа
             # pygame.draw.rect(win, (255,223,196), (settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*3,0,settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT']))
@@ -1862,6 +1934,8 @@ def run_main(dict_arguments):
                     red_mm.X = cor[0]
                     red_mm.Y = cor[1]
                     red_mm.show_image(win)
+            if player_lvl1.flag_potion:
+                dict_arguments['flag_show_dialog_potion'] = True
             #Отображаем кол-во ресурсов на экране
             if dict_arguments['resources_dict']['food'] != 0:
                 apple.show_image(win)
@@ -1912,6 +1986,7 @@ def run_main(dict_arguments):
                                 text_daily_event.index +=1
                     text_daily_event.font_content += text_cost(list_resource,finally_text='',text_obj=text_daily_event,settings=settings)[0]
                     text_daily_event.font_content = text_daily_event.font_content.split(';')
+                    
                 if dict_arguments['daily_event'] == 'heist':
                     list_resource = list()
                     dict_arguments['text_daily_event_font_content'] = '           Внимание!;Вы прошли по лесу и;вас ограбили разбойники!;Потеряно:'
@@ -2120,7 +2195,7 @@ def run_main(dict_arguments):
             dict_arguments['count_dialog']+=1
             if dict_arguments['count_dialog'] == 50:
                 if dict_arguments['flag_dialog_offer_yes']:
-                    dict_arguments['mat_objetcs_lvl1'][player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
+                    dict_arguments['mat_objetcs_lvl1'][dict_arguments['card_cor'][0]][dict_arguments['card_cor'][1]] = '0'
                     player_lvl1.flag_move = True
                     dict_arguments['flag_show_dialog'] = False
                     dict_arguments['flag_dialog_offer_yes'] = False
@@ -2133,7 +2208,7 @@ def run_main(dict_arguments):
                     player_lvl1.flag_card = False
                     player_lvl1.near_card = False
                     dict_arguments['flag_show_dialog'] = False
-                    dict_arguments['mat_objetcs_lvl1'][player_lvl1.card_cor[0]][player_lvl1.card_cor[1]] = '0'
+                    dict_arguments['mat_objetcs_lvl1'][dict_arguments['card_cor'][0]][dict_arguments['card_cor'][1]] = '0'
                     dict_arguments['flag_dialog_threat_win'] = False
                 if dict_arguments['flag_dialog_threat_lose']:
                     dict_arguments['flag_fight_start'] = True
@@ -2146,7 +2221,38 @@ def run_main(dict_arguments):
                 dict_arguments['flag_offer'] = True
                 for obj in list_buttons_dialog:
                     obj.font_content = obj.start_content
-        
+        if dict_arguments['count_dialog_potion'] < 50:
+            dict_arguments['count_dialog_potion']+=1
+            for obj in list_buttons_dialog_potion:
+                obj.font_content = ''
+            if dict_arguments['count_dialog_potion'] == 50:
+                if dict_arguments['flag_dialog_threat_win']:
+                    dict_arguments['characteristic_dict']['potion'] = 1
+                    dict_arguments['mat_objetcs_lvl1'][player_lvl1.potion_cor[0]][player_lvl1.potion_cor[1]] = '0'
+                    player_lvl1.flag_move = True
+                    player_lvl1.near_potion = False
+                    player_lvl1.flag_potion = False
+                    dict_arguments['flag_show_dialog_potion'] = False
+                    dict_arguments['flag_dialog_threat_win'] = False
+                if dict_arguments['flag_dialog_threat_lose']:
+                    player_lvl1.flag_move = True
+                    player_lvl1.near_potion = False
+                    player_lvl1.flag_potion = False
+                    dict_arguments['mat_objetcs_lvl1'][player_lvl1.potion_cor[0]][player_lvl1.potion_cor[1]] = '0'
+                    dict_arguments['flag_show_dialog_potion'] = False
+                    dict_arguments['flag_dialog_threat_lose'] = False
+                if dict_arguments['flag_dialog_offer_yes']:
+                    dict_arguments['mat_objetcs_lvl1'][player_lvl1.potion_cor[0]][player_lvl1.potion_cor[1]] = '0'
+                    player_lvl1.flag_move = True
+                    dict_arguments['flag_show_dialog_potion'] = False
+                    dict_arguments['flag_dialog_offer_yes'] = False
+                if dict_arguments['flag_dialog_offer_no']:
+                    dict_arguments['flag_dialog_offer_no'] = False
+                    dict_arguments['flag_show_dialog_potion'] = False
+                    player_lvl1.flag_move = True
+                dict_arguments['text_potion'] = None
+                for obj in list_buttons_dialog_potion:
+                    obj.font_content = obj.start_content
         dict_arguments['index_water'] +=1
         if dict_arguments['index_water'] % 10 == 0:
             water = choice(list_water)
