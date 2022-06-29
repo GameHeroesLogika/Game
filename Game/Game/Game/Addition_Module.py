@@ -810,6 +810,14 @@ def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_her
     dict_arguments['characteristic_dict']['count_step'] = player_lvl1.count_step
     dict_arguments['list_capture_buildings'] = player_lvl1.list_capture_buildings
     dict_arguments['list_capture_buildings_symbol'] = player_lvl1.list_capture_buildings_symbol
+    dict_arguments['cardgame_variables']['card_attacker'] = None
+    dict_arguments['cardgame_variables']['card_that_move_pl'] = None
+    dict_arguments['cardgame_variables']['card_victim'] = None
+    dict_arguments['cardgame_variables']['picked_card'] = None
+    dict_arguments['cardgame_variables']['card_that_showing_desc'] = None
+    dict_arguments['cardgame_variables']['healed_card'] = None
+    dict_arguments['cardgame_variables']['hp_text'] = None
+    dict_arguments['cardgame_variables']['card_that_move_en'] = None
     with open('saves/config1.json','w') as file:
         json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
     dict_arguments['game'] = False

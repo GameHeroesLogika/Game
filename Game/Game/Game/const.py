@@ -281,6 +281,7 @@ mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c
                     list('ввввввв000000aa000000лл10110ззз'),
                     list('вввC0000000000000И00M1л10Г00ззз')]
 list_forest_element = ['|','\\','/','л']
+list_story_end_cor = [[30,27],[28,27],[29,27]]
 for el in range(len(mat_objetcs_lvl1)):
     for element in range(len(mat_objetcs_lvl1[el])):
         if mat_objetcs_lvl1[el][element] == 'л':
@@ -325,7 +326,7 @@ dict_card_characteristics = {
                             'клаус':[1,0,'hell'],
                             'гигант':[1,3,'mountain'],
                             'ями':[9,1,'hell'],
-                            'подрывник':[8,5,'earth'],
+                            'подрывник':[1,100,'earth'],
                             'арбалетчик':[9,3,'earth'],
                             'кентавр':[10,3,'hell'],
                             'орк':[10,2,'mountain'],
@@ -362,6 +363,8 @@ dict_card_price = {
                     'кентавр':'gold_bullion/9;',
                     'орк':'gold_bullion/9;',
                     'дворф':'gold_bullion/9;',
+                    'гоблин':'gold_bullion/1;',
+                    'король_гоблинов':'gold_bullion/2;',
 }
 dict_count_resource = {
     'wood':20,
@@ -371,7 +374,7 @@ dict_count_resource = {
     'food':20,
 }
 city_cor_enter = [3,1]
-list_cards_pl = [[None,1,2],[None,10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
+list_cards_pl = [['подрывник',1,2],[None,10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
 list_cards_pl_post_army = [[None,1,2],[None,10,10],[None,3,5],[None,4,3],[None,2,3],[None,3,2]]
 list_card_pl_reserv = [[None,1,2],[None,5,0],['подрывник',3,5],['арбалетчик',4,3],['гигант',2,3],['ями',3,2]]
 list_cards_en = [['кентавр',10,3],[None,9,3],[None,10,0],[None,10,1],[None,5,2],[None,0,0]]

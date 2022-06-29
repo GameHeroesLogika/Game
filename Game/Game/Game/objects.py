@@ -128,11 +128,15 @@ button_camp_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN
 button_altar_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19,'images/menu_hero_back_y.png')
 button_castle_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19,'images/menu_hero_back_y.png')
 button_market_back = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=0,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19,path='images/menu_hero_back_b.png')
-button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//10, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9,path='images/menu/play_gray.png',image_button_b='images/menu/play_b.png',image_button_y='images/menu/play_y.png',x_divider=15,y_divider=10)
-button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=15,y_divider=3.5)
-button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//2.1, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/settings_b.png',image_button_b='images/menu/settings_b.png',image_button_y='images/menu/settings_y.png',x_divider=15,y_divider=2.1)
-button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//8, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=15,y_divider=1.5)
-button_new_game = Menu(settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//3.5, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=15,y_divider=720)
+
+button_new_game = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24)
+button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*4, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9,path='images/menu/play_gray.png',image_button_b='images/menu/play_b.png',image_button_y='images/menu/play_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*4)
+button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*8, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*8)
+button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*12, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9, 'images/menu/settings_b.png',image_button_b='images/menu/settings_b.png',image_button_y='images/menu/settings_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*12)
+button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*16, settings['SCREEN_WIDTH']//7, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*16)
+
+if dict_arguments['civ_selected'] != None:
+    button_play.path = 'images/menu/play_b.png'
 button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//4,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/camp_hire_b.png')
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
 button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
@@ -338,9 +342,13 @@ story1_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HE
 story2_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story2_scene.png')
 story3_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story3_scene.png')
 story4_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story4_scene.png')
-story5_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story2_scene.png')
-story6_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story3_scene.png')
-story7_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story4_scene.png')
+story5_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story5_scene.png')
+story6_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story6_scene.png')
+story7_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story7_scene.png')
+story8_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story8_scene.png')
+story9_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story9_scene.png')
+story10_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story10_scene.png')
+credits_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/credits.png')
 #Звуки
 #Звук открытия книги
 sound_book = Sounds('sounds/book_opened.wav', settings['SOUNDS_VOLUME'])
