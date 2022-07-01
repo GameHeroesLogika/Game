@@ -89,13 +89,13 @@ class Main_Hero(Graphic_elements):
         self.portal_sound = Sounds('sounds/portal.wav',settings['SOUNDS_VOLUME'])#Звук портала
         self.build_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук захвата здания
         self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
-        self.tavern_music = Music('sounds/tavern.wav',settings['MUSIC_VOLUME'])
+        self.tavern_music = Music('sounds/tavern.mp3',settings['MUSIC_VOLUME'])
         self.shack_sound = Sounds('sounds/tavern.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием
         self.tower_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.academy_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.fountain_exp_sound = Sounds('sounds/fountain_exp.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.fountain_mana_sound = Sounds('sounds/fountain_mana.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        self.water_sound = Music('sounds/water.wav',settings['MUSIC_VOLUME'])
+        self.water_sound = Music('sounds/water.mp3',settings['MUSIC_VOLUME'])
         for i in range(4):# Заполнение списков изобржаний с движением 
             path = os.path.join(os.path.abspath(__file__+'/..'),'images/player/right/'+str(i)+'.png')
             self.list_images_right.append(path)
@@ -444,7 +444,7 @@ class Main_Hero(Graphic_elements):
                     self.show_tip(' [R] Незнакомец...', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5) 
                     if keys[pygame.K_r] and self.flag_pressed == False:
                         self.flag_potion = True
-                        self.flag_pressed = False
+                        self.flag_pressed = True
                 if self.near_fountain_exp:
                     self.show_tip(' [R] Дерево знаний',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                     if keys[pygame.K_r] and self.flag_pressed == False:
@@ -551,7 +551,7 @@ class Main_Hero(Graphic_elements):
                             if (self.player_cor[0]-1,self.player_cor[1]-2) not in  self.list_capture_buildings:
                                 self.list_capture_buildings.append((self.player_cor[0]-1,self.player_cor[1]-2))
                                 self.list_capture_buildings_symbol.append(self.building_cor.upper())
-            if not keys[pygame.K_e] and self.flag_pressed:
+            if not keys[pygame.K_r] and self.flag_pressed:
                 self.flag_pressed = False
             if not keys[pygame.K_ESCAPE] and self.flag_pressed_escape:
                 self.flag_pressed_escape = False    

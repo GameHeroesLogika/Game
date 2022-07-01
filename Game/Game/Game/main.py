@@ -1763,6 +1763,7 @@ def run_main(dict_arguments):
                 dict_arguments['flag_use_fountain_mana'] = False
                 player_lvl1.flag_fountain_mana = False
                 dict_arguments['flag_show_fountain_mana'] = 0
+                player_lvl1.flag_fountain_mana = False
                 dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] = 'm'
             if player_lvl1.flag_tavern  and player_lvl1.flag_draw_chest == False and player_lvl1.flag_tower==False and dict_arguments['flag_use_tavern'] and dict_arguments['flag_show_new_day'] >= 100:
                 player_lvl1.flag_tavern = False
@@ -1804,9 +1805,12 @@ def run_main(dict_arguments):
             if player_lvl1.flag_fountain_exp and  player_lvl1.flag_pressed and dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] == 'e':
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_fountain_exp = False
+            print(player_lvl1.flag_pressed)
             if player_lvl1.flag_fountain_mana and  player_lvl1.flag_pressed and dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] == 'm':
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_fountain_mana = False
+                print('fldsfksdlfksdlfsld')
+
             if player_lvl1.flag_academy and dict_arguments['flag_use_royal_academy'] == False and player_lvl1.flag_pressed :
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_academy = False
@@ -2034,6 +2038,7 @@ def run_main(dict_arguments):
         if dict_arguments['flag_show_error_next_week'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_next_week_buildings.show_text(win)
+            print('fsld;fsdf;slf;')
             dict_arguments['flag_show_error_next_week'] +=1
         if dict_arguments['flag_market_aritfact_no_slots'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
@@ -2058,6 +2063,7 @@ def run_main(dict_arguments):
         if dict_arguments['flag_show_fountain_mana'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_fountain_mana.show_text(win)
+
             dict_arguments['flag_show_fountain_mana'] +=1
         if dict_arguments['flag_show_fountain_exp'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
@@ -2192,7 +2198,7 @@ def run_main(dict_arguments):
             button_menu.show_text(win)
             button_quit.show_text(win)
             player_lvl1.flag_move = False
-        # print(mouse_cor)
+        print(mouse_cor)
         pygame.display.flip()
 
 
