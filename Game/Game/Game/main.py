@@ -38,42 +38,43 @@ def run_main(dict_arguments):
             #Услове выхода из игры
             mouse_cor = pygame.mouse.get_pos() 
             
-            if change_story(dict_arguments,story1_scene,'story1',mouse_cor,'story2',event):
+            if change_story(dict_arguments,story1_scene,'story1',mouse_cor,'story2',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story2_scene,'story2',mouse_cor,'story3',event):
+            if change_story(dict_arguments,story2_scene,'story2',mouse_cor,'story3',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story3_scene,'story3',mouse_cor,'story4',event):
+            if change_story(dict_arguments,story3_scene,'story3',mouse_cor,'story4',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story4_scene,'story4',mouse_cor,'lvl1',event):
+            if change_story(dict_arguments,story4_scene,'story4',mouse_cor,'lvl1',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story5_scene,'story5',mouse_cor,'story6',event):
+            if change_story(dict_arguments,story5_scene,'story5',mouse_cor,'story6',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story6_scene,'story6',mouse_cor,'story7',event):
+            if change_story(dict_arguments,story6_scene,'story6',mouse_cor,'story7',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story7_scene,'story7',mouse_cor,'card_game',event):
+            if change_story(dict_arguments,story7_scene,'story7',mouse_cor,'card_game',event,win,bg,button_continue_story):
                 for i in range(len(list_cards_enemy_castle)):
                     dict_arguments['list_cards_en'][i][0] = list_cards_enemy_castle[i][0]
                 cards_arrangement(dict_arguments,dict_arguments['list_cards_pl'],list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
                 break
-            if change_story(dict_arguments,story8_scene,'story8',mouse_cor,'menu',event):
+            if change_story(dict_arguments,story8_scene,'story8',mouse_cor,'menu',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story9_scene,'story9',mouse_cor,'credits',event):
+            if change_story(dict_arguments,story9_scene,'story9',mouse_cor,'credits',event,win,bg,button_continue_story):
                 break
-            if change_story(dict_arguments,story10_scene,'story10',mouse_cor,'credits',event):
+            if change_story(dict_arguments,story10_scene,'story10',mouse_cor,'credits',event,win,bg,button_continue_story):
                 break
             if dict_arguments['flag_pause']:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if check_mouse_cor_font(button_quit,mouse_cor):
                         dict_arguments['game'] = False
                         save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
+                        
                     if check_mouse_cor_font(button_menu,mouse_cor):
                         dict_arguments['scene'] = 'menu'
                         dict_arguments['flag_pause'] = False
                     if check_mouse_cor_font(button_continue,mouse_cor):
                         dict_arguments['flag_pause'] = False
             if event.type == pygame.QUIT:
-                
                 save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
+                dict_arguments['game'] = False
             if dict_arguments['scene'] == 'result_screen':
                 # Если навелись на кнопку окончания боя
                 if event.type == pygame.MOUSEMOTION:
@@ -884,30 +885,23 @@ def run_main(dict_arguments):
                             click_sound.play_sound()
                             path_skill = obj.path.split('/')[-1]
                             path_skill = path_skill.split('.')[0]
-                            if  path_skill in list_order_skills:
-                                past_index_skill = list_order_skills.index(path_skill) - 1
-                                if past_index_skill < 0:
-                                    past_index_skill = None
-                                if past_index_skill != None:
-                                    if list_order_skills[past_index_skill].split('_')[-1] == 'learn':
-                                        dict_arguments['flag_buy_skill'] = True
-                                    else:
-                                        dict_arguments['flag_buy_skill'] = False
-                                else:
-                                    dict_arguments['flag_buy_skill'] = True
-                                if  dict_arguments['flag_buy_skill']:
-                                    if dict_arguments['characteristic_dict']['mana'] >= dict_arguments['skill_cost'] and path_skill.split('_')[-1] != 'learn':
-                                        
-                                        dict_arguments['characteristic_dict']['mana']-=dict_arguments['skill_cost']
-                                        list_order_skills[list_order_skills.index(path_skill)] = path_skill+'_learn'
-                                        path_skill = obj.path.split('/')[-1]
-                                        
-                                        path_skill = path_skill.split('.')[0]
-                                        
-                                        obj.path = 'images/skills/eliot/'+path_skill+'_learn.png'
-                                        
-                                        list_learn_skills.append(path_skill+'_learn')
-                                        obj.image_load()
+                            list_order_skills = list(dict_arguments['dict_order_skills'].keys())
+                            if not dict_arguments['dict_order_skills'][path_skill] == False:
+                                if dict_arguments['characteristic_dict']['mana'] >= dict_arguments['skill_cost']:
+                                    dict_arguments['dict_order_skills'][path_skill] = True
+                                    if list_order_skills.index(path_skill) == 0:
+                                        dict_arguments['dict_order_skills'][list_order_skills[1]] = True
+                                        dict_arguments['dict_order_skills'][list_order_skills[2]] = True
+                                    if list_order_skills.index(path_skill) == 1:
+                                        dict_arguments['dict_order_skills'][list_order_skills[3]] = True
+                                    if list_order_skills.index(path_skill) == 2:
+                                        dict_arguments['dict_order_skills'][list_order_skills[4]] = True
+                                    dict_arguments['characteristic_dict']['mana']-=dict_arguments['skill_cost']
+                                    path_skill = obj.path.split('/')[-1]
+                                    path_skill = path_skill.split('.')[0]
+                                    obj.path = 'images/skills/eliot/'+path_skill+'_learn.png'
+                                    list_learn_skills.append(path_skill+'_learn')
+                                    obj.image_load()
                     obj.show_image(win)
                 for obj in list_cards_menu_hero:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
@@ -1034,25 +1028,26 @@ def run_main(dict_arguments):
                             obj.font_color = 'red'
                             break
                     if check_mouse_cor_font(button_save,mouse_cor):
+                        
+                        for obj in list_buttons_display_size:
+                            if obj.font_color == 'red':
+                                width = obj.font_content.split('x')[0]
+                                height = obj.font_content.split('x')[1]
+                        if list_button_auto_save[0].font_color == 'red':
+                            settings_display['AUTOSAVE'] = True
+                        if list_button_auto_save[1].font_color == 'red':
+                            settings_display['AUTOSAVE'] = False
+                        if list_button_display_fullsize[0].font_color == 'red':
+                            settings_display['FULLSCREEN'] = True
+                            width = 0
+                            height = 0
+                        elif list_button_display_fullsize[1].font_color == 'red':
+                            settings_display['FULLSCREEN'] = False
+                        settings_display['SCREEN_WIDTH'] = int(width)
+                        settings_display['SCREEN_HEIGHT'] = int(height)
+                        settings_display['SOUNDS_VOLUME'] = int(count_volume_sound.font_content)
+                        settings_display['MUSIC_VOLUME'] = int(count_volume_music.font_content)
                         with open('saves/settings_display.json','w') as file:
-                            for obj in list_buttons_display_size:
-                                if obj.font_color == 'red':
-                                    width = obj.font_content.split('x')[0]
-                                    height = obj.font_content.split('x')[1]
-                            if list_button_auto_save[0].font_color == 'red':
-                                settings_display['AUTOSAVE'] = "True"
-                            if list_button_auto_save[1].font_color == 'red':
-                                settings_display['AUTOSAVE'] = "False"
-                            if list_button_display_fullsize[0].font_color == 'red':
-                                settings_display['FULLSCREEN'] = "True"
-                                width = 0
-                                height = 0
-                            elif list_button_display_fullsize[1].font_color == 'red':
-                                settings_display['FULLSCREEN'] = "False"
-                            settings_display['SCREEN_WIDTH'] = int(width)
-                            settings_display['SCREEN_HEIGHT'] = int(height)
-                            settings_display['SOUNDS_VOLUME'] = int(count_volume_sound.font_content)
-                            settings_display['MUSIC_VOLUME'] = int(count_volume_music.font_content)
                             json.dump(settings_display,file,indent=4)
                         dict_arguments['flag_save'] = 0
 
@@ -2197,24 +2192,10 @@ def run_main(dict_arguments):
             button_menu.show_text(win)
             button_quit.show_text(win)
             player_lvl1.flag_move = False
-        print(mouse_cor)
+        # print(mouse_cor)
         pygame.display.flip()
 
-def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event):
-    if dict_arguments['scene'] == story:
-        bg.show_image(win)
-        story_scene.show_image(win)
-        button_continue_story.show_image(win)
-        if check_mouse_cor(button_continue_story,mouse_cor):
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                dict_arguments['scene'] = next_story
-                return True
-            button_continue_story.path = 'images/button_continue_story_b.png'
-            button_continue_story.image_load()
-        else:
-            button_continue_story.path = 'images/button_continue_story_y.png'
-            button_continue_story.image_load()
-        
+
 
 
 

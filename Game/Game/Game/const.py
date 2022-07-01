@@ -1,7 +1,6 @@
 import pygame
 import os
 from graphic_elements import*
-from sounds import Sounds
 from random import randint, choice
 from Addition_Module import*
 from Text import Font
@@ -15,10 +14,7 @@ with open('saves/config.json','r') as file:
     settings = json.load(file)
 for key in settings_display.keys():
     settings[key] = settings_display[key]
-if settings['FULLSCREEN'] == 'True':
-    settings['FULLSCREEN'] = True
-else:
-    settings['FULLSCREEN'] = False
+
 if settings['AUTOSAVE'] == 'True':
     settings['AUTOSAVE'] = True
 else:
@@ -123,9 +119,18 @@ dict_path_skills = {
                     'skill_idol_people':'images/skills/eliot/skill_idol_people.png',
                     'skill_leader':'images/skills/eliot/skill_leader.png',
 }
+dict_order_skills = {
+                    'skill_leader':True,#Первый
+                    
+                    'skill_earth_blessing':False,#Слево
+                    'skill_lumberjack':False,#Справо
+
+                    'skill_forest_path':False,#Слево
+                    'skill_idol_people':False,#Справо
+}
 list_learn_skills = list()
 dict_artifact_on_past = dict_artifact_on.copy()
-list_order_skills = ['skill_earth_blessing','skill_forest_path','skill_idol_people','skill_leader','skill_lumberjack']
+ 
 mana_fountain = int(settings['MANA_FOUNTAIN'])
 exp_fountain = int(settings['EXP_FOUNTAIN'])
 flag_buy_card = True
@@ -545,6 +550,7 @@ dict_arguments = {
     'flag_show_deal':False,
     'text_potion':None,
     'gold_count_potion':0,
+    'dict_order_skills':dict_order_skills,
 }
 
 new_game_dict = dict_arguments.copy()

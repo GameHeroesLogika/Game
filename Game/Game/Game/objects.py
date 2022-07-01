@@ -129,11 +129,11 @@ button_altar_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREE
 button_castle_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19,'images/menu_hero_back_y.png')
 button_market_back = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=0,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19,path='images/menu_hero_back_b.png')
 
-button_new_game = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24)
-button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*4, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9,path='images/menu/play_gray.png',image_button_b='images/menu/play_b.png',image_button_y='images/menu/play_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*4)
-button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*8, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*8)
-button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*12, settings['SCREEN_WIDTH']//9, settings['SCREEN_HEIGHT']//9, 'images/menu/settings_b.png',image_button_b='images/menu/settings_b.png',image_button_y='images/menu/settings_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*12)
-button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*16, settings['SCREEN_WIDTH']//7, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*16)
+button_new_game = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24)
+button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*4, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/play_gray.png',image_button_b='images/menu/play_b.png',image_button_y='images/menu/play_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*4)
+button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*8, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*8)
+button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*12, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9, 'images/menu/settings_b.png',image_button_b='images/menu/settings_b.png',image_button_y='images/menu/settings_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*12)
+button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*16, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*16)
 
 if dict_arguments['civ_selected'] != None:
     button_play.path = 'images/menu/play_b.png'
@@ -148,7 +148,7 @@ button_quit = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'wh
 button_display_size = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Разрешение:',settings['SCREEN_WIDTH']//14.2,settings['SCREEN_HEIGHT']//8)
 list_buttons_display_size =[
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','800x600',button_display_size.font_x,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
-                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1280x720',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*2,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
+                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','1280x720',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*2,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1920x1080',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*4,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
 ]
 text_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выберите расу',settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19)
@@ -165,6 +165,7 @@ button_civ_choose = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//
 for obj in list_buttons_display_size:
     width = settings_display['SCREEN_WIDTH']
     height = settings_display['SCREEN_HEIGHT']
+    print(width,height)
     obj_width = obj.font_content.split('x')[0]
     obj_height = obj.font_content.split('x')[1]
     if int(obj_width) == width and int(obj_height) == height:
@@ -176,7 +177,7 @@ list_button_display_fullsize = [
     Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//25,'black','Нет',settings['SCREEN_WIDTH']//14.2*4,settings['SCREEN_HEIGHT']//8*5)
 ]
 
-if settings_display['FULLSCREEN'] == 'True':
+if settings_display['FULLSCREEN']:
     list_button_display_fullsize[0].font_color = 'red'
 else:
     list_button_display_fullsize[1].font_color = 'red'

@@ -2,7 +2,7 @@
     "SCREEN_WIDTH": 1280,
     "SCREEN_HEIGHT": 720,
     "SOUNDS_VOLUME": 0,
-    "AUTOSAVE": "False",
-    "FULLSCREEN": "False",
-    "MUSIC_VOLUME": 7
+    "AUTOSAVE": false,
+    "FULLSCREEN": false,
+    "MUSIC_VOLUME": 0
 }

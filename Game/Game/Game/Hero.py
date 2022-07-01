@@ -89,13 +89,13 @@ class Main_Hero(Graphic_elements):
         self.portal_sound = Sounds('sounds/portal.wav',settings['SOUNDS_VOLUME'])#Звук портала
         self.build_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук захвата здания
         self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
-        self.tavern_music = Music('sounds/tavern.mp3',settings['MUSIC_VOLUME'])
+        self.tavern_music = Music('sounds/tavern.wav',settings['MUSIC_VOLUME'])
         self.shack_sound = Sounds('sounds/tavern.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием
         self.tower_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.academy_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.fountain_exp_sound = Sounds('sounds/fountain_exp.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.fountain_mana_sound = Sounds('sounds/fountain_mana.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
-        self.water_sound = Music('sounds/water.mp3',settings['MUSIC_VOLUME'])
+        self.water_sound = Music('sounds/water.wav',settings['MUSIC_VOLUME'])
         for i in range(4):# Заполнение списков изобржаний с движением 
             path = os.path.join(os.path.abspath(__file__+'/..'),'images/player/right/'+str(i)+'.png')
             self.list_images_right.append(path)

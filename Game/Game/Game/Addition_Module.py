@@ -719,6 +719,11 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
             dict_arguments['characteristic_dict']['lvl_skill_diplomacy'] +=2
         if dict_artifact_on['helmet'] != 'helmet_ice.png' and dict_artifact_on_past['helmet'] == 'helmet_ice.png':
             dict_arguments['characteristic_dict']['lvl_skill_diplomacy'] -=2
+        if dict_artifact_on['helmet'] == 'helmet_fire.png' and dict_artifact_on_past['helmet'] != 'helmet_fire.png':
+            dict_arguments['index_fog'] += 1
+        if dict_artifact_on['helmet'] != 'helmet_fire.png' and dict_artifact_on_past['helmet'] == 'helmet_fire.png':
+            dict_arguments['index_fog'] -= 1
+        
     if dict_artifact_on['boots'] != dict_artifact_on_past['boots']:
         if dict_artifact_on['boots'] == 'boots_ice.png' and dict_artifact_on_past['boots'] != 'boots_ice.png':
             dict_arguments['characteristic_dict']['count_step'] +=2
@@ -820,5 +825,20 @@ def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_her
     dict_arguments['cardgame_variables']['card_that_move_en'] = None
     with open('saves/config1.json','w') as file:
         json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
-    dict_arguments['game'] = False
+    
 
+def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event,win,bg,button_continue_story):
+    if dict_arguments['scene'] == story:
+        bg.show_image(win)
+        story_scene.show_image(win)
+        button_continue_story.show_image(win)
+        if check_mouse_cor(button_continue_story,mouse_cor):
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                dict_arguments['scene'] = next_story
+                return True
+            button_continue_story.path = 'images/button_continue_story_b.png'
+            button_continue_story.image_load()
+        else:
+            button_continue_story.path = 'images/button_continue_story_y.png'
+            button_continue_story.image_load()
+        
