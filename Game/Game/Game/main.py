@@ -66,12 +66,15 @@ def run_main(dict_arguments):
                     if check_mouse_cor_font(button_quit,mouse_cor):
                         dict_arguments['game'] = False
                         save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
-                        
+                        player_lvl1.flag_move = True
                     if check_mouse_cor_font(button_menu,mouse_cor):
                         dict_arguments['scene'] = 'menu'
                         dict_arguments['flag_pause'] = False
+                        player_lvl1.flag_move = True
                     if check_mouse_cor_font(button_continue,mouse_cor):
                         dict_arguments['flag_pause'] = False
+                        player_lvl1.flag_move = True
+
             if event.type == pygame.QUIT:
                 save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
                 dict_arguments['game'] = False
@@ -878,7 +881,7 @@ def run_main(dict_arguments):
                 text_mana_cost_click.show_text(win)
                 for obj in list_slots_base_skills:
                     obj.show_image(win)
-                
+            
                 for obj in list_slots_skills_hero:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                         if check_mouse_cor(obj,mouse_cor=mouse_cor):
@@ -886,22 +889,23 @@ def run_main(dict_arguments):
                             path_skill = obj.path.split('/')[-1]
                             path_skill = path_skill.split('.')[0]
                             list_order_skills = list(dict_arguments['dict_order_skills'].keys())
-                            if not dict_arguments['dict_order_skills'][path_skill] == False:
-                                if dict_arguments['characteristic_dict']['mana'] >= dict_arguments['skill_cost']:
-                                    dict_arguments['dict_order_skills'][path_skill] = True
-                                    if list_order_skills.index(path_skill) == 0:
-                                        dict_arguments['dict_order_skills'][list_order_skills[1]] = True
-                                        dict_arguments['dict_order_skills'][list_order_skills[2]] = True
-                                    if list_order_skills.index(path_skill) == 1:
-                                        dict_arguments['dict_order_skills'][list_order_skills[3]] = True
-                                    if list_order_skills.index(path_skill) == 2:
-                                        dict_arguments['dict_order_skills'][list_order_skills[4]] = True
-                                    dict_arguments['characteristic_dict']['mana']-=dict_arguments['skill_cost']
-                                    path_skill = obj.path.split('/')[-1]
-                                    path_skill = path_skill.split('.')[0]
-                                    obj.path = 'images/skills/eliot/'+path_skill+'_learn.png'
-                                    list_learn_skills.append(path_skill+'_learn')
-                                    obj.image_load()
+                            if not 'learn' in path_skill:
+                                if not dict_arguments['dict_order_skills'][path_skill] == False:
+                                    if dict_arguments['characteristic_dict']['mana'] >= dict_arguments['skill_cost']:
+                                        dict_arguments['dict_order_skills'][path_skill] = True
+                                        if list_order_skills.index(path_skill) == 0:
+                                            dict_arguments['dict_order_skills'][list_order_skills[1]] = True
+                                            dict_arguments['dict_order_skills'][list_order_skills[2]] = True
+                                        if list_order_skills.index(path_skill) == 1:
+                                            dict_arguments['dict_order_skills'][list_order_skills[3]] = True
+                                        if list_order_skills.index(path_skill) == 2:
+                                            dict_arguments['dict_order_skills'][list_order_skills[4]] = True
+                                        dict_arguments['characteristic_dict']['mana']-=dict_arguments['skill_cost']
+                                        path_skill = obj.path.split('/')[-1]
+                                        path_skill = path_skill.split('.')[0]
+                                        obj.path = 'images/skills/eliot/'+path_skill+'_learn.png'
+                                        list_learn_skills.append(path_skill+'_learn')
+                                        obj.image_load()
                     obj.show_image(win)
                 for obj in list_cards_menu_hero:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
@@ -1805,12 +1809,9 @@ def run_main(dict_arguments):
             if player_lvl1.flag_fountain_exp and  player_lvl1.flag_pressed and dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_exp_cor[0]][player_lvl1.fountain_exp_cor[1]] == 'e':
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_fountain_exp = False
-            print(player_lvl1.flag_pressed)
             if player_lvl1.flag_fountain_mana and  player_lvl1.flag_pressed and dict_arguments['mat_objetcs_lvl1'][player_lvl1.fountain_mana_cor[0]][player_lvl1.fountain_mana_cor[1]] == 'm':
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_fountain_mana = False
-                print('fldsfksdlfksdlfsld')
-
             if player_lvl1.flag_academy and dict_arguments['flag_use_royal_academy'] == False and player_lvl1.flag_pressed :
                 dict_arguments['flag_show_error_next_week'] = 0
                 player_lvl1.flag_academy = False
@@ -2038,7 +2039,7 @@ def run_main(dict_arguments):
         if dict_arguments['flag_show_error_next_week'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_next_week_buildings.show_text(win)
-            print('fsld;fsdf;slf;')
+            # print('fsld;fsdf;slf;')
             dict_arguments['flag_show_error_next_week'] +=1
         if dict_arguments['flag_market_aritfact_no_slots'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
@@ -2198,7 +2199,6 @@ def run_main(dict_arguments):
             button_menu.show_text(win)
             button_quit.show_text(win)
             player_lvl1.flag_move = False
-        print(mouse_cor)
         pygame.display.flip()
 
 

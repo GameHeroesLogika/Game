@@ -37,6 +37,9 @@ CENTER_CELL_COR = [settings['SCREEN_WIDTH']//19*8,settings['SCREEN_HEIGHT']//2]
 settings['SOUNDS_VOLUME'] = settings['SOUNDS_VOLUME']/100
 settings['MUSIC_VOLUME'] = settings['MUSIC_VOLUME']/100
 
+SCREEN_CELL_H = settings['SCREEN_HEIGHT']//10.8
+SCREEN_CELL_W = settings['SCREEN_WIDTH']//19
+
 
 list_losed_card_enemy = []
 list_losed_card_pl = []
@@ -68,7 +71,7 @@ LENGTH_MAP_LVL1 = 31
 W_CELL_MINI_MAP = settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1
 H_CELL_MINI_MAP = settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1
 # Координаты для старта отрисовки клеток в мини-карте
-X_FRAME_MM, Y_FRAME_MM = (settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1) + settings['SCREEN_WIDTH']//200,  settings['SCREEN_WIDTH']//19 + settings['SCREEN_HEIGHT']//115.8 
+X_FRAME_MM, Y_FRAME_MM = settings['SCREEN_WIDTH']//1.16,  settings['SCREEN_WIDTH']//19 + settings['SCREEN_HEIGHT']//115.8 
 # список клеток для мини-карты
 list_cells_MM = list()
 #Список из звуков подбора ресурсов
@@ -241,7 +244,7 @@ list_cells_lvl1 = [
                    list('000t0000000ckkdoodl000tttttttt0'),
                    list('000t0000000addooodnf0tt000000t0'),
                    list('000t0000000adooooddl0t0000000tt'),
-                   list('000ttttttttбббooббббtt00000000t'),
+                   list('000ttttttttбббббббббtt00000000t'),
                    list('tttt0000000adooooddl0t000000000'),
                    list('t000000000ckdoooddgj0t000000000'),
                    list('t000000000addddddgj00t000000000'),
@@ -255,7 +258,7 @@ list_cells_lvl1 = [
 
 #Список-матрица объектов(персонаж, здания, ресурсы)
 mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B,e,m,s
-                    list('kkkА000b0000лл11000000000nn11гг'),#A,a-academia
+                    list('kkk0000b0000лл11000000000nn11гг'),#A,a-academia
                     list('kkk0000000001л1Hh0000P000000вг1'),#J,j-taverna
                     list('0p00А0000000Mл1hh0000000000вв11'),#S-Хижина
                     list('00C000000000л11000000000W0вв00S'),#B-Храм

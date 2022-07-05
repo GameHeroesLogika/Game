@@ -21,32 +21,35 @@ elif settings['FULLSCREEN'] == False:
 win_rect = Rect(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'])
 player_lvl1 = Main_Hero(
                         x=0,y=0,
-                        height=settings['SCREEN_WIDTH']//19,width=settings['SCREEN_WIDTH']//19,
+                        height=SCREEN_CELL_W,width=SCREEN_CELL_W,
                         path='images/player/player_front.png',
                         SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
                         where_move=where_move,count_move=int(settings['COUNT_MOVE']),
                         win=win,count_step=dict_arguments['characteristic_dict']['count_step'])
-dialog_book = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_WIDTH']//19,width=settings['SCREEN_WIDTH']//19*14,height=settings['SCREEN_WIDTH']//19*9,path='images/dialog_book.png')
+dialog_book = Graphic_elements(x=SCREEN_CELL_W,y=SCREEN_CELL_H,width=SCREEN_CELL_W*14,height=SCREEN_CELL_H*7.5,path='images/dialog_book.png')
+elliot_img = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9 + settings['SCREEN_WIDTH']//350,  SCREEN_CELL_W*4.74, settings['SCREEN_WIDTH']//16, settings['SCREEN_HEIGHT']//7.5, 'images/game_interface/elliot_img.png')
+player_info = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Эллиот, ур '+str(dict_arguments['characteristic_dict']['lvl']),elliot_img.X,elliot_img.Y +elliot_img.HEIGHT+ settings['SCREEN_HEIGHT']//100)
+
 #Объекты матрицы
 
 
-flower0 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower0.png')
-flower1 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower1.png')
-flower2 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower2.png')
-flower3 = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/flower3.png')
+flower0 = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/flower0.png')
+flower1 = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/flower1.png')
+flower2 = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/flower2.png')
+flower3 = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/flower3.png')
 list_forest =[]
 for i in range(4):
-    forest = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_WIDTH']//19*2,path='images/MatrixImage/forest'+str(i)+'.png')
+    forest = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H*2,path='images/MatrixImage/forest'+str(i)+'.png')
     list_forest.append(forest)
-field_path = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/field_path.png')
-mountain = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19*2, settings['SCREEN_WIDTH']//19*2, 'images/MatrixImage/mountain.png')
+field_path = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/field_path.png')
+mountain = Graphic_elements(0, 0, SCREEN_CELL_W*2, SCREEN_CELL_H*2, 'images/MatrixImage/mountain.png')
 
 list_water = []
 for i in range(5):
-    water = Graphic_elements(0,0,width=settings['SCREEN_WIDTH']//19,height=settings['SCREEN_WIDTH']//19,path='images/MatrixImage/water'+str(i)+'.png')
+    water = Graphic_elements(0,0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/water'+str(i)+'.png')
     list_water.append(water)
 water = choice(list_water)
-bridge = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/MatrixImage/bridge.png')
+bridge = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H, 'images/MatrixImage/bridge.png')
 #Контент ошибки 
 text_error_content = None
 # Рамка для ошибки
@@ -57,7 +60,7 @@ frame_new_day = Graphic_elements(settings['SCREEN_WIDTH']//2 - settings['SCREEN_
 
 # Объект текста ошибки
 error_text_obj = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red',None,frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10)
-portal = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/portal.png')
+portal = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/portal.png')
 #Картинки клеточек для мини карты
 green = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/green.png')
 black = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/black.png')
@@ -71,24 +74,24 @@ forest_mm = Graphic_elements(x=0,y=0,width=W_CELL_MINI_MAP,height=H_CELL_MINI_MA
 field_path_mm = Graphic_elements(x=0,y=0,width=W_CELL_MINI_MAP,height=H_CELL_MINI_MAP,path='images/MatrixImage/field_path.png')
 red_mm = Graphic_elements(x=0,y=0,width=W_CELL_MINI_MAP,height=H_CELL_MINI_MAP,path='images/red_mm.png')
 #Строения
-fountain_exp = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*2, 'images/buildings/fountain_exp.png')
-fountain_mana = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/buildings/fountain_mana.png')
-fountain_exp_empty = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*2, 'images/buildings/fountain_exp_empty.png')
-fountain_mana_empty = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/buildings/fountain_mana_empty.png')
-gemsmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/gemsmine.png')
-farm = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/farm.png')
-goldmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/goldmine.png')
-ironmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/ironmine.png')
+fountain_exp = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H*2, 'images/buildings/fountain_exp.png')
+fountain_mana = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H, 'images/buildings/fountain_mana.png')
+fountain_exp_empty = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H*2, 'images/buildings/fountain_exp_empty.png')
+fountain_mana_empty = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H, 'images/buildings/fountain_mana_empty.png')
+gemsmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/gemsmine.png')
+farm = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/farm.png')
+goldmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/goldmine.png')
+ironmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/ironmine.png')
 sawmill = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/sawmill.png')
 stonebreaker = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/stinebreaker.png')
-watchtower = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5,'images/buildings/watchtower.png')
+watchtower = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_W*1.5,'images/buildings/watchtower.png')
 royal_academy = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/royal_academy.png')
 tavern = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/tavern.png')
-# template = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5,'images/buildings/template.png')
-shack = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5,'images/buildings/shack.png')
-market = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*2, settings['SCREEN_WIDTH']//19*2,'images/buildings/market.png')
-city = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*3, settings['SCREEN_WIDTH']//19*3,'images/buildings/castle.png')
-man_potion = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5,'images/man_potion.png')
+# template = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_W*1.5,'images/buildings/template.png')
+shack = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_W*1.5,'images/buildings/shack.png')
+market = Graphic_elements(0,0,SCREEN_CELL_W*2, SCREEN_CELL_W*2,'images/buildings/market.png')
+city = Graphic_elements(0,0,SCREEN_CELL_W*3, SCREEN_CELL_W*3,'images/buildings/castle.png')
+man_potion = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_W*1.5,'images/man_potion.png')
 #Строения города
 castle = Graphic_elements(x=settings['SCREEN_WIDTH']//2.2,y=0,width=settings['SCREEN_WIDTH']//3.65,height=settings['SCREEN_HEIGHT']//3.6,path = 'images/city/castle.png')
 camp = Graphic_elements(x=settings['SCREEN_WIDTH']//4.83,y=settings['SCREEN_HEIGHT']//1.58,width=settings['SCREEN_WIDTH']//6.4,height=settings['SCREEN_HEIGHT']//5.53,path = 'images/city/camp.png')
@@ -97,44 +100,42 @@ altar = Graphic_elements(x=settings['SCREEN_WIDTH']//1.33,y=settings['SCREEN_HEI
 forge = Graphic_elements(x=settings['SCREEN_WIDTH']//1.2,y=settings['SCREEN_HEIGHT']//1.58,width=settings['SCREEN_WIDTH']//6.4,height=settings['SCREEN_HEIGHT']//4.36,path = 'images/city/forge.png')
 portal_resource = Graphic_elements(x=settings['SCREEN_WIDTH']//3.55,y=settings['SCREEN_HEIGHT']//4.23,width=settings['SCREEN_WIDTH']//6.56,height=settings['SCREEN_HEIGHT']//3.07,path = 'images/city/portal.png')
 #Замок гоблниа
-castle_goblin = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*3, settings['SCREEN_WIDTH']//19*3,path = 'images/goblin_camp.png')
-player_info = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Эллиот, ур '+str(dict_arguments['characteristic_dict']['lvl']),settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*3 + settings['SCREEN_WIDTH']//350,settings['SCREEN_WIDTH']//19*4.7 + settings['SCREEN_HEIGHT']//7.03)
+castle_goblin = Graphic_elements(0,0,SCREEN_CELL_W*3, SCREEN_CELL_W*3,path = 'images/goblin_camp.png')
 
 #Ресурсы
 mana_img = Graphic_elements(x=settings['SCREEN_WIDTH']//1.21,y=settings['SCREEN_HEIGHT']//1.59,width=settings['SCREEN_WIDTH']//50,height=settings['SCREEN_HEIGHT']//28.125,path='images/mana.png')
 
-gold = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/resources/gold.png')
-iron = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/resources/iron.png')
-crystal = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/gems.png')
-wood = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/resources/wood.png')
-stone = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/resources/stone_liana.png')
-tree_full = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree_full.png')
-tree = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19*1.5, 'images/resources/tree.png')
+gold = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/resources/gold.png')
+iron = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/resources/iron.png')
+crystal = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W*1.5, 'images/resources/gems.png')
+wood = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/resources/wood.png')
+stone = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/resources/stone_liana.png')
+tree_full = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W*1.5, 'images/resources/tree_full.png')
+tree = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W*1.5, 'images/resources/tree.png')
 
 
-apple = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, player_info.font_y+settings["SCREEN_HEIGHT"]//40, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/food.png')
-iron_bullion = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*1.4//1, apple.Y, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/iron_bullion.png')
-wood2 = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, apple.Y+apple.HEIGHT+settings["SCREEN_HEIGHT"]//40, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/wood.png')
-gold_bullion = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*1.4//1, wood2.Y, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/gold_bullion.png')
-crystal_purified = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*1.4//1, wood2.Y+wood2.HEIGHT+settings["SCREEN_HEIGHT"]//40, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/crystal.png')
-stone_purified = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1, crystal_purified.Y, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/stone.png')
+apple = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9//1, player_info.font_y+settings["SCREEN_HEIGHT"]//30, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/food.png')
+iron_bullion = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*1.4//1, apple.Y, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/iron_bullion.png')
+wood2 = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9//1, apple.Y+apple.HEIGHT+settings["SCREEN_HEIGHT"]//40, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/wood.png')
+gold_bullion = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*1.4//1, wood2.Y, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/gold_bullion.png')
+crystal_purified = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*1.4//1, wood2.Y+wood2.HEIGHT+settings["SCREEN_HEIGHT"]//40, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/crystal.png')
+stone_purified = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9//1, crystal_purified.Y, settings['SCREEN_WIDTH']//30, settings['SCREEN_WIDTH']//30, 'images/resources/stone.png')
 
-exp_img = Graphic_elements(x=settings['SCREEN_WIDTH']//1.23,y=settings['SCREEN_HEIGHT']//1.7,width=settings['SCREEN_WIDTH']//50,height=settings['SCREEN_WIDTH']//50,path='images/exp.png')
+exp_img = Graphic_elements(x=settings['SCREEN_WIDTH']//1.23,y=settings['SCREEN_HEIGHT']//1.7,width=settings['SCREEN_WIDTH']//50,height=settings['SCREEN_HEIGHT']//28.125,path='images/exp.png')
 exp_img.X =  exp_img.start_x+(len(str(dict_arguments['characteristic_dict']['exp']))-1)*step_exp_text
 mana_img.X = mana_img.start_x+(len(str(dict_arguments['characteristic_dict']['mana']))-1)*step_exp_text
 button_change = Graphic_elements(x=settings['SCREEN_WIDTH']//2.43,y=settings['SCREEN_HEIGHT']//1.69,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
-exp_img = Graphic_elements(x=settings['SCREEN_WIDTH']//1.23,y=settings['SCREEN_HEIGHT']//1.7,width=settings['SCREEN_WIDTH']//50,height=settings['SCREEN_HEIGHT']//28.125,path='images/exp.png')
 
-button_to_hero = Graphic_elements( settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1 +settings['SCREEN_WIDTH']//13.5,settings['SCREEN_WIDTH']//19*4.7,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//30,'images/game_interface/to_hero.png')
-button_pause = Graphic_elements( settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1 +settings['SCREEN_WIDTH']//13.5,settings['SCREEN_WIDTH']//19*4.7 + settings['SCREEN_WIDTH']//30,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//30,'images/game_interface/pause.png')
+button_to_hero = Graphic_elements( settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9//1 +settings['SCREEN_WIDTH']//13.5,SCREEN_CELL_W*4.7,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//30,'images/game_interface/to_hero.png')
+button_pause = Graphic_elements( settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9//1 +settings['SCREEN_WIDTH']//13.5,SCREEN_CELL_W*4.7 + settings['SCREEN_WIDTH']//30,settings['SCREEN_WIDTH']//15,settings['SCREEN_WIDTH']//30,'images/game_interface/pause.png')
 button_end_move = Graphic_elements(settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//7.6, settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//11, settings['SCREEN_WIDTH']//9,settings['SCREEN_HEIGHT']//20 , 'images/game_interface/end_moves.png')
 
-button_menu_hero_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9,'images/menu_hero_back_y.png')
-button_city_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9,'images/menu_hero_back_y.png')
-button_camp_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9,'images/menu_hero_back_y.png')
-button_altar_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9,'images/menu_hero_back_y.png')
-button_castle_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9,'images/menu_hero_back_y.png')
-button_market_back = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=0,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_HEIGHT']//8.9,path='images/menu_hero_back_b.png')
+button_menu_hero_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,SCREEN_CELL_W*2,SCREEN_CELL_H,'images/menu_hero_back_y.png')
+button_city_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,SCREEN_CELL_W*2,SCREEN_CELL_H,'images/menu_hero_back_y.png')
+button_camp_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,SCREEN_CELL_W*2,SCREEN_CELL_H,'images/menu_hero_back_y.png')
+button_altar_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,SCREEN_CELL_W*2,SCREEN_CELL_H,'images/menu_hero_back_y.png')
+button_castle_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,SCREEN_CELL_W*2,SCREEN_CELL_H,'images/menu_hero_back_y.png')
+button_market_back = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=0,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H,path='images/menu_hero_back_b.png')
 
 button_new_game = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24)
 button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*4, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/play_gray.png',image_button_b='images/menu/play_b.png',image_button_y='images/menu/play_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*4)
@@ -146,29 +147,29 @@ if dict_arguments['civ_selected'] != None:
     button_play.path = 'images/menu/play_b.png'
 button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//4,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/camp_hire_b.png')
 button_change_card = Graphic_elements(x=settings['SCREEN_WIDTH']//2.48,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//14.4*2.5,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_change_b.png')
-button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
+button_build = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8*1.5,y=settings['SCREEN_HEIGHT']-SCREEN_CELL_H*2,width=settings['SCREEN_WIDTH']//12.8*3,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/button_build_b.png')
 
-button_continue = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'white','Продолжить',settings['SCREEN_WIDTH']//2.5-settings['SCREEN_WIDTH']//19,settings['SCREEN_HEIGHT']//3-settings['SCREEN_HEIGHT']//8.9)
-button_menu = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'white','Выйти в меню',settings['SCREEN_WIDTH']//2.5-settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_HEIGHT']//3+settings['SCREEN_HEIGHT']//8.9)
-button_quit = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'white','Выйти из игры',settings['SCREEN_WIDTH']//2.5-settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_HEIGHT']//3+settings['SCREEN_HEIGHT']//8.9*3)
+button_continue = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'white','Продолжить',settings['SCREEN_WIDTH']//2.5-SCREEN_CELL_W,settings['SCREEN_HEIGHT']//3-SCREEN_CELL_H)
+button_menu = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'white','Выйти в меню',settings['SCREEN_WIDTH']//2.5-SCREEN_CELL_W*1.5,settings['SCREEN_HEIGHT']//3+SCREEN_CELL_H)
+button_quit = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'white','Выйти из игры',settings['SCREEN_WIDTH']//2.5-SCREEN_CELL_W*1.5,settings['SCREEN_HEIGHT']//3+SCREEN_CELL_H*3)
 
-button_display_size = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Разрешение:',settings['SCREEN_WIDTH']//14.2,settings['SCREEN_HEIGHT']//8)
+button_display_size = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Разрешение:',settings['SCREEN_WIDTH']//14.2,settings['SCREEN_HEIGHT']//8)
 list_buttons_display_size =[
-                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','800x600',button_display_size.font_x,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
-                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1280x720',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*2,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
+                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1280x720',button_display_size.font_x,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
+                Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1600x920',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*2,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1920x1080',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*4,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
 ]
-text_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выберите расу',settings['SCREEN_WIDTH']//19,settings['SCREEN_HEIGHT']//8.9)
-lava_icon = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_WIDTH']//19*3,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_HEIGHT']//8.9*2,path='images/lava_icon.png')
-lava_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Огненная',settings['SCREEN_WIDTH']//19,settings['SCREEN_HEIGHT']//8.9*3.3+lava_icon.HEIGHT)
-ice_icon = Graphic_elements(x=settings['SCREEN_WIDTH']//19*4,y=settings['SCREEN_WIDTH']//19*3,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_HEIGHT']//8.99*2,path='images/snow_icon.png')
-ice_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Ледяная',settings['SCREEN_WIDTH']//19*4,settings['SCREEN_HEIGHT']//8.9*3.3+ice_icon.HEIGHT)
-earth_icon = Graphic_elements(x=settings['SCREEN_WIDTH']//19*7,y=settings['SCREEN_WIDTH']//19*3,width=settings['SCREEN_WIDTH']//19*2,height=settings['SCREEN_HEIGHT']//8.9*2,path='images/earth_icon.png')
-earth_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Земляная',settings['SCREEN_WIDTH']//19*7,settings['SCREEN_HEIGHT']//8.9*3.3+earth_icon.HEIGHT)
+text_choose_civ = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Выберите расу',SCREEN_CELL_W,SCREEN_CELL_H)
+lava_icon = Graphic_elements(x=SCREEN_CELL_W,y=SCREEN_CELL_W*3,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H*2,path='images/lava_icon.png')
+lava_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Огненная',SCREEN_CELL_W,SCREEN_CELL_H*3.3+lava_icon.HEIGHT)
+ice_icon = Graphic_elements(x=SCREEN_CELL_W*4,y=SCREEN_CELL_W*3,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H*2,path='images/snow_icon.png')
+ice_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Ледяная',SCREEN_CELL_W*4,SCREEN_CELL_H*3.3+ice_icon.HEIGHT)
+earth_icon = Graphic_elements(x=SCREEN_CELL_W*7,y=SCREEN_CELL_W*3,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H*2,path='images/earth_icon.png')
+earth_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Земляная',SCREEN_CELL_W*7,SCREEN_CELL_H*3.3+earth_icon.HEIGHT)
 scene_choose_civ = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH'],height=settings['SCREEN_HEIGHT'],path='images/book.png')
 list_icon_civ = [lava_icon,earth_icon,ice_icon]
 list_text_civ = [lava_text,ice_text,earth_text]
-button_civ_choose = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выбрать',settings['SCREEN_WIDTH']//19*3.5,settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//8.9*2)
+button_civ_choose = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Выбрать',SCREEN_CELL_W*3.5,settings['SCREEN_HEIGHT']//2+SCREEN_CELL_H*2)
 for obj in list_buttons_display_size:
     width = settings_display['SCREEN_WIDTH']
     height = settings_display['SCREEN_HEIGHT']
@@ -212,18 +213,18 @@ else:
     list_button_auto_save[1].font_color = 'red'
 button_save = Font('images/Font/pixel_font.ttf', settings['SCREEN_WIDTH']//38,'black','Сохранить',settings['SCREEN_WIDTH']//1.14,settings['SCREEN_HEIGHT']//1.34)
 
-button_fight = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Сразится',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_HEIGHT']//8.9*1.5)
-button_offer = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Подкупить',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_HEIGHT']//8.9*3)
-button_threat= Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Угроза',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_HEIGHT']//8.9*4.5)
-button_leave = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Уйти',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_HEIGHT']//8.9*6)
+button_fight = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Сразится',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+SCREEN_CELL_H*1.3)
+button_offer = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Подкупить',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+SCREEN_CELL_H*2.6)
+button_threat= Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Угроза',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+SCREEN_CELL_H*3.9)
+button_leave = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Уйти',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+SCREEN_CELL_H*5.2)
 list_buttons_dialog = [button_fight,button_offer,button_threat,button_leave]
-button_deal = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Сделка',dialog_book.X+settings['SCREEN_WIDTH']//19*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_HEIGHT']//8.9*3)
+button_deal = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Сделка',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+SCREEN_CELL_H*3)
 
 list_buttons_dialog_potion = [button_leave,button_threat,button_deal]
 #Текст для кнопки гарнизона
-button_post_army = Graphic_elements(0,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9-button_menu_hero_back.HEIGHT,settings['SCREEN_WIDTH']//19*2.5,settings['SCREEN_HEIGHT']//8.9,'images/post_army_b.png')
+button_post_army = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H-button_menu_hero_back.HEIGHT,SCREEN_CELL_W*2.5,SCREEN_CELL_H,'images/post_army_b.png')
 
-button_continue_story = Graphic_elements(settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*4,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//8.9*2,settings['SCREEN_WIDTH']//19*4,settings['SCREEN_HEIGHT']//8.9*2,path='images/button_continue_story_y.png')
+button_continue_story = Graphic_elements(settings['SCREEN_WIDTH']-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']-SCREEN_CELL_H*2,SCREEN_CELL_W*4,SCREEN_CELL_H*2,path='images/button_continue_story_y.png')
 
 list_buttons = [button_play,button_help,button_set,button_exit,button_new_game] 
 
@@ -231,18 +232,18 @@ list_buttons = [button_play,button_help,button_set,button_exit,button_new_game]
 #Текст стоимость скиллов 
 text_mana_cost_click = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'blue','  Нажмите;для покупки;за '+str(skill_cost)+' маны',settings['SCREEN_WIDTH']//320,settings['SCREEN_HEIGHT']//2.21,index=3)
 #Текст нового уровня
-text_new_lvl = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','Поздровляем! У вас новый уровень;Выберите улучшение способности;'+'Новый уровень - '+str(characteristic_dict['lvl']+1),settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//8.9*2,index=3)
+text_new_lvl = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','Поздровляем! У вас новый уровень;Выберите улучшение способности;'+'Новый уровень - '+str(characteristic_dict['lvl']+1),settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_W*2,index=3)
 #Текст опыта и уровня
 text_lvl_hero = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'yellow','Текущий уровень - '+str(characteristic_dict['lvl'])+';До следующего уровня:',settings['SCREEN_WIDTH']//1.34,settings['SCREEN_HEIGHT']//2,index=2)
 text_exp_hero = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'green',str(characteristic_dict['exp'])+'/'+str(max_exp_lvl),settings['SCREEN_WIDTH']//1.34,settings['SCREEN_HEIGHT']//1.7)
 #Текст количества ходов
 text_step_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Осталось ходов: '+str(player_lvl1.count_step),settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//6.8,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//7.5)
 #Текст нового дня
-text_new_day = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','           Новый день;        Получено за день; ;Яблок - 0 Золота - 0; ;Железа - 0 Кристаллов - 0; ;Камня - 0 Дерева - 0',frame_new_day.X+settings['SCREEN_WIDTH']//19,frame_new_day.Y+settings['SCREEN_HEIGHT']//8.9,index=8)
+text_new_day = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','           Новый день;        Получено за день; ;Яблок - 0 Золота - 0; ;Железа - 0 Кристаллов - 0; ;Камня - 0 Дерева - 0',frame_new_day.X+SCREEN_CELL_W,frame_new_day.Y+SCREEN_CELL_H,index=8)
 #Текст сундука 
 chest_text_gold =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red','   Нет места для артефакта;   Вы забираете золото',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10,index=2)
 
-chest_text_choice = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Выберите награду;       или',settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//9.5,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//8.9*2,index=2)
+chest_text_choice = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Выберите награду;       или',settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//9.5,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*2,index=2)
 #Текст рынка нет места для артефакта 
 text_market_aritfact_no_slots =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','Нет места для артефакта',frame_error.X+ frame_error.WIDTH//10,frame_error.Y + settings['SCREEN_HEIGHT']//10)
 #Текст даты 
@@ -272,11 +273,11 @@ text_cost_buildings = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']
 #Текст лагерь наемников
 text_camp = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','Лагерь наемников',settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//9.5,0)
 #Текст для хижины колдуна
-text_shack = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red',' Вы выпили зелье маны',frame_buildings.X,frame_buildings.Y + settings['SCREEN_HEIGHT']//8.9)
+text_shack = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red',' Вы выпили зелье маны',frame_buildings.X,frame_buildings.Y + SCREEN_CELL_H)
 #Текст для колодца маны
-text_fountain_mana = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red',' Вы выпили воду из колодца',frame_buildings.X,frame_buildings.Y + settings['SCREEN_HEIGHT']//8.9)
+text_fountain_mana = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red',' Вы выпили воду из колодца',frame_buildings.X,frame_buildings.Y + SCREEN_CELL_H)
 #Текст для дерева знаний
-text_fountain_exp = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','Вы получили знания дерева',frame_buildings.X,frame_buildings.Y + settings['SCREEN_HEIGHT']//8.9)
+text_fountain_exp = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','Вы получили знания дерева',frame_buildings.X,frame_buildings.Y + SCREEN_CELL_H)
 #Текст для ошибки недостаточно ресурсов
 text_not_enough_resource = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','Не хватает ресурсов!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для ошибки купленого здания
@@ -285,22 +286,22 @@ text_build_alredy_bought = Font('images/Font/pixel_font.ttf',settings['SCREEN_WI
 text_buy_previous_build = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//37,'red','Нельзя купить здание!;  Купите предыдущее!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12,index=2)
 #Текст для подкупа противника
 text_offer_enemy = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19)
-text_offer_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+settings['SCREEN_WIDTH']//19*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
-text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+settings['SCREEN_WIDTH']//19*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
+text_offer_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+SCREEN_CELL_W*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
+text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+SCREEN_CELL_W*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
 #Текст недостаточно карт
 text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Не хватает карт!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для карт 
-text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_HEIGHT']//8.9,index=2)
+text_dialog_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+SCREEN_CELL_H,index=2)
 #Текст для зелья
-text_dialog_potion = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+settings['SCREEN_HEIGHT']//8.9)
+text_dialog_potion = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',dialog_book.X+dialog_book.WIDTH//2+settings['SCREEN_WIDTH']//35,dialog_book.Y+settings['SCREEN_HEIGHT']//19+SCREEN_CELL_H)
 #Текст для события
-text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',frame_notification.X+settings['SCREEN_WIDTH']//19,frame_notification.Y+settings['SCREEN_HEIGHT']//8.9)
+text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','',frame_notification.X+SCREEN_CELL_W,frame_notification.Y+SCREEN_CELL_H)
 #Текст для сохранения
 text_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','  Настройки сохранены.;  Перезайдите в игру!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19,index=2)
 #Текст для ошибки выбора расы
 text_error_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','Вы не выбрали расу!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для выбора способности 
-text_hero_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','        Поздровляем!;Вы познали великую магию!;Вы можете изучить способность!',settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//8.9*2,index=3)
+text_hero_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','        Поздровляем!;Вы познали великую магию!;Вы можете изучить способность!',settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*2,index=3)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',apple.X+apple.WIDTH+settings['SCREEN_WIDTH']//160,apple.Y)
 amount_iron = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',iron_bullion.X+iron_bullion.WIDTH+settings['SCREEN_WIDTH']//160,iron_bullion.Y)
@@ -309,23 +310,22 @@ amount_gold = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCRE
 amount_crystal=Font('images/Font/pixel_font.ttf',int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',crystal_purified.X+crystal_purified.WIDTH+settings['SCREEN_WIDTH']//160,crystal_purified.Y)
 amount_stone = Font('images/Font/pixel_font.ttf',int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',stone_purified.X+stone_purified.WIDTH+settings['SCREEN_WIDTH']//160,stone_purified.Y)
 
-amount_money = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*1.4//1, settings['SCREEN_WIDTH']//19*6.7,settings['SCREEN_WIDTH']//19*1.5, settings['SCREEN_HEIGHT']//8.9*1.5, 'images/resources/gold_bullion.png')
+amount_money = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*1.4//1, SCREEN_CELL_W*6.7,SCREEN_CELL_W*1.5, SCREEN_CELL_H*1.5, 'images/resources/gold_bullion.png')
 #Туман войны
-fog_war = Graphic_elements(None,None,settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19,'images/fog_war.bmp')
+fog_war = Graphic_elements(None,None,SCREEN_CELL_W, SCREEN_CELL_W,'images/fog_war.bmp')
 #Интерфейс
-interface_bg  = Graphic_elements(settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*3,0,settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT'],'images/game_interface/sheet.png')
-frame = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1,  settings['SCREEN_WIDTH']//19*4.7, settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//7.03, 'images/game_interface/ramka.png')
-frame_mini_map = Graphic_elements(X_FRAME_MM-settings['SCREEN_WIDTH']//128,  Y_FRAME_MM-settings['SCREEN_HEIGHT']//144 , settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), 'images/game_interface/ramka.png')
-elliot_img = Graphic_elements(settings['SCREEN_WIDTH'] - settings['SCREEN_WIDTH']//19*2.9//1 + settings['SCREEN_WIDTH']//350,  settings['SCREEN_WIDTH']//19*4.74, settings['SCREEN_WIDTH']//16, settings['SCREEN_HEIGHT']//7.5, 'images/game_interface/elliot_img.png')
+interface_bg  = Graphic_elements(settings['SCREEN_WIDTH']-SCREEN_CELL_W*3,0,SCREEN_CELL_W*3,settings['SCREEN_HEIGHT'],'images/game_interface/sheet.png')
+frame = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9,  SCREEN_CELL_W*4.7, settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//7.03, 'images/game_interface/ramka.png')
+frame_mini_map = Graphic_elements(settings['SCREEN_WIDTH']//1.167,  Y_FRAME_MM-settings['SCREEN_HEIGHT']//150 , settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), 'images/game_interface/ramka.png')
 list_interface_button = [button_to_hero,button_pause,button_end_move]
 menu_hero_icon_eliot = Graphic_elements(x=settings['SCREEN_WIDTH']//1.64,y=settings['SCREEN_HEIGHT']//2.08,width=settings['SCREEN_WIDTH']//8.25,height=settings['SCREEN_HEIGHT']//5.1,path='images/game_interface/elliot_img.png')
-text_date = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'white','День: '+str(characteristic_dict['day'])+';Неделя: '+str(characteristic_dict['week']),X_FRAME_MM+settings['SCREEN_WIDTH']//85.3,frame_mini_map.Y+frame_mini_map.HEIGHT,index=2)
+text_date = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'white','День: '+str(characteristic_dict['day'])+';Неделя: '+str(characteristic_dict['week']),X_FRAME_MM,frame_mini_map.Y+frame_mini_map.HEIGHT,index=2)
 
 #
 #Описание чего то
 desc = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//2,settings['SCREEN_HEIGHT']//2,path=None)
 desc_artifact = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_HEIGHT']/1.4,path=None)
-desc_base_skill = Graphic_elements(x=settings['SCREEN_WIDTH']//19,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_HEIGHT']/1.4,path=None)
+desc_base_skill = Graphic_elements(x=SCREEN_CELL_W,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_HEIGHT']/1.4,path=None)
 desc_skill_hero = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_HEIGHT']//2,height=settings['SCREEN_HEIGHT']/1.43,path=None)
 desc_buildings_city = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//4,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//4,settings['SCREEN_WIDTH']//2,settings['SCREEN_HEIGHT']//2,path=None)
 #Рамка выбраного чего то
@@ -336,8 +336,8 @@ castle_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_
 civ_selected = Graphic_elements(x=0,y=0,width=0,height=0,path='images/market_selected.png')
 
 #Cундук
-chest = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19,path='images/chest/chest.png')
-chest_open = Graphic_elements(settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//8.9*3,settings['SCREEN_WIDTH']//19*6,settings['SCREEN_WIDTH']//19*6,path='images/chest/chest_open.png')
+chest = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W,path='images/chest/chest.png')
+chest_open = Graphic_elements(settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*3,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*3,SCREEN_CELL_W*6,SCREEN_CELL_W*6,path='images/chest/chest_open.png')
 
 #Сцены
 book = Graphic_elements(0, 0, settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT'], 'images/book.png')
@@ -385,9 +385,9 @@ background_music_card_game = Sounds('sounds/game_music.wav',settings['MUSIC_VOLU
 
 brightless_pause = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/brightless.png')
 
-flashlight_icon = Graphic_elements(frame_notification.X+settings['SCREEN_WIDTH']//19,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9*2,'images/skills_icons/flash_icon.png')
-healskill_Icon = Graphic_elements(frame_notification.X+settings['SCREEN_WIDTH']//19*4,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9*2,'images/skills_icons/heal_icon.png')
-damageskill_Icon = Graphic_elements(frame_notification.X+settings['SCREEN_WIDTH']//19*7,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']//8.9*2,'images/skills_icons/dmg_icon.png')
+flashlight_icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/flash_icon.png')
+healskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*4,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/heal_icon.png')
+damageskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*7,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/dmg_icon.png')
 list_card_camp = [
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*8,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path='images/cards/бард_locked.png'),
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*4.5,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path='images/cards/гигант_locked.png'),
@@ -425,16 +425,16 @@ list_all_artifact = [
 ]
 #Базовые скиллы
 list_slots_base_skills = [
-    Graphic_elements(settings['SCREEN_WIDTH']//51.2,settings['SCREEN_HEIGHT']//24,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//5.71,path='images/skills/skill_diplomacy.png'),
-    Graphic_elements(settings['SCREEN_WIDTH']//7.11,settings['SCREEN_HEIGHT']//24,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//5.71,path='images/skills/skill_domesticpolitics.png'),
-    Graphic_elements(settings['SCREEN_WIDTH']//3.87,settings['SCREEN_HEIGHT']//24,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//5.71,path='images/skills/skill_fight.png')
+    Graphic_elements(settings['SCREEN_WIDTH']//51.2,settings['SCREEN_HEIGHT']//23.2,settings['SCREEN_WIDTH']//9.8,settings['SCREEN_HEIGHT']//5.6,path='images/skills/skill_diplomacy.png'),
+    Graphic_elements(settings['SCREEN_WIDTH']//7.15,settings['SCREEN_HEIGHT']//23.2,settings['SCREEN_WIDTH']//9.8,settings['SCREEN_HEIGHT']//5.6,path='images/skills/skill_domesticpolitics.png'),
+    Graphic_elements(settings['SCREEN_WIDTH']//3.85,settings['SCREEN_HEIGHT']//23.2,settings['SCREEN_WIDTH']//9.8,settings['SCREEN_HEIGHT']//5.6,path='images/skills/skill_fight.png')
 ]
 
 
 list_choice_base_skill = [
-    Graphic_elements(frame_notification.X+frame_notification.WIDTH//2-settings['SCREEN_WIDTH']//19.68-settings['SCREEN_WIDTH']//19*3,frame_notification.Y+settings['SCREEN_HEIGHT']//8.9*3,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//4.61,path='images/skills/skill_diplomacy.png'),
-    Graphic_elements(frame_notification.X+frame_notification.WIDTH//2-settings['SCREEN_WIDTH']//19.68,frame_notification.Y+settings['SCREEN_HEIGHT']//8.9*3,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//4.61,path='images/skills/skill_domesticpolitics.png'),
-    Graphic_elements(frame_notification.X+frame_notification.WIDTH//2-settings['SCREEN_WIDTH']//19.68+settings['SCREEN_WIDTH']//19*3,frame_notification.Y+settings['SCREEN_HEIGHT']//8.9*3,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//4.61,path='images/skills/skill_fight.png')
+    Graphic_elements(frame_notification.X+frame_notification.WIDTH//2-SCREEN_CELL_W-SCREEN_CELL_W*3,frame_notification.Y+SCREEN_CELL_W*3,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//4.61,path='images/skills/skill_diplomacy.png'),
+    Graphic_elements(frame_notification.X+frame_notification.WIDTH//2-SCREEN_CELL_W,frame_notification.Y+SCREEN_CELL_W*3,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//4.61,path='images/skills/skill_domesticpolitics.png'),
+    Graphic_elements(frame_notification.X+frame_notification.WIDTH//2-SCREEN_CELL_W+SCREEN_CELL_W*3,frame_notification.Y+SCREEN_CELL_W*3,settings['SCREEN_WIDTH']//9.84,settings['SCREEN_HEIGHT']//4.61,path='images/skills/skill_fight.png')
 ]
 list_text_lvl_base_skills = [
     Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//51,'red','Уровень: '+str(characteristic_dict['lvl_skill_diplomacy']),settings['SCREEN_WIDTH']//51.2,0),
@@ -533,27 +533,27 @@ for i in range(6):
 
 list_artifact_graphic_elements = list()
 for i in dict_arguments['list_matrix_artifact']:
-    artifact = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19*1.5,settings['SCREEN_HEIGHT']//8.9*1.5,path='images/artifacts/'+i+'.png')
+    artifact = Graphic_elements(0,0,SCREEN_CELL_W*1.5,SCREEN_CELL_H*1.5,path='images/artifacts/'+i+'.png')
     list_artifact_graphic_elements.append(artifact)
 
 #Карты на матрице
-crossbowman = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/арбалетчик.png',name='А')#А
-druid = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/друид.png',name='Д')#Д
-bard = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/бард.png',name='Б')#Б
-giant = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/гигант.png',name='Г')#Г
-golem = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/голем.png',name='Е')#Е
-centaur = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/кентавр.png',name='К')#К
-klaus = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/клаус.png',name='М')#М
-ludorn = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/лудорн.png',name='Л')#Л
-ork = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/орк.png',name='О')#О
-bomb_man = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/подрывник.png',name='П')#П
-roggy = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/рогги.png',name='Р')#Р
-surtur = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/суртур.png',name='С')#С
-yamy = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/ями.png',name='Я')#Я
-dvorf = Graphic_elements(0,0,settings['SCREEN_WIDTH']//19,settings['SCREEN_WIDTH']//19*1.5,path='images/cards/Heroes/дворф.png',name='В')#В
+crossbowman = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/арбалетчик.png',name='А')#А
+druid = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/друид.png',name='Д')#Д
+bard = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/бард.png',name='Б')#Б
+giant = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/гигант.png',name='Г')#Г
+golem = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/голем.png',name='Е')#Е
+centaur = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/кентавр.png',name='К')#К
+klaus = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/клаус.png',name='М')#М
+ludorn = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/лудорн.png',name='Л')#Л
+ork = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/орк.png',name='О')#О
+bomb_man = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/подрывник.png',name='П')#П
+roggy = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/рогги.png',name='Р')#Р
+surtur = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/суртур.png',name='С')#С
+yamy = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/ями.png',name='Я')#Я
+dvorf = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/Heroes/дворф.png',name='В')#В
 list_card_matrix = [crossbowman,druid,bard,giant,golem,centaur,klaus,ludorn,ork,bomb_man,roggy,surtur,yamy,dvorf]
 #Картинка зеленого флага
-flag_green = Graphic_elements(0, 0, settings['SCREEN_WIDTH']//19, settings['SCREEN_WIDTH']//19, 'images/flags/flag_g.png')
+flag_green = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/flags/flag_g.png')
 
 
 
