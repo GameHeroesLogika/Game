@@ -71,7 +71,7 @@ LENGTH_MAP_LVL1 = 31
 W_CELL_MINI_MAP = settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1
 H_CELL_MINI_MAP = settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1
 # Координаты для старта отрисовки клеток в мини-карте
-X_FRAME_MM, Y_FRAME_MM = settings['SCREEN_WIDTH']//1.16,  settings['SCREEN_WIDTH']//19 + settings['SCREEN_HEIGHT']//115.8 
+X_FRAME_MM, Y_FRAME_MM = settings['SCREEN_WIDTH']//1.17,  settings['SCREEN_WIDTH']//19 + settings['SCREEN_HEIGHT']//115.8 
 # список клеток для мини-карты
 list_cells_MM = list()
 #Список из звуков подбора ресурсов
@@ -212,15 +212,15 @@ dict_path_artifact = {
 
 list_daily_events = [
                     'post_fight',
-                    'goblin',
-                    'enemy',
-                    'gold',
-                    'heist',
-                    'artifact',
-                    'add_army',
-                    'fog_more',
-                    'fog_less',
-                    'discount',
+                    # 'goblin',
+                    # 'enemy',
+                    # 'gold',
+                    # 'heist',
+                    # 'artifact',
+                    # 'add_army',
+                    # 'fog_more',
+                    # 'fog_less',
+                    # 'discount',
                     ]
 #Список из клеток первого уровня
 list_cells_lvl1 = [
@@ -554,6 +554,7 @@ dict_arguments = {
     'text_potion':None,
     'gold_count_potion':0,
     'dict_order_skills':dict_order_skills,
+    'count_error_bought_skill':30
 }
 
 new_game_dict = dict_arguments.copy()

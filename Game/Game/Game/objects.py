@@ -78,10 +78,10 @@ fountain_exp = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H*2, 'images/buil
 fountain_mana = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H, 'images/buildings/fountain_mana.png')
 fountain_exp_empty = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H*2, 'images/buildings/fountain_exp_empty.png')
 fountain_mana_empty = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H, 'images/buildings/fountain_mana_empty.png')
-gemsmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/gemsmine.png')
-farm = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/farm.png')
-goldmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/goldmine.png')
-ironmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H//2),'images/buildings/ironmine.png')
+gemsmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H*2),'images/buildings/gemsmine.png')
+farm = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H*2),'images/buildings/farm.png')
+goldmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H*2),'images/buildings/goldmine.png')
+ironmine = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(SCREEN_CELL_H*2),'images/buildings/ironmine.png')
 sawmill = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/sawmill.png')
 stonebreaker = Graphic_elements(0,0,int(settings['SCREEN_WIDTH']//9.5),int(settings['SCREEN_WIDTH']//9.5),'images/buildings/stinebreaker.png')
 watchtower = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_W*1.5,'images/buildings/watchtower.png')
@@ -285,7 +285,7 @@ text_build_alredy_bought = Font('images/Font/pixel_font.ttf',settings['SCREEN_WI
 #Текст для ошибки нельзя купить здание
 text_buy_previous_build = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//37,'red','Нельзя купить здание!;  Купите предыдущее!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12,index=2)
 #Текст для подкупа противника
-text_offer_enemy = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19)
+text_offer_enemy = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//48,'red','',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19)
 text_offer_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+SCREEN_CELL_W*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
 text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+SCREEN_CELL_W*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
 #Текст недостаточно карт
@@ -302,6 +302,9 @@ text_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red'
 text_error_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','Вы не выбрали расу!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для выбора способности 
 text_hero_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','        Поздровляем!;Вы познали великую магию!;Вы можете изучить способность!',settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*2,index=3)
+#Текст для ошибки уже купленной способности
+text_error_bought_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//44,'red','Способность уже куплена!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10)
+
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',apple.X+apple.WIDTH+settings['SCREEN_WIDTH']//160,apple.Y)
 amount_iron = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',iron_bullion.X+iron_bullion.WIDTH+settings['SCREEN_WIDTH']//160,iron_bullion.Y)
@@ -316,7 +319,7 @@ fog_war = Graphic_elements(None,None,SCREEN_CELL_W, SCREEN_CELL_W,'images/fog_wa
 #Интерфейс
 interface_bg  = Graphic_elements(settings['SCREEN_WIDTH']-SCREEN_CELL_W*3,0,SCREEN_CELL_W*3,settings['SCREEN_HEIGHT'],'images/game_interface/sheet.png')
 frame = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9,  SCREEN_CELL_W*4.7, settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//7.03, 'images/game_interface/ramka.png')
-frame_mini_map = Graphic_elements(settings['SCREEN_WIDTH']//1.167,  Y_FRAME_MM-settings['SCREEN_HEIGHT']//150 , settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), 'images/game_interface/ramka.png')
+frame_mini_map = Graphic_elements(settings['SCREEN_WIDTH']//1.175,  Y_FRAME_MM-settings['SCREEN_HEIGHT']//150 , settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), settings['SCREEN_WIDTH']//6.9//LENGTH_MAP_LVL1*(LENGTH_MAP_LVL1+2), 'images/game_interface/ramka.png')
 list_interface_button = [button_to_hero,button_pause,button_end_move]
 menu_hero_icon_eliot = Graphic_elements(x=settings['SCREEN_WIDTH']//1.64,y=settings['SCREEN_HEIGHT']//2.08,width=settings['SCREEN_WIDTH']//8.25,height=settings['SCREEN_HEIGHT']//5.1,path='images/game_interface/elliot_img.png')
 text_date = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'white','День: '+str(characteristic_dict['day'])+';Неделя: '+str(characteristic_dict['week']),X_FRAME_MM,frame_mini_map.Y+frame_mini_map.HEIGHT,index=2)
@@ -443,12 +446,12 @@ list_text_lvl_base_skills = [
 ]
 
 list_slots_skills_hero = [
-    Graphic_elements(x=settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//1.61,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//11.07,path=dict_arguments['dict_path_skills']['skill_earth_blessing']),
-    Graphic_elements(x=settings['SCREEN_WIDTH']//5.68,y=settings['SCREEN_HEIGHT']//1.61,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//11.07,path=dict_arguments['dict_path_skills']['skill_lumberjack']),
-    Graphic_elements(x=settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//1.34,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//11.07,path=dict_arguments['dict_path_skills']['skill_forest_path']),
-    Graphic_elements(x=settings['SCREEN_WIDTH']//5.68,y=settings['SCREEN_HEIGHT']//1.34,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//11.07,path=dict_arguments['dict_path_skills']['skill_idol_people']),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//12.69,y=settings['SCREEN_HEIGHT']//1.63,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//10.5,path=dict_arguments['dict_path_skills']['skill_earth_blessing']),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//5.71,y=settings['SCREEN_HEIGHT']//1.63,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//10.5,path=dict_arguments['dict_path_skills']['skill_lumberjack']),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//12.69,y=settings['SCREEN_HEIGHT']//1.35,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//10.5,path=dict_arguments['dict_path_skills']['skill_forest_path']),
+    Graphic_elements(x=settings['SCREEN_WIDTH']//5.71,y=settings['SCREEN_HEIGHT']//1.35,width=settings['SCREEN_WIDTH']//18.28,height=settings['SCREEN_HEIGHT']//10.5,path=dict_arguments['dict_path_skills']['skill_idol_people']),
     
-    Graphic_elements(x=settings['SCREEN_WIDTH']//8.25,y=settings['SCREEN_HEIGHT']//2.21,width=settings['SCREEN_WIDTH']//14.22,height=settings['SCREEN_HEIGHT']//8,path=dict_arguments['dict_path_skills']['skill_leader'])
+    Graphic_elements(x=settings['SCREEN_WIDTH']//8.25,y=settings['SCREEN_HEIGHT']//2.23,width=settings['SCREEN_WIDTH']//13.9,height=settings['SCREEN_HEIGHT']//8,path=dict_arguments['dict_path_skills']['skill_leader'])
     ]
 artifact_chest = Graphic_elements(0,0,0,0,dict_arguments['path_artifact_chest'])
 dict_price_artifact = {

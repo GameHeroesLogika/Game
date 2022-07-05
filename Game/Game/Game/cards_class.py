@@ -15,8 +15,8 @@ class Cards(Graphic_elements_cards):
         self.img_heart = Graphic_elements_cards(self.X,self.Y+self.HEIGHT-self.HEIGHT//6,self.HEIGHT//5,self.HEIGHT//5,'images/hp_symb.png')
         self.img_dmg = Graphic_elements_cards(self.X+ self.WIDTH -self.WIDTH//34,self.Y+self.HEIGHT-self.HEIGHT//6,self.HEIGHT//3.5,self.HEIGHT//3.5,'images/dmg_symb.png')
         #Отображаемый текст урона и хп карты
-        self.hp_text = Font('images/Font/pixel_font.ttf',self.HEIGHT//5,'lime','0',self.X + self.img_heart.WIDTH//4,self.Y+self.HEIGHT-self.HEIGHT//6)
-        self.dmg_text = Font('images/Font/pixel_font.ttf',self.HEIGHT//5,'red','0',self.X + self.WIDTH -self.WIDTH//5,self.Y+self.HEIGHT-self.HEIGHT//6)
+        self.hp_text = Font('images/Font/pixel_font.ttf',int(self.HEIGHT//5),'lime','0',self.X + self.img_heart.WIDTH//4,self.Y+self.HEIGHT-self.HEIGHT//6)
+        self.dmg_text = Font('images/Font/pixel_font.ttf',int(self.HEIGHT//5),'red','0',self.X + self.WIDTH -self.WIDTH//5,self.Y+self.HEIGHT-self.HEIGHT//6)
         #Путь к картеочке-описанию
         self.DESC_PATH = desc_path 
         #Объект карточки-описания 

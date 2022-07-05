@@ -12,7 +12,7 @@ class Font():
         self.font_x = font_x
         self.font_y = font_y
     def show_text(self,win):
-        self.font = pygame.font.Font(self.font_path,self.font_size)
+        self.font = pygame.font.Font(self.font_path,int(self.font_size))
         self.font = self.font.render(self.font_content,True,self.font_color)
         win.blit(self.font,(self.font_x,self.font_y))
     

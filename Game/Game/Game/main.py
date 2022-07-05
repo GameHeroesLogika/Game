@@ -103,7 +103,7 @@ def run_main(dict_arguments):
                             if dict_arguments['flag_fight_start_post'] != True:
                                 dict_arguments['mat_objetcs_lvl1'][dict_arguments['card_cor'][0]][dict_arguments['card_cor'][1]] = '0'
                         if dict_arguments['cardgame_variables']['who_won'] != 'player':
-                            if not player_lvl1.index_cor in list_story_end_cor:
+                            if  player_lvl1.index_cor in list_story_end_cor:
                                 dict_arguments['scene'] = 'story8'
                             dict_arguments['mat_objetcs_lvl1'][player_lvl1.player_cor[0]][player_lvl1.player_cor[1]] = '0'
                             player_lvl1.player_cor = city_cor_enter
@@ -464,14 +464,14 @@ def run_main(dict_arguments):
                 button_market_back.show_image(win)
                 #Кнопка назад
                 if check_mouse_cor(button_market_back,mouse_cor):
-                    button_market_back.path = 'images/menu_hero_back_y.png'
+                    button_market_back.path = 'images/menu_hero_back_b.png'
                     button_market_back.image_load()
                     if event.type == pygame.MOUSEBUTTONDOWN and not dict_arguments['flag_pause']:
                         click_sound.play_sound()
                         dict_arguments['scene'] = 'lvl1'
                         player_lvl1.flag_market = False
                 else:
-                    button_market_back.path = 'images/menu_hero_back_b.png'
+                    button_market_back.path = 'images/menu_hero_back_y.png'
                     button_market_back.image_load()
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
                     click_sound.play_sound()
@@ -906,6 +906,8 @@ def run_main(dict_arguments):
                                         obj.path = 'images/skills/eliot/'+path_skill+'_learn.png'
                                         list_learn_skills.append(path_skill+'_learn')
                                         obj.image_load()
+                            else:
+                                dict_arguments['count_error_bought_skill'] = 0
                     obj.show_image(win)
                 for obj in list_cards_menu_hero:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not dict_arguments['flag_pause']:
@@ -1421,10 +1423,10 @@ def run_main(dict_arguments):
                 cards_arrangement(dict_arguments,dict_arguments['list_cards_pl_post_army'],list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
                 dict_arguments['scene'] = 'card_game'
             if card_number == 0:
-                dict_arguments['game'] = False
                 for i in dict_arguments['resources_dict'].keys():
                     if dict_arguments['resources_dict'][i] != 0:
-                        dict_arguments['resources_dict'][i] = dict_arguments['resources_dict'][i]/2
+                        dict_arguments['resources_dict'][i] = int(dict_arguments['resources_dict'][i]/2)
+                        dict_arguments['flag_fight_start_post'] = False
         if dict_arguments['scene'] == 'card_game':
             #Алгоритм поочередности ходов игрока и врага
             move_players_algorithm(dict_arguments['cardgame_variables'],list_objects_cards_pl,text_move,list_objects_cards_en,dict_card_characteristics)
@@ -1896,7 +1898,7 @@ def run_main(dict_arguments):
                 dict_arguments['count_daily_event'] = 0
                 if dict_arguments['daily_event'] == 'goblin':
                     list_resource = list()
-                    text_daily_event.font_content = '           Внимание!;На своём пути вы обнаружили ;тело гоблина. ;Обыскав его вы находите:;'
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;На своём пути вы обнаружили ;тело гоблина. ;Обыскав его вы находите:;'
                     text_daily_event.index = 5
                     list_unavailable_resource = []
                     for i in range(randint(1,4)):
@@ -1908,10 +1910,10 @@ def run_main(dict_arguments):
                             dict_arguments['resources_dict'][resource] += resoruce_count
                             list_resource.append(str(str(resource)+'/'+str(resoruce_count)))
                             if i == 2:
-                                text_daily_event.font_content+= ';'
+                                dict_arguments['text_daily_event_font_content']+= ';'
                                 text_daily_event.index +=1
-                    text_daily_event.font_content += text_cost(list_resource,finally_text='',text_obj=text_daily_event,settings=settings)[0]
-                    text_daily_event.font_content = text_daily_event.font_content.split(';')
+                    dict_arguments['text_daily_event_font_content'] += text_cost(list_resource,finally_text='',text_obj=dict_arguments['text_daily_event_font_content'],settings=settings)[0]
+                    dict_arguments['text_daily_event_font_content'] = dict_arguments['text_daily_event_font_content'].split(';')
                     
                 if dict_arguments['daily_event'] == 'heist':
                     list_resource = list()
@@ -1929,12 +1931,12 @@ def run_main(dict_arguments):
                                 dict_arguments['resources_dict'][resource] -= resoruce_count
                             list_resource.append(str(str(resource)+'/'+str(resoruce_count)))
                             if i == 2:
-                                text_daily_event.font_content+= ';'
+                                dict_arguments['text_daily_event_font_content']+= ';'
                                 text_daily_event.index +=1
-                    text_daily_event.font_content += text_cost(list_resource,finally_text='',text_obj=text_daily_event,settings=settings)[0]
-                    text_daily_event.font_content = text_daily_event.font_content.split(';')
+                    dict_arguments['text_daily_event_font_content'] += text_cost(list_resource,finally_text='',text_obj=dict_arguments['text_daily_event_font_content'],settings=settings)[0]
+                    dict_arguments['text_daily_event_font_content'] = dict_arguments['text_daily_event_font_content'].split(';')
                 if dict_arguments['daily_event'] == 'gold':
-                    text_daily_event.font_content = '           Внимание!;Прошлой ночью метеорологами был ;зафиксирован золотопад. ;;Шанс найти золото увеличен.'.split(';')
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;Прошлой ночью метеорологами был ;зафиксирован золотопад. ;;Шанс найти золото увеличен.'.split(';')
                     
                     text_daily_event.index = 5
                     for i in range(5):
@@ -1945,7 +1947,7 @@ def run_main(dict_arguments):
                                 dict_arguments['mat_objetcs_lvl1'][random_y][random_x] = 'g'
                                 break
                 if dict_arguments['daily_event'] == 'artifact':
-                    text_daily_event.font_content = '           Внимание!;;Ходя по лесу, Вы встретили мудреца;; с артефактом.Он передал его вам'.split(';')
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;;Идя по лесу Вы встретили мудреца;;с артефактом.Он передал его вам'.split(';')
                     text_daily_event.index = 5
                     random_artifact = choice(list_matrix_artifact)
                     for obj in list_all_artifact:
@@ -1961,10 +1963,10 @@ def run_main(dict_arguments):
                                 random_artifact = None
                                 break
                     if random_artifact != None:
-                        text_daily_event.font_content = '           Внимание!;;Ходя по лесу, Вы встретили мудреца;;с артефактом.Он передал его вам;;Но Ваш рюкзак был полным.'.split(';')
+                        dict_arguments['text_daily_event_font_content'] = '           Внимание!;;Ходя по лесу, Вы встретили мудреца;;с артефактом.Он передал его вам;;Но Ваш рюкзак был полным.'.split(';')
                         text_daily_event.index = 7
                 if dict_arguments['daily_event'] == 'add_army':
-                    text_daily_event.font_content = '           Внимание;;К вашему замку пришли путники;;Они просят вступления в вашу армию.;;Вы любезно согласились!'.split(';')
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание;;К вашему замку пришли путники;;Они просят вступления в вашу армию.;;Вы любезно согласились!'.split(';')
                     text_daily_event.index = 7
                     counter_card = randint(2,3)
                     for i in range(counter_card):
@@ -1984,29 +1986,25 @@ def run_main(dict_arguments):
                                     counter_card -=1
                                     break
                     if counter_card != 0:
-                        text_daily_event.font_content = ('           Внимание;;К вашему замку пришли путники;;Они просят вступления в вашу армию.;;Но для '+str(counter_card)+' не было найдено место').split(';')
+                        dict_arguments['text_daily_event_font_content'] = ('           Внимание;;К вашему замку пришли путники;;Они просят вступления в вашу армию.;;Но для '+str(counter_card)+' не было найдено место').split(';')
                         text_daily_event.index = 7
                         
                 if dict_arguments['daily_event'] == 'fog_less':
-                    text_daily_event.font_content = '           Внимание!;;На ваши земли надвигается туман!;;Ваш обзор уменьшен!'.split(';')
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;;На ваши земли надвигается туман!;;Ваш обзор уменьшен!'.split(';')
                     text_daily_event.index = 5
                     dict_arguments['index_fog'] -= 1
                 if dict_arguments['daily_event'] == 'fog_more':
-                    text_daily_event.font_content = '           Внимание!;;Сегодня будет ясная погода!;;Ваш обзор увеличен'.split(';')
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;;Сегодня будет ясная погода!;;Ваш обзор увеличен'.split(';')
                     text_daily_event.index = 5
                     dict_arguments['index_fog'] += 1
                 if dict_arguments['daily_event'] == 'post_fight':
-                    text_daily_event.font_content = '           Внимание!;;   На ваш замок напали! ;;Немедленно перейдите к обороне!'.split(';')
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;;   На ваш замок напали! ;;Немедленно перейдите к обороне!'.split(';')
                     text_daily_event.index = 5
-                    dict_arguments['daily_event'] = None
-                    dict_arguments['count_daily_event_post_fight'] = 0
                 if dict_arguments['daily_event'] == 'discount':
-                    text_daily_event.font_content = '           Внимание!;;Цены артефактов на рынке упали!;;         Скидки от 50%!!!;;Самое время закупится'.split(';')
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;;Цены артефактов на рынке упали!;;         Скидки от 50%!!!;;Самое время закупится'.split(';')
                     text_daily_event.index = 7
                     for i in dict_price_artifact.keys():
                         dict_price_artifact[i] = dict_price_artifact[i]//2
-                dict_arguments['text_daily_event_font_content'] = text_daily_event.font_content
-                
                 
             if player_lvl1.flag_card != None and player_lvl1.flag_card != False:
                 dict_arguments['flag_show_dialog'] = True
@@ -2039,7 +2037,6 @@ def run_main(dict_arguments):
         if dict_arguments['flag_show_error_next_week'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_next_week_buildings.show_text(win)
-            # print('fsld;fsdf;slf;')
             dict_arguments['flag_show_error_next_week'] +=1
         if dict_arguments['flag_market_aritfact_no_slots'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
@@ -2094,7 +2091,11 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_buy_previous_build.show_text(win)
             dict_arguments['flag_buy_previous_build'] += 1  
-        if dict_arguments['count_daily_event'] <80 and player_lvl1.flag_move and dict_arguments['count_daily_event_post_fight'] == 80:
+        if dict_arguments['count_error_bought_skill'] <30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_error_bought_skill.show_text(win)
+            dict_arguments['count_error_bought_skill'] += 1  
+        if dict_arguments['count_daily_event'] <80 and player_lvl1.flag_move:
             generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
             dict_arguments['count_daily_event'] += 1  
             index_font = 0
@@ -2105,18 +2106,14 @@ def run_main(dict_arguments):
             if dict_arguments['count_daily_event'] == 1:
                 event_sound.play_sound()
             if dict_arguments['count_daily_event'] == 80:
+                if dict_arguments['daily_event'] == 'post_fight':
+                    dict_arguments['flag_fight_start_post'] = True
                 dict_arguments['daily_event'] = None
             text_daily_event.show_text(win)
         if dict_arguments['flag_save'] <50:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_save.show_text(win)
-            dict_arguments['flag_save'] += 1  
-        if dict_arguments['count_daily_event_post_fight'] <80 and player_lvl1.flag_move:
-            generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
-            text_daily_event.show_text(win)
-            dict_arguments['count_daily_event_post_fight'] += 1  
-            if dict_arguments['count_daily_event_post_fight'] == 80:
-                dict_arguments['flag_fight_start_post'] = True
+            dict_arguments['flag_save'] += 1   
         if dict_arguments['count_dialog'] <50:
             for obj in list_buttons_dialog:
                 obj.font_content = ''
