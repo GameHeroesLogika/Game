@@ -66,6 +66,7 @@ def target_searching(cardgame_variables,list_objects_cards_en,list_objects_cards
                             cardgame_variables['text_error_content'] = 'У карты количество ХП макс.'
             
             index_card_pl += 1
+
                     
     #Возвращаем на стол взятую в рукт игроком карту, если он отпустил ЛКМ
     if cardgame_variables['card_attacker'] == None and cardgame_variables['picked_card'] != None:    

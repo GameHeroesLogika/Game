@@ -8,7 +8,7 @@ from event_functions_cardgame import*
 from sounds import*
 from Text_cardgame import*
 from draw_function import draw_all
-from profilehooks import profile
+# from profilehooks import profile
 pygame.init()
 # @profile
 #Основная фунуция
@@ -2196,6 +2196,7 @@ def run_main(dict_arguments):
             button_menu.show_text(win)
             button_quit.show_text(win)
             player_lvl1.flag_move = False
+
         pygame.display.flip()
 
 
