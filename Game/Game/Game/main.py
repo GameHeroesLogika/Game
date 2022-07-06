@@ -94,9 +94,9 @@ def run_main(dict_arguments):
                         dict_arguments['scene'] = 'lvl1'
                         
                         if dict_arguments['cardgame_variables']['who_won'] == 'player':
-                            if not player_lvl1.index_cor in list_story_end_cor and dict_arguments['characteristic_dict']['potion'] == 0:
+                            if  player_lvl1.index_cor in list_story_end_cor and dict_arguments['characteristic_dict']['potion'] == 0:
                                 dict_arguments['scene'] = 'story9'
-                            if not player_lvl1.index_cor in list_story_end_cor and dict_arguments['characteristic_dict']['potion'] == 1:
+                            if  player_lvl1.index_cor in list_story_end_cor and dict_arguments['characteristic_dict']['potion'] == 1:
                                 dict_arguments['scene'] = 'story10'
                             dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
                             dict_arguments['characteristic_dict']['exp']+=dict_arguments['trophy_exp']

@@ -37,7 +37,7 @@ def activate_hero_skill(cardgame_variables,heal_cloud,dmg_img,check_mouse_cor,he
                     cardgame_variables['need_to_show_skill'] = True
 #Отвечает за обнаружение цели, которую выбрал игрок, когда отпустил карту или скилл
 def target_searching(cardgame_variables,list_objects_cards_en,list_objects_cards_pl,check_mouse_cor,mouse_cor,dict_card_characteristics):
-    if cardgame_variables['card_attacker'] == None:
+    if cardgame_variables['card_attacker'] == None and cardgame_variables['picked_card'] != None:
         #Перебираем список объектов вражеских карт
         for en_card in list_objects_cards_en:
             #Если игрок положил свою карту на вражескую 

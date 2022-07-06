@@ -17,7 +17,7 @@ class Menu(Graphic_elements):
                 self.path = self.IMAGE_BUTTON_Y
             self.X = self.X_DIVIDER
             self.Y = self.Y_DIVIDER
-            self.WIDTH = SCREEN_W//5
+            self.WIDTH = SCREEN_W//4
             self.HEIGHT = SCREEN_H//9
             self.image_load()
         else:
@@ -25,7 +25,7 @@ class Menu(Graphic_elements):
                 self.path = self.IMAGE_BUTTON_B
             self.X = self.start_x
             self.Y = self.start_y
-            self.WIDTH = SCREEN_W//6
+            self.WIDTH = SCREEN_W//5
             self.HEIGHT = SCREEN_H//10
             self.image_load()
 
