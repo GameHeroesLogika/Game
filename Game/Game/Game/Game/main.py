@@ -111,7 +111,7 @@ def run_main(dict_arguments):
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if check_mouse_cor_font(button_quit,mouse_cor):
                         dict_arguments['game'] = False
-                        save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
+                        save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp)
                         player_lvl1.flag_move = True
                     if check_mouse_cor_font(button_menu,mouse_cor):
                         dict_arguments['scene'] = 'menu'
@@ -122,7 +122,7 @@ def run_main(dict_arguments):
                         player_lvl1.flag_move = True
 
             if event.type == pygame.QUIT:
-                save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
+                save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp)
                 dict_arguments['game'] = False
             if dict_arguments['scene'] == 'result_screen':
                 # Если навелись на кнопку окончания боя
@@ -1039,7 +1039,7 @@ def run_main(dict_arguments):
                     if check_mouse_cor(button_exit,mouse_cor):
                         sound_book.play_sound()
                         dict_arguments['game'] = False
-                        save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
+                        save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp)
                     elif check_mouse_cor(button_set,mouse_cor):
                         dict_arguments['scene'] = 'settings_scene'
                     elif check_mouse_cor(button_new_game,mouse_cor):
@@ -1252,7 +1252,7 @@ def run_main(dict_arguments):
                             player_lvl1.flag_card = False
                             player_lvl1.near_card = False
                             dict_arguments['flag_show_dialog'] = False
-                            dict_arguments['gold_count_enemy'] = int(dict_arguments['characteristic_dict']['lvl'])*randint(4,5)-int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*randint(3,4)+5
+                            dict_arguments['gold_count_enemy'] = int(dict_arguments['characteristic_dict']['lvl'])*randint(10,20)-int(dict_arguments['characteristic_dict']['lvl_skill_diplomacy'])*randint(3,4)+15
                         elif check_mouse_cor_font(button_threat,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             
                             chance_base = randint(0,100)
@@ -2239,7 +2239,7 @@ def run_main(dict_arguments):
             index = 0
         if dict_arguments['minute_in_game'] % 30 == 0:
             if settings['AUTOSAVE']:
-                save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero)
+                save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp)
         index+=1
         #Обновляем экран
         if dict_arguments['flag_pause']:

@@ -267,7 +267,7 @@ text_bought_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//4
 #Текст стоимость карт
 text_price_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_hire.X-settings['SCREEN_WIDTH']//30,button_hire.Y - settings['SCREEN_HEIGHT']//18.75)
 #Текст стоимости обмена карты в алтаре
-text_change_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_change_card.X-settings['SCREEN_WIDTH']//30,button_change_card.Y - settings['SCREEN_HEIGHT']//18.75)
+text_change_card = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_change_card.X+settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT'] - settings['SCREEN_HEIGHT']//18.75)
 #Текст стоимости здания в замке
 text_cost_buildings = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',button_build.X-settings['SCREEN_WIDTH']//30,button_build.Y - settings['SCREEN_HEIGHT']//18.75)
 #Текст лагерь наемников
@@ -392,11 +392,11 @@ flashlight_icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W,frame_noti
 healskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*4,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/heal_icon.png')
 damageskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*7,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/dmg_icon.png')
 list_card_camp = [
-                    Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*8,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path='images/cards/бард_locked.png'),
-                    Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*4.5,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path='images/cards/гигант_locked.png'),
-                    Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path='images/cards/клаус_locked.png'),
-                    Graphic_elements(x=settings['SCREEN_WIDTH']//2+settings['SCREEN_WIDTH']//20*2.5,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path='images/cards/друид_locked.png'),
-                    Graphic_elements(x=settings['SCREEN_WIDTH']//2+settings['SCREEN_WIDTH']//20*6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path='images/cards/подрывник_locked.png'),
+                    Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*8,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=  dict_arguments['dict_card_path_camp']['бард']),
+                    Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*4.5,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=dict_arguments['dict_card_path_camp']['гигант']),
+                    Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=    dict_arguments['dict_card_path_camp']['клаус']),
+                    Graphic_elements(x=settings['SCREEN_WIDTH']//2+settings['SCREEN_WIDTH']//20*2.5,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=dict_arguments['dict_card_path_camp']['друид']),
+                    Graphic_elements(x=settings['SCREEN_WIDTH']//2+settings['SCREEN_WIDTH']//20*6,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=  dict_arguments['dict_card_path_camp']['подрывник']),
 ]
 list_card_altar = [
                     Graphic_elements(x=settings['SCREEN_WIDTH']//3.7,y=settings['SCREEN_HEIGHT']//6,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path= None),

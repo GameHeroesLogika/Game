@@ -801,7 +801,7 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
         list_learn_skills.remove('skill_earth_blessing_learn')
         
     
-def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero):
+def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp):
     for key in list_all_artifact:
         if key.NAME !=None:
             key_dict = key.NAME
@@ -812,6 +812,9 @@ def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_her
     for key in list_slots_skills_hero:
         key_dict = key.path.split('/')[-1].split('_learn')[0]
         dict_arguments['dict_path_skills'][key_dict] = key.path
+    for key in list_card_camp:
+        dict_arguments['dict_card_path_camp'][key.path.split('/')[-1].split('_')[0]] = key.path
+        
     dict_arguments['characteristic_dict']['count_step'] = player_lvl1.count_step
     dict_arguments['list_capture_buildings'] = player_lvl1.list_capture_buildings
     dict_arguments['list_capture_buildings_symbol'] = player_lvl1.list_capture_buildings_symbol

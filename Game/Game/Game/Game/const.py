@@ -172,7 +172,7 @@ flag_fight_start_post = False
 flag_church = True
 flag_save = 50
 skill_cost = 200
-max_exp_lvl = 1000
+max_exp_lvl = 100
 max_mana = 1000
 mana_shack = 200
 change_mana_x = 0
@@ -198,6 +198,13 @@ flag_mouse_volume_music = False
 index_fog = 0
 flag_show_error_choose_icon = 30
 flag_pause = False
+dict_card_path_camp = {
+                        "бард":'images/cards/бард_locked.png',
+                        "гигант":'images/cards/гигант_locked.png',
+                        "клаус":'images/cards/клаус_locked.png',
+                        "друид":'images/cards/друид_locked.png',
+                        "подрывник":'images/cards/подрывник_locked.png'
+}
 dict_path_artifact = {
                         'helmet':None,
                         'chest':'images/artifacts/chest_ice.png',
@@ -570,7 +577,8 @@ dict_arguments = {
     'text_potion':None,
     'gold_count_potion':0,
     'dict_order_skills':dict_order_skills,
-    'count_error_bought_skill':30
+    'count_error_bought_skill':30,
+    'dict_card_path_camp':dict_card_path_camp
 }
 
 new_game_dict = dict_arguments.copy()
