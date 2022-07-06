@@ -13,9 +13,55 @@ pygame.init()
 # @profile
 #Основная фунуция
 def run_main(dict_arguments):
+    hero_skill = None
+
     if dict_arguments['scene'] == 'card_game':
         dict_arguments['scene'] = 'lvl1'
-    hero_skill = None
+        dict_arguments['cardgame_variables'] = {
+                                                'need_to_play_final_music':True,#Нужно ли проиграть финальную музыку
+                                                'flag_show_desc':30,#Флаг для показа описаний карт
+                                                'flag_show_desc_skill':30,#Флаг для показа описания скилла
+                                                'flag_show_error':30,#Флаг для показа ошибок
+                                                'card_attacker': None,#Атакующая карта
+                                                'card_victim':None,#Карта-жертва
+                                                'card_that_move_pl':None,
+                                                'count_play_sound':50,#Счетчик для проигрыша звука взятой карты
+                                                'index_picked_card':0,#Индекс взятой карты в списке
+                                                'picked_card':None,#Взятая игроком карта
+                                                'text_error_content': None,# Контент отображаемой ошибки
+                                                'need_to_show_skill':False, # Нужно ли отображать целебое облако или мечь, при использовании скилла
+                                                'active_skill':None,#Применяется ли скилл в данный момент
+                                                'is_healing':None, #Происходит ли сейчас лечение 
+                                                'card_that_showing_desc':None,   #Карта, описание которой нужно показать
+                                                'who_move':'player', #Пременная означает, кто ходит
+                                                'count_text_move':0, #Счетчик для отображения тескта для хода
+                                                'card_that_move_index':0, #Индекс карты игрока, которая должна ходить  
+                                                'card_that_move_en':None,#Карта, которая должна ходить у врага
+                                                'index_card_that_move_en':0,# Индекс карты, которая должна ходить у врага
+                                                'flag_animation_attack':0, #Счетчик для анимации атаки
+                                                "double_damage":None,  #Должна ли атакующая карта делать двойной урон
+                                                'healed_card':None,#Карта, которую нужно похилить
+                                                'hp_for_heal':None,# Кол-во хп, которое нужно прибавить карте
+                                                'who_won':None,#Означает, кто победил
+                                                'hp_text':None#Объект текста, который отображает прибавляемое хп карте
+                                            }
+        if hero_skill != None and '_bw' in hero_skill.path:
+            hero_skill.path = hero_skill.path.split('_bw')[0]+'.png'
+            hero_skill.image_load()
+        for card_losed in dict_arguments['list_losed_card_pl']:
+            for card_pl in dict_arguments['list_cards_pl']:
+                if card_losed == card_pl[0]:
+                    dict_arguments['list_cards_pl'][dict_arguments['list_cards_pl'].index(card_pl)][0] = None
+                    break
+        for i in range(len(dict_arguments['list_cards_en'])):
+            dict_arguments['list_cards_en'][i][0] = None
+        dict_arguments['list_losed_card_enemy'] = list()
+        dict_arguments['list_losed_card_pl'] = list()
+        create_icon_card(settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],dict_arguments['list_cards_pl'],list_cards_menu_hero,dict_arguments['list_card_pl_reserv'])
+        player_lvl1.flag_move = True
+        dict_arguments['flag_fight_start_post'] = False
+        background_music_card_game.stop_sound()
+        background_music.play_sound(-1)
     index = 0
     water = choice(list_water)
     time = pygame.time.Clock()
@@ -94,16 +140,16 @@ def run_main(dict_arguments):
                         dict_arguments['scene'] = 'lvl1'
                         
                         if dict_arguments['cardgame_variables']['who_won'] == 'player':
-                            if  player_lvl1.index_cor in list_story_end_cor and dict_arguments['characteristic_dict']['potion'] == 0:
+                            if  (player_lvl1.index_cor in list_story_end_cor or player_lvl1.player_cor in list_story_end_cor) and dict_arguments['characteristic_dict']['potion'] == 0:
                                 dict_arguments['scene'] = 'story9'
-                            if  player_lvl1.index_cor in list_story_end_cor and dict_arguments['characteristic_dict']['potion'] == 1:
+                            if  (player_lvl1.index_cor in list_story_end_cor or player_lvl1.player_cor in list_story_end_cor) and dict_arguments['characteristic_dict']['potion'] == 1:
                                 dict_arguments['scene'] = 'story10'
                             dict_arguments['resources_dict']['gold_bullion']+=dict_arguments['trophy_gold']
                             dict_arguments['characteristic_dict']['exp']+=dict_arguments['trophy_exp']
                             if dict_arguments['flag_fight_start_post'] != True:
                                 dict_arguments['mat_objetcs_lvl1'][dict_arguments['card_cor'][0]][dict_arguments['card_cor'][1]] = '0'
                         if dict_arguments['cardgame_variables']['who_won'] != 'player':
-                            if  player_lvl1.index_cor in list_story_end_cor:
+                            if  player_lvl1.index_cor in list_story_end_cor or player_lvl1.player_cor in list_story_end_cor:
                                 dict_arguments['scene'] = 'story8'
                             dict_arguments['mat_objetcs_lvl1'][player_lvl1.player_cor[0]][player_lvl1.player_cor[1]] = '0'
                             player_lvl1.player_cor = city_cor_enter
@@ -1936,7 +1982,7 @@ def run_main(dict_arguments):
                             if i == 2:
                                 dict_arguments['text_daily_event_font_content']+= ';'
                                 text_daily_event.index +=1
-                    dict_arguments['text_daily_event_font_content'] += text_cost(list_resource,finally_text='',text_obj=dict_arguments['text_daily_event_font_content'],settings=settings)[0]
+                    dict_arguments['text_daily_event_font_content'] += text_cost(list_resource,finally_text='',text_obj=text_daily_event,settings=settings)[0]
                     dict_arguments['text_daily_event_font_content'] = dict_arguments['text_daily_event_font_content'].split(';')
                 if dict_arguments['daily_event'] == 'gold':
                     dict_arguments['text_daily_event_font_content'] = '           Внимание!;Прошлой ночью метеорологами был ;зафиксирован золотопад. ;;Шанс найти золото увеличен.'.split(';')
@@ -2184,7 +2230,10 @@ def run_main(dict_arguments):
         dict_arguments['index_water'] +=1
         if dict_arguments['index_water'] % 10 == 0:
             water = choice(list_water)
-        time.tick(int(settings['FPS']))
+        if dict_arguments['scene'] != 'card_game':
+            time.tick(int(settings['FPS']))
+        else:
+            time.tick(45)
         if index == 90:
             dict_arguments['minute_in_game'] +=1
             index = 0
