@@ -1405,6 +1405,9 @@ def run_main(dict_arguments):
                 dict_arguments['flag_fight_start'] = False
                 dict_arguments['text_card'] = None
             if card_number == 0:
+                for i in dict_arguments['resources_dict'].keys():
+                    if dict_arguments['resources_dict'][i] != 0:
+                        dict_arguments['resources_dict'][i] = dict_arguments['resources_dict'][i]//2
                 dict_arguments['flag_not_enough_cards'] = 0
                 player_lvl1.flag_card = False
                 player_lvl1.near_card = False
@@ -1561,7 +1564,7 @@ def run_main(dict_arguments):
             elliot_img.show_image(win)
             player_info.show_text(win)
             if dict_arguments['number_opened_card'] <=5:
-                dict_arguments['number_opened_card'] = dict_arguments['characteristic_dict']['lvl'] // 3
+                dict_arguments['number_opened_card'] = (dict_arguments['characteristic_dict']['lvl'] // 3)+1
             if player_lvl1.flag_city and dict_arguments['flag_show_new_day'] >= 100:
                 dict_arguments['scene'] = 'city'
 
