@@ -11,7 +11,6 @@ class Menu(Graphic_elements):
         self.Y_DIVIDER = y_divider
         self = Graphic_elements(x,y,width,height,path)
     def resize_button_menu(self, mouse_cor,SCREEN_W,SCREEN_H):
-        
         if check_mouse_cor(self,mouse_cor):
             if not 'gray'  in self.path:
                 self.path = self.IMAGE_BUTTON_Y

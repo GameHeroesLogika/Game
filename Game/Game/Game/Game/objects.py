@@ -137,11 +137,11 @@ button_altar_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,S
 button_castle_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,SCREEN_CELL_W*2,SCREEN_CELL_H,'images/menu_hero_back_y.png')
 button_market_back = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=0,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H,path='images/menu_hero_back_b.png')
 
-button_new_game = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/new_game_b.png',image_button_b='images/menu/new_game_b.png',image_button_y='images/menu/new_game_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24)
-button_play = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*4, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9,path='images/menu/play_gray.png',image_button_b='images/menu/play_b.png',image_button_y='images/menu/play_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*4)
-button_help = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*8, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9, 'images/menu/help_b.png',image_button_b='images/menu/help_b.png',image_button_y='images/menu/help_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*8)
-button_set = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*12, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9, 'images/menu/settings_b.png',image_button_b='images/menu/settings_b.png',image_button_y='images/menu/settings_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*12)
-button_exit = Menu(settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*16, settings['SCREEN_WIDTH']//6, settings['SCREEN_HEIGHT']//9, 'images/menu/exit_b.png',image_button_b='images/menu/exit_b.png',image_button_y='images/menu/exit_y.png',x_divider=settings['SCREEN_WIDTH']//15,y_divider=settings['SCREEN_HEIGHT']//24*16)
+button_new_game = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Новая игра',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24)
+button_play = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'DimGrey','Продолжить игру',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*4)
+# button_help = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//6,'Помощь',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*8)
+button_set = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Настройки',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*12)
+button_exit = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выйти',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*16)
 
 if dict_arguments['civ_selected'] != None:
     button_play.path = 'images/menu/play_b.png'
@@ -226,7 +226,7 @@ button_post_army = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H-bu
 
 button_continue_story = Graphic_elements(settings['SCREEN_WIDTH']-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']-SCREEN_CELL_H*2,SCREEN_CELL_W*4,SCREEN_CELL_H*2,path='images/button_continue_story_y.png')
 
-list_buttons = [button_play,button_help,button_set,button_exit,button_new_game] 
+list_buttons = [button_play,button_set,button_exit,button_new_game] 
 
 #Текст
 #Текст стоимость скиллов 
@@ -391,6 +391,7 @@ brightless_pause = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREE
 flashlight_icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/flash_icon.png')
 healskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*4,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/heal_icon.png')
 damageskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*7,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/dmg_icon.png')
+
 list_card_camp = [
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*8,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=  dict_arguments['dict_card_path_camp']['бард']),
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*4.5,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=dict_arguments['dict_card_path_camp']['гигант']),
