@@ -14,7 +14,7 @@ pygame.init()
 #Основная фунуция
 def run_main(dict_arguments):
     hero_skill = None
-
+    flag_add_map = True
     if dict_arguments['scene'] == 'card_game':
         dict_arguments['scene'] = 'lvl1'
         dict_arguments['cardgame_variables'] = {
@@ -526,6 +526,7 @@ def run_main(dict_arguments):
                         dict_arguments['scene'] = 'lvl1'
                     for obj in list_slots_market_hero:
                         if dict_arguments['flag_market_selected'] and check_mouse_cor(button_change,mouse_cor) and market_selected.NAME.path != None:
+                            recourse_sounds[0].play_sound()
                             if market_selected.NAME.NAME == 'artifact':
                                 price_artifact = dict_arguments['dict_price_artifact'][market_selected.NAME.path.split('/')[-1].split('.')[0]]
                                 if dict_arguments['resources_dict']['gold_bullion'] < price_artifact and market_selected.NAME in list_slots_market:
@@ -803,7 +804,39 @@ def run_main(dict_arguments):
                             dict_arguments['scene'] = 'story1'
                         else:
                             dict_arguments['flag_show_error_choose_icon'] = 0
-                            
+                        if civ_selected.NAME != 'name' and civ_selected.NAME != None and 'lava' in civ_selected.NAME.path:
+                            city_scene.path = 'images/FIRE/bg_city.bmp'
+                            city_scene.image_load()
+                            castle.path = 'images/FIRE/castle.png'
+                            castle.image_load()
+                            city.path = 'images/FIRE/castle.png'
+                            city.image_load()
+                            dict_arguments['dict_card_path_camp'] = {
+                                                    "бард":'images/cards/бард_locked.png',
+                                                    "гигант":'images/cards/гигант_locked.png',
+                                                    "клаус":'images/cards/клаус_locked.png',
+                                                    "друид":'images/cards/друид_locked.png',
+                                                    "подрывник":'images/cards/подрывник_locked.png'
+                                                    }
+                        if civ_selected.NAME != 'name' and civ_selected.NAME != None and 'snow' in civ_selected.NAME.path:
+                            city_scene.path = 'images/ICE/bg_city.bmp'
+                            city_scene.image_load()
+                            castle.path = 'images/ICE/castle.png'
+                            castle.image_load()
+                            city.path = 'images/ICE/castle.png'
+                            city.image_load()
+                            dict_arguments['dict_card_path_camp'] = {
+                                                    "бард":'images/cards/бард_locked.png',
+                                                    "гигант":'images/cards/гигант_locked.png',
+                                                    "клаус":'images/cards/клаус_locked.png',
+                                                    "друид":'images/cards/друид_locked.png',
+                                                    "подрывник":'images/cards/подрывник_locked.png'
+                                                    }
+
+                        if civ_selected.NAME != 'name' and civ_selected.NAME != None and 'earth' in civ_selected.NAME.path:
+                            city_scene.path = 'images/city.bmp'
+                            city_scene.image_load()
+
 
 
             #Условие Меню Героя
@@ -1049,8 +1082,8 @@ def run_main(dict_arguments):
                     elif check_mouse_cor_font(button_new_game,mouse_cor):
                         if os.path.exists('saves/config1.json'):
                             os.remove('saves/config1.json')
-                            dict_arguments['game'] = False
-                        if not os.path.exists('saves/config1.json'):
+                            dict_arguments['count_text_new_game'] = 0
+                        elif not os.path.exists('saves/config1.json'):
                             dict_arguments['scene'] = 'choose_civ_scene'
                         
             if dict_arguments['scene'] == 'settings_scene':
@@ -1223,7 +1256,9 @@ def run_main(dict_arguments):
                                 dict_arguments['flag_dialog_offer_yes'] = True
                                 dict_arguments['resources_dict']['gold_bullion']-=dict_arguments['gold_count_enemy']
                                 dict_arguments['flag_show_offer'] = False
-                                dict_arguments['text_card'] = dict_card_dialog[dict_arguments['name_card']][3]
+                                dict_arguments['text_card'] = dict_card_dialog[dict_arguments["name_card"]][3]
+
+                                dict_arguments['index_text_card'] = len(dict_arguments['text_card'])
                                 dict_arguments['count_dialog'] = 0
                                 dict_arguments['flag_offer'] = False
                                 dict_arguments['flag_show_dialog'] = True
@@ -1236,7 +1271,8 @@ def run_main(dict_arguments):
                             dict_arguments['flag_show_offer'] = False
                             dict_arguments['flag_offer'] = False
                             dict_arguments['count_dialog'] = 0
-                            dict_arguments['text_card'] = [str(dict_arguments['name_card']).title()+': Очень жаль!','']
+                            dict_arguments['text_card'] = dict_card_dialog[dict_arguments["name_card"]][4]
+                            dict_arguments['index_text_card'] = len(dict_arguments['text_card'])
                             dict_arguments['flag_show_dialog'] = True
                     if dict_arguments['flag_show_dialog']:
                         if check_mouse_cor_font(button_leave,mouse_cor) and dict_arguments['count_dialog'] == 50:
@@ -1247,12 +1283,12 @@ def run_main(dict_arguments):
                             dict_arguments['text_card'] = None
                         elif check_mouse_cor_font(button_fight,mouse_cor) and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_dialog_fight'] = True
-                            dict_arguments['text_card'] = [str(player_lvl1.flag_card).title()+': Думаешь,мне',' страшно? Я с тебя',' шкуру сдеру!']
+                            dict_arguments['text_card'] = dict_card_dialog[dict_arguments["name_card"]][5]
+                            dict_arguments['index_text_card'] = len(dict_arguments['text_card'])
                             dict_arguments['flag_show_dialog'] = True
                             dict_arguments['count_dialog'] = 0
                         elif check_mouse_cor_font(button_offer,mouse_cor) and dict_arguments['flag_offer'] and dict_arguments['count_dialog'] == 50:
                             dict_arguments['flag_show_offer'] = True
-                            dict_arguments['name_card'] = player_lvl1.flag_card
                             player_lvl1.flag_card = False
                             player_lvl1.near_card = False
                             dict_arguments['flag_show_dialog'] = False
@@ -1266,14 +1302,15 @@ def run_main(dict_arguments):
                             if chance_base <= chance_diplomaty:
                                 dict_arguments['flag_dialog_threat_win'] = True
                                 dict_arguments['count_dialog'] = 0
-                                dict_arguments['text_card'] = [dict_card_dialog[player_lvl1.flag_card]]
+                                dict_arguments['text_card'] = dict_card_dialog[dict_arguments["name_card"]][2]
+                                dict_arguments['index_text_card'] = len(dict_arguments['text_card'])
                                 dict_arguments['flag_show_dialog'] = True
                             else:
                                 dict_arguments['flag_dialog_threat_lose'] = True
                                 dict_arguments['count_dialog'] = 0
-                                dict_arguments['text_card'] = [str(player_lvl1.flag_card).title()+': Да начнётся','битва!']
+                                dict_arguments['text_card'] = dict_card_dialog[dict_arguments["name_card"]][1]
+                                dict_arguments['index_text_card'] = len(dict_arguments['text_card'])
                                 dict_arguments['flag_show_dialog'] = True
-
 
                     #Если заканчиваем ход
                     if check_mouse_cor(button_end_move,mouse_cor) and (player_lvl1.where_move == None or player_lvl1.count_step == 0) and player_lvl1.flag_move:
@@ -1288,6 +1325,8 @@ def run_main(dict_arguments):
                         #Начисляем русурсы за захваченые здания
                         resourse_accural(player_lvl1.list_capture_buildings_symbol, dict_arguments['resources_dict'])
                     if artifact_chest.path != None and check_mouse_cor(artifact_chest,mouse_cor):
+                        recourse_sounds[0].play_sound()
+
                         name_artifact = artifact_chest.path.split('/')[-1]
                         name_artifact = name_artifact.split('.')[0]
                         name_artifact= name_artifact.split('_')[0]
@@ -1310,6 +1349,7 @@ def run_main(dict_arguments):
                         dict_arguments['mat_objetcs_lvl1'][player_lvl1.chest_cor[0]][player_lvl1.chest_cor[1]] = '0'
                         player_lvl1.flag_move = True
                     if check_mouse_cor(amount_money,mouse_cor) and player_lvl1.flag_draw_chest:
+                        recourse_sounds[0].play_sound()
                         artifact_chest.path = None
                         player_lvl1.flag_draw_chest = False
                         if player_lvl1.chest_cor != None:
@@ -1391,7 +1431,10 @@ def run_main(dict_arguments):
                             obj.font_color = 'black'
                             obj.font_size = settings['SCREEN_WIDTH']//19
         if dict_arguments['scene'] == 'credits':
-            credits_scene.show_image(win)
+            win.fill('white')
+            for obj in list_text_credits_object:
+                obj.show_text(win)
+            button_menu_end.show_text(win)
         # if dict_arguments['scene'] == 'sandwich':
         if dict_arguments['scene'] == 'settings_scene':
             book.show_image(win)
@@ -1571,11 +1614,13 @@ def run_main(dict_arguments):
             fog_war_func(dict_arguments['mat_objetcs_lvl1'],X_FRAME_MM,Y_FRAME_MM,dict_arguments['list_studied_map'],fog_war,list_objects_cells_lvl1,win,dict_arguments['list_cells_MM'],LENGTH_MAP_LVL1,W_CELL_MINI_MAP,H_CELL_MINI_MAP)
             if dict_arguments['flag_show_dialog']:
                 if dict_arguments['text_card'] == None:
-                    dict_arguments['text_card'] = dict_card_dialog[player_lvl1.flag_card]
+                    dict_arguments['text_card'] = dict_card_dialog[dict_arguments["name_card"]][0]
+                    dict_arguments['index_text_card'] = len(dict_arguments['text_card'])
                 dialog_book.show_image(win)
                 for obj in list_buttons_dialog:
                     obj.show_text(win)
                 player_lvl1.flag_move = False
+                
                 text_dialog_card.font_content = dict_arguments['text_card']
                 text_dialog_card.index = dict_arguments['index_text_card']
                 text_dialog_card.show_text(win)
@@ -1608,6 +1653,17 @@ def run_main(dict_arguments):
             # matrix_image_blind(list_objects_cells_lvl1,dict_arguments['mat_objetcs_lvl1'],player_lvl1,list_objects_cells_lvl1,player_lvl1.changed_x,player_lvl1.changed_y,win)
             #Отрисовуем полоску справа
             # pygame.draw.rect(win, (255,223,196), (settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*3,0,settings['SCREEN_WIDTH']//19*3,settings['SCREEN_HEIGHT']))
+            if  player_lvl1.index_cor in list_story_end_cor or player_lvl1.player_cor in list_story_end_cor and flag_add_map:
+                player_lvl1.list_studied_map.append([30,30])
+                player_lvl1.list_studied_map.append([30,29])
+                player_lvl1.list_studied_map.append([30,28])
+                player_lvl1.list_studied_map.append([29,30])
+                player_lvl1.list_studied_map.append([29,29])
+                player_lvl1.list_studied_map.append([29,28])
+                player_lvl1.list_studied_map.append([28,30])
+                player_lvl1.list_studied_map.append([28,29])
+                player_lvl1.list_studied_map.append([28,28])
+                flag_add_map = False
             interface_bg.show_image(win)
             frame.show_image(win)
             button_to_hero.show_image(win)
@@ -2106,6 +2162,12 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_not_enough_cards.show_text(win)
             dict_arguments['flag_not_enough_cards'] +=1
+        if dict_arguments['count_text_new_game'] <150:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_new_game.show_text(win)
+            dict_arguments['count_text_new_game'] +=1
+            if dict_arguments['count_text_new_game'] == 150:
+                dict_arguments['game'] = False
         if dict_arguments['flag_show_error_not_inventory'] <50:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_not_inventory.show_text(win)

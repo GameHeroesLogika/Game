@@ -143,6 +143,8 @@ button_play = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'D
 button_set = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Настройки',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*12)
 button_exit = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выйти',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*16)
 
+button_menu_end = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Меню',settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19)
+
 if dict_arguments['civ_selected'] != None:
     button_play.path = 'images/menu/play_b.png'
 button_hire = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=settings['SCREEN_HEIGHT']//2+settings['SCREEN_HEIGHT']//4,width=settings['SCREEN_WIDTH']//12.8*2,height=settings['SCREEN_HEIGHT']//14.4*2,path='images/camp_hire_b.png')
@@ -304,7 +306,8 @@ text_error_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH
 text_hero_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','        Поздровляем!;Вы познали великую магию!;Вы можете изучить способность!',settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*2,index=3)
 #Текст для ошибки уже купленной способности
 text_error_bought_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//44,'red','Способность уже куплена!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10)
-
+#Текст для закрытия после новой игры
+text_new_game = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','Для начала игры;требуется перезайти!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19,index=2)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',apple.X+apple.WIDTH+settings['SCREEN_WIDTH']//160,apple.Y)
 amount_iron = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',iron_bullion.X+iron_bullion.WIDTH+settings['SCREEN_WIDTH']//160,iron_bullion.Y)
@@ -559,9 +562,21 @@ list_card_matrix = [crossbowman,druid,bard,giant,golem,centaur,klaus,ludorn,ork,
 #Картинка зеленого флага
 flag_green = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/flags/flag_g.png')
 
-
-
-
+dict_text_credits = {
+                    'Дизайн':['Срибный Дима','Устич Паша', 'Мальцева Лиза', 'Ильченко Ксюша', 'Алексеенко Эгор', 'Гайдар Паша', 'Ткаченко Прохор'],
+                    'Код':['Семёнов Рома','Дмитрий Ларин','Кикот Сергей','Скрипник Николай'],
+                    'Сюжет':['12345','12356','123']
+}               
+list_text_credits_object = list()
+x_text = settings['SCREEN_WIDTH']//38
+y_text = 0 
+for key in dict_text_credits.keys():
+    for name in dict_text_credits[key]:
+        text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black',name,x_text,y_text,font_name=key)
+        list_text_credits_object.append(text)
+        y_text += settings['SCREEN_WIDTH']//38
+    y_text=0
+    x_text += settings['SCREEN_WIDTH']//3-settings['SCREEN_WIDTH']//38
 
 
 

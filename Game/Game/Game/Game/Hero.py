@@ -414,11 +414,16 @@ class Main_Hero(Graphic_elements):
                 self.near_fountain_mana,self.fountain_mana_cor = self.check_near_build(element='M',sub_element='m',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 self.near_water1 = self.check_near_build_sound(element='в',mat_objetcs=mat_objetcs,index=1)
+                self.near_tavern1 = self.check_near_build_sound(element='J',sub_element='j',mat_objetcs=mat_objetcs,index=1)
                 if self.near_water1:
                     if not pygame.mixer.music.get_busy():
                         self.water_sound.load_music()
                         pygame.mixer.music.play(-1)
-                if not self.near_tavern and not self.near_water1:
+                if self.near_tavern1:
+                    if not pygame.mixer.music.get_busy():
+                        self.tavern_music.load_music()
+                        pygame.mixer.music.play(-1)
+                if not self.near_tavern1 and not self.near_water1:
                     if pygame.mixer.music.get_busy():
                         pygame.mixer.music.unload()
                 if self.near_card:
@@ -428,6 +433,7 @@ class Main_Hero(Graphic_elements):
                             if keys[pygame.K_f]:
                                 self.flag_card = obj.path.split('/')[-1].split('.')[0]
                                 self.near_card = False
+                                dict_arguments['name_card'] = self.flag_card
                 if self.near_castle_enemy:
                     self.show_tip( '[F] Войти в замок', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                     if keys[pygame.K_f]:
@@ -476,9 +482,6 @@ class Main_Hero(Graphic_elements):
                         self.flag_shack = True
                         self.flag_pressed = True
                 if self.near_tavern:
-                    if not pygame.mixer.music.get_busy():
-                        self.tavern_music.load_music()
-                        pygame.mixer.music.play(-1)
                     self.show_tip(' [R] Сыграть в карты',self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//32.5)
                     if keys[pygame.K_r] and self.flag_pressed == False:
                         self.flag_tavern = True
