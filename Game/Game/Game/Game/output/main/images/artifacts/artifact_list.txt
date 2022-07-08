@@ -1,1 +1,0 @@
-boots_fire,boots_hero,boots_ice,chest_fire,chest_ice,helmet_ice,shield_ice,sword_ice,chest_hero,helmet_hero,shield_hero,sword_hero,shield_fire,sword_fire,helmet_fire
