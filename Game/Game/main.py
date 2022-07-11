@@ -100,30 +100,30 @@ def run_main(dict_arguments):
                 else:
                     button_menu_end.font_color = 'black'
 
-            if change_story(dict_arguments,story1_scene,'story1',mouse_cor,'story2',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story1_scene,'story1',mouse_cor,'story2',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story2_scene,'story2',mouse_cor,'story3',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story2_scene,'story2',mouse_cor,'story3',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story3_scene,'story3',mouse_cor,'story4',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story3_scene,'story3',mouse_cor,'story4',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story4_scene,'story4',mouse_cor,'lvl1',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story4_scene,'story4',mouse_cor,'lvl1',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story5_scene,'story5',mouse_cor,'story6',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story5_scene,'story5',mouse_cor,'story6',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story6_scene,'story6',mouse_cor,'story7',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story6_scene,'story6',mouse_cor,'story7',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story7_scene,'story7',mouse_cor,'card_game',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story7_scene,'story7',mouse_cor,'card_game',event,win,bg,button_continue_story,sound_book):
                 for i in range(len(list_cards_enemy_castle)):
                     dict_arguments['list_cards_en'][i][0] = list_cards_enemy_castle[i][0]
                 background_music.stop_sound()
                 background_music_card_game.play_sound(-1)
                 cards_arrangement(dict_arguments,dict_arguments['list_cards_pl'],list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_card_characteristics)
                 break
-            if change_story(dict_arguments,story8_scene,'story8',mouse_cor,'menu',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story8_scene,'story8',mouse_cor,'menu',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story9_scene,'story9',mouse_cor,'credits',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story9_scene,'story9',mouse_cor,'credits',event,win,bg,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story10_scene,'story10',mouse_cor,'credits',event,win,bg,button_continue_story):
+            if change_story(dict_arguments,story10_scene,'story10',mouse_cor,'credits',event,win,bg,button_continue_story,sound_book):
                 break
             if dict_arguments['flag_pause']:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

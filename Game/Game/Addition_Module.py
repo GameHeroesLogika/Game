@@ -847,7 +847,7 @@ def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_her
 
     
 
-def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event,win,bg,button_continue_story):
+def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event,win,bg,button_continue_story,sound_book):
     if dict_arguments['scene'] == story:
         bg.show_image(win)
         story_scene.show_image(win)
@@ -855,6 +855,7 @@ def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event,win
         if check_mouse_cor(button_continue_story,mouse_cor):
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 dict_arguments['scene'] = next_story
+                sound_book.play_sound()
                 return True
             button_continue_story.path = 'images/button_continue_story_b.png'
             button_continue_story.image_load()

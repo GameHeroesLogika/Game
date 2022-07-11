@@ -90,7 +90,7 @@ class Main_Hero(Graphic_elements):
         self.build_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук захвата здания
         self.chest_open_sound = Sounds('sounds/openchest.wav',settings['SOUNDS_VOLUME'])#Звук открытия сундука
         self.tavern_music = Music('sounds/tavern.mp3',settings['MUSIC_VOLUME'])
-        self.shack_sound = Sounds('sounds/tavern.mp3',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием
+        self.shack_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием
         self.tower_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.academy_sound = Sounds('sounds/captured.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
         self.fountain_exp_sound = Sounds('sounds/fountain_exp.wav',settings['SOUNDS_VOLUME'])#Звук взаемодействия со зданием 
