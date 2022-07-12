@@ -203,7 +203,7 @@ def run_main(dict_arguments):
                                                 'who_won':None,#Означает, кто победил
                                                 'hp_text':None#Объект текста, который отображает прибавляемое хп карте
                                             }
-                        if hero_skill != None and '_bw' in hero_skill.path:
+                        if hero_skill.path != None and '_bw' in hero_skill.path:
                             hero_skill.path = hero_skill.path.split('_bw')[0]+'.png'
                             hero_skill.image_load()
                         for card_losed in dict_arguments['list_losed_card_pl']:
@@ -1618,6 +1618,8 @@ def run_main(dict_arguments):
             show_result_screen(win,bg_win,music_win,bg_lose,music_lose,card_for_result_screen,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],
             dict_arguments['list_losed_card_enemy'],dict_arguments['list_losed_card_pl'],dict_arguments['trophy_exp'],dict_arguments['trophy_gold'],gold_icon,exp_icon,trophy_recourse_text,button_end_fight,
             dict_arguments['cardgame_variables'])
+            background_music_card_game.stop_sound()
+
         if dict_arguments['scene'] == 'lvl1':
             
             #Условие события 
@@ -1822,11 +1824,11 @@ def run_main(dict_arguments):
             #Новый день
             if dict_arguments['flag_show_new_day'] < 100:
                 player_lvl1.flag_move = False
-                text_new_day.font_content = ('           Новый день;        Получено за день; ;Яблок - '+str(dict_arguments['resources_dict']['food']-dict_arguments['past_resources_dict']['food'])+'      Золота - '+str(dict_arguments['resources_dict']['gold_bullion']-dict_arguments['past_resources_dict']['gold_bullion'])+'; ;Железа - '+str(dict_arguments['resources_dict']['iron_bullion']-dict_arguments['past_resources_dict']['iron_bullion'])+'      Кристаллов - '+str(dict_arguments['resources_dict']['crystal']-dict_arguments['past_resources_dict']['crystal'])+'; ;Камня - '+str(dict_arguments['resources_dict']['stone']-dict_arguments['past_resources_dict']['stone'])+'      Дерева - '+str(dict_arguments['resources_dict']['wood']-dict_arguments['past_resources_dict']['wood'])).split(';')
+                text_new_day.font_content = ('           Новый день;    Статистика по ресурсам; ;Яблок - '+str(dict_arguments['resources_dict']['food']-dict_arguments['past_resources_dict']['food'])+'      Золота - '+str(dict_arguments['resources_dict']['gold_bullion']-dict_arguments['past_resources_dict']['gold_bullion'])+'; ;Железа - '+str(dict_arguments['resources_dict']['iron_bullion']-dict_arguments['past_resources_dict']['iron_bullion'])+'      Кристаллов - '+str(dict_arguments['resources_dict']['crystal']-dict_arguments['past_resources_dict']['crystal'])+'; ;Камня - '+str(dict_arguments['resources_dict']['stone']-dict_arguments['past_resources_dict']['stone'])+'      Дерева - '+str(dict_arguments['resources_dict']['wood']-dict_arguments['past_resources_dict']['wood'])).split(';')
                 if dict_arguments['flag_show_new_day'] == 99:
                     dict_arguments['past_resources_dict'] = dict_arguments['resources_dict'].copy()
                     
-                frame_new_day.show_image(win)        
+                frame_new_day.show_image(win)
                 text_new_day.show_text(win)
                 dict_arguments['flag_show_new_day'] += 1
                 if dict_arguments['flag_show_new_day'] == 100:
@@ -2111,6 +2113,17 @@ def run_main(dict_arguments):
                             random_x = randint(0,LENGTH_MAP_LVL1-1)
                             if dict_arguments['mat_objetcs_lvl1'][random_y][random_x] == '0' and not [random_y,random_x] in list_untochable_cells:
                                 dict_arguments['mat_objetcs_lvl1'][random_y][random_x] = 'g'
+                                break
+                if dict_arguments['daily_event'] == 'enemy':
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;За последнее время уровень;     преступности вырос.;;Шанс наткнуться на разбойников увеличен.'.split(';')
+                    
+                    text_daily_event.index = 5
+                    for i in range(randint(3,6)):
+                        while True:
+                            random_y = randint(0,LENGTH_MAP_LVL1-1)
+                            random_x = randint(0,LENGTH_MAP_LVL1-1)
+                            if dict_arguments['mat_objetcs_lvl1'][random_y][random_x] == '0' and not [random_y,random_x] in list_untochable_cells:
+                                dict_arguments['mat_objetcs_lvl1'][random_y][random_x] = choice(list_cards_symbol)
                                 break
                 if dict_arguments['daily_event'] == 'artifact':
                     dict_arguments['text_daily_event_font_content'] = '           Внимание!;;Идя по лесу Вы встретили мудреца;;с артефактом.Он передал его вам'.split(';')

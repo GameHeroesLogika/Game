@@ -240,7 +240,7 @@ text_exp_hero = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'
 #Текст количества ходов
 text_step_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Осталось ходов: '+str(player_lvl1.count_step),settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//6.8,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//7.5)
 #Текст нового дня
-text_new_day = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','           Новый день;        Получено за день; ;Яблок - 0 Золота - 0; ;Железа - 0 Кристаллов - 0; ;Камня - 0 Дерева - 0',frame_new_day.X+SCREEN_CELL_W,frame_new_day.Y+SCREEN_CELL_H,index=8)
+text_new_day = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','           Новый день;    Статистика по ресурсам; ;Яблок - 0 Золота - 0; ;Железа - 0 Кристаллов - 0; ;Камня - 0 Дерева - 0',frame_new_day.X+SCREEN_CELL_W,frame_new_day.Y+SCREEN_CELL_H,index=8)
 #Текст сундука 
 chest_text_gold =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red','   Нет места для артефакта;   Вы забираете золото',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10,index=2)
 
@@ -559,11 +559,10 @@ dvorf = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W*1.5,path='images/cards/
 list_card_matrix = [crossbowman,druid,bard,giant,golem,centaur,klaus,ludorn,ork,bomb_man,roggy,surtur,yamy,dvorf]
 #Картинка зеленого флага
 flag_green = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/flags/flag_g.png')
-
 dict_text_credits = {
                     'Дизайнеры:':['Срибный Дима','Устич Паша', 'Мальцева Лиза', 'Ильченко Ксюша', 'Алексеенко Егор', 'Гайдар Паша', 'Ткаченко Прохор'],
                     'Разработчики:':['Семёнов Рома','Дмитрий Ларин','Кикот Сергей','Скрипник Николай'],
-                    'Сюжет:':['Дмитрий Ларин','Антон Петров','Василий Пупкин']
+                    'Сюжет:':['Дмитрий Ларин','Илья Подрез','Смирнов Тимофей','Глеб Фурсенко']
 }
 text_credits = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','За игру отвечали:',settings['SCREEN_WIDTH']//2.5,0)
 list_text_credits_object = list()
