@@ -558,7 +558,10 @@ class Main_Hero(Graphic_elements):
                 self.flag_pressed = False
             if not keys[pygame.K_ESCAPE] and self.flag_pressed_escape:
                 self.flag_pressed_escape = False    
-
+        if self.count_step == 0:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_RIGHT] or keys[pygame.K_LEFT] or keys[pygame.K_DOWN] or keys[pygame.K_UP] and dict_arguments['flag_show_error_not_enoug_step'] >= 30:
+                dict_arguments['flag_show_error_not_enoug_step'] = 0
     #Функция для сбора ресрусов
     def take_resource(self,index_x,index_y,name_resource,resource_symb,mat_objetcs,min_count,max_count,resources_dict,recourse_sounds):
         if mat_objetcs[index_x][index_y] == resource_symb:

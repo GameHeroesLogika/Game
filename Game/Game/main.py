@@ -84,6 +84,8 @@ def run_main(dict_arguments):
         for event in pygame.event.get():
             #Услове выхода из игры
             mouse_cor = pygame.mouse.get_pos() 
+            if change_story(dict_arguments,story11_scene,'story11',mouse_cor,'credits',event,win,bg,button_continue_story,sound_book):
+                break
             if dict_arguments['scene'] == 'credits':
                 win.fill('white')
                 for obj in list_text_credits_object:
@@ -1111,7 +1113,7 @@ def run_main(dict_arguments):
                     
                 # Реакция на нажатие кнопок
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    click_sound.play_sound()
+                    
                     
                     if dict_arguments['civ_selected'] == None:
                         button_play.font_color = 'DimGrey'
@@ -1119,14 +1121,17 @@ def run_main(dict_arguments):
                         if check_mouse_cor_font(button_play,mouse_cor):
                             dict_arguments['scene'] = 'lvl1'
                             sound_book.play_sound()
+                            click_sound.play_sound()
                             
                     if check_mouse_cor_font(button_exit,mouse_cor):
-                        sound_book.play_sound()
+                        click_sound.play_sound()
                         dict_arguments['game'] = False
                         save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp)
                     elif check_mouse_cor_font(button_set,mouse_cor):
+                        click_sound.play_sound()
                         dict_arguments['scene'] = 'settings_scene'
                     elif check_mouse_cor_font(button_new_game,mouse_cor):
+                        click_sound.play_sound()
                         if os.path.exists('saves/config1.json'):
                             os.remove('saves/config1.json')
                             dict_arguments['count_text_new_game'] = 0
@@ -1141,30 +1146,33 @@ def run_main(dict_arguments):
                     button_menu_hero_back.path = 'images/menu_hero_back_y.png'
                     button_menu_hero_back.image_load()
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    click_sound.play_sound()
                     if check_mouse_cor(button_menu_hero_back,mouse_cor):
                         dict_arguments['scene'] = 'menu'
+                        click_sound.play_sound()
                     for obj in list_buttons_display_size:
                         if list_button_display_fullsize[0].font_color != 'red':
                             if check_mouse_cor_font(obj,mouse_cor):
+                                click_sound.play_sound()
                                 for obj2 in  list_buttons_display_size:
                                     obj2.font_color = 'black'
                                 obj.font_color = 'red'
                                 break
                     for obj in list_button_display_fullsize:
                         if check_mouse_cor_font(obj,mouse_cor):
+                            click_sound.play_sound()
                             for obj2 in  list_button_display_fullsize:
                                 obj2.font_color = 'black'
                             obj.font_color = 'red'
                             break
                     for obj in list_button_auto_save:
                         if check_mouse_cor_font(obj,mouse_cor):
+                            click_sound.play_sound()
                             for obj2 in  list_button_auto_save:
                                 obj2.font_color = 'black'
                             obj.font_color = 'red'
                             break
                     if check_mouse_cor_font(button_save,mouse_cor):
-                        
+                        click_sound.play_sound()
                         for obj in list_buttons_display_size:
                             if obj.font_color == 'red':
                                 width = obj.font_content.split('x')[0]
@@ -1378,6 +1386,7 @@ def run_main(dict_arguments):
                         new_day_sound.play_sound()
                         if randint(0,100) <= int(settings['DAILY_EVENT']):
                             dict_arguments['daily_event'] = choice(list_daily_events)
+                        
                         #Начисляем русурсы за захваченые здания
                         resourse_accural(player_lvl1.list_capture_buildings_symbol, dict_arguments['resources_dict'])
                     if artifact_chest.path != None and check_mouse_cor(artifact_chest,mouse_cor):
@@ -1740,6 +1749,8 @@ def run_main(dict_arguments):
                 player_lvl1.flag_move = False
                 if dict_arguments['characteristic_dict']['day'] == 7:
                     dict_arguments['characteristic_dict']['week']+=1
+                    if dict_arguments['characteristic_dict']['week'] == 6:
+                        dict_arguments['scene'] = 'story11'
                     dict_arguments['characteristic_dict']['day'] = 0
                     fountain_mana.path = 'images/buildings/fountain_mana.png'
                     fountain_mana.image_load()
@@ -1748,6 +1759,10 @@ def run_main(dict_arguments):
                     dict_arguments['flag_buy_card'] = True
                     dict_arguments['flag_use_tavern'] = True
                     dict_arguments['flag_use_royal_academy'] = True
+                    dict_arguments['text_show_notification_goblins'] = ['Гоблины сбегут через: ','    '+str(count_week_goblins - dict_arguments['characteristic_dict']['week']) +' недели']
+                    if count_week_goblins - dict_arguments['characteristic_dict']['week'] <= 0:
+                        dict_arguments['text_show_notification_goblins'] =  ['Гоблины сбегут через: ',str(8 - dict_arguments['characteristic_dict']['day']) + ' дней']
+                    dict_arguments['flag_show_notification_goblins'] = 0
                     for el in range(len(dict_arguments['mat_objetcs_lvl1'])):
                         for element in range(len(dict_arguments['mat_objetcs_lvl1'][el])):
                             if dict_arguments['mat_objetcs_lvl1'][el][element] == 'e' or  dict_arguments['mat_objetcs_lvl1'][el][element] == 'm' or dict_arguments['mat_objetcs_lvl1'][el][element] == 's':
@@ -1810,6 +1825,13 @@ def run_main(dict_arguments):
                 if dict_arguments['dict_price_artifact']['boots_fire'] != dict_price_artifact['boots_fire']:
                     dict_arguments['dict_price_artifact'] = dict_price_artifact
                 dict_arguments['characteristic_dict']['day']+=1
+                if dict_arguments['characteristic_dict']['day'] == 5 and dict_arguments['characteristic_dict']['week'] == 5:
+                    dict_arguments['text_show_notification_goblins'] = ['Гоблины сбегут через: ','      3 дня']
+                    dict_arguments['flag_show_notification_goblins'] = 0
+                    print('fdsfsdfds')
+                if dict_arguments['characteristic_dict']['day'] == 7 and dict_arguments['characteristic_dict']['week'] == 5:
+                    dict_arguments['text_show_notification_goblins'] = ['Гоблины сбегут через: ','      1 день']
+                    dict_arguments['flag_show_notification_goblins'] = 0
                 #Ежедновное золото
                 if 'skill_idol_people_learn' in list_learn_skills:
                     if randint(0,4) == 4:
@@ -2053,7 +2075,7 @@ def run_main(dict_arguments):
                 amount_wood.show_text(win)
             text_step_count.show_text(win)
             button_end_move.show_image(win)
-            text_step_count.font_content = 'Осталось ходов: '+str(player_lvl1.count_step)
+            text_step_count.font_content = 'Осталось шагов: '+str(player_lvl1.count_step)
             if dict_arguments['characteristic_dict']['lvl'] == 5 and hero_skill.path == None:
                 frame_notification.show_image(win)
                 text_hero_skill.show_text(win)
@@ -2268,6 +2290,11 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_not_enough_resource.show_text(win)
             dict_arguments['flag_not_enough_resource'] +=1
+        if dict_arguments['flag_show_notification_goblins'] <80 and dict_arguments['flag_show_new_day'] >= 100 and dict_arguments['count_daily_event'] >= 80 and not dict_arguments['flag_new_lvl'] :
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_notification_goblins.font_content = dict_arguments['text_show_notification_goblins']
+            text_notification_goblins.show_text(win)
+            dict_arguments['flag_show_notification_goblins'] +=1
         if dict_arguments['flag_build_alredy_bought'] <30:
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_build_alredy_bought.show_text(win)
@@ -2280,6 +2307,10 @@ def run_main(dict_arguments):
             generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
             text_error_bought_skill.show_text(win)
             dict_arguments['count_error_bought_skill'] += 1  
+        if dict_arguments['flag_show_error_not_enoug_step'] < 30:
+            generate_error(frame_error=frame_error,error_text_obj=error_text_obj,error_content=None,win=win)
+            text_error_not_enoug_step.show_text(win)
+            dict_arguments['flag_show_error_not_enoug_step'] += 1  
         if dict_arguments['count_daily_event'] <80 and player_lvl1.flag_move:
             generate_error(frame_error=frame_notification,error_text_obj=error_text_obj,error_content=None,win=win)
             dict_arguments['count_daily_event'] += 1  

@@ -159,6 +159,8 @@ flag_show_error_not_inventory = 50
 flag_show_error_locked = 30
 flag_show_error_blocked_camp = 50
 changed_hp = 0
+flag_show_notification_goblins = 80
+text_show_notification_goblins = ''
 changed_dmg = 0
 flag_show_dialog = False
 flag_show_error_bought_card = 30
@@ -167,6 +169,7 @@ count_animation= 0
 count_dialog_offer = 50
 count_dialog_fight = 50
 count_daily_event = 80
+count_week_goblins = 6
 count_dialog_threat = 50
 flag_fight_start_post = False
 flag_church = True
@@ -703,6 +706,9 @@ dict_arguments = {
     'dict_card_name_camp':dict_card_name_camp,
     'hero_skill_path':None,
     'hero_skill_name':None,
+    'flag_show_error_not_enoug_step':30,
+    'text_show_notification_goblins':text_show_notification_goblins,
+    'flag_show_notification_goblins':flag_show_notification_goblins
 }
 
 new_game_dict = dict_arguments.copy()

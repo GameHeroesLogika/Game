@@ -161,13 +161,13 @@ list_buttons_display_size =[
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1600x920',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*2,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
                 Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','1920x1080',button_display_size.font_x+settings['SCREEN_WIDTH']//14.2*4,button_display_size.font_y+settings['SCREEN_HEIGHT']//8),
 ]
-text_choose_civ = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Выберите расу',SCREEN_CELL_W,SCREEN_CELL_H)
+text_choose_civ = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black',' Выберите;цивилизацию',SCREEN_CELL_W*2,SCREEN_CELL_H//2,index=2)
 lava_icon = Graphic_elements(x=SCREEN_CELL_W,y=SCREEN_CELL_W*3,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H*2,path='images/lava_icon.png')
 lava_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Огненная',SCREEN_CELL_W,SCREEN_CELL_H*3.3+lava_icon.HEIGHT)
 ice_icon = Graphic_elements(x=SCREEN_CELL_W*4,y=SCREEN_CELL_W*3,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H*2,path='images/snow_icon.png')
 ice_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Ледяная',SCREEN_CELL_W*4,SCREEN_CELL_H*3.3+ice_icon.HEIGHT)
 earth_icon = Graphic_elements(x=SCREEN_CELL_W*7,y=SCREEN_CELL_W*3,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H*2,path='images/earth_icon.png')
-earth_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Земляная',SCREEN_CELL_W*7,SCREEN_CELL_H*3.3+earth_icon.HEIGHT)
+earth_text = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Наземная',SCREEN_CELL_W*7,SCREEN_CELL_H*3.3+earth_icon.HEIGHT)
 scene_choose_civ = Graphic_elements(x=0,y=0,width=settings['SCREEN_WIDTH'],height=settings['SCREEN_HEIGHT'],path='images/book.png')
 list_icon_civ = [lava_icon,earth_icon,ice_icon]
 list_text_civ = [lava_text,ice_text,earth_text]
@@ -238,12 +238,14 @@ text_new_lvl = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'r
 text_lvl_hero = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'yellow','Текущий уровень - '+str(characteristic_dict['lvl'])+';До следующего уровня:',settings['SCREEN_WIDTH']//1.34,settings['SCREEN_HEIGHT']//2,index=2)
 text_exp_hero = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'green',str(characteristic_dict['exp'])+'/'+str(max_exp_lvl),settings['SCREEN_WIDTH']//1.34,settings['SCREEN_HEIGHT']//1.7)
 #Текст количества ходов
-text_step_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Осталось ходов: '+str(player_lvl1.count_step),settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//6.8,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//7.5)
+text_step_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Осталось шагов: '+str(player_lvl1.count_step),settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//6.8,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//7.5)
 #Текст нового дня
 text_new_day = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','           Новый день;    Статистика по ресурсам; ;Яблок - 0 Золота - 0; ;Железа - 0 Кристаллов - 0; ;Камня - 0 Дерева - 0',frame_new_day.X+SCREEN_CELL_W,frame_new_day.Y+SCREEN_CELL_H,index=8)
 #Текст сундука 
 chest_text_gold =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red','   Нет места для артефакта;   Вы забираете золото',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10,index=2)
-
+#Текст для показа сколько осталось до побега
+text_notification_goblins = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','',frame_buildings.X+settings['SCREEN_WIDTH']//40,frame_buildings.Y + settings['SCREEN_HEIGHT']//19,index=2)
+#
 chest_text_choice = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','Выберите награду;       или',settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//9.5,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*2,index=2)
 #Текст рынка нет места для артефакта 
 text_market_aritfact_no_slots =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','Нет места для артефакта',frame_error.X+ frame_error.WIDTH//10,frame_error.Y + settings['SCREEN_HEIGHT']//10)
@@ -300,7 +302,9 @@ text_daily_event =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//
 #Текст для сохранения
 text_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','  Настройки сохранены.;  Перезайдите в игру!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19,index=2)
 #Текст для ошибки выбора расы
-text_error_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','Вы не выбрали расу!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
+text_error_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','    Вы не выбрали;    цивилизацию!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//18,index=2)
+#текст для ошибки что недостаточно ходов
+text_error_not_enoug_step = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','Шаги за день потрачены',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//14)
 #Текст для выбора способности 
 text_hero_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','        Поздровляем!;Вы познали великую магию!;Вы можете изучить способность!',settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*2,index=3)
 #Текст для ошибки уже купленной способности
@@ -363,6 +367,7 @@ story7_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HE
 story8_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story8_scene.png')
 story9_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story9_scene.png')
 story10_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story10_scene.png')
+story11_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story10_scene.png')
 #Звуки
 #Звук открытия книги
 sound_book = Sounds('sounds/book_opened.wav', settings['SOUNDS_VOLUME'])

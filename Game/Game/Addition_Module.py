@@ -808,9 +808,8 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
         list_learn_skills.remove('skill_leader_learn')
     if 'skill_earth_blessing_learn' in list_learn_skills:
         for key in dict_card_characteristics.keys():
-            if dict_card_characteristics[key][2] == 'earth':
-                dict_card_characteristics[key][0] +=1
-                dict_card_characteristics[key][1] +=1
+            dict_card_characteristics[key][0] +=1
+            dict_card_characteristics[key][1] +=1
         list_learn_skills.remove('skill_earth_blessing_learn')
         
     
