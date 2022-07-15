@@ -3,6 +3,7 @@ def draw_all(bg,cardgame_variables,win,text_move,list_objects_cards_pl,list_obje
                 stun_img,heal_cloud,dmg_img,hero_skill):
     #Отображаем задний фон
     bg.show_image(win)
+    # win.fill('white')
     #Отображаем иконку скилла
     if hero_skill.path != None:
         hero_skill.show_image(win)

@@ -2399,8 +2399,8 @@ def run_main(dict_arguments):
             water = choice(list_water)
         if dict_arguments['scene'] != 'card_game':
             time.tick(int(settings['FPS']))
-        else:
-            time.tick(35)
+        else:  
+            time.tick(45)
         if index == 90:
             dict_arguments['minute_in_game'] +=1
             index = 0

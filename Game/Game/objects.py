@@ -219,7 +219,7 @@ button_offer = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Подк
 button_threat= Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Угроза',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+SCREEN_CELL_H*3.9)
 button_leave = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Уйти',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+SCREEN_CELL_H*5.2)
 list_buttons_dialog = [button_fight,button_offer,button_threat,button_leave]
-button_deal = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Сделка',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+settings['SCREEN_HEIGHT']//19+SCREEN_CELL_H*3)
+button_deal = Font('images/Font/pixel_font.ttf',SCREEN_CELL_W,'black','Сделка',dialog_book.X+SCREEN_CELL_W*1.5,dialog_book.Y+SCREEN_CELL_H*2.5)
 
 list_buttons_dialog_potion = [button_leave,button_threat,button_deal]
 #Текст для кнопки гарнизона
@@ -367,7 +367,7 @@ story7_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HE
 story8_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story8_scene.png')
 story9_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story9_scene.png')
 story10_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story10_scene.png')
-story11_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story10_scene.png')
+story11_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/story/story11_scene.png')
 #Звуки
 #Звук открытия книги
 sound_book = Sounds('sounds/book_opened.wav', settings['SOUNDS_VOLUME'])
@@ -589,7 +589,7 @@ for key in dict_text_credits.keys():
 
 #Карточный бой
 #Создаем объект фона
-bg = Graphic_elements_cards(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg.bmp')
+bg = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg.PNG')
 #Создаем объекты карт
 card_pl_1 = Cards(settings['SCREEN_WIDTH']//12*3.2,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//3.28,path = None,hp = None,damage = None,desc_path = None,name='pl_1')
 card_pl_2 = Cards(settings['SCREEN_WIDTH']//12*4.6,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//3.28,path = None,hp = None,damage = None,desc_path = None,name='pl_2')

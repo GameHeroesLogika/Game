@@ -107,10 +107,7 @@ class Main_Hero(Graphic_elements):
             self.list_images_down.append(path)
         #Создание графического экземпляра класса
         self = Graphic_elements(0, 0, SCREEN_W//19, SCREEN_W//19, 'images/player/player_front.png')
-         
 
-        
-        
     def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals,list_card_matrix,water,dict_arguments):
         self.RECT = pygame.Rect(self.X-settings['SCREEN_WIDTH']//19*2,self.Y-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19*5,settings['SCREEN_WIDTH']//19*5)
         #Если нажата клавиша ВПРАВО
