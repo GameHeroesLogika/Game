@@ -29,7 +29,6 @@ def draw_all(bg,cardgame_variables,win,text_move,list_objects_cards_pl,list_obje
             list_objects_cards_en[cardgame_variables['index_card_that_move_en']].can_move = True
             cardgame_variables['index_card_that_move_en'] += 1
             cardgame_variables['card_that_move_en'] = None     
-
     #Отрисовуем карты игрока
     for c in list_objects_cards_pl:
         if c.path != None and c != cardgame_variables['picked_card']:
@@ -39,7 +38,6 @@ def draw_all(bg,cardgame_variables,win,text_move,list_objects_cards_pl,list_obje
                 stun_img.X = c.X-  c.WIDTH//6
                 stun_img.Y = c.Y  + c.HEIGHT //1.5
                 stun_img.show_image(win)
-
     #Отрисовуем карты противника
     for c in list_objects_cards_en:
         if c.path != None:
@@ -48,10 +46,7 @@ def draw_all(bg,cardgame_variables,win,text_move,list_objects_cards_pl,list_obje
             if c.can_move == False:
                 stun_img.X = c.X - c.WIDTH//6
                 stun_img.Y = c.Y  + c.HEIGHT // 1.5
-                stun_img.show_image(win)
-                
-
-
+                stun_img.show_image(win)                
     #Отрисовуем взятую в руки игроком карту выше остальных спрайтов
     if cardgame_variables['picked_card']!=None:
         cardgame_variables['picked_card'].show_image(win)

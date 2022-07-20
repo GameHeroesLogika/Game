@@ -107,15 +107,12 @@ class Main_Hero(Graphic_elements):
             self.list_images_down.append(path)
         #Создание графического экземпляра класса
         self = Graphic_elements(0, 0, SCREEN_W//19, SCREEN_W//19, 'images/player/player_front.png')
-
     def move_sprite(self, mat_objetcs, LENGTH_MAP,resources_dict,recourse_sounds,list_cor_portals,list_card_matrix,water,dict_arguments):
         self.RECT = pygame.Rect(self.X-settings['SCREEN_WIDTH']//19*2,self.Y-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_WIDTH']//19*5,settings['SCREEN_WIDTH']//19*5)
         #Если нажата клавиша ВПРАВО
         if self.count_step != 0:
-            
             if self.where_move == 'right' and self.count_move <= 9:
                 # Условия для телепорта
-                
                 if self.count_move == 8:
                     # Если клетка справа - телеопрт
                     if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P':
@@ -136,9 +133,6 @@ class Main_Hero(Graphic_elements):
                                             self.need_to_move_to_hero = True
 
                                             # move_to_hero(CENTER_CELL_COR,list_cor_player_xy,list_objects_cells_lvl1,SCREEN_W,SCREEN_H)
-                                            
-
-                                
                 if self.count_move == 0 or self.count_move == 3 or self.count_move == 6 or self.count_move == 9:
                     self.path = self.list_images_right[self.index]
                     self.image_load()
@@ -146,8 +140,6 @@ class Main_Hero(Graphic_elements):
                 self.X += (self.SCREEN_W//19)/10
                 self.changed_x = self.count_move*(self.SCREEN_W//19)/10
                 self.count_move+=1
-                
-
             elif self.count_move > 9 and self.where_move == 'right':
                 self.index = 0
                 self.count_move = 0
@@ -159,10 +151,6 @@ class Main_Hero(Graphic_elements):
                 if mat_objetcs[self.player_cor[0]][self.player_cor[1]] == 'p':
                     mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
                 self.player_cor[1] += 1
-                
-              
-                
-                
             if self.where_move == 'left' and self.count_move <= 9:
                 # Условия для телепорта
                 if self.count_move == 8:
@@ -179,8 +167,6 @@ class Main_Hero(Graphic_elements):
                                             self.count_move = 0
                                             self.index = 0
                                             self.need_to_move_to_hero = True
-
-
                 if self.count_move == 0 or self.count_move == 3 or self.count_move == 6 or self.count_move == 9:
                     self.path = self.list_images_left[self.index]
                     self.image_load()
@@ -223,7 +209,6 @@ class Main_Hero(Graphic_elements):
                 self.Y -= (self.SCREEN_W//19)/10
                 self.changed_y = -1*self.count_move*(self.SCREEN_W//19)/10
                 self.count_move+=1
-
             elif self.count_move > 9 and self.where_move == 'up':
                 self.count_move = 0
                 self.index = 0
@@ -268,7 +253,6 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] + 1,'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-                
                     if (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == '0' or mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P') and self.where_move == None:
                         self.where_move = 'right'
                         self.count_step -= 1
@@ -276,7 +260,6 @@ class Main_Hero(Graphic_elements):
                 # if mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] == 'P' and :
                     # self.player_cor[1]+=10
                         #Указываем, что игрок переместился на клетку вправо
-                    
             #Если нажата клавиша ВЛЕВО
             elif keys[pygame.K_LEFT] and self.flag_move and self.where_move == None:
                 if self.player_cor[1] != 0:
@@ -290,24 +273,19 @@ class Main_Hero(Graphic_elements):
                         self.where_move = 'left'
                         self.count_step -= 1
                         choice(self.move_sound).play_sound()
-
-                        
             #Если нажата клавиша ВВЕРХ
             elif keys[pygame.K_UP] and self.flag_move and self.where_move == None:
                 if self.player_cor[0] != 0:
-                    
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'wood','w',mat_objetcs,8,10,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-                
                     if (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == '0' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'P') and self.where_move == None:
                         self.where_move = 'up'
                         self.count_step -= 1
                         choice(self.move_sound).play_sound()
-                        
             #Если нажата клавиша ВНИЗ
             elif keys[pygame.K_DOWN] and self.flag_move and self.where_move == None:
                 if self.player_cor[0] != LENGTH_MAP - 1:
@@ -317,12 +295,10 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
-
                     if mat_objetcs[self.player_cor[0] + 1][self.player_cor[1]] == '0'  and self.where_move == None:
                         self.where_move = 'down'
                         self.count_step -= 1
                         choice(self.move_sound).play_sound()
-            
             elif keys[pygame.K_ESCAPE] and dict_arguments['flag_pause'] and self.flag_pressed_escape == False:
                 dict_arguments['flag_pause'] = False
                 self.flag_move = True
@@ -366,7 +342,6 @@ class Main_Hero(Graphic_elements):
                 else:
                     self.near_building = False
                     self.building_cor = None
-
                 if not self.flag_right and mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1] in list_symbol_cards:
                     self.near_card = True
                     self.card_name = mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]
@@ -495,8 +470,6 @@ class Main_Hero(Graphic_elements):
                     if keys[pygame.K_f]:
                         self.flag_city = True
                         self.near_city = False
-                
-                
                 #Если рядом со здание и нажимаем кнопку E - захватываем здание
                 if self.near_building:
                     self.show_tip( '[E] Захватить здание', self.SCREEN_W-self.SCREEN_W//6.4, 0)
@@ -568,13 +541,10 @@ class Main_Hero(Graphic_elements):
                 mat_objetcs[index_x][index_y] = 't'
             else:
                 mat_objetcs[index_x][index_y] = '0'
-
-
     #Функция для показа подсказок
     def show_tip(self, text, x_text, y_text,font_size = settings['SCREEN_WIDTH']//65):
         text = Font('images/Font/pixel_font.ttf',font_size,(255,255,255),text,x_text,y_text)
         text.show_text(self.win)
-
     # Метод тумана войны 
     def blind_move(self,index,flag_player): 
         #Константы координат персонажа
@@ -621,7 +591,6 @@ class Main_Hero(Graphic_elements):
                     self.list_studied_map.append(list_cor)
                 self.index_cor[1] = index_y
             self.index_cor = [index_x,index_y] 
-
             #Движение влево
             self.index_cor[0]+=-i-1
             list_cor= [self.index_cor[0],self.index_cor[1]]
@@ -681,7 +650,6 @@ class Main_Hero(Graphic_elements):
             if not list_cor in self.list_studied_map: 
                 self.list_studied_map.append(list_cor)
         dict_arguments['list_studied_map'] = self.list_studied_map
-
         self.index_cor = [index_x,index_y] 
     def check_near_build(self,element,mat_objetcs,sub_element=None,flag_building_cor=None,index=1):
         building_cor = None

@@ -1,9 +1,7 @@
-
 import pygame
 from graphic_elements import Graphic_elements
 from random import randint,choice
 import json
-
 
 def civ_change(dict_arguments,civ,city_scene,castle,city,card,list_card_camp):
     if civ != None:
@@ -13,8 +11,6 @@ def civ_change(dict_arguments,civ,city_scene,castle,city,card,list_card_camp):
     city_scene.image_load()
     castle.image_load()
     city.image_load()
-
-    
     for i in range(len(list(dict_arguments['dict_card_path_camp'].keys()))-1):
         list_card_camp[i].path = dict_arguments['dict_card_path_camp'][list(dict_arguments['dict_card_path_camp'].keys())[i]]
     for i in range(len(list(dict_arguments['dict_card_name_camp'].keys()))-1):
@@ -39,7 +35,6 @@ def check_rect_cell_list(list_cells,rect):
 def text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=None,settings=None):
     for resource in list_text_cost:
         resource_full_name = resource
-        
         resource = resource.split('/')
         if resource[0] == 'gold_bullion':
             finally_text += ' '+resource[1]+' золота'
@@ -60,8 +55,6 @@ def text_cost(list_text_cost,finally_text = 'Купить за:',text_obj=None,s
     text_len = len(finally_text)
     text_x = settings['SCREEN_WIDTH']//2-((text_len//2)*text_obj.font_size)//2
     return finally_text,text_x
-
-        
 def move_map(event, list_map,SCREEN_W,SCREEN_H):
     #Изменяем координаты каждой клетки
     for cell in list_map:
@@ -74,7 +67,6 @@ def move_map(event, list_map,SCREEN_W,SCREEN_H):
         for cell in list_map:
             cell.X += change_x
     #Если игровое поле ушло влево от границы экрана
-    
     elif  list_map[-1].X + list_map[-1].WIDTH    < SCREEN_W - SCREEN_W//19*3: 
         change_x = SCREEN_W - (list_map[-1].X + list_map[-1].WIDTH + SCREEN_W//19*3)
         #Возвращаем его к левой стороне экрана
@@ -268,7 +260,6 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         ork.X = list_objects_cells_lvl1[index_cells].X
                         ork.Y = list_objects_cells_lvl1[index_cells].Y - SCREEN_W//19/2
                         ork.show_image(win)
-
                     ##Конец отрисовки на матрице карт
                     elif obj == 'M':
                         fountain_mana.X = list_objects_cells_lvl1[index_cells].X
@@ -368,7 +359,6 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         shack.show_image(win)
                         list_cells_MM.append((X_CELL_MM,Y_CELL_MM,'white'))
                         flag_cell_MM = False
-                        
                     elif obj == 'N':
                         stonebreaker.X = list_objects_cells_lvl1[index_cells].X
                         stonebreaker.Y = list_objects_cells_lvl1[index_cells].Y 
@@ -421,7 +411,6 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                         list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'white'))
                         flag_cell_MM = False
                     elif obj == 'P':
-                        
                         portal.X = list_objects_cells_lvl1[index_cells].X
                         portal.Y = list_objects_cells_lvl1[index_cells].Y
                         portal.show_image(win)
@@ -439,10 +428,6 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
                     list_cells_MM.append((X_CELL_MM,Y_CELL_MM + H_CELL_MINI_MAP,'green_dark'))
                     list_cells_MM.append((X_CELL_MM + W_CELL_MINI_MAP,Y_CELL_MM+ H_CELL_MINI_MAP,'green_dark'))
                     flag_cell_MM = False
-            
-
-
-            
             for c in list_cells_MM:
                 if c[0] == X_CELL_MM and c[1] == Y_CELL_MM:
                     flag_cell_MM = False
@@ -458,11 +443,8 @@ def matrix_image(win, player_lvl1, gold, iron, crystal, wood, stone, tree_full,
             index_cells += 1
 
             X_CELL_MM += W_CELL_MINI_MAP
-        
-            
         Y_CELL_MM += H_CELL_MINI_MAP
         X_CELL_MM = X_FRAME_MM
-
 def fog_war_func(mat_objetcs_lvl1,X_FRAME_MM,Y_FRAME_MM,list_studied_map,fog_war,list_objects_cells_lvl1,win,list_cells_MM,LENGTH_MAP,W_CELL_MINI_MAP,H_CELL_MINI_MAP):
     X_CELL_MM = X_FRAME_MM
     Y_CELL_MM = Y_FRAME_MM
@@ -496,8 +478,6 @@ def fog_war_func(mat_objetcs_lvl1,X_FRAME_MM,Y_FRAME_MM,list_studied_map,fog_war
             X_CELL_MM += W_CELL_MINI_MAP
         Y_CELL_MM += H_CELL_MINI_MAP
         X_CELL_MM = X_FRAME_MM         
-
-
 def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
     #Стартовые координаты клеток
     x = 0
@@ -551,14 +531,12 @@ def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
                 list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand13.png'))
             if cell == 'б':
                 list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19, SCREEN_W//19, 'images/MatrixImage/bridge.png'))
-            
             #Увеличиваем х, двигаясь по ряду
             x += SCREEN_W//19
         #Увеличиваем y, двигаясь по столбцамя
         y += SCREEN_W //19
         #Обнуляем x
         x = 0
-
 #Перебираем список захваченый зданий и игроку начесляем ресурсы
 def resourse_accural(list_capture_buildings_symbol, resources_dict):
     for i in list_capture_buildings_symbol:
@@ -574,8 +552,6 @@ def resourse_accural(list_capture_buildings_symbol, resources_dict):
             resources_dict['gold_bullion'] += randint(1,2)
         elif i == 'X':
             resources_dict['crystal'] += 1
-
-
 def move_to_hero(CENTER_CELL_COR,list_cor_player_xy,list_objects_cells_lvl1,SCREEN_W,SCREEN_H):
     #Перемещаемся к герою по X
     if CENTER_CELL_COR[0] >= list_cor_player_xy[0]:
@@ -591,12 +567,10 @@ def move_to_hero(CENTER_CELL_COR,list_cor_player_xy,list_objects_cells_lvl1,SCRE
         difference = CENTER_CELL_COR[1] - list_cor_player_xy[1]
         for cell in list_objects_cells_lvl1:
             cell.Y += difference
-
     elif CENTER_CELL_COR[1] <= list_cor_player_xy[1]:
         difference = list_cor_player_xy[1] - CENTER_CELL_COR[1]  
         for cell in list_objects_cells_lvl1:
             cell.Y -= difference
-            
     #Если игровое поле ушло вправо от границы экрана
     if list_objects_cells_lvl1[0].X > 0:
         change_x = list_objects_cells_lvl1[0].X * -1
@@ -658,7 +632,6 @@ def create_icon_card_post_army(list_cards_post_army,list_cards_pl,list_cards_pl_
             index = list_cards_pl.index(obj)+6
             list_cards_post_army[index].path = 'images/cards/'+str(obj[0])+'.png'
             list_cards_post_army[index].image_load()
-
 def change_x_y_width_height(artifact_pressed, sprite):
     sprite.X = artifact_pressed.start_x
     sprite.Y = artifact_pressed.start_y
@@ -726,7 +699,6 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
             dict_artifact_on[obj.NAME] = obj.path.split('/')[-1]
         if obj.path == None and obj.NAME != None:
             dict_artifact_on[obj.NAME] = None
-
     if dict_artifact_on['helmet'] != dict_artifact_on_past['helmet'] :
         if dict_artifact_on['helmet'] == 'helmet_ice.png' and dict_artifact_on_past['helmet'] != 'helmet_ice.png':
             dict_arguments['characteristic_dict']['lvl_skill_diplomacy'] +=2
@@ -811,8 +783,6 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
             dict_card_characteristics[key][0] +=1
             dict_card_characteristics[key][1] +=1
         list_learn_skills.remove('skill_earth_blessing_learn')
-        
-    
 def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp):
     for key in list_all_artifact:
         if key.NAME !=None:
@@ -843,9 +813,6 @@ def save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_her
     dict_arguments['cardgame_variables']['card_that_move_en'] = None
     with open('saves/config1.json','w') as file:
         json.dump(dict_arguments,file,indent=4,ensure_ascii=True)
-
-    
-
 def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event,win,bg,button_continue_story,sound_book):
     if dict_arguments['scene'] == story:
         bg.show_image(win)
@@ -861,4 +828,3 @@ def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event,win
         else:
             button_continue_story.path = 'images/button_continue_story_y.png'
             button_continue_story.image_load()
-        

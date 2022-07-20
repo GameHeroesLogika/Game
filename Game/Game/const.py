@@ -275,18 +275,18 @@ list_cells_lvl1 = [
                    list('dddohhhj000000tt000000000000000')]
 
 #Список-матрица объектов(персонаж, здания, ресурсы)
-mat_objetcs_lvl1 =[ list('KkkP00000000БCл1000000000Nnгггг'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B,e,m,s
-                    list('kkk0000.0000лл110000.0000nn11гг'),#A,a-academia
-                    list('kkk0000000001л1Hh0000P000.00вг1'),#J,j-taverna
+mat_objetcs_lvl1 =[ list('KkkP00000000ллл1000000000Nnгггг'),#M,p,P,E,g,i,c,w,T,t,F,f,H,h,D,d,N,n,R,r,X,x,C,W,A,B,e,m,s
+                    list('kkk0000.000011110000.0000nn11гг'),#A,a-academia
+                    list('kkk000000000БC1Hh0000P000.00вг1'),#J,j-taverna
                     list('0p0000000000Mл1hh0000.00000вв11'),#S-Хижина
                     list('00C000000000л110000000.0W0вв00S'),#B-Храм
                     list('00000W000000л10000000000ввв0000'),#\ / | л
                     list('00000000000л1100000E000вв00.000'),#
                     list('000.000000011000.000000в0000000'),#
                     list('000Jj000л10000.000000ввв000.000'),#
-                    list('000jj000л100000000000вC00000000'),#
-                    list('Глллллллл100000.00000вв0000.00C'),#
-                    list('Cллл111111000000000000в00000000'),#
+                    list('Г00jj000л100000000000вC00000000'),#
+                    list('Cлллллллл100000.00000вв0000.00C'),#
+                    list('лллл111111000000000000в00000000'),#
                     list('01111000000.000000000Ав0000E000'),#
                     list('S000000000.000000000в0в00000000'),#
                     list('0.0000Dd000000ввв00вв000000.000'),#
@@ -322,7 +322,7 @@ with open('images/artifacts/artifact_list.txt','r') as file:
     for text in file:
         text = text.split(',')
     list_matrix_artifact = text
-list_symbol_resource = ['i','g','w','c','T','b','']
+list_symbol_resource = ['i','g','w','c','T','b']
 for el in range(len(mat_objetcs_lvl1)):
     for element in range(len(mat_objetcs_lvl1[el])):
         if mat_objetcs_lvl1[el][element] == '.':
@@ -464,7 +464,7 @@ list_choice_slots_market = [
 dict_card_characteristics = {
                             'бард':[7,2,'earth'],
                             'клаус':[10,0,'hell'],
-                            'гигант':[12,3,'mountain'],
+                            'гигант':[7,3,'mountain'],
                             'ями':[9,1,'hell'],
                             'подрывник':[8,5,'earth'],
                             'арбалетчик':[9,3,'earth'],
@@ -481,7 +481,7 @@ dict_card_characteristics = {
 dict_card_characteristics_enemy = {
                             'бард':[7,2,'earth'],
                             'клаус':[10,0,'hell'],
-                            'гигант':[12,3,'mountain'],
+                            'гигант':[7,3,'mountain'],
                             'ями':[9,1,'hell'],
                             'подрывник':[8,5,'earth'],
                             'арбалетчик':[9,3,'earth'],
@@ -710,7 +710,6 @@ dict_arguments = {
     'text_show_notification_goblins':text_show_notification_goblins,
     'flag_show_notification_goblins':flag_show_notification_goblins
 }
-
 new_game_dict = dict_arguments.copy()
 if os.path.exists('saves/config1.json'):
     with open('saves/config1.json','r') as file:
