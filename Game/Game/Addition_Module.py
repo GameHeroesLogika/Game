@@ -531,6 +531,8 @@ def create_map(list_cells, list_objects_cells,SCREEN_W,SCREEN_H):
                 list_objects_cells.append(Graphic_elements(x,y,width=SCREEN_W//19,height=SCREEN_W//19,path='images/MatrixImage/sand13.png'))
             if cell == 'б':
                 list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19, SCREEN_W//19, 'images/MatrixImage/bridge.png'))
+            if cell == 'Б':
+                list_objects_cells.append(Graphic_elements(x,y,SCREEN_W//19, SCREEN_W//19, 'images/MatrixImage/bridge2.png'))
             #Увеличиваем х, двигаясь по ряду
             x += SCREEN_W//19
         #Увеличиваем y, двигаясь по столбцамя
@@ -728,6 +730,7 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
         if dict_artifact_on['chest'] == 'chest_ice.png' and dict_artifact_on_past['chest'] != 'chest_ice.png':
             for jey in dict_card_characteristics.keys():
                 dict_card_characteristics[jey][1]+=1
+                print(jey)
         if dict_artifact_on['chest'] != 'chest_ice.png' and dict_artifact_on_past['chest'] == 'chest_ice.png':
             for jey in dict_card_characteristics.keys():
                 dict_card_characteristics[jey][1]-=1

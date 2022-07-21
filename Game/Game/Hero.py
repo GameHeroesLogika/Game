@@ -401,7 +401,13 @@ class Main_Hero(Graphic_elements):
                 if self.near_card:
                     for obj in list_card_matrix:
                         if obj.NAME == self.card_name:
-                            self.show_tip( '[F] Поговорить с '+obj.path.split('/')[-1].split('.')[0], self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80)
+                            name = obj.path.split('/')[-1].split('.')[0]
+                            index = 1
+                            text = '[F] Поговорить с '+name
+                            if len(name) >= 7:
+                                index = 2
+                                text = '[F] Поговорить с;'+'    '+name
+                            self.show_tip( text, self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65,font_size=settings['SCREEN_WIDTH']//80,index=index)
                             if keys[pygame.K_f]:
                                 self.flag_card = obj.path.split('/')[-1].split('.')[0]
                                 self.near_card = False
@@ -542,8 +548,8 @@ class Main_Hero(Graphic_elements):
             else:
                 mat_objetcs[index_x][index_y] = '0'
     #Функция для показа подсказок
-    def show_tip(self, text, x_text, y_text,font_size = settings['SCREEN_WIDTH']//65):
-        text = Font('images/Font/pixel_font.ttf',font_size,(255,255,255),text,x_text,y_text)
+    def show_tip(self, text, x_text, y_text,font_size = settings['SCREEN_WIDTH']//65,index=1):
+        text = Font('images/Font/pixel_font.ttf',font_size,(255,255,255),text,x_text,y_text,index=index)
         text.show_text(self.win)
     # Метод тумана войны 
     def blind_move(self,index,flag_player): 

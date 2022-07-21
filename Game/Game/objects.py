@@ -26,7 +26,8 @@ player_lvl1 = Main_Hero(
                         win=win,count_step=dict_arguments['characteristic_dict']['count_step'])
 dialog_book = Graphic_elements(x=SCREEN_CELL_W,y=SCREEN_CELL_H,width=SCREEN_CELL_W*14,height=SCREEN_CELL_H*7.5,path='images/dialog_book.png')
 elliot_img = Graphic_elements(settings['SCREEN_WIDTH'] - SCREEN_CELL_W*2.9 + settings['SCREEN_WIDTH']//350,  SCREEN_CELL_W*4.74, settings['SCREEN_WIDTH']//16, settings['SCREEN_HEIGHT']//7.5, 'images/game_interface/elliot_img.png')
-player_info = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Эллиот, ур '+str(dict_arguments['characteristic_dict']['lvl']),elliot_img.X,elliot_img.Y +elliot_img.HEIGHT+ settings['SCREEN_HEIGHT']//100)
+player_info = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Уровень '+str(dict_arguments['characteristic_dict']['lvl']),elliot_img.X,elliot_img.Y +elliot_img.HEIGHT+ settings['SCREEN_HEIGHT']//100)
+game_icon = Graphic_elements(settings['SCREEN_WIDTH']//1.6,0,SCREEN_CELL_W*5,SCREEN_CELL_H*10,'images/game_icon.png')
 #Объекты матрицы
 flower0 = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/flower0.png')
 flower1 = Graphic_elements(x=0,y=0,width=SCREEN_CELL_W,height=SCREEN_CELL_H,path='images/MatrixImage/flower1.png')
@@ -56,7 +57,7 @@ error_text_obj = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,
 portal = Graphic_elements(0, 0, SCREEN_CELL_W, SCREEN_CELL_W, 'images/portal.png')
 #Картинки клеточек для мини карты
 green = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/green.png')
-black = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/black.png')
+black = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/fog_war.bmp')
 yellow = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/yellow.png')
 white = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/white.png')
 green_dark = Graphic_elements(0,0,W_CELL_MINI_MAP,H_CELL_MINI_MAP,'images/green_dark.png')
@@ -211,7 +212,7 @@ text_exp_hero = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'
 #Текст количества ходов
 text_step_count = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//65,'white','Осталось шагов: '+str(player_lvl1.count_step),settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//6.8,settings['SCREEN_HEIGHT']-settings['SCREEN_HEIGHT']//7.5)
 #Текст нового дня
-text_new_day = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','           Новый день;    Статистика по ресурсам; ;Яблок - 0 Золота - 0; ;Железа - 0 Кристаллов - 0; ;Камня - 0 Дерева - 0',frame_new_day.X+SCREEN_CELL_W,frame_new_day.Y+SCREEN_CELL_H,index=8)
+text_new_day = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','           Новый день;    Статистика по ресурсам; ;Еды - 0 Золота - 0; ;Железа - 0 Кристаллов - 0; ;Камня - 0 Дерева - 0',frame_new_day.X+SCREEN_CELL_W,frame_new_day.Y+SCREEN_CELL_H,index=8)
 #Текст сундука 
 chest_text_gold =  Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'red','   Нет места для артефакта;   Вы забираете золото',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10,index=2)
 #Текст для показа сколько осталось до побега
@@ -275,6 +276,8 @@ text_save = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red'
 text_error_choose_civ = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red','    Вы не выбрали;    цивилизацию!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//18,index=2)
 #текст для ошибки что недостаточно ходов
 text_error_not_enoug_step = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','Шаги за день потрачены',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//14)
+#текст для ошибки что недостаточно ходов
+text_skill_icon = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//40,'red','   Нужен уровень - 5',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//14)
 #Текст для выбора способности 
 text_hero_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','        Поздровляем!;Вы познали великую магию!;Вы можете изучить способность!',settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*2,index=3)
 #Текст для ошибки уже купленной способности
@@ -315,7 +318,7 @@ chest = Graphic_elements(0,0,SCREEN_CELL_W,SCREEN_CELL_W,path='images/chest/ches
 chest_open = Graphic_elements(settings['SCREEN_WIDTH']//2-SCREEN_CELL_W*3,settings['SCREEN_HEIGHT']//2-SCREEN_CELL_H*3,SCREEN_CELL_W*6,SCREEN_CELL_W*6,path='images/chest/chest_open.png')
 #Сцены
 book = Graphic_elements(0, 0, settings['SCREEN_WIDTH'], settings['SCREEN_HEIGHT'], 'images/book.png')
-menu_hero = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/hero_menu.bmp')
+menu_hero = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/hero_menuclose.bmp')
 background_market = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/background_market.bmp')
 city_scene = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/city.bmp')
 scene_camp = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/scene_camp.bmp')
@@ -518,6 +521,11 @@ dict_text_credits = {
                     'Разработчики:':['Семёнов Рома','Дмитрий Ларин','Кикот Сергей','Скрипник Николай'],
                     'Сюжет:':['Дмитрий Ларин','Илья Подрез','Смирнов Тимофей','Глеб Фурсенко']
 }
+skill_icon = Graphic_elements(settings['SCREEN_WIDTH']//1.099,settings['SCREEN_HEIGHT']//1.692,settings['SCREEN_WIDTH']//12.6,settings['SCREEN_HEIGHT']//7.2,dict_arguments['hero_skill_path'])
+if dict_arguments['hero_skill_path'] != None:
+    skill_icon.path = dict_arguments['hero_skill_path']
+    menu_hero.path = 'images/hero_menu.bmp'
+    menu_hero.image_load()
 text_credits = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'black','За игру отвечали:',settings['SCREEN_WIDTH']//2.5,0)
 list_text_credits_object = list()
 x_text = SCREEN_CELL_W*2
