@@ -455,9 +455,9 @@ for i in range(len(list_buildings_castle)):
     list_buildings_castle[i].NAME = list(dict_arguments['dict_bought_city'].keys())[i]
     list_buildings_castle[i].X += i*settings['SCREEN_WIDTH']//4.78
     if not dict_arguments['dict_bought_city'][list_buildings_castle[i].NAME]:
-        list_buildings_castle[i].path = 'images\city\castle\\'+list(dict_arguments['dict_bought_city'].keys())[i]+'_locked.png'
+        list_buildings_castle[i].path = 'images/city/castle/'+list(dict_arguments['dict_bought_city'].keys())[i]+'_locked.png'
     else:
-        list_buildings_castle[i].path = 'images\city\castle\\'+list(dict_arguments['dict_bought_city'].keys())[i]+'.png'
+        list_buildings_castle[i].path = 'images/city/castle/'+list(dict_arguments['dict_bought_city'].keys())[i]+'.png'
     
     list_buildings_castle[i].image_load()
 list_slots_market_hero = [
