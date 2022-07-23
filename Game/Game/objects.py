@@ -85,7 +85,7 @@ shack = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_W*1.5,'images/buildings/
 market = Graphic_elements(0,0,SCREEN_CELL_W*2, SCREEN_CELL_W*2,'images/buildings/market.png')
 city = Graphic_elements(0,0,SCREEN_CELL_W*3, SCREEN_CELL_W*3,'images/buildings/castle.png')
 man_potion = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_W*1.5,'images/man_potion.png')
-#Строения города
+#Строения города    
 castle = Graphic_elements(x=settings['SCREEN_WIDTH']//2.2,y=0,width=settings['SCREEN_WIDTH']//3.65,height=settings['SCREEN_HEIGHT']//3.6,path = 'images/city/castle.png')
 camp = Graphic_elements(x=settings['SCREEN_WIDTH']//2.8,y=settings['SCREEN_HEIGHT']//3,width=settings['SCREEN_WIDTH']//6.4,height=settings['SCREEN_HEIGHT']//5.53,path = 'images/city/camp.png')
 church = Graphic_elements(x=settings['SCREEN_WIDTH']//1.79,y=settings['SCREEN_HEIGHT']//1.58,width=settings['SCREEN_WIDTH']//6.73,height=settings['SCREEN_HEIGHT']//4.8,path = 'images/city/church.png')
