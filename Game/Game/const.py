@@ -89,7 +89,7 @@ past_resources_dict = resources_dict.copy()
 effect_art_skills_name_dict = {
     'boots_fire.png':'iron_bullion;4;+;resourcesdict',
     'chest_hero.png':'crystal;1;+;resourcesdict',
-    'helmet_hero.png':'exp;100;+;characteristicdict',
+    'helmet_hero.png':'exp;25;+;characteristicdict',
     'skill_lumberjack_learn.png':'wood;1;+;resourcesdict',
 }
 characteristic_dict = {
@@ -230,14 +230,15 @@ dict_path_artifact = {
 
 list_daily_events = [
                     'post_fight',
-                    'goblin',
                     'enemy',
-                    'gold',
+                    'fog_less',
                     'heist',
+                    
+                    'gold',
+                    'goblin',
                     'artifact',
                     'add_army',
                     'fog_more',
-                    'fog_less',
                     'discount',
                     ]
 #Список из клеток первого уровня
@@ -545,11 +546,11 @@ dict_bought_city = {
                     
 }
 dict_price_city = {
-                    'camp':'gold_bullion/10;food/10',
-                    'portal':'gold_bullion/20;stone/10;crystal/5',
-                    'altar':'gold_bullion/15;stone/15;crystal/2;iron_bullion/5',
-                    'church':'gold_bullion/25;stone/10;wood/10;food/15;crystal/4',
-                    'forge':'gold_bullion/20;food/10;iron_bullion/10;stone/20;crystal/3',
+                    'camp':'gold_bullion/10;wood/8;food/10',
+                    'portal':'gold_bullion/10;stone/20',
+                    'altar':'gold_bullion/15;stone/20;iron_bullion/10',
+                    'church':'gold_bullion/20;stone/30;wood/10;food/15;crystal/3',
+                    'forge':'gold_bullion/25;food/10;iron_bullion/20;stone/20',
 }
     
 create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],

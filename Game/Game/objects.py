@@ -260,8 +260,8 @@ text_build_alredy_bought = Font('images/Font/pixel_font.ttf',settings['SCREEN_WI
 text_buy_previous_build = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//37,'red','Нельзя купить здание!;  Купите предыдущее!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12,index=2)
 #Текст для подкупа противника
 text_offer_enemy = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//48,'red','',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19)
-text_offer_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+SCREEN_CELL_W*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
-text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+SCREEN_CELL_W*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
+text_offer_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+SCREEN_CELL_W*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*3)
+text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+SCREEN_CELL_W*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*3)
 #Текст недостаточно карт
 text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Не хватает карт!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для карт 

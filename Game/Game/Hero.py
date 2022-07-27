@@ -392,9 +392,9 @@ class Main_Hero(Graphic_elements):
                     self.show_tip('[→] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                 if not self.flag_left and (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]) in list_symbol_resource:
                     self.show_tip('[←] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
-                if not self.flag_up and (mat_objetcs[self.player_cor[0]+ 1][self.player_cor[1] ]) in list_symbol_resource:
+                if not self.flag_down and (mat_objetcs[self.player_cor[0]+ 1][self.player_cor[1] ]) in list_symbol_resource:
                     self.show_tip('[↓] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
-                if not self.flag_down and (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1] ]) in list_symbol_resource:
+                if not self.flag_up and (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1] ]) in list_symbol_resource:
                     self.show_tip('[↑] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
                     
                 if self.near_water1:
