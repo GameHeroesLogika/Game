@@ -68,7 +68,6 @@ def run_main(dict_arguments):
     time = pygame.time.Clock()
     player_lvl1.flag_move = True
     while dict_arguments['game']:
-        print(dict_arguments['city_cor_enter'])
         if dict_arguments['cardgame_variables']['who_won'] == 'enemy' and dict_arguments['flag_fight_start_post'] : 
             dict_arguments['flag_fight_start_post'] = False
             player_lvl1.player_cor = dict_arguments['city_cor_enter']
@@ -2116,8 +2115,8 @@ def run_main(dict_arguments):
                     dict_arguments['text_daily_event_font_content'] = dict_arguments['text_daily_event_font_content'].split(';')
                 if dict_arguments['daily_event'] == 'heist':
                     list_resource = list()
-                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;Вы прошли по лесу и;вас ограбили разбойники!;Потеряно:'
-                    text_daily_event.index = 4
+                    dict_arguments['text_daily_event_font_content'] = '           Внимание!;;Вы прошли по лесу и вас ограбили;разбойники!;;Потеряно:'
+                    text_daily_event.index = 6
                     list_unavailable_resource = []
                     for i in range(randint(1,4)):
                         resource = choice(list(dict_arguments['resources_dict'].keys()))

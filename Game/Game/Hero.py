@@ -282,6 +282,7 @@ class Main_Hero(Graphic_elements):
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'stone','b',mat_objetcs,6,8,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'crystal','c',mat_objetcs,1,2,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'food','T',mat_objetcs,10,12,resources_dict,recourse_sounds)
+                    
                     if (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == '0' or mat_objetcs[self.player_cor[0] - 1][self.player_cor[1]] == 'P') and self.where_move == None:
                         self.where_move = 'up'
                         self.count_step -= 1
@@ -387,6 +388,15 @@ class Main_Hero(Graphic_elements):
                 self.near_fountain_exp,self.fountain_exp_cor = self.check_near_build(element='E',sub_element='e',mat_objetcs=mat_objetcs,flag_building_cor=True)
                 self.near_water1 = self.check_near_build_sound(element='в',mat_objetcs=mat_objetcs,index=1)
                 self.near_tavern1 = self.check_near_build_sound(element='J',sub_element='j',mat_objetcs=mat_objetcs,index=1)
+                if not self.flag_right and (mat_objetcs[self.player_cor[0]][self.player_cor[1] + 1]) in list_symbol_resource:
+                    self.show_tip('[→] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                if not self.flag_left and (mat_objetcs[self.player_cor[0]][self.player_cor[1] - 1]) in list_symbol_resource:
+                    self.show_tip('[←] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                if not self.flag_up and (mat_objetcs[self.player_cor[0]+ 1][self.player_cor[1] ]) in list_symbol_resource:
+                    self.show_tip('[↓] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                if not self.flag_down and (mat_objetcs[self.player_cor[0] - 1][self.player_cor[1] ]) in list_symbol_resource:
+                    self.show_tip('[↑] Собрать ресурс', self.SCREEN_W-self.SCREEN_W//6.4, self.SCREEN_W//65)
+                    
                 if self.near_water1:
                     if not pygame.mixer.music.get_busy():
                         self.water_sound.load_music()
