@@ -243,7 +243,7 @@ class Main_Hero(Graphic_elements):
                     mat_objetcs[self.player_cor[0]][self.player_cor[1]] = '0'
                 self.player_cor[0] += 1
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_RIGHT] and self.flag_move and self.where_move == None:
+            if keys[pygame.K_d] and self.flag_move and self.where_move == None:
                 #Если мы стоим не с правого краю карты
                 if self.player_cor[1] != LENGTH_MAP - 1:
                     #Вызываем функции подбора ресрусов
@@ -261,7 +261,7 @@ class Main_Hero(Graphic_elements):
                     # self.player_cor[1]+=10
                         #Указываем, что игрок переместился на клетку вправо
             #Если нажата клавиша ВЛЕВО
-            elif keys[pygame.K_LEFT] and self.flag_move and self.where_move == None:
+            elif keys[pygame.K_a] and self.flag_move and self.where_move == None:
                 if self.player_cor[1] != 0:
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0],self.player_cor[1] - 1,'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
@@ -274,7 +274,7 @@ class Main_Hero(Graphic_elements):
                         self.count_step -= 1
                         choice(self.move_sound).play_sound()
             #Если нажата клавиша ВВЕРХ
-            elif keys[pygame.K_UP] and self.flag_move and self.where_move == None:
+            elif keys[pygame.K_w] and self.flag_move and self.where_move == None:
                 if self.player_cor[0] != 0:
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]-1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
@@ -287,7 +287,7 @@ class Main_Hero(Graphic_elements):
                         self.count_step -= 1
                         choice(self.move_sound).play_sound()
             #Если нажата клавиша ВНИЗ
-            elif keys[pygame.K_DOWN] and self.flag_move and self.where_move == None:
+            elif keys[pygame.K_s] and self.flag_move and self.where_move == None:
                 if self.player_cor[0] != LENGTH_MAP - 1:
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'gold_bullion','g',mat_objetcs,2,4,resources_dict,recourse_sounds)
                     self.take_resource(self.player_cor[0]+1,self.player_cor[1],'iron_bullion','i',mat_objetcs,4,6,resources_dict,recourse_sounds)
@@ -536,7 +536,7 @@ class Main_Hero(Graphic_elements):
                 self.flag_pressed_escape = False    
         if self.count_step == 0:
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_RIGHT] or keys[pygame.K_LEFT] or keys[pygame.K_DOWN] or keys[pygame.K_UP] and dict_arguments['flag_show_error_not_enoug_step'] >= 30:
+            if keys[pygame.K_d] or keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_w] and dict_arguments['flag_show_error_not_enoug_step'] >= 30:
                 dict_arguments['flag_show_error_not_enoug_step'] = 0
     #Функция для сбора ресрусов
     def take_resource(self,index_x,index_y,name_resource,resource_symb,mat_objetcs,min_count,max_count,resources_dict,recourse_sounds):

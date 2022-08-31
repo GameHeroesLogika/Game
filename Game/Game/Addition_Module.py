@@ -730,7 +730,6 @@ def effect_hero(list_all_artifact,dict_artifact_on,dict_artifact_on_past,list_le
         if dict_artifact_on['chest'] == 'chest_ice.png' and dict_artifact_on_past['chest'] != 'chest_ice.png':
             for jey in dict_card_characteristics.keys():
                 dict_card_characteristics[jey][1]+=1
-                print(jey)
         if dict_artifact_on['chest'] != 'chest_ice.png' and dict_artifact_on_past['chest'] == 'chest_ice.png':
             for jey in dict_card_characteristics.keys():
                 dict_card_characteristics[jey][1]-=1
@@ -831,3 +830,44 @@ def change_story(dict_arguments,story_scene,story,mouse_cor,next_story,event,win
         else:
             button_continue_story.path = 'images/button_continue_story_y.png'
             button_continue_story.image_load()
+def change_help(dict_arguments,help_scene,help_name,mouse_cor,next_help,event,win,bg,sound_book,button_back,button_next,button_leave,previous_help):
+    if dict_arguments['scene'] == help_name:
+        bg.show_image(win)
+        help_scene.show_image(win)
+        if button_back != None:
+            button_back.show_image(win)
+        if button_next != None:
+            button_next.show_image(win)
+        button_leave.show_image(win)
+        if  button_next != None:
+            if check_mouse_cor(button_next,mouse_cor):
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    dict_arguments['scene'] = next_help
+                    sound_book.play_sound()
+                    return True
+                button_next.path = 'images/button_continue_story_b.png'
+                button_next.image_load()
+            else:
+                button_next.path = 'images/button_continue_story_y.png'
+                button_next.image_load()
+        if button_back != None:
+            if check_mouse_cor(button_back,mouse_cor):
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    dict_arguments['scene'] = previous_help
+                    sound_book.play_sound()
+                    return True
+                button_back.path = 'images/menu_hero_back_b.png'
+                button_back.image_load()
+            else:
+                button_back.path = 'images/menu_hero_back_y.png'
+                button_back.image_load()
+        if check_mouse_cor(button_leave,mouse_cor):
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                dict_arguments['scene'] = 'menu'
+                sound_book.play_sound()
+                return True
+            button_leave.path = 'images/button_continue_story_b.png'
+            button_leave.image_load()
+        else:
+            button_leave.path = 'images/button_continue_story_y.png'
+            button_leave.image_load()

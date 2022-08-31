@@ -711,7 +711,8 @@ dict_arguments = {
     'flag_show_notification_goblins':flag_show_notification_goblins,
     'dict_card_characteristics':dict_card_characteristics,
     "skill_icon_error":30,
-    'city_cor_enter':city_cor_enter
+    'city_cor_enter':city_cor_enter,
+    'flag_new_game_ask':False
 }
 new_game_dict = dict_arguments.copy()
 if os.path.exists('saves/config1.json'):

@@ -45,6 +45,22 @@ for i in range(5):
     list_water.append(water)
 water = choice(list_water)
 bridge = Graphic_elements(0,0,SCREEN_CELL_W, SCREEN_CELL_H, 'images/MatrixImage/bridge.png')
+#Помощь
+button_back_help = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H*1,SCREEN_CELL_W*3,SCREEN_CELL_H*1,path='images/menu_hero_back_y.png')
+button_next_help = Graphic_elements(settings['SCREEN_WIDTH']-SCREEN_CELL_W*3,settings['SCREEN_HEIGHT']-SCREEN_CELL_H*1,SCREEN_CELL_W*3,SCREEN_CELL_H*1,path='images/button_continue_story_y.png')
+button_leave_help = Graphic_elements(settings['SCREEN_WIDTH']//2 - SCREEN_CELL_W*1.5,settings['SCREEN_HEIGHT']-SCREEN_CELL_H*1,SCREEN_CELL_W*3,SCREEN_CELL_H*1,path='images/button_continue_story_y.png')
+help_scene1 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene1.png')
+help_scene2 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene2.png')
+help_scene3 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene3.png')
+help_scene4 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene4.png')
+help_scene5 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene5.png')
+help_scene6 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene6.png')
+help_scene7 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene7.png')
+help_scene8 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene8.png')
+help_scene9 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene9.png')
+help_scene10 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene10.png')
+help_scene11 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene11.png')
+help_scene12 = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/help/help_scene12.png')
 #Контент ошибки 
 text_error_content = None
 # Рамка для ошибки
@@ -127,6 +143,7 @@ button_castle_back = Graphic_elements(0,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,
 button_market_back = Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//12.8,y=0,width=SCREEN_CELL_W*2,height=SCREEN_CELL_H,path='images/menu_hero_back_b.png')
 button_new_game = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Новая игра',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24)
 button_play = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'DimGrey','Продолжить игру',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*4)
+button_help = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Помощь',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*8)
 button_set = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Настройки',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*12)
 button_exit = Font( 'images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Выйти',settings['SCREEN_WIDTH']//15, settings['SCREEN_HEIGHT']//24*16)
 button_menu_end = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//19,'black','Меню',settings['SCREEN_WIDTH']-settings['SCREEN_WIDTH']//19*2,settings['SCREEN_HEIGHT']-settings['SCREEN_WIDTH']//19)
@@ -200,7 +217,7 @@ list_buttons_dialog_potion = [button_leave,button_threat,button_deal]
 #Текст для кнопки гарнизона
 button_post_army = Graphic_elements(settings['SCREEN_WIDTH']-SCREEN_CELL_W*2.5,settings['SCREEN_HEIGHT']-SCREEN_CELL_H,SCREEN_CELL_W*2.5,SCREEN_CELL_H,'images/post_army_b.png')
 button_continue_story = Graphic_elements(settings['SCREEN_WIDTH']-SCREEN_CELL_W*4,settings['SCREEN_HEIGHT']-SCREEN_CELL_H*2,SCREEN_CELL_W*4,SCREEN_CELL_H*2,path='images/button_continue_story_y.png')
-list_buttons = [button_play,button_set,button_exit,button_new_game] 
+list_buttons = [button_play,button_set,button_exit,button_new_game,button_help] 
 #Текст
 #Текст стоимость скиллов 
 text_mana_cost_click = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//50,'blue','  Нажмите;для покупки;за '+str(skill_cost)+' маны',settings['SCREEN_WIDTH']//320,settings['SCREEN_HEIGHT']//2.21,index=3)
@@ -249,7 +266,7 @@ text_camp = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red'
 #Текст для хижины колдуна
 text_shack = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red',' Вы выпили зелье маны',frame_buildings.X,frame_buildings.Y + SCREEN_CELL_H)
 #Текст для колодца маны
-text_fountain_mana = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red',' Вы выпили воду из колодца',frame_buildings.X,frame_buildings.Y + SCREEN_CELL_H)
+text_fountain_mana = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','Вы выпили воду из колодца',frame_buildings.X,frame_buildings.Y + SCREEN_CELL_H)
 #Текст для дерева знаний
 text_fountain_exp = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//45,'red','Вы получили знания дерева',frame_buildings.X,frame_buildings.Y + SCREEN_CELL_H)
 #Текст для ошибки недостаточно ресурсов
@@ -262,6 +279,8 @@ text_buy_previous_build = Font('images/Font/pixel_font.ttf',settings['SCREEN_WID
 text_offer_enemy = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//48,'red','',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19)
 text_offer_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+SCREEN_CELL_W*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
 text_offer_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+SCREEN_CELL_W*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*2)
+text_yes = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Да',frame_error.X+SCREEN_CELL_W*2,frame_error.Y + settings['SCREEN_HEIGHT']//19*3)
+text_no = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//30,'red','Нет',frame_error.X+SCREEN_CELL_W*4,frame_error.Y + settings['SCREEN_HEIGHT']//19*3)
 #Текст недостаточно карт
 text_not_enough_cards = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//35,'red',' Не хватает карт!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//12)
 #Текст для карт 
@@ -284,6 +303,7 @@ text_hero_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38
 text_error_bought_skill = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//44,'red','Способность уже куплена!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//10)
 #Текст для закрытия после новой игры
 text_new_game = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','Для начала игры;требуется перезайти!',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19,index=2)
+text_new_game_error = Font('images/Font/pixel_font.ttf',settings['SCREEN_WIDTH']//38,'red','Вы действительно хоти-;те начать игру заного?',frame_error.X+settings['SCREEN_WIDTH']//40,frame_error.Y + settings['SCREEN_HEIGHT']//19,index=2)
 #Картинки иконок ресурсов
 amount_food = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',apple.X+apple.WIDTH+settings['SCREEN_WIDTH']//160,apple.Y)
 amount_iron = Font('images/Font/pixel_font.ttf', int(apple.HEIGHT-settings['SCREEN_WIDTH']//85.3),'white','0',iron_bullion.X+iron_bullion.WIDTH+settings['SCREEN_WIDTH']//160,iron_bullion.Y)
@@ -540,10 +560,10 @@ for key in dict_text_credits.keys():
         y_text += SCREEN_CELL_H
     y_text=SCREEN_CELL_H
     x_text += settings['SCREEN_WIDTH']//3-settings['SCREEN_WIDTH']//38
-
+bg_story = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg1.bmp')
 #Карточный бой
 #Создаем объект фона
-bg = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg.PNG')
+bg = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg.png')
 #Создаем объекты карт
 card_pl_1 = Cards(settings['SCREEN_WIDTH']//12*3.2,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//3.28,path = None,hp = None,damage = None,desc_path = None,name='pl_1')
 card_pl_2 = Cards(settings['SCREEN_WIDTH']//12*4.6,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//3.28,path = None,hp = None,damage = None,desc_path = None,name='pl_2')

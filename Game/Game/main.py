@@ -68,7 +68,7 @@ def run_main(dict_arguments):
     time = pygame.time.Clock()
     player_lvl1.flag_move = True
     while dict_arguments['game']:
-        print(dict_arguments['city_cor_enter'])
+        # print(dict_arguments['city_cor_enter'])
         if dict_arguments['cardgame_variables']['who_won'] == 'enemy' and dict_arguments['flag_fight_start_post'] : 
             dict_arguments['flag_fight_start_post'] = False
             player_lvl1.player_cor = dict_arguments['city_cor_enter']
@@ -87,7 +87,33 @@ def run_main(dict_arguments):
         for event in pygame.event.get():
             #Услове выхода из игры
             mouse_cor = pygame.mouse.get_pos() 
-            if change_story(dict_arguments,story11_scene,'story11',mouse_cor,'credits',event,win,bg,button_continue_story,sound_book):
+            if change_help(dict_arguments,help_scene1,'help1',mouse_cor,'help2',event,win,bg_story,sound_book,None,button_next_help,button_leave_help,None):
+                break
+            if change_help(dict_arguments,help_scene2,'help2',mouse_cor,'help3',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help1'):
+                break
+            if change_help(dict_arguments,help_scene3,'help3',mouse_cor,'help4',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help2'):
+                break
+            if change_help(dict_arguments,help_scene4,'help4',mouse_cor,'help5',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help3'):
+                break
+            if change_help(dict_arguments,help_scene5,'help5',mouse_cor,'help6',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help4'):
+                break
+            if change_help(dict_arguments,help_scene6,'help6',mouse_cor,'help7',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help5'):
+                break
+            if change_help(dict_arguments,help_scene7,'help7',mouse_cor,'help8',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help6'):
+                break
+            if change_help(dict_arguments,help_scene8,'help8',mouse_cor,'help9',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help7'):
+                break
+            if change_help(dict_arguments,help_scene9,'help9',mouse_cor,'help10',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help8'):
+                break
+            if change_help(dict_arguments,help_scene10,'help10',mouse_cor,'help11',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help9'):
+                break
+            if change_help(dict_arguments,help_scene11,'help11',mouse_cor,'help12',event,win,bg_story,sound_book,button_back_help,button_next_help,button_leave_help,'help10'):
+                break
+            if change_help(dict_arguments,help_scene12,'help12',mouse_cor,None,event,win,bg_story,sound_book,button_back_help,None,button_leave_help,'help11'):
+                break
+
+                
+            if change_story(dict_arguments,story11_scene,'story11',mouse_cor,'credits',event,win,bg_story,button_continue_story,sound_book):
                 break
             if dict_arguments['scene'] == 'credits':
                 win.fill('white')
@@ -103,30 +129,30 @@ def run_main(dict_arguments):
                             button_play.font_color = 'DimGrey'
                 else:
                     button_menu_end.font_color = 'black'
-            if change_story(dict_arguments,story1_scene,'story1',mouse_cor,'story2',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story1_scene,'story1',mouse_cor,'story2',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story2_scene,'story2',mouse_cor,'story3',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story2_scene,'story2',mouse_cor,'story3',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story3_scene,'story3',mouse_cor,'story4',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story3_scene,'story3',mouse_cor,'story4',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story4_scene,'story4',mouse_cor,'lvl1',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story4_scene,'story4',mouse_cor,'lvl1',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story5_scene,'story5',mouse_cor,'story6',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story5_scene,'story5',mouse_cor,'story6',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story6_scene,'story6',mouse_cor,'story7',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story6_scene,'story6',mouse_cor,'story7',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story7_scene,'story7',mouse_cor,'card_game',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story7_scene,'story7',mouse_cor,'card_game',event,win,bg_story,button_continue_story,sound_book):
                 for i in range(len(list_cards_enemy_castle)):
                     dict_arguments['list_cards_en'][i][0] = list_cards_enemy_castle[i][0]
                 background_music.stop_sound()
                 background_music_card_game.play_sound(-1)
                 cards_arrangement(dict_arguments,dict_arguments['list_cards_pl'],list_objects_cards_en,list_objects_cards_pl,dict_card_characteristics_enemy,dict_arguments['dict_card_characteristics'])
                 break
-            if change_story(dict_arguments,story8_scene,'story8',mouse_cor,'menu',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story8_scene,'story8',mouse_cor,'menu',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story9_scene,'story9',mouse_cor,'credits',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story9_scene,'story9',mouse_cor,'credits',event,win,bg_story,button_continue_story,sound_book):
                 break
-            if change_story(dict_arguments,story10_scene,'story10',mouse_cor,'credits',event,win,bg,button_continue_story,sound_book):
+            if change_story(dict_arguments,story10_scene,'story10',mouse_cor,'credits',event,win,bg_story,button_continue_story,sound_book):
                 break
             if dict_arguments['flag_pause']:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -145,6 +171,7 @@ def run_main(dict_arguments):
             if event.type == pygame.QUIT:
                 save_game(dict_arguments,list_all_artifact,player_lvl1,list_slots_skills_hero,list_card_camp)
                 dict_arguments['game'] = False
+            
             if dict_arguments['scene'] == 'result_screen':
                 # Если навелись на кнопку окончания боя
                 if event.type == pygame.MOUSEMOTION:
@@ -177,8 +204,8 @@ def run_main(dict_arguments):
                             dict_arguments['mat_objetcs_lvl1'][player_lvl1.player_cor[0]][player_lvl1.player_cor[1]] = '0'
                             player_lvl1.player_cor = list(dict_arguments['city_cor_enter'])
                             player_lvl1.index_cor = list(dict_arguments['city_cor_enter'])
-                            print(player_lvl1.index_cor)
-                            print(player_lvl1.player_cor)
+                            # print(player_lvl1.index_cor)
+                            # print(player_lvl1.player_cor)
                             dict_arguments['mat_objetcs_lvl1'][int(dict_arguments['city_cor_enter'][0])][int(dict_arguments['city_cor_enter'][1])] = 'p'
                         player_lvl1.flag_card = False
                         dict_arguments['trophy_exp'] = 0
@@ -1158,13 +1185,34 @@ def run_main(dict_arguments):
                     elif check_mouse_cor_font(button_set,mouse_cor):
                         click_sound.play_sound()
                         dict_arguments['scene'] = 'settings_scene'
+                    elif check_mouse_cor_font(button_help,mouse_cor):
+                        dict_arguments['scene'] = 'help1'
                     elif check_mouse_cor_font(button_new_game,mouse_cor):
                         click_sound.play_sound()
-                        if os.path.exists('saves/config1.json'):
-                            os.remove('saves/config1.json')
-                            dict_arguments['count_text_new_game'] = 0
-                        elif not os.path.exists('saves/config1.json'):
+                        if not os.path.exists('saves/config1.json') and dict_arguments['civ_selected'] == None:
                             dict_arguments['scene'] = 'choose_civ_scene'
+                        if dict_arguments['civ_selected'] != None and not os.path.exists('saves/config1.json'):
+                            dict_arguments['flag_new_game_ask'] = True
+                        if os.path.exists('saves/config1.json'):
+                            if dict_arguments['civ_selected'] == None:
+                                dict_arguments['scene'] = 'choose_civ_scene'
+                            else:
+                                os.remove('saves/config1.json')
+                                dict_arguments['flag_new_game_ask'] = True
+                            
+                            
+                                                        
+            if dict_arguments['flag_new_game_ask'] == True:
+                frame_error.show_image(win)
+                text_new_game_error.show_text(win)
+                text_yes.show_text(win)
+                text_no.show_text(win)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if check_mouse_cor_font(text_yes,mouse_cor):
+                        dict_arguments['count_text_new_game'] = 0
+                        dict_arguments['flag_new_game_ask'] = False
+                    if check_mouse_cor_font(text_no,mouse_cor):
+                        dict_arguments['flag_new_game_ask'] = False          
             if dict_arguments['scene'] == 'settings_scene':
                 if check_mouse_cor(button_menu_hero_back,mouse_cor):
                     button_menu_hero_back.path = 'images/menu_hero_back_b.png'
@@ -2369,6 +2417,7 @@ def run_main(dict_arguments):
                 dict_arguments['flag_offer'] = True
                 for obj in list_buttons_dialog:
                     obj.font_content = obj.start_content
+        
         if dict_arguments['count_dialog_potion'] < 50:
             dict_arguments['count_dialog_potion']+=1
             for obj in list_buttons_dialog_potion:
