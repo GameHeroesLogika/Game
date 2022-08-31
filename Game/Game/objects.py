@@ -376,9 +376,9 @@ background_music.play_sound(index=-1)
 #Фоновая музыка для карточного боя
 background_music_card_game = Sounds('sounds/game_music.wav',settings['MUSIC_VOLUME'])
 brightless_pause = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],path='images/brightless.png')
-flashlight_icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/flash_icon.png')
-healskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*4,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/heal_icon.png')
-damageskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*7,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/dmg_icon.png')
+flashlight_icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/flash_icon.png',name='flash_light')
+healskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*4,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/heal_icon.png',name='heal')
+damageskill_Icon = Graphic_elements(frame_notification.X+SCREEN_CELL_W*7,frame_notification.Y+settings['SCREEN_HEIGHT']//19*5,SCREEN_CELL_W*2,SCREEN_CELL_H*2,'images/skills_icons/dmg_icon.png',name='damage')
 list_card_camp = [
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*8,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=  dict_arguments['dict_card_path_camp'][list(dict_arguments['dict_card_path_camp'].keys())[0]]),
                     Graphic_elements(x=settings['SCREEN_WIDTH']//2-settings['SCREEN_WIDTH']//20*4.5,y=settings['SCREEN_HEIGHT']//2-settings['SCREEN_HEIGHT']//3.51,width=settings['SCREEN_WIDTH']//10,height=settings['SCREEN_HEIGHT']//3.51,path=dict_arguments['dict_card_path_camp'][list(dict_arguments['dict_card_path_camp'].keys())[1]]),
@@ -560,10 +560,10 @@ for key in dict_text_credits.keys():
         y_text += SCREEN_CELL_H
     y_text=SCREEN_CELL_H
     x_text += settings['SCREEN_WIDTH']//3-settings['SCREEN_WIDTH']//38
-bg_story = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg1.bmp')
+bg_story = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg.bmp')
 #Карточный бой
 #Создаем объект фона
-bg = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg.png')
+bg = Graphic_elements(0,0,settings['SCREEN_WIDTH'],settings['SCREEN_HEIGHT'],'images/bg1.png')
 #Создаем объекты карт
 card_pl_1 = Cards(settings['SCREEN_WIDTH']//12*3.2,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//3.28,path = None,hp = None,damage = None,desc_path = None,name='pl_1')
 card_pl_2 = Cards(settings['SCREEN_WIDTH']//12*4.6,settings['SCREEN_HEIGHT']//1.5, settings['SCREEN_WIDTH']//12, settings['SCREEN_HEIGHT']//3.28,path = None,hp = None,damage = None,desc_path = None,name='pl_2')

@@ -481,7 +481,7 @@ dict_card_characteristics = {
 dict_card_characteristics_enemy = {
                             'бард':[7,2,'earth'],
                             'клаус':[10,0,'hell'],
-                            'гигант':[7,30,'mountain'],
+                            'гигант':[7,3,'mountain'],
                             'ями':[9,1,'hell'],
                             'подрывник':[8,5,'earth'],
                             'арбалетчик':[9,3,'earth'],
@@ -545,11 +545,11 @@ dict_bought_city = {
                     
 }
 dict_price_city = {
-                    'camp':'gold_bullion/10;food/10',
-                    'portal':'gold_bullion/20;stone/10;crystal/5',
-                    'altar':'gold_bullion/15;stone/15;crystal/2;iron_bullion/5',
-                    'church':'gold_bullion/25;stone/10;wood/10;food/15;crystal/4',
-                    'forge':'gold_bullion/20;food/10;iron_bullion/10;stone/20;crystal/3',
+                    'camp':'gold_bullion/10;wood/8;food/10',
+                    'portal':'gold_bullion/10;stone/20',
+                    'altar':'gold_bullion/15;stone/20;iron_bullion/10',
+                    'church':'gold_bullion/20;stone/30;wood/10;food/15;crystal/3',
+                    'forge':'gold_bullion/25;food/10;iron_bullion/20;stone/20',
 }
     
 create_icon_card(SCREEN_W=settings['SCREEN_WIDTH'],SCREEN_H=settings['SCREEN_HEIGHT'],
